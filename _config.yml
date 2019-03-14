@@ -6,11 +6,11 @@
 # 'jekyll serve'. If you change this file, please restart the server process.
 
 # Site settings
-title: Design System Template
-author: Lundegaard a.s.
-email: design-systems@lundegaard.eu
-baseurl: "/design-system-template" # the subpath of your site, e.g. /blog
-url: "https://lundegaard.github.io/" # the base hostname & protocol for your site
+title: Design System Web
+author: Julien BAYLE / Stephane GUELLEC
+email: contact@loire-atlantique.fr
+baseurl: "/design-system-web"
+url: "https://departement-loire-atlantique.github.io/"
 
 # Build settings
 markdown: kramdown
@@ -32,11 +32,6 @@ collections:
 # Configure minification
 jekyll-minifier:
   exclude: ['*.html', '*.xml', '*.txt']  # Exclude xml and html files from processing (take too long to generate)
-
-# If you want use Lundegaard design-system-template as jekyll theme. For more
-# info see https://github.com/lundegaard/design-system-template/wiki/Instalation/
-
-# remote_theme: lundegaard/design-system-template  # you can specify git branch or commit lundegaard/design-system-template@v0.1.0
 
 # Overriding default colors
 branding:
