@@ -1,5 +1,5 @@
 
-{% assign pattern = site.patterns | where:"path", include.pattern_path | first %}
+{% assign pattern = site.variations | where:"path", include.pattern_path | first %}
 
 <div class="preview" style="position: relative;">
     <img src="{{ include.image_path | prepend: site.baseurl }}" style="margin-left: auto; margin-right: auto; display: block;">
@@ -9,9 +9,9 @@
             <a class="preview-links-btn" href="{{ pattern.url | prepend: site.baseurl }}" target="_blank">{{ site.data.locale['live_preview'] | default:'Live preview'}}</a>
         {% endif %}
 
-        {% if include.storybook_url %}
+        {% if include.website_preview_url %}
             <a class="preview-links-btn btn-storybook" href="{{ include.storybook_url }}" target="_blank">
-                {{ site.data.locale['storybook_preview'] | default:'Show in Storybook'}}
+                {{ site.data.locale['website_preview'] | default:'Show in Storybook'}}
             </a>
         {% endif %}
         

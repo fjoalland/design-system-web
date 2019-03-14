@@ -1,32 +1,20 @@
 - title: Introduction
   url: /
 
-- title: Getting started
-  url: /getting-started.html
-
-- title: Guidelines
+- title: Exigences
   group: guidelines
 
 - title: Styles
   group: styles
 
-- title: Components
+- title: Composants
   group: components
 
-- title: Utilities
+- title: Modificateurs
   group: utilities
 
-- title: Page templates
+- title: Pages
   group: page-templates
 
-- title: Downloads
-  url: /downloads.html
-
-- title: Support
-  url: /support.html
-
-- title: Release history
-  url: /release-history/
-
-- title: Contribute
-  url: /contribute.html
+- title: Historique
+  url: /changes/

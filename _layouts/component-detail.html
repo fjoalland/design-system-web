@@ -28,8 +28,8 @@ layout: default
 							{% if variation.description %}<div>{{ variation.description | markdownify }} </div>{% endif %}
 						</header>
 
-						{% capture pattern_path %}_patterns/{{ variation.pattern }}{% endcapture %}
-						{% if variation.image %}
+						{% capture pattern_path %}_variations/{{ variation.pattern }}{% endcapture %}
+                        {% if variation.image %}
 							{% capture image_path %}/{{ variation.image }}{% endcapture %}
 							{% include pattern-image-preview.html pattern_path=pattern_path image_path=image_path storybook_url=variation.storybook %}
 						{% else if variation.pattern %}
@@ -37,7 +37,7 @@ layout: default
 						{% endif %}
 
 						{% if pattern %}
-							{% capture pattern_path %}_patterns/{{ variation.pattern }}{% endcapture %}
+							{% capture pattern_path %}_variations/{{ variation.pattern }}{% endcapture %}
 							{% include pattern-code.html path=pattern_path %}
 						{% endif %}
 

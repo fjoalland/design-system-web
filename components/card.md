@@ -10,6 +10,9 @@ variations:
 - title: Image card
   description: Class `.card-img-top` places an image to the top of the card. With `.card-text`, text can be added to the card. Text within `.card-text` can also be styled with the standard HTML tags.
   pattern: cards/card-image.html
+- title: Agenda card
+  description: Agenda
+  pattern: cards/card-agenda.html
 - title: Text card
   description: Card titles are used by adding `.card-title` to a \<h\*\> tag. In the same way, links are added and placed next to each other by adding `.card-link` to an \<a\> tag. Subtitles are used by adding a `.card-subtitle` to a \<h\*\> tag. If the `.card-title` and the `.card-subtitle` items are placed in a `.card-body` item, the card title and subtitle are aligned nicely.
   pattern: cards/card-text.html

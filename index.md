@@ -1,16 +1,44 @@
 ---
 layout: page
-title: Style Guide Guide
-description: A boilerplate for creating superb style guides
+title: Web Design 2018
+description: Ce site documente les éléments utilisés sur les sites du Département de Loire-Atlantique en décembre 2018 et les exigences pour le futur "design system" du Département.
 ---
 
-The homepage of a style guide should provide high-level information around what the design system is, what benefits it provides, who it's for, and how to get started with it. Like any good index page, it should provide clear navigation to key parts of the website.
+## Avancement
 
-<div class="u-margin-bottom-double"><a href="{{ "/getting-started.html" | prepend: site.baseurl }}" class="c-btn">Get Started</a></div>
+Logo en dur dans le site
 
-## Design System Benefits
-Explain how the design system benefits users and the business. For inspiration, check out over 180 examples of design systems at [Styleguides.io](http://styleguides.io/examples).
-tivizes teams to use the system, and shows components in the wild.
+Pour chaque composant, un "badge" est aposé. 
 
-## Contributing info
-If it's desirable to have people from across the organization contribute to the design system, linking to the <a href="{{ "/contributing.html" | prepend: site.baseurl }}">contributing page</a> from the homepage could be a good idea.
+En cours
+En cours -> Abandonné
+En cours -> Validé 
+
+Base : _layout/pattern.html
+-> A mettre à jour
+
+Mettre à jour :
+* assets
+* components
+* variations
+* guidelines
+* pages-templates
+* styles
+* utilities
+* images
+
+## Ressources
+
+Pour inspiration, lien vers des sites de références au sujet des design system:
+* [styleguides.io](http://styleguides.io/examples) - Ce site référence des centaines de design system
+* [Carbon Design System](http://carbondesignsystem.com/resources) - Outils et ressource pour inspiration.
+* [Material Design](https://material.io) - Exemple de design system
+
+## Contribuer
+
+1. Installer [Ruby](https://www.ruby-lang.org/en/documentation/installation/)
+2. Dans une console, installer Ruby bundler : `gem install bundler`
+3. Dans une console, récupérer le code du projet : `git clone https://github.com/departement-loire-atlantique/design-system-web`
+3. Dans une console, installer les dépendances : `bundle install` (ou `bundle update` pour une mise à jour)
+4. Dans une console, lancer le mode développement : `bundle exec jekyll serve` 
+5. Ouvrir le navigateur à l'addresse `http://localhost:4000/design-system-web/` pour voir le site (mise à jour automatique au fil et à mesure de l'édition des fichiers).

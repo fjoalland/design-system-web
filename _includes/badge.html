@@ -4,9 +4,9 @@
 {% assign status = componentPage.status %}
 {% endif %}
 
-{% if status == 'Deprecated' %}
+{% if status == 'Abandonné' %}
 {% assign badge = "negative" %}
-{% elsif status == 'Complete' %}
+{% elsif status == 'Validé' %}
 {% assign badge = "positive" %}
 {% else %}
 {% assign badge = "caution" %}

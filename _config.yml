@@ -23,11 +23,11 @@ sass:
 
 # Setup pattern collection
 collections:
-  patterns:
+  variations:
     output: true
   posts:
     output: true
-    permalink: /release-history/:year/:month/:day/:title/
+    permalink: /post/:year/:month/:day/:title/
 
 # Configure minification
 jekyll-minifier:
@@ -35,7 +35,7 @@ jekyll-minifier:
 
 # Overriding default colors
 branding:
-  logo_path: '/assets/logo.svg'
+  logo_path: 'https://www.loire-atlantique.fr/upload/docs/image/png/2013-11/entete-logo2.png'
   navigation_background_color: '#eee'
   navigation_link_color: '#444'
   navigation_link_color_hover: 'gray'

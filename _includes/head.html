@@ -9,13 +9,15 @@
 	{% endif %}
 
 	<link rel="stylesheet" href="{{ "/assets/css/style-guide.css" | prepend: site.baseurl }}?{{site.time | date: '%s%N'}}">
-	<link rel="stylesheet" href="{{ "/assets/css/print.css" | prepend: site.baseurl }}?{{site.time | date: '%s%N'}}" media="print">
+    <link rel="stylesheet" href="{{ "/assets/css/prism.css" | prepend: site.baseurl }}?{{site.time | date: '%s%N'}}">
+    <link rel="stylesheet" href="{{ "/assets/css/print.css" | prepend: site.baseurl }}?{{site.time | date: '%s%N'}}" media="print">
+	
 	<link rel="icon" href="{{ "/assets/favicon.ico" | prepend: site.baseurl }}">
 
 	<link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
 
 	<link rel="alternate" type="application/rss+xml" href="{{ "/feed.xml" | prepend: site.baseurl }}" />
-
+	
 	{% if site.author %}
 		<meta name="author" content="{{ site.author }}">
 	{% endif %}

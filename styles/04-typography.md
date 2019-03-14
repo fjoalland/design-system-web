@@ -13,13 +13,13 @@ In case of Bootstrap we present basic styles.
 
 ## Headings 
 
-{% include pattern-live-preview.html pattern_path="_patterns/typography/headings.html" %}
+{% include pattern-live-preview.html pattern_path="_variations/typography/headings.html" %}
 
 ## Paragraphs
 
-{% include pattern-live-preview.html pattern_path="_patterns/typography/paragraphs.html" %}
+{% include pattern-live-preview.html pattern_path="_variations/typography/paragraphs.html" %}
 
 ## Lists
 
-{% include pattern-live-preview.html pattern_path="_patterns/typography/lists.html" %}
+{% include pattern-live-preview.html pattern_path="_variations/typography/lists.html" %}
 

@@ -2,25 +2,19 @@
 layout: component-detail
 group: components
 
-title: Buttons
+title: List
 description: Buttons express what action will occur when the user clicks or touches it. Buttons are used to initialize an action, either in the background or foreground of an experience.
-status: Complete
+status: In progress
 
 variations:
 - title: Button types
   description: Several predefined button styles, each serving its own semantic purpose, with a few extras thrown in for more control.
-  pattern: buttons/button-types.html
-- title: Tag variants
-  description: The `.btn` classes are designed to be used with the `<button>` element. However, you can also use these classes on `<a>` or `<input>` elements (though some browsers may apply a slightly different rendering).
-  pattern: buttons/button-tags.html
-- title: Sizes
-  description: Fancy larger or smaller buttons? Add `.btn-lg` or `.btn-sm` for additional sizes.
-  pattern: buttons/button-sizes.html
+  pattern: list/list-style1.html
 ---
 
 ## General guidelines
 
-Buttons are used primarily on action items. Some examples include Add, Save, Delete, Sign up. Do not use Buttons as navigational elements. Instead, use Links because it takes the user to a new page and is not associated with an action. Each page may have one to two primary buttons. Any remaining calls-to-action are represented as secondary buttons.
+Test
 
 ## Usage
 
