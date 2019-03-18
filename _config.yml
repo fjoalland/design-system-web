@@ -15,7 +15,6 @@ url: "https://departement-loire-atlantique.github.io/"
 # Build settings
 markdown: kramdown
 plugins:
-  - jekyll-feed
   - jekyll-sitemap
   - jekyll-minifier
 sass:
