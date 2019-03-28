@@ -1,44 +1,31 @@
 ---
 layout: page
-title: Web Design 2018
-description: Ce site documente les éléments utilisés sur les sites du Département de Loire-Atlantique en décembre 2018 et les exigences pour le futur "design system" du Département.
+title: Design System
+description: Ce site présente le Design System du Département de Loire-Atlantique.
 ---
 
-## Avancement
+## Attention - Travail en cours
 
-Logo en dur dans le site
+Ce site est en cours de construction depuis mi-mars 2019.
 
-Pour chaque composant, un "badge" est aposé. 
+Il est le fruit d'un travail partenarial entre la Direction de la communication, la Direction informatique et la société TRSB (prestataire sélectionné dans le cadre d'un appel d'offre pour accompagner le Département à la mise en oeuvre d'un design system pour ses sites et ses applications mobiles).
 
-En cours
-En cours -> Abandonné
-En cours -> Validé 
+## Sommaire
 
-Base : _layout/pattern.html
--> A mettre à jour
+Dans le menu "Exigences", l'ensemble des exigences associées à ce design system sont exposées.
 
-Mettre à jour :
-* assets
-* components
-* variations
-* guidelines
-* pages-templates
-* styles
-* utilities
-* images
+Dans le menu "Styles", les éléments communs à tous les composants sont identifiés (police, iconographie, ...)
 
-## Ressources
+Dans le menu "Web", les éléments de construction des sites internet sont listés. La construction de ses composants a été pensée suivant une approche atomic design. Chaque composant est associé à un "badge" d'état. L'état est l'un des suivants :
+* Brouillon : Le composant est en phase conception
+* Décrit : Le composant est décrit mais doit être validé
+* A valider : Le composant est prêt (Description, HTML, CSS, JS) mais reste à valider par l'équipe qualité (accessibilité, performance, compatbilité navigateurs, ...)
+* Validé : Le composant peut être utilisé dans les sites du Département
+* Abandonné : Le composant est obsolète, il doit être retiré des sites qui l'utilise
 
-Pour inspiration, lien vers des sites de références au sujet des design system:
+## Bibliographie
+
+Plusieurs sites ont inspiré la création du design system du Département :
 * [styleguides.io](http://styleguides.io/examples) - Ce site référence des centaines de design system
 * [Carbon Design System](http://carbondesignsystem.com/resources) - Outils et ressource pour inspiration.
 * [Material Design](https://material.io) - Exemple de design system
-
-## Contribuer
-
-1. Installer [Ruby](https://www.ruby-lang.org/en/documentation/installation/)
-2. Dans une console, installer Ruby bundler : `gem install bundler`
-3. Dans une console, récupérer le code du projet : `git clone https://github.com/departement-loire-atlantique/design-system-web`
-3. Dans une console, installer les dépendances : `bundle install` (ou `bundle update` pour une mise à jour)
-4. Dans une console, lancer le mode développement : `bundle exec jekyll serve` 
-5. Ouvrir le navigateur à l'addresse `http://localhost:4000/design-system-web/` pour voir le site (mise à jour automatique au fil et à mesure de l'édition des fichiers).
