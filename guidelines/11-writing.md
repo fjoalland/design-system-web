@@ -1,9 +1,9 @@
 ---
 layout: page
 type: detail
-title: Writing
+title: Editorial
 group: guidelines
-permalink: /guidelines/writing.html
+permalink: /exigences/writing.html
 description: Guidelines for writing best practices
 
 ---

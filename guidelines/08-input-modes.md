@@ -1,9 +1,9 @@
 ---
 layout: page
 type: detail
-title: Input modes
+title: Formulaire / Champs de saisie
 group: guidelines
-permalink: /guidelines/input-modes.html
+permalink: /exigences/input-modes.html
 description: Guidelines around multiple types of input
 
 ---

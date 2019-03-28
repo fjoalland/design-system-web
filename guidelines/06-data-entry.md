@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Data entry
+title: Formulaires
 group: guidelines
 permalink: /guidelines/data-entry.html
 description: High-level form guidelines
