@@ -23,3 +23,5 @@ In case of Bootstrap we present basic styles.
 
 {% include pattern-live-preview.html pattern_path="_variations/typography/lists.html" %}
 
+
+Les polices d'affichages ou l'iconographie doit apporter clairement une valeur identifiable pour l'internaute afin de ne pas alourdir les pages sans valeur ajouté.

@@ -2,7 +2,7 @@
 layout: page
 title: Formulaires
 group: guidelines
-permalink: /guidelines/data-entry.html
+permalink: /exigences/data-entry.html
 description: High-level form guidelines
 
 ---

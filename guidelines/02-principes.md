@@ -10,7 +10,7 @@ description: Les principes fondateurs suivants sont à la base de la constructio
 
 Chaque composant ou élément de style contribue positivement au système général. A ce titre, aucun élément n'est secondaire ou fantaisiste. 
 
-Chaque composant est essentiel et traité avec le même niveau d'exigence. 
+Chaque composant est essentiel et traité avec le même niveau d'exigence.
 
 ## Inclusif
 
