@@ -19,7 +19,7 @@
                 {% for group in sorted_groups %}
                 
                     {% comment %} In group sort items by title {% endcomment %}
-                    {% assign sorted_pages = group.items | sort: 'title'  %}
+                    {% assign sorted_pages = group.items | sort: 'name'  %}
     
                     {% for my_subpage in sorted_pages %}
                         {% if my_subpage.group == include.group %}
