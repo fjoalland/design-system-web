@@ -168,7 +168,7 @@ Exemple de groupe de composant : champs de formulaire
 
 Exemple de composant : menu accordéon
 
-Un mécanisme de compilation permet de compiler uniquement un unique fichier JS et deux fichiers CSS (print et screen) comprenant le socle et les composants sélectionnés, de manière optimisé en taille (suppression des commentaires, des caractères inutiles, ...).
+Un mécanisme de compilation permet de compiler uniquement un unique fichier JS et trois fichiers CSS (wysiwyg, print et screen) comprenant le socle et les composants sélectionnés, de manière optimisé en taille (suppression des commentaires, des caractères inutiles, ...).
 
 Etant donné que les téléphones mobiles ne conserve pas souvent en cache les fichiers de plus de 25ko (même si l'entête HTTP indique que c'est possible), le fichier CSS et JS résultat de cette compilation ont été travaillé pour respecter cette limite.
 
