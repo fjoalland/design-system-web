@@ -7,9 +7,12 @@ title: Pagination
 description: Pagination is used for splitting up content or data into several pages, with a control for navigating to the next or previous page.
 
 variations:
-- title: Overview
-  pattern: pagination/pagination.html
-  storybook: https://react-bootstrap-table.github.io/react-bootstrap-table2/storybook/index.html?selectedKind=Row%20Selection&selectedStory=Single%20Selection&full=0&addons=1&stories=1&panelRight=0&addonPanel=storybook%2Factions%2Factions-panel
+- title: Pager standard
+  pattern: pagination/pager-standard.html
+  storybook: https://www.loire-atlantique.fr/jcms/sorties-loisirs-fr-c_5063
+- title: Pager infini
+  pattern: pagination/pager-infini.html
+  storybook: https://www.loire-atlantique.fr/jcms/tout-savoir-sur-le-departement/elu-es/annuaire-des-elu-es-fr-p1_214628
 ---
 
 ## Usage
