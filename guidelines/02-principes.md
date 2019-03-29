@@ -8,17 +8,19 @@ description: Les principes fondateurs suivants sont à la base de la constructio
 
 ## Cohérent et rigoureux
 
-Chaque composant ou élément de style contribue positivement au système général. A ce titre, aucun élément n'est secondaire ou fantaisiste. 
+Chaque composant ou élément de style contribue positivement au système général. A ce titre, aucun élément n'est secondaire ou fantaisiste.
 
-Chaque composant est essentiel et traité avec le même niveau d'exigence.
+Les composants qui intègrent le design system ont une existance pérènne et sous voués à être réutilisés.
+
+Ils sont donc essentiels et traités avec le même niveau d'exigence.
 
 ## Inclusif
 
-Le Département de Loire-Atlantique s'adresse à une communauté d'utilisateur vaste et variée. Ainsi, chaque composant ou élément visuel doit être compris par tous et sans effort. 
+Le Département de Loire-Atlantique s'adresse à une communauté d'utilisateurs vaste et variée. Ainsi, chaque composant ou élément visuel doit être compris par tous et sans effort. 
 
-Si l'originalité ou la séduction est importante en matière de design, la recherche de l'inclusité est posé comme principe premier de la construction de chaque élément.
+Si l'originalité ou la séduction est importante en matière de design, la recherche de l'inclusité est posée comme principe premier de la construction de chaque élément.
 
-Chaque élément, quel que soit la taille de l'écran ou les facultés de l'utilisateur, est perceptible, utilisable et compréhensible par tous. Au delà, il est également compatible avec les technologie d'assistance pour les différents handicaps. A ce titre, tous les matériaux de ce design system sont certifiés niveau AA suivant la version 3 du [Référentiel général d'accessibilité](https://references.modernisation.gouv.fr/rgaa-accessibilite/).
+Chaque élément, quelle que soit la taille de l'écran ou les facultés de l'utilisateur, est perceptible, utilisable et compréhensible par tous. Au delà, il est également compatible avec les technologie d'assistance pour les différents handicaps. A ce titre, tous les matériaux de ce design system sont certifiés niveau AA suivant la version 3 du [Référentiel général d'accessibilité](https://references.modernisation.gouv.fr/rgaa-accessibilite/).
 
 ## Emblématique
 
