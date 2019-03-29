@@ -4,8 +4,8 @@ type: detail
 title: Editorial
 group: guidelines
 permalink: /exigences/writing.html
-description: Guidelines for writing best practices
+description: Guide des meilleurs pratique rédactionnelle pour le web
 
 ---
 
-Guidelines go here.
+A documenter
