@@ -13,9 +13,12 @@ variations:
 
 ## Utilisation
 
-Page générique utilisée pour les pages intérieurs des site.
+Page générique utilisée pour les pages intérieurs des sites.
+
 Les élements se placent par rapport à leur référence.
+
 Utilisé dans l'élément JPlatform Portail JSP Collection.
+
 
 ## Liste des références de la page
 
