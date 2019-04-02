@@ -1,27 +1,25 @@
 ---
 layout: page
 type: detail
-title: Typography
+title: Typographie
 group: styles
 permalink: /styles/typography.html
-description: Typography is used to create clear hierarchies, useful organizations, and purposeful alignments that guide users through the product and experience. It is the core structure of any well designed interface.
-
+description: Les différents style de texte sont utiles pour organiser et hiérarchiser les informations sur une page.
 ---
 
-We should provide information about used typeface, type scales and other typographic rules applied to design system.
-In case of Bootstrap we present basic styles.
+Cette page décrit les différentes polices et taille de police utilisées.
 
-## Headings 
+Les polices apporte clairement une valeur identifiable pour l'internaute afin de ne pas alourdir les pages sans valeur ajouté.
+
+## Titres
 
 {% include pattern-live-preview.html pattern_path="_variations/typography/headings.html" %}
 
-## Paragraphs
+## Style de paragraphes
 
 {% include pattern-live-preview.html pattern_path="_variations/typography/paragraphs.html" %}
 
-## Lists
+## Listes
 
 {% include pattern-live-preview.html pattern_path="_variations/typography/lists.html" %}
 
-
-Les polices d'affichages ou l'iconographie doit apporter clairement une valeur identifiable pour l'internaute afin de ne pas alourdir les pages sans valeur ajouté.

@@ -4,14 +4,14 @@
 - title: Exigences
   group: guidelines
 
-- title: Styles
+- title: Styles web
   group: styles
 
+- title: Modificateurs style web
+  group: utilities
+  
 - title: Composants web
   group: components
-
-- title: Modificateurs
-  group: utilities
 
 - title: Historique
   url: /changes/
