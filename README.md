@@ -18,7 +18,7 @@ set http_proxy=http://MajMaven:Sv56jgc4@proxy-ng.cg44.fr:8080
 set https_proxy=http://MajMaven:Sv56jgc4@proxy-ng.cg44.fr:8080
 gem sources -r https://rubygems.org/
 gem sources -a http://rubygems.org/
-ridk install > Choisir 3 puis rien
+ridk install > Choisir "3" puis taper "entrer". Puis ne rien choisir et taper "entrer"
 http://repo.msys2.org/distrib/x86_64/msys2-x86_64-20180531.exe
 A installer dans C:\msys64
 ```
