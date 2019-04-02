@@ -24,6 +24,7 @@ How are you measuring your project's speed (such as Pingdom Speed Test or Google
 What techniques are you using to decrease file size (such as Gzip, Image Optimization)?
 What performance-related tools are you using in your workflow? (such as WebPagetest, BigRig Speedcurve)?
 
+HTTP2
 
 AMP ?
 

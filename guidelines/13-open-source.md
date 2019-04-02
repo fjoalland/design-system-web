@@ -3,7 +3,7 @@ layout: page
 type: detail
 title: Open source
 group: guidelines
-permalink: /exigences/browsers.html
+permalink: /exigences/opensource.html
 description: Choix de licences
 ---
 
