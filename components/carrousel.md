@@ -9,6 +9,8 @@ description: Un carrousel avec une image et une description. La couleur de fond 
 variations:
 - title: Carrousel
   pattern: carrousel/carrousel.html
+- title: Carrousel large
+  pattern: carrousel/carrousel-large.html
 ---
 
 ## Utilisation
