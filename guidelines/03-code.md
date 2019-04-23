@@ -13,7 +13,7 @@ JS : JavaScript
 HTML : HyperText Markup Language (langage de balisage)
 
 
-## Compatibilité navigateurs
+## Compatibilité navigateurs web
 
 L'implémentation web du design system repose uniquement sur des balises HTML, les fonctions JS et les propriétés HTML ou CSS supportées nativement par tous les navigateurs ciblés comme "de premier plan" dans le chapitre "Navigateurs" de cette section sont utilisées.  
 

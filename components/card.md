@@ -19,6 +19,9 @@ variations:
 - title: Header and footer
   description: Add an optional header and/or footer within a card.
   pattern: cards/card-header-footer.html
+- title: Aide
+  description: Vue liste des aides
+  pattern: cards/card-help.html
 ---
 
 ## Usage
