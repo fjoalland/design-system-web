@@ -3,3 +3,5 @@ _site
 .jekyll-metadata
 .DS_Store
 node_modules
+framework/css
+frameword/js/cd44.js
