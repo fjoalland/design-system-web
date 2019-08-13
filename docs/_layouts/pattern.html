@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <title>Pattern</title>
+  <meta name="description" content="Pattern">
+  
+  <!-- DS -->
+  <link rel="stylesheet" href="{{ "/build/css/cd44.css" | prepend: site.baseurl }}">
+  <link rel="stylesheet" href="{{ "/build/css/reset_grid.min.css" | prepend: site.baseurl }}">
+
+  <!-- Jekyll specific css -->
+  <link rel="stylesheet" href="{{ "/assets/css/icon-preview.css" | prepend: site.baseurl }}">
+
+  
+</head>
+<body class="body">
+  <div class="container-fluid">
+      {{ content }}
+  </div>
+
+  <!-- Jekyll specific : Necessary for resizing patterns iframe, if pattern has big height -->
+  <script src="{{ "/assets/js/vendor/iframeResizer.contentWindow.min.js" | prepend: site.baseurl }}"></script>
+
+  <!-- DS -->
+  <script src="{{ "/build/js/cd44.js" | prepend: site.baseurl }}" type="text/javascript"></script>
+
+</body>
+</html>
+

@@ -1,0 +1,52 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely need to edit after that.
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'jekyll serve'. If you change this file, please restart the server process.
+
+# Site settings
+title: Design System Web
+author: Julien BAYLE / Stephane GUELLEC
+email: contact@loire-atlantique.fr
+baseurl: "/design-system-web"
+url: "https://departement-loire-atlantique.github.io/"
+
+# Build settings
+markdown: kramdown
+plugins:
+  - jekyll-sitemap
+  - jekyll-minifier
+sass:
+  style: compressed
+
+# Setup pattern collection
+collections:
+  variations:
+    output: true
+  posts:
+    output: true
+    permalink: /post/:year/:month/:day/:title/
+
+# Configure minification
+jekyll-minifier:
+  exclude: ['*.html', '*.xml', '*.txt']  # Exclude xml and html files from processing (take too long to generate)
+
+# Overriding default colors
+branding:
+  logo_path: 'https://www.loire-atlantique.fr/upload/docs/image/png/2013-11/entete-logo2.png'
+  navigation_background_color: '#eee'
+  navigation_link_color: '#444'
+  navigation_link_color_hover: 'gray'
+  main_background_color: '#fff'
+  highlight_color: '#444'
+  code_background_color: '#f9f9f9'
+
+# Do not serve CSS framework development files
+exclude:
+  - package.json
+  - node_modules
+  - gulpfile.js
+
+# GTM analytics
+gtm_id: GTM-XXXXXX

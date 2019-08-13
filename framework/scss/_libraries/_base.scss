@@ -1,0 +1,282 @@
+/* ----------------------------- */
+/* ==Base (basic styles)         */
+/* ----------------------------- */
+
+/* disable animations styles when reduced motion is enabled */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* switching to border-box model for all elements */
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  /* avoid min-width: auto on flex and grid children */
+  min-width: 0;
+  min-height: 0;
+}
+
+html {
+  /* set base font-size to equiv "10px", which is adapted to rem unit */
+  font-size: 62.5%;
+  /* IE9-IE11 math fixing. See http://bit.ly/1g4X0bX */
+  font-size: calc(1em * 0.625);
+}
+
+body {
+  margin: 0;
+  @include font-size(base);
+  background-color: $background-base;
+  color: $color-base;
+  font-family: $font-family-base;
+  line-height: $line-height-base;
+}
+
+/* Main structure */
+
+.cd44-container-fluid {
+  padding: 0 $cd44-container-hmargin;
+}
+.cd44-inner-container {
+  margin: $cd44-container-vmargin;
+}
+
+/* xx-large screens */
+/* ---------------- */
+
+@media (min-width: ($cd44-max-size+$cd44-container-hmargin) ) { // larger viewport + margin
+
+  /* layout for high resolution
+     when viewport is too large, limits size of the inner container and centers content
+     */
+
+  .cd44-inner-container {
+    width: $cd44-max-size;
+    margin: 0 auto;
+  }
+
+}
+
+/* Links */
+a {
+  color: $link-color;
+  text-decoration: $link-decoration;
+  transition: color .4s ease-out;
+
+  &:focus,
+  &:hover,
+  &:active {
+    color: $link-color-hover;
+    text-decoration: $link-decoration-hover;
+  }
+}
+
+/* Headings */
+h1, .h1-like {
+  @include font-size(h1);
+  @if variable_exists(font-family-headings) and $font-family-headings != $font-family-base{
+    font-family: $font-family-headings;
+  }
+  font-weight: $weight-medium;
+}
+
+h2, .h2-like {
+  @include font-size(h2);
+  @if variable_exists(font-family-headings) and $font-family-headings != $font-family-base{
+    font-family: $font-family-headings;
+  }
+  font-weight: $weight-bold;
+  padding: 0 1.5rem;
+  display: inline-block;
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#ffffff+40,99e6d1+40,99e6d1+65,ffffff+65 */
+  background: rgb(255,255,255); /* Old browsers */
+  background: -moz-linear-gradient(top,  rgba(255,255,255,1) 40%, rgba(153,230,209,1) 40%, rgba(153,230,209,1) 65%, rgba(255,255,255,1) 65%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 40%,rgba(153,230,209,1) 40%,rgba(153,230,209,1) 65%,rgba(255,255,255,1) 65%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  rgba(255,255,255,1) 40%,rgba(153,230,209,1) 40%,rgba(153,230,209,1) 65%,rgba(255,255,255,1) 65%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+}
+
+h3, .h3-like {
+  @include font-size(h3);
+  @if variable_exists(font-family-headings) and $font-family-headings != $font-family-base{
+    font-family: $font-family-headings;
+  }
+  background: transparent;
+  font-weight: $weight-bold;
+}
+
+h4, .h4-like {
+  @include font-size(h4);
+  @if variable_exists(font-family-headings) and $font-family-headings != $font-family-base{
+    font-family: $font-family-headings;
+  }
+  background: transparent;
+  font-weight: $weight-medium;
+}
+
+h5, .h5-like {
+  @include font-size(h5);
+  @if variable_exists(font-family-headings) and $font-family-headings != $font-family-base{
+    font-family: $font-family-headings;
+  }
+  background: transparent;
+  font-weight: $weight-medium;
+}
+
+h6, .h6-like {
+  @include font-size(h6);
+  @if variable_exists(font-family-headings) and $font-family-headings != $font-family-base{
+    font-family: $font-family-headings;
+  }
+  background: transparent;
+  font-weight: $weight-medium;
+}
+
+/* Texts */
+
+.chapo {
+  font-weight: 700;
+  font-size: 1.7rem; // 17px
+}
+figcaption {
+  font-size: 1.4rem;
+  color: $color-soft-text;
+}
+
+/* Vertical rythm */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+dd {
+  margin-top: 0;
+  margin-bottom: $headings-margin-bottom;
+}
+
+p,
+address,
+ol,
+ul,
+dl,
+blockquote {
+  margin-top: 0;
+  margin-bottom: $paragraph-margin-bottom;
+}
+
+/* Avoid margins on nested elements */
+li p,
+li .p-like,
+li ul,
+li ol,
+ol ol,
+ul ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* Max values */
+img,
+table,
+td,
+blockquote,
+textarea,
+input,
+video,
+svg {
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+/* Styling elements */
+ul,
+ol {
+  padding-left: 2em;
+}
+
+img {
+  vertical-align: middle;
+}
+
+sup,
+sub {
+  vertical-align: 0;
+}
+
+sup {
+  bottom: 1ex;
+}
+
+sub {
+  top: 0.5ex;
+}
+
+blockquote {
+  position: relative;
+  padding-left: 3em;
+  min-height: 2em;
+}
+
+blockquote::before {
+  content: "\201C";
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-family: georgia, serif;
+  font-size: 5em;
+  height: .4em;
+  line-height: .9;
+  color: $quote-color;
+}
+
+blockquote > footer {
+  margin-top: .75em;
+  font-size: 0.9em;
+  color: rgba(0, 0, 0, .7);
+
+  &::before {
+    content: "\2014 \0020";
+  }
+}
+
+q {
+  font-style: normal;
+}
+
+q,
+.q {
+  quotes: "“" "”" "‘" "’";
+
+  &:lang(fr) {
+    quotes: "«\00a0" "\00a0»" "“" "”";
+  }
+}
+
+hr {
+  display: block;
+  clear: both;
+  height: 1px;
+  margin: 1em 0 2em;
+  padding: 0;
+  border: 0;
+  color: #ccc;
+  background-color: #ccc;
+}
+
+blockquote,
+figure {
+  margin-left: 0;
+  margin-right: 0;
+}

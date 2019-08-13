@@ -1,0 +1,58 @@
+@charset "UTF-8";
+/*
+* CD44 Design System - Main SCSS
+*/
+
+
+/* ----------------------------*/
+/* ------ - 1 - Config ------- */
+/* --------------------------- */
+
+// Base KNACSS config
+@import "./node_modules/knacss/sass/_config/variables";
+@import "./node_modules/knacss/sass/_config/mixins";
+
+// CD44 config
+@import "_config/variables";
+
+/* -------------------------------*/
+/* ------ - 2 - Libraries ------- */
+/* ------------------------------ */
+
+// KNACSS Libraries
+
+@import "./node_modules/knacss/sass/_library/print";        // print quick reset
+@import "./node_modules/knacss/sass/_library/utilities";    // width and spacer helpers
+//@import "_library/responsive";   // Responsive Web Design helpers
+//@import "./node_modules/knacss/sass/_library/layout";       // alignment, modules, positionning
+
+// KNACSS modified Libraries
+
+@import "_libraries/base";
+
+// CD44 specific Libraries
+
+@import "_libraries/fonts"; 
+@import "_libraries/skins";
+
+/* ---------------------------------------------------*/
+/* ------ - 3 - KNACSS components             ------- */
+/* -------------------------------------------------- */
+
+@import "./node_modules/knacss/sass/components/buttons";     // CD44 buttons
+@import "./node_modules/knacss/sass/components/skip-links";  // Accessibility tool
+//@import "./node_modules/knacss/sass/components/media";      // media object
+//@import "./node_modules/knacss/sass/components/tables";     // data tables consistency
+//@import "./node_modules/knacss/sass/components/forms";      // forms consistency and styles
+//@import "./node_modules/knacss/sass/components/checkbox";   // checkbox, radio, switch styles
+//@import "./node_modules/knacss/sass/components/tabs";       // tabs styles
+//@import "./node_modules/knacss/sass/components/arrows";     // arrows styles
+//@import "./node_modules/knacss/sass/components/tags";        // tags styles
+//@import "./node_modules/knacss/sass/components/badges";     // badges styles
+//@import "./node_modules/knacss/sass/components/alerts";     // alerts styles
+
+/* ---------------------------------------------------*/
+/* ------ - 4 - CD44 components               ------- */
+/* -------------------------------------------------- */
+
+@import "components/collapser";

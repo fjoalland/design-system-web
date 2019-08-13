@@ -1,0 +1,48 @@
+{
+  "name": "design-system-web",
+  "version": "1.0.0",
+  "description": "Design system for departement de loire atlantique websites",
+  "keywords": [
+    "css",
+    "framework"
+  ],
+  "author": "Julien BAYLE, Stephane GUELLEC",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/departement-loire-atlantique/design-system-web.git"
+  },
+  "bugs": {
+    "url": "https://github.com/departement-loire-atlantique/design-system-web/issues"
+  },
+  "homepage": "https://github.com/departement-loire-atlantique/design-system-web#readme",
+  "devDependencies": {
+    "autoprefixer": "^9.6.1",
+    "bootstrap-scss": "^4.3.1",
+    "browser-sync": "^2.26.7",
+    "cssnano": "^4.1.10",
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-postcss": "^8.0.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-run": "^1.7.1",
+    "gulp-sass": "^4.0.2",
+    "gulp-util": "^3.0.8",
+    "knacss": "^7.1.0",
+    "postcss-flexbugs-fixes": "^4.1.0",
+    "postcss-gap-properties": "^2.0.0",
+    "postcss-unprefix": "^2.1.4"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "IE >= 10",
+    "Edge >= 16",
+    "Chrome >= 72",
+    "Firefox >= 60",
+    "Firefox ESR",
+    "Safari >= 12",
+    "ios_saf >= 12",
+    "Android >= 7"
+  ]
+}

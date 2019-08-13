@@ -1,0 +1,95 @@
+/* ----------------------------- */
+/* ==Collapser                   */
+/* ----------------------------- */
+
+/* component structure */
+.cd44-collapser {
+  list-style: none; // if collapser is a list
+  padding: 0;
+  margin: 2rem 0 4rem 0;
+  border-top: 1px solid $cd44-mid-color;
+}
+
+/* container for collapsed content */
+.cd44-collapser_element {
+  border-bottom: 1px solid $cd44-mid-color;
+}
+
+/* row-like button */
+.cd44-collapser_button {
+  font-size: 1.6rem;
+  padding: 1.5rem 3.5rem 1.5rem 1.5rem;
+  display: block;
+  width: 100%;
+  text-align: left;
+  background-color: transparent;
+  position: relative;
+
+  &::after {
+    content: "";
+    width:2rem;
+    height:2rem;
+    display: block;
+    background: url('../images/icons.svg') no-repeat 0 -682px;
+    position: absolute;
+    right: 1.5rem;
+    top: 1.5rem;
+    transition: all 0.4s ease-in-out;
+  }
+
+  &.show::after {
+    transform: rotate(180deg);
+  }
+
+}
+
+.cd44-collapser_content {
+  padding: 0 3rem;
+  background-color: $cd44-light-bg;
+  transition: all 0.4s ease-in-out;
+  max-height: 0;
+  overflow: hidden;
+}
+.show + .cd44-collapser_content {
+  padding: 3rem; // this value is connected to the component JS, changing it results in changing the calculated value of the height in cd44-collapser.js
+}
+
+.cd44-collapser_content--links {
+  text-decoration: $link-list-decoration;
+  padding: 2rem 2rem 2rem 0;
+  display: block;
+
+  &:hover, &:focus, &:active {
+    text-decoration: $link-list-decoration-hover;
+
+    &::after {
+      content: "";
+      display: inline-block;
+      vertical-align: middle;
+      width: 2rem;
+      height: 2rem;
+      margin-left: 0.5rem;
+      margin-top: -0.4rem; // magic number for Chrome vertical align middle issue
+      background: url('../images/icons.svg') no-repeat 0 -120px;
+    }
+  }
+}
+
+@media (max-width: $small) {
+  
+  .cd44-collapser_content {
+    padding: 0 1rem;
+  }
+  .show + .cd44-collapser_content {
+    padding: 1rem;
+  }
+  .cd44-collapser_content--links {
+    padding: 1rem 2rem 1rem 0;
+  }
+
+}
+
+@media (max-width: $medium) {
+  
+}
+
