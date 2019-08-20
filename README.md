@@ -25,7 +25,7 @@ Récupérer le code du projet : `git clone https://github.com/departement-loire-
 #### Version avec Docker
 
 1. Installer Docker et [Docker compose](https://docs.docker.com/compose/install/) 
-2. Pour démarrer le projet : `cd .docker && docker-compose up -d`
+2. Pour démarrer le projet : `cd .docker && docker-compose up`
 3. Ouvrez un navigateur à l'adresse : `http://localhost:4000/design-system-web/`
 
 Si le port 4000 est déja utilisé sur votre machine, vous pouvez le modifier en modifiant la ligne `PORT:4000` du fichier `.docker/.env`
