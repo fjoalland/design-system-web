@@ -5,3 +5,5 @@ _site
 node_modules
 framework/css
 frameword/js/cd44.js
+Gemfile.lock
+.docker/cache

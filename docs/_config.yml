@@ -42,11 +42,5 @@ branding:
   highlight_color: '#444'
   code_background_color: '#f9f9f9'
 
-# Do not serve CSS framework development files
-exclude:
-  - package.json
-  - node_modules
-  - gulpfile.js
-
 # GTM analytics
 gtm_id: GTM-XXXXXX

@@ -14,13 +14,23 @@ Récupérer le code du projet : `git clone https://github.com/departement-loire-
 
 ### Contribuer à la documentation
 
+#### Version manuelle
+
 1. Installer [Ruby](https://www.ruby-lang.org/en/documentation/installation/)
 2. Dans une console : installer Ruby bundler : `gem install bundler`
 3. Dans une console, installer les dépendances : `cd docs && bundle install` (ou `bundle update` pour une mise à jour)
 4. Dans une console, lancer le mode développement : `cd docs && bundle exec jekyll serve --incremental` 
 5. Ouvrir le navigateur à l'addresse `http://localhost:4000/design-system-web/` pour voir le site (mise à jour automatique au fur et à mesure de l'édition des fichiers).
 
-Description de l'arborescence de la documentation (sous dossier docs) :
+#### Version avec Docker
+
+1. Installer Docker et [Docker compose](https://docs.docker.com/compose/install/) 
+2. Pour démarrer le projet : `cd .docker && docker-compose up`
+3. Ouvrez un navigateur à l'adresse : `http://localhost:4000/design-system-web/`
+
+Si le port 4000 est déja utilisé sur votre machine, vous pouvez le modifier en modifiant la ligne `PORT:4000` du fichier `.docker/.env`
+
+#### Description de l'arborescence de la documentation (sous dossier docs) :
 
 * \_data/locale.yml : Fichier de traduction pour les templates
 * \_data/primary_nav.yml : Arborescence du menu
