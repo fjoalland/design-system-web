@@ -74,8 +74,16 @@ gulp.task('build:js', function() {
       .pipe(gulp.dest(jsDest));
 });
 
+gulp.task('build:jekyll:fast', function(cb) {
+    exec('cd ' + jekyllDir + ' && bundle exec jekyll build --incremental', function (err, stdout, stderr) {
+      console.log(stdout);
+      console.log(stderr);
+      cb(err);
+    });
+  });
+
 gulp.task('build:jekyll', function(cb) {
-  exec('cd ' + jekyllDir + ' && bundle exec jekyll build --incremental', function (err, stdout, stderr) {
+  exec('cd ' + jekyllDir + ' && bundle install && bundle exec jekyll build', function (err, stdout, stderr) {
     console.log(stdout);
     console.log(stderr);
     cb(err);
@@ -110,7 +118,7 @@ gulp.task('serve', gulp.series('build', function() {
     open: false       // do not open the browser (annoying)
   });
 
-  gulp.watch('docs/**/*', gulp.series('build:jekyll', function(done) {
+  gulp.watch('docs/**/*', gulp.series('build:jekyll:fast', function(done) {
     browserSync.reload(); 
     done();
   }));
