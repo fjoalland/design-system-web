@@ -36,6 +36,6 @@ before_deploy:
 deploy:
   provider: script
   skip_cleanup: true
-  script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/dist/ loireatl-ds@ssh.cluster011.hosting.ovh.net:/home/loireatl-ds/
+  script: rsync -r --delete-after --quiet --exclude .ssh $TRAVIS_BUILD_DIR/dist/ loireatl-ds@ssh.cluster011.hosting.ovh.net:/home/loireatl-ds/
   on:
     branch: master
