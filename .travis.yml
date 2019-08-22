@@ -1,7 +1,6 @@
 before_script:
+  - npm install -g gulp-cli
   - npm install
-  
-script: 
- - gulp build
 
-# - gulp deploy --user $FTP_USER --password $FTP_PASSWORD
+script: 
+  - gulp build
