@@ -1,5 +1,8 @@
 # Design System
 
+<a href="https://travis-ci.org/departement-loire-atlantique/design-system-web">
+<img src="https://travis-ci.org/departement-loire-atlantique/design-system-web.svg?branch=master" />
+</a>
 
 Le design system est divisé en deux parties : la documentation et le framework CSS/JS.
 
@@ -92,6 +95,8 @@ npm version patch
 npm version minor
 npm version major
 ```
+
+A chaque commit dans la branche master, le site est automatiquement mis à jour si la compilation du projet (documentation et framework) sont en succès.
 
 ## License
 
