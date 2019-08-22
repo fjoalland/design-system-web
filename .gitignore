@@ -1,9 +1,8 @@
 _site
 .sass-cache
 .jekyll-metadata
-.DS_Store
-node_modules
-framework/css
-frameword/js/cd44.js
-Gemfile.lock
 .docker/cache
+.DS_Store
+dist
+node_modules
+Gemfile.lock

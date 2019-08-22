@@ -4,7 +4,7 @@
 Le design system est divisé en deux parties : la documentation et le framework CSS/JS.
 
 La documentation s'appuie sur un site Jekyll avec un outillage en Ruby.
-Elle est disponible à cette adresse : https://departement-loire-atlantique.github.io/design-system-web/
+Elle est disponible à cette adresse : https://design.loire-atlantique.fr
 
 Le framework s'appuie sur SCSS avec un outillage en NodeJS.
 
@@ -14,19 +14,19 @@ Récupérer le code du projet : `git clone https://github.com/departement-loire-
 
 ### Contribuer à la documentation
 
-#### Version manuelle
+#### Solution 1 : Installation des outils en local
 
 1. Installer [Ruby](https://www.ruby-lang.org/en/documentation/installation/)
 2. Dans une console : installer Ruby bundler : `gem install bundler`
 3. Dans une console, installer les dépendances : `cd docs && bundle install` (ou `bundle update` pour une mise à jour)
-4. Dans une console, lancer le mode développement : `cd docs && bundle exec jekyll serve --incremental` 
-5. Ouvrir le navigateur à l'addresse `http://localhost:4000/design-system-web/` pour voir le site (mise à jour automatique au fur et à mesure de l'édition des fichiers).
+4. Dans une console, lancer le mode développement : `cd docs && bundle exec jekyll serve --watch` 
+5. Ouvrir le navigateur à l'addresse `http://localhost:4000/` pour voir le site (mise à jour automatique au fur et à mesure de l'édition des fichiers).
 
-#### Version avec Docker
+#### Solution 2 : Utilisation de Docker
 
 1. Installer Docker et [Docker compose](https://docs.docker.com/compose/install/) 
 2. Pour démarrer le projet : `cd .docker && docker-compose up`
-3. Ouvrez un navigateur à l'adresse : `http://localhost:4000/design-system-web/`
+3. Ouvrez un navigateur à l'adresse : `http://localhost:4000/` pour voir le site (mise à jour automatique au fur et à mesure de l'édition des fichiers).
 
 Si le port 4000 est déja utilisé sur votre machine, vous pouvez le modifier en modifiant la ligne `PORT:4000` du fichier `.docker/.env`
 
@@ -58,7 +58,7 @@ Le framework dérive de BootStrap et KNACSS
 
 1. Installer [NodeJS](https://nodejs.org/en/download/)
 2. Dans une console, installer les dépendances du projet : `npm install`
-3. Compiler le projet : `gulp build`
+3. Compiler le projet : `gulp build:ds`
 
 Description de l'arborescence du framework (sous dossier framework) :
 
@@ -70,16 +70,28 @@ Description de l'arborescence du framework (sous dossier framework) :
 * gulpfile.js : Tâches de compilation et de développemnet
 * package.json : Dépendances NodeJS pour les tâches GULP
 
-### Contribuer de manière avancée
+### Contribuer simultanément à la documentation et au framework scss/js
 
-Pour modifier ou ajouter un composant, il est possible d'activer un mode de développement.
-Ce mode permet de recharger automatiquement le navigateur en temps réel suite à toute modification dans la documentation ou le framework. 
+Ce mode permet de recharger automatiquement le navigateur en temps réel suite à toute modification dans la documentation ou le framework.
 
-Simplement lancer `gulp serve` et ouvrir un http://localhost:3000
+Installer les outils conformément aux étapes ci-dessus.
 
-Puis, aller sur le composant ou la page que l'on souhaite modifier.
+Puis simplement lancer `gulp serve` et ouvrir un http://localhost:4000
+
+Puis, aller sur le composant ou la page que l'on souhaite modifier. 
 La mise à jour d'une modification dans le SCSS du framework est immédiate sans rechargement de la page.
-La mise à jour de la documentation ou du gabarit HTML quelques secondes à s'afficher.
+La mise à jour d'un fichier JS du framework est prise en compte en environ 500ms avec rechargement de la page.
+La mise à jour d'un des fichiers de la documentation est prise en compte en 2 à 3 secondes avec rechargement de la page.
+
+### Publier une nouvelle version
+
+Pour créer un tag afin de marquer une nouvelle révision du projet, utiliser simplement les commandes de gestion de version prévue dans npm selon l'importance des modifications réalisée depuis la précédente version :
+
+```bash
+npm version patch
+npm version minor
+npm version major
+```
 
 ## License
 
