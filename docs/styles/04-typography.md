@@ -9,7 +9,7 @@ description: Les différents style de texte sont utiles pour organiser et hiéra
 
 Cette page décrit les différentes polices et taille de police utilisées.
 
-Les polices apporte clairement une valeur identifiable pour l'internaute afin de ne pas alourdir les pages sans valeur ajouté.
+La taille de la police s'adapte automatiquement en fonction de la résolution de l'écran.
 
 ## Titres
 
@@ -22,4 +22,3 @@ Les polices apporte clairement une valeur identifiable pour l'internaute afin de
 ## Listes
 
 {% include pattern-live-preview.html pattern_path="_variations/typography/lists.html" %}
-

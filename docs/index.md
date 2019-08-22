@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Design System
-description: Ce site présente le Design System du Département de Loire-Atlantique.
+description: Ce site présente le Design System du Département de Loire-Atlantique. Les sources de ce site sont sur [GitHub](https://github.com/departement-loire-atlantique/design-system-web)
 ---
 
 ## Attention - Travail en cours
