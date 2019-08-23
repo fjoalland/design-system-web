@@ -2,7 +2,7 @@
   url: /
 
 - title: Philosophie
-  group: guidelines
+  group: philosophy
 
 - title: Styles web
   group: styles
@@ -14,4 +14,4 @@
   group: components
 
 - title: Historique
-  url: /changes/
+  url: /historique/

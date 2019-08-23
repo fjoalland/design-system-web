@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Historique
-permalink: /changes/
+permalink: /historique/
 description: Liste des changements
 ---
 

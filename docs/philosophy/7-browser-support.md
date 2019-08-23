@@ -2,8 +2,8 @@
 layout: page
 type: detail
 title: Support navigateurs
-group: guidelines
-permalink: /exigences/browsers.html
+group: philosophy
+permalink: /philosophie/navigateurs.html
 description: Niveau de support des différents navigateurs web
 ---
 
@@ -22,7 +22,7 @@ Au 29 mars 2019, ces navigateurs représentait plus de 75% du trafic des sites d
 Ce design system entrant en production à partir de mars 2020, ce sera alors plus de 90% du trafic des sites.
 
 Liste des navigateurs de second plan :
-* Edge 11+
+* Edge 17+
 
 Au 29 mars 2019, ces navigateurs représentait environ 5% du trafic des sites du Département.
 
@@ -43,3 +43,11 @@ Les pages intégrent toujours la mention suivante dans la balise **HEAD** :
 ```html
 <meta name="viewport" content="initial-scale=1.0, width=device-width, shrink-to-fit=no">
 ```
+
+## Compatibilité navigateurs web
+
+L'implémentation web du design system repose uniquement sur des balises et propriété HTML5, les fonctions JS et les propriétés CSS supportées nativement par tous les navigateurs ciblés comme "de premier plan" dans le chapitre "Navigateurs" de cette section.  
+
+Aucune technique permettant d'implémenter dans un navigateur ce qui est manquant n'est employée (pas de "Shims, "Shivs" ou 'Polyfills" par exemple) afin de favoriser la performance du système, son accessibilité et sa pérennité.
+
+Enfin, l'utilisation des éléments non supportés par les navigateurs "de second plan" est mise en oeuvre de sorte à ne pas empêcher la navigation sur le site, même si l'expérience est susceptible d'être dégradée.

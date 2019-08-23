@@ -2,8 +2,8 @@
 layout: page
 type: detail
 title: Microdonnées
-group: guidelines
-permalink: /exigences/microdata.html
+group: philosophy
+permalink: /philosophie/microdata.html
 description: L'utilisation de microdonnées dans les composants permet aux moteurs de recherche et autres indexeurs de mieux comprendre le contenu des pages
 ---
 
@@ -48,5 +48,3 @@ Le protocole Open Graph est utilisé sur les gabarits de page afin de permettre 
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="@loireatlantique" />
 ```
-
-## 

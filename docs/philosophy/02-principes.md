@@ -1,8 +1,8 @@
 ---
 layout: page
 title: Principes fondateurs
-group: guidelines
-permalink: /exigences/principes.html
+group: philosophy
+permalink: /philosophie/principes.html
 description: Les principes fondateurs suivants sont à la base de la construction de chaque élément de ce design system
 ---
 
@@ -12,7 +12,7 @@ Chaque composant ou élément de style contribue positivement au système géné
 
 Les composants qui intègrent le design system ont une existance pérènne et sous voués à être réutilisés.
 
-Ils sont donc essentiels et traités avec le même niveau d'exigence.
+Ils sont donc tous essentiels et traités avec le même niveau d'exigence.
 
 ## Inclusif
 

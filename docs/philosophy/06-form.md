@@ -1,8 +1,8 @@
 ---
 layout: page
 title: Formulaires
-group: guidelines
-permalink: /exigences/formulaire.html
+group: philosophy
+permalink: /philosophie/formulaire.html
 description: Exigences générales autour des formulaires en ligne
 
 ---
