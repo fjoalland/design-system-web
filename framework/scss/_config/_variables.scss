@@ -18,9 +18,9 @@ $cd44-max-size  : 85.375em !default; // 1366px
 // ----------
 
 // Font families
-$font-family-base      : Muli, sans-serif !default;             // texts standard font
-$font-family-headings  : "Blogger Sans", sans-serif !default;   // font for h1, h2.. h6
-$font-family-monospace : consolas, courier, monospace !default; // font for code and samples
+$font-family-base      : Muli, sans-serif;             // texts standard font
+$font-family-headings  : "Blogger Sans", sans-serif;   // font for h1, h2.. h6
+$font-family-monospace : consolas, courier, monospace; // font for code and samples
 
 // Font sizes (1.6rem value is "16px" equivalent)
 $font-size-base : 1.5rem !default;
