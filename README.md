@@ -60,7 +60,7 @@ Pour chaque composant du design system :
 Le framework dérive de BootStrap et KNACSS
 
 1. Installer [NodeJS](https://nodejs.org/en/download/)
-2. Dans une console, installer les dépendances du projet : `npm install`
+2. Dans une console, installer les dépendances du projet : `npm install && npm install -g gulp`
 3. Compiler le projet : `gulp build:ds`
 
 Description de l'arborescence du framework (sous dossier framework) :
