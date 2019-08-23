@@ -1,10 +1,12 @@
 version: '3'
 services:
   site:
-    command: jekyll serve --force_polling --watch --incremental
-    image: jekyll/jekyll:latest
+    command: gulp serve
+    # Use on etime "npm rebuild node-sass --force" if you have an error 
+    # or npm install about linux version of node-sass
+    build: .
     volumes:
-      - ./../docs:/srv/jekyll
+      - ./..:/app
       - ./cache/bundle:/usr/local/bundle
     ports:
       - ${PORT}:4000

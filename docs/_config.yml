@@ -3,6 +3,7 @@ title: Design System Web
 author: Département de Loire Atlantique
 email: contact@loire-atlantique.fr
 url: "https://design.loire-atlantique.fr/"
+encoding: utf-8
 
 # Build settings
 destination: ../dist

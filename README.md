@@ -17,23 +17,13 @@ Récupérer le code du projet : `git clone https://github.com/departement-loire-
 
 ### Contribuer à la documentation
 
-#### Solution 1 : Installation des outils en local
-
 1. Installer [Ruby](https://www.ruby-lang.org/en/documentation/installation/)
 2. Dans une console : installer Ruby bundler : `gem install bundler`
 3. Dans une console, installer les dépendances : `cd docs && bundle install` (ou `bundle update` pour une mise à jour)
 4. Dans une console, lancer le mode développement : `cd docs && bundle exec jekyll serve --watch` 
 5. Ouvrir le navigateur à l'addresse `http://localhost:4000/` pour voir le site (mise à jour automatique au fur et à mesure de l'édition des fichiers).
 
-#### Solution 2 : Utilisation de Docker
-
-1. Installer Docker et [Docker compose](https://docs.docker.com/compose/install/) 
-2. Pour démarrer le projet : `cd .docker && docker-compose up`
-3. Ouvrez un navigateur à l'adresse : `http://localhost:4000/` pour voir le site (mise à jour automatique au fur et à mesure de l'édition des fichiers).
-
-Si le port 4000 est déja utilisé sur votre machine, vous pouvez le modifier en modifiant la ligne `PORT:4000` du fichier `.docker/.env`
-
-#### Description de l'arborescence de la documentation (sous dossier docs) :
+Description de l'arborescence de la documentation (sous dossier docs) :
 
 * \_data/locale.yml : Fichier de traduction pour les templates
 * \_data/primary_nav.yml : Arborescence du menu
@@ -41,7 +31,7 @@ Si le port 4000 est déja utilisé sur votre machine, vous pouvez le modifier en
 * \_layout : Gabarits des différents types de page
 * \_post : Un fichier par billet (Partie historique du site)
 * \_sass : Librairies SCSS du site de documentation
-* guidelines : Pages du menu "Philosophie"
+* philosophy : Pages du menu "Philosophie"
 * styles : Pages du menu "Styles web"
 * utilities : Pages du menu "Modificateurs style web"
 * assets : Dossier contenant les images, js, ... lié au site de documentation
@@ -77,14 +67,27 @@ Description de l'arborescence du framework (sous dossier framework) :
 
 Ce mode permet de recharger automatiquement le navigateur en temps réel suite à toute modification dans la documentation ou le framework.
 
+Aller sur le composant ou la page que l'on souhaite modifier. 
+La mise à jour d'une modification dans le SCSS du framework est immédiate sans rechargement de la page.
+La mise à jour d'un fichier JS du framework est prise en compte en environ 500ms avec rechargement de la page.
+La mise à jour d'un des fichiers de la documentation est prise en compte en 2 à 3 secondes avec rechargement de la page.
+
+#### Solution 1 : Outil en local
+
 Installer les outils conformément aux étapes ci-dessus.
 
 Puis simplement lancer `gulp serve` et ouvrir un http://localhost:4000
 
-Puis, aller sur le composant ou la page que l'on souhaite modifier. 
-La mise à jour d'une modification dans le SCSS du framework est immédiate sans rechargement de la page.
-La mise à jour d'un fichier JS du framework est prise en compte en environ 500ms avec rechargement de la page.
-La mise à jour d'un des fichiers de la documentation est prise en compte en 2 à 3 secondes avec rechargement de la page.
+
+#### Solution 2 : Utilisation de Docker
+
+1. Installer Docker et [Docker compose](https://docs.docker.com/compose/install/) 
+2. Pour démarrer le projet : `cd .docker && docker-compose up`
+3. Ouvrez un navigateur à l'adresse : `http://localhost:4000/` pour voir le site (mise à jour automatique au fur et à mesure de l'édition des fichiers).
+
+Si le port 4000 est déja utilisé sur votre machine, vous pouvez le modifier en modifiant la ligne `PORT:4000` du fichier `.docker/.env`
+
+
 
 ### Publier une nouvelle version
 

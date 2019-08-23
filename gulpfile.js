@@ -118,16 +118,16 @@ gulp.task('serve', gulp.series('build', function() {
     open: false       // do not open the browser (annoying)
   });
 
-  gulp.watch('docs/**/*', gulp.series('build:jekyll:fast', function(done) {
+  gulp.watch('docs/**/*', {interval: 500, usePolling: true}, gulp.series('build:jekyll:fast', function(done) {
     browserSync.reload(); 
     done();
   }));
 
   // Watch framework .scss files
-  gulp.watch(['framework/scss/**/*.scss'], gulp.series('build:css:cd44:dev'));
+  gulp.watch(['framework/scss/**/*.scss'], {interval: 500, usePolling: true}, gulp.series('build:css:cd44:dev'));
 
   // Watch framework .js files
-  gulp.watch('framework/js/**/*.js', gulp.series('build:js', function(done) {
+  gulp.watch('framework/js/**/*.js', {interval: 500, usePolling: true}, gulp.series('build:js', function(done) {
     browserSync.reload(); 
     done();
   }));
