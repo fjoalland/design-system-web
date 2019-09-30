@@ -1,0 +1,47 @@
+// Card common styles
+
+.ds44-card {
+    background-color: $ds44-lightgray;
+    transition-duration: $ds44-timing-standard;
+    transition-property: box-shadow, transform;
+    transition-timing-function: ease;
+
+    &:focus,
+    &:hover,
+    &:active { // JVI REM :il manque la gestion de la flèche qui doit apparaître au survol (en attente de la webfont de Julien R.)
+        box-shadow: 0px 13px 20px 0px rgba(0,0,0,0.35);
+        transform: scale(1.01); 
+    }
+}
+.ds44-card--verticalPicture {
+    background-color: $ds44-lightgray;
+}
+.ds44-card__section {
+    padding:  $ds44-padding-small $ds44-padding-box;
+}
+.ds44-card__globalLink { 
+    text-decoration: none;
+    color: #000000;
+    
+    &:focus,
+    &:hover,
+    &:active {
+        text-decoration: none;
+    }
+}
+.ds44-card__title {
+    margin: $headings-margin-bottom 0;
+    padding: 0;
+    font-size: 1.0625em; // 17px
+    font-weight: bold;
+}
+.ds44-card__file {
+    @include ds44-font-sizes(smallText);
+    color: $ds44-gray;
+}
+
+// Horizontal card specific styles
+
+.ds44-card__section--horizontal {
+    padding:  $ds44-padding-small $ds44-padding-base;
+}

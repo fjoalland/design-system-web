@@ -33,122 +33,137 @@ html {
 
 body {
   margin: 0;
-  @include font-size(base);
-  background-color: $background-base;
-  color: $color-base;
-  font-family: $font-family-base;
-  line-height: $line-height-base;
+  @include ds44-font-sizes(base);
+  background-color: $ds44-background-base;
+  color: $ds44-color-base;
+  font-family: $ds44-font-family-base;
+  line-height: $ds44-line-height-base;
 }
 
 /* Main structure */
 
-.cd44-container-fluid {
-  padding: 0 $cd44-container-hmargin;
+.ds44-container-fluid {
+  padding: 0 $ds44-container-hmargin;
 }
-.cd44-inner-container {
-  margin: $cd44-container-vmargin;
+.ds44-inner-container {
+  margin: 0 auto;
+  padding: $ds44-container-vmargin $ds44-container-hmargin;
+  max-width:$ds44-max-size;
 }
-
-/* xx-large screens */
-/* ---------------- */
-
-@media (min-width: ($cd44-max-size+$cd44-container-hmargin) ) { // larger viewport + margin
-
-  /* layout for high resolution
-     when viewport is too large, limits size of the inner container and centers content
-     */
-
-  .cd44-inner-container {
-    width: $cd44-max-size;
-    margin: 0 auto;
-  }
-
+.ds44-alternate-container {
+  background-color: $ds44-light-bg;
 }
 
 /* Links */
 a {
-  color: $link-color;
-  text-decoration: $link-decoration;
+  color: $ds44-link-color;
+  text-decoration: $ds44-link-decoration;
   transition: color .4s ease-out;
 
   &:focus,
   &:hover,
   &:active {
-    color: $link-color-hover;
-    text-decoration: $link-decoration-hover;
+    color: $ds44-link-color-hover;
+    text-decoration: $ds44-link-decoration-hover;
   }
 }
 
 /* Headings */
 h1, .h1-like {
-  @include font-size(h1);
-  @if variable_exists(font-family-headings) and $font-family-headings != $font-family-base{
-    font-family: $font-family-headings;
+  @include ds44-font-sizes(h1);
+  @if variable_exists(ds44-font-family-headings) and $ds44-font-family-headings != $ds44-font-family-base{
+    font-family: $ds44-font-family-headings;
   }
   font-weight: $weight-medium;
 }
 
 h2, .h2-like {
-  @include font-size(h2);
-  @if variable_exists(font-family-headings) and $font-family-headings != $font-family-base{
-    font-family: $font-family-headings;
+  @include ds44-font-sizes(h2);
+  @if variable_exists(ds44-font-family-headings) and $ds44-font-family-headings != $ds44-font-family-base{
+    font-family: $ds44-font-family-headings;
   }
   font-weight: $weight-bold;
   padding: 0 1.5rem;
+  line-height: 1.2;
   display: inline-block;
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#ffffff+40,99e6d1+40,99e6d1+65,ffffff+65 */
-  background: rgb(255,255,255); /* Old browsers */
-  background: -moz-linear-gradient(top,  rgba(255,255,255,1) 40%, rgba(153,230,209,1) 40%, rgba(153,230,209,1) 65%, rgba(255,255,255,1) 65%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 40%,rgba(153,230,209,1) 40%,rgba(153,230,209,1) 65%,rgba(255,255,255,1) 65%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom,  rgba(255,255,255,1) 40%,rgba(153,230,209,1) 40%,rgba(153,230,209,1) 65%,rgba(255,255,255,1) 65%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+  background: $ds44-contextual-color; /* Old browsers */
+  background: linear-gradient(to bottom, rgba(255,255,255,1) 55%,$ds44-contextual-color 55%);
 }
 
 h3, .h3-like {
-  @include font-size(h3);
-  @if variable_exists(font-family-headings) and $font-family-headings != $font-family-base{
-    font-family: $font-family-headings;
+  @include ds44-font-sizes(h3);
+  @if variable_exists(ds44-font-family-headings) and $ds44-font-family-headings != $ds44-font-family-base{
+    font-family: $ds44-font-family-headings;
   }
   background: transparent;
   font-weight: $weight-bold;
 }
 
 h4, .h4-like {
-  @include font-size(h4);
-  @if variable_exists(font-family-headings) and $font-family-headings != $font-family-base{
-    font-family: $font-family-headings;
+  @include ds44-font-sizes(h4);
+  @if variable_exists(ds44-font-family-headings) and $ds44-font-family-headings != $ds44-font-family-base{
+    font-family: $ds44-font-family-headings;
   }
   background: transparent;
   font-weight: $weight-medium;
 }
 
 h5, .h5-like {
-  @include font-size(h5);
-  @if variable_exists(font-family-headings) and $font-family-headings != $font-family-base{
-    font-family: $font-family-headings;
+  @include ds44-font-sizes(h5);
+  @if variable_exists(ds44-font-family-headings) and $ds44-font-family-headings != $ds44-font-family-base{
+    font-family: $ds44-font-family-headings;
   }
   background: transparent;
   font-weight: $weight-medium;
 }
 
 h6, .h6-like {
-  @include font-size(h6);
-  @if variable_exists(font-family-headings) and $font-family-headings != $font-family-base{
-    font-family: $font-family-headings;
+  @include ds44-font-sizes(h6);
+  @if variable_exists(ds44-font-family-headings) and $ds44-font-family-headings != $ds44-font-family-base{
+    font-family: $ds44-font-family-headings;
   }
   background: transparent;
   font-weight: $weight-medium;
 }
 
+.ds44-smallText {
+  @include ds44-font-sizes(smallText);
+}
+
+.ds44-titleContainer {
+  position: absolute;
+  bottom: 0;
+  z-index: 10;
+  padding: $ds44-padding-base;
+  width: 100%;
+  box-sizing: border-box;
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 50%,rgba(0,0,0,1) 100%);
+  background-size: cover;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.ds44-introduction, .ds44-introduction-like {
+  @include font-size(h6);
+  @if variable_exists(font-family-headings) and $font-family-headings != $font-family-base{
+    font-family: $font-family-headings;
+  }
+  background: transparent;
+  font-weight: $weight-bold;
+}
+
 /* Texts */
 
-.chapo {
-  font-weight: 700;
-  font-size: 1.7rem; // 17px
+.ds44-text--colorInvert {
+  color: $ds44-light-color;
 }
+
 figcaption {
   font-size: 1.4rem;
-  color: $color-soft-text;
+  color: $ds44-color-soft-text;
 }
 
 /* Vertical rythm */
@@ -170,7 +185,7 @@ ul,
 dl,
 blockquote {
   margin-top: 0;
-  margin-bottom: $paragraph-margin-bottom;
+  margin-bottom: $ds44-paragraph-margin-bottom;
 }
 
 /* Avoid margins on nested elements */
@@ -184,9 +199,10 @@ ul ul {
   margin-bottom: 0;
 }
 
-/* Remove bullets for lists */
+/* Remove bullets and padding for lists */
 ol, ul {
   list-style: none;
+  padding-left: 0;
 }
 
 /* Max values */
@@ -206,10 +222,6 @@ img {
 }
 
 /* Styling elements */
-ul,
-ol {
-  padding-left: 2em;
-}
 
 img {
   vertical-align: middle;
@@ -284,4 +296,36 @@ blockquote,
 figure {
   margin-left: 0;
   margin-right: 0;
+}
+
+
+/* --------------
+  --- DS44 specific utilities 
+  --- */
+
+.ds44-darkContext {
+  background-color: $ds44-color-inverse!important;
+}
+
+/* Thematic colors */
+
+.ds44-theme--LA {
+  background-color: $ds44-LA-color;
+}
+.ds44-theme--Agenda {
+  background-color: $ds44-Agenda-color;
+}
+
+/* Flex utils */
+
+.ds44-flex-container {
+  display: flex;
+  flex-direction: row;
+}
+.ds44-flex-container--column {
+  display: flex;
+  flex-direction: column;
+}
+.ds44-flex-align-center {  
+  align-items: center;
 }

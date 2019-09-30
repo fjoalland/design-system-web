@@ -1,0 +1,68 @@
+/*
+* CD44 Design System - Buttons
+*/
+  
+
+[type="button"],
+button {
+    display: inline-block;
+    cursor: pointer;
+    user-select: none;
+    transition: all ease-in-out $ds44-timing-faster;
+    vertical-align: middle;
+    text-decoration: none;
+    border: none;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: 1;
+
+    &:focus {
+        -webkit-tap-highlight-color: transparent;
+    }
+}
+
+.ds44-btnStd {
+    @include ds44-font-sizes(bodySize);
+    padding: $ds44-padding-box;
+    border-radius: $ds44-border-radius;
+    border: 1px solid $ds44-dark;
+    font-weight: bold;
+    background-color: $ds44-light-color;
+    
+    &:focus,
+    &:hover,
+    &:active {
+        box-shadow: 0px 13px 20px 0px rgba(0,0,0,0.35);
+        transform: scale(1.01); 
+        border: 1px solid $ds44-darkgray;
+    }
+}
+
+.ds44-btnStd--large {
+    padding: $ds44-padding-large;
+}
+
+.ds44-btn--invert {
+    background-color: $ds44-background-dark;
+    color: $ds44-color-inverse;
+
+    &:focus,
+    &:hover,
+    &:active {
+        background-color: $ds44-hover-dark;
+    }
+}
+
+.ds44-btnStd--contextual {
+    background-color: $ds44-contextual-color;
+
+    &:focus,
+    &:hover,
+    &:active {
+        background-color: $ds44-contextual-hover;
+    }
+}
+
+
+/* Icon buttons */
+

@@ -5,12 +5,12 @@
 // ----------------
 
 // Best practice is Mobile First: (min-width: $breakpoint)
-$tiny           : 30em !default;     // 480px
-$small          : 36em !default;     // 576px
-$medium         : 48em !default;     // 768px
-$large          : 62em !default;     // 992px
-$extra-large    : 75em !default;     // 1200px
-$cd44-max-size  : 85.375em !default; // 1366px
+$ds44-tiny           : 30em !default;     // 480px
+$ds44-small          : 36em !default;     // 576px
+$ds44-medium         : 48em !default;     // 768px
+$ds44-large          : 62em !default;     // 992px
+$ds44-extra-large    : 75em !default;     // 1200px
+$ds44-max-size       : 85.375em !default; // 1366px
 
 
 // ----------
@@ -18,147 +18,108 @@ $cd44-max-size  : 85.375em !default; // 1366px
 // ----------
 
 // Font families
-$font-family-base      : Muli, sans-serif;             // texts standard font
-$font-family-headings  : "Blogger Sans", sans-serif;   // font for h1, h2.. h6
-$font-family-monospace : consolas, courier, monospace; // font for code and samples
+$ds44-font-family-base      : Muli, sans-serif;             // texts standard font
+$ds44-font-family-headings  : "Blogger Sans", sans-serif;   // font for h1, h2.. h6
+$ds44-font-family-monospace : consolas, courier, monospace; // font for code and samples
 
-// Font sizes (1.6rem value is "16px" equivalent)
-$font-size-base : 1.5rem !default;
+// Font sizes (1rem value is "10px" equivalent)
+$ds44-font-size-base : 1.6em !default;
 
-$font-sizes: (
+$ds44-font-sizes: (
   base: (
-    mobile  : 1.4rem,
-    desktop : $font-size-base
+    mobile  : 1.5em,                // 15px
+    desktop : $ds44-font-size-base  // 16px
   ),
   h1: (
-    mobile  : 3.4rem,
-    desktop : 6rem
+    mobile  : 2.666666667em,  // 34px
+    desktop : 3.75em          // 60px
   ),
   h2: (
-    mobile  : 2.8rem,
-    desktop : 3.8rem
+    mobile  : 1.8666666667em, // 28px
+    desktop : 2.375em         // 38px
   ),
   h3: (
-    mobile  : 2.1rem,
-    desktop : 2.8rem
+    mobile  : 1.4em,          // 21px
+    desktop : 1.75em          // 28px
   ),
   h4: (
-    mobile  : 1.9rem,
-    desktop : 2.4rem
+    mobile  : 1.2666666667em, // 19px
+    desktop : 1.5em           // 24px
   ),
   h5: (
-    mobile  : 1.8rem,
-    desktop : 2rem
+    mobile  : 1.2em,          // 18px
+    desktop : 1.25em          // 20px
   ),
   h6: (
-    mobile  : 1.7rem,
-    desktop : 1.8rem
+    mobile  : 1.1333333333em, // 17px
+    desktop : 1.0625em        // 17px
+  ),
+  smallText: (
+    mobile  : .8em,           // 12px
+    desktop : .875em          // 14px
+  ),
+  bodySize: (
+    mobile  : 1em,            // 15px
+    desktop : 1em             // 16px
   )
 ) !default;
 
 // Line heights
-$line-height-xs   : 1 !default;
-$line-height-s    : 1.2 !default;
-$line-height-base : 1.5 !default;
-$line-height-l    : 1.7 !default;
+$ds44-line-height-base : 1.4 !default;
 
-// Font weights
-$weight-regular : normal !default;
-$weight-medium  : 500 !default;
-$weight-bold    : bold !default;
 
-// Activate hyphenation on small screens
-$hyphens: false !default;
+// Margins & paddings
 
-// ------------
-// Spacing zone
-// ------------
+$ds44-margin-bottom-base      : 3rem !default;
+$ds44-container-vmargin       : $ds44-margin-bottom-base *5 !default;
+$ds44-paragraph-margin-bottom : $ds44-margin-bottom-base /6 !default;
+$ds44-components-vmargin      : $ds44-margin-bottom-base *3 !default;
+$ds44-small-vmargin           : $ds44-margin-bottom-base /3 !default;
+$ds44-medium-vmargin          : $ds44-margin-bottom-base /2 !default;
 
-// Default margin-bottom
-$margin-bottom-base       : 1rem !default;
-$headings-margin-bottom   : $margin-bottom-base /2 !default;
-$paragraph-margin-bottom  : $margin-bottom-base !default;
-$cd44-container-vmargin   : $margin-bottom-base *5 !default;
+$ds44-container-hmargin       : 5.5% !default;
+$ds44-portlet-vmargins        : 3rem !default;
 
-$cd44-container-hmargin  : 3.875em !default; // 62px for main container horizontal margins
-$cd44-portlet-vmargins   : 3rem !default;
-$spacer-tiny             : .5rem  !default;
-$spacer-tiny-plus        : .7rem !default;
-$spacer-small            : 1rem !default;
-$spacer-small-plus       : 1.5rem !default;
-$spacer-medium           : 2rem !default;
-$spacer-medium-plus      : 3rem !default;
-$spacer-large            : 4rem !default;
-$spacer-large-plus       : 6rem !default;
-$spacer-extra-large      : 8rem !default;
-$spacer-extra-large-plus : 12rem !default;
-$spacer-ultra-large      : 16rem !default;
-$spacer-ultra-large-plus : 20rem !default;
+$ds44-spacer-std              : 3rem !default;
+$ds44-padding-base            : 1rem !default;
+$ds44-padding-small           : $ds44-padding-base /2 !default;
+$ds44-padding-medium          : $ds44-padding-base !default;
+$ds44-padding-box             : $ds44-padding-base *1.5 !default;
+$ds44-padding-large           : $ds44-padding-base *2 !default;
+$ds44-padding-xlarge          : $ds44-padding-base *3 !default;
 
 
 // ----------
 // Color zone
 // ----------
 
-// Color names
-$white                  : #fff !default;
-$cd44-gray              : #666 !default;
-$cd44-lightgray         : #F5F5F5 !default;
-$cd44-iceblue           : #99E6D1 !default;
-$cd44-yellow            : #FFD883 !default;
-$cd44-flat-overlay      : rgba(0, 0, 0, 0.4) !default;
-$black                  : #000 !default;
-.cd44-overlay { // JVI REM : need to find how to embed this gradient in a variable SASS
-  /* Permalink to edit this gradient: https://colorzilla.com/gradient-editor/#ffffff+33,ffffff+33,000000+77&0+33,0.8+77,0.8+77 */
-  background: -moz-linear-gradient(top, rgba(255,255,255,0) 33%, rgba(0,0,0,0.8) 77%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, rgba(255,255,255,0) 33%,rgba(0,0,0,0.8) 77%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, rgba(255,255,255,0) 33%,rgba(0,0,0,0.8) 77%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#cc000000',GradientType=0 ); /* IE6-9 */ 
-}
-
-// Knacss colors
-// JVI REM : need to be adapted or erased if no need of KNACSS buttons
-$blue-300   : #5BC0DE !default;
-$blue-500   : #0275D8 !default;
-$green-500  : #5CB85C !default;
-$orange-500 : #F0AD4E !default;
-$red-500    : #D9534F !default;
-
-// Gray scale colors
-// JVI REM : need to be adapted or erased if no need
-
-$gray-100 : #f8f9fa !default;
-$gray-200 : #e7e9ed !default;
-$gray-300 : #dee2e6 !default;
-$gray-400 : #ced4da !default;
-$gray-500 : #acb3c2 !default;
-$gray-600 : #727e96 !default;
-$gray-700 : #454d5d !default;
-$gray-800 : #333 !default;
-$gray-900 : #212529 !default;
+$ds44-light             : #FFF !default;
+$ds44-dark              : #000 !default;
+$ds44-gray              : #666 !default;
+$ds44-lightgray         : #F5F5F5 !default;
+$ds44-darkgray          : #333 !default;
+$ds44-LA                : #99E6D1 !default;
+$ds44-Agenda            : #FFD883 !default;
+$ds44-flat-overlay      : rgba(0, 0, 0, 0.4) !default;
 
 // Semantic colors
-$color-inverse            : $white !default;          // for CD44 texts over dark backgrounds
-$color-dark-text          : $black !default;          // for CD44 standard texts over light backgrounds
-$color-soft-text          : $cd44-gray !default;      // for CD44 light texts (legends, captions etc.)
-$cd44-mid-color           : $cd44-iceblue !default;   // for CD44 cold colored elements
-$cd44-light-color         : $cd44-yellow !default;    // for CD44 light colored elements
-$cd44-light-bg            : $cd44-lightgray !default; // for CD44 light backgrounds
+$ds44-color-base        : $ds44-dark !default;
+$ds44-color-inverse     : $ds44-light !default;     // for CD44 texts over dark backgrounds
+$ds44-color-dark-text   : $ds44-dark !default;      // for CD44 standard texts over light backgrounds
+$ds44-color-soft-text   : $ds44-gray !default;      // for CD44 light texts (legends, captions etc.)
+$ds44-LA-color          : $ds44-LA !default;        // for CD44 colored elements
+$ds44-Agenda-color      : $ds44-Agenda !default;    // for CD44 agenda website
+$ds44-light-color       : $ds44-light !default;     // for CD44 light colored elements
+$ds44-forms-color       : $ds44-gray !default;
+$ds44-graytext-color    : $ds44-darkgray !default;
 
-$color-muted              : $gray-200 !default;       // Knacss colors for buttons (to be adapted later)
-$color-brand              : $green-500 !default;
-$color-primary            : $blue-500 !default;
-$color-success            : $green-500 !default;
-$color-info               : $blue-300 !default;
-$color-warning            : $orange-500 !default;
-$color-danger             : $red-500 !default;
-$color-inverse            : $gray-800 !default;
-$color-ghost              : transparent !default;
+$ds44-background-base   : $ds44-light !default;
+$ds44-background-dark   : $ds44-dark !default;
+$ds44-light-bg          : $ds44-lightgray !default; // for CD44 light backgrounds
 
-$color-base      : $black !default;
-$background-base : $white !default;
-
-$forms-color     : $cd44-gray !default;
+$ds44-hover-dark        : transparentize(rgba($ds44-background-dark, 1), 0.25) !default;
+$ds44-hover-LA          : transparentize(rgba($ds44-LA, 1), 0.25) !default;    
+$ds44-hover-Agenda      : transparentize(rgba($ds44-Agenda, 1), 0.25) !default; 
 
 
 // ---------------
@@ -166,36 +127,23 @@ $forms-color     : $cd44-gray !default;
 // ---------------
 
 // Component: links
-$link-color                 : $black !default;
-$link-color-hover           : /*darken($link-color, 15%) !default;*/ $link-color !default;
-$link-decoration            : underline !default;
-$link-decoration-hover      : none !default;
-$link-list-decoration       : none !default; // used for menus or link groups
-$link-list-decoration-hover : none !default; // used for menus or link groups
+$ds44-link-color                 : $ds44-dark !default;
+$ds44-link-color-hover           : /*darken($link-color, 15%) !default;*/ $ds44-link-color !default;
+$ds44-link-decoration            : underline !default;
+$ds44-link-decoration-hover      : none !default;
+$ds44-link-list-decoration       : none !default; // used for menus or link groups
+$ds44-link-list-decoration-hover : none !default; // used for menus or link groups
 
 // Global border-radius
-$border-radius: 0 !default;
+$ds44-border-radius: 3px !default;
 
-// Component: quotes
-$quote-color     : $gray-200 !default;
+// ---------------
+// Animation zone
+// ---------------
 
-
-// Components: buttons, badges, alerts color variants list
-// Convention is: name - background-color - color - border
-$variants-list: (
-  (primary,    $color-primary,    $white,    none),
-  (success,    $color-success,    $white,    none),
-  (info,       $color-info,       $black,    none),
-  (warning,    $color-warning,    $black,    none),
-  (danger,     $color-danger,     $white,    none),
-  (inverse,    $color-inverse,    $white,    none),
-  (ghost,      $color-ghost,      $white,    0 0 0 1px $white inset)
-) !default;
-
-// Component: nav burger button
-$burger-color             : $gray-800 !default;
-$burger-background        : transparent !default;
-$burger-hover-background  : transparent !default;
-$burger-size              : 2.6rem !default;
-$burger-weight            : 5px !default; // size of stripes
-$burger-padding           : 0 !default;
+$ds44-timing-standard : 0.25s !default;
+$ds44-timing-slower   : 0.35s !default;
+$ds44-timing-x2       : 0.5s !default;
+$ds44-timing-x3       : 0.75s !default;
+$ds44-timing-x4       : 1s !default;
+$ds44-timing-faster   : 0.15s !default;

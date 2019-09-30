@@ -2,26 +2,22 @@
 layout: component-detail
 group: components
 
-title: Cards
-alternative_title: Panel
-description: Bootstrap’s cards provide a flexible and extensible content container with multiple variants and options.
+title: Tuiles
+alternative_title: Cards
+description: Une tuile propose un groupement de contenus cliquables menant à un contenu détaillé. Il s'agit d'un lien hypertexte graphique et multi-contenu.
 
 variations:
-- title: Image card
-  description: Class `.card-img-top` places an image to the top of the card. With `.card-text`, text can be added to the card. Text within `.card-text` can also be styled with the standard HTML tags.
-  pattern: cards/card-image.html
-- title: Agenda card
-  description: Agenda
-  pattern: cards/card-agenda.html
-- title: Text card
-  description: Card titles are used by adding `.card-title` to a \<h\*\> tag. In the same way, links are added and placed next to each other by adding `.card-link` to an \<a\> tag. Subtitles are used by adding a `.card-subtitle` to a \<h\*\> tag. If the `.card-title` and the `.card-subtitle` items are placed in a `.card-body` item, the card title and subtitle are aligned nicely.
-  pattern: cards/card-text.html
-- title: Header and footer
-  description: Add an optional header and/or footer within a card.
-  pattern: cards/card-header-footer.html
-- title: Aide
-  description: Vue liste des aides
-  pattern: cards/card-help.html
+- title: Tuile verticale avec image
+  description: La classe `.ds44-card--verticalPicture` définit une tuile verticale prévue pour recevoir une image en en-tête.
+  pattern: cards/card--verticalPicture.html
+
+- title: Tuile sur fond sombre
+  description: Pour adapter une tuile sur un fond gris ou sombre, ajouter la classe `.ds44-darkContext` pour modifier le background de la tuile.
+  pattern: cards/card--verticalPicture--darkContext.html
+
+- title: Tuile horizontale
+  description: Ce type de tuile est défini par la classe `.ds44-card--horizontal`. Elle présente (en général) une image sur la gauche et un contenu à droite.
+  pattern: cards/card--horizontal.html
 ---
 
 ## Usage
@@ -30,7 +26,8 @@ Lorem ipsum
 
 ## Documentation
 
-Lorem ipsum
+La classe `.ds44-card` donne le contexte de tuile à la section.
+Dans le cadre de la charte du site Loire-Atlantique, les tuiles placées dans des contextes sombres ou gris doivent recevoir la classe `.ds44-darkContext` à côté de la classe `.card` afin d'adapter leur couleur de fond.
 
 ## FAQ
 

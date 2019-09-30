@@ -2,10 +2,33 @@
 layout: component-detail
 group: components
 
-title: Form
-description: Rules for form usage inheried from [Carbon Design System](http://carbondesignsystem.com/components/form/usage)
+title: Formulaires
+description: 
 
+variations:
+- title: Champ standard
+  description: 
+  pattern: forms/form--input-std.html
+- title: Champ large
+  description: Champ élargi
+  pattern: forms/form--input-large.html
+- title: Champ avec label extérieur
+  description: Type de champ comprenant un label au-dessus et un placeholder à l'intérieur
+  pattern: forms/form--input-externalLabel.html
 ---
+
+## Usage
+
+Les champs de formulaire peuvent être soit obligatoires soit optionnels. S'ils sont obligatoires, placer l'attribut `required` dans la balise `input`.
+Ajouter l'attribut `disabled` si le champ n'est pas saisissable mais doit rester visible.
+
+### Note d'intégration
+
+Pour l'instant, le système de déplacement du label fonctionne en pur CSS mais nécessite deux éléments obligatoires :
+1. Il faut que le label soit placé directement en dessous du champ ;
+2. Le champ doit posséder un attribut required (true).
+
+Ces deux inconvénients pourront être solutionnés par l'ajout de JS.
 
 ## Effective form design
 
