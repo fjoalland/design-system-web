@@ -39,6 +39,7 @@ branding:
 # Do not delete or change any file of the design system 
 keep_files: [js, fonts, css, images]
 exclude: [js, fonts, css, images]
+include: ['.htaccess']
 
 # GTM analytics
 gtm_id: UA-46270573-1
