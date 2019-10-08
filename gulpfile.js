@@ -12,12 +12,16 @@ var autoprefixer = require('autoprefixer');
 var unprefix = require("postcss-unprefix"); // deletes old prefixes using browsersList variable
 var flexbugs = require('postcss-flexbugs-fixes'); // flexbox fixes for IE
 var gaps = require('postcss-gap-properties'); // gaps polyfill
+var iconfont = require("gulp-iconfont");
+var iconfontCss = require("gulp-iconfont-css");
+var fs = require('fs');
 
 var jekyllDir = "docs/",
     scssFile = 'framework/scss/cd44.scss'
     cssDest = 'dist/css',
     jsFiles = 'framework/js/**/*.js'
     jsDest  = 'dist/js';
+    distDest = 'dist/';
     assetsFolders = ['framework/fonts/**', 'framework/images/**'];
 
 var postCssPluginsDev = [
@@ -81,14 +85,42 @@ gulp.task('build:jekyll', function(cb) {
   });
 });
 
+gulp.task('build:glyphicons', function() {
+  return gulp
+    .src("framework/glyphicons/**/*")
+    .pipe(
+      iconfontCss({
+        fontName: "ds44-icons",
+        targetPath: "css/icons.css",
+        fontPath: "../fonts/",
+      }),
+    )
+    .pipe(
+      iconfont({
+        fontName: "fonts/ds44-icons", // identique au nom de iconfontCss
+      }),
+    )
+    .pipe(gulp.dest(distDest));
+	});
+	
+// cd .docker && docker-compose exec site gulp createComponent --name button
+gulp.task('createComponent', function() {
+  var componentName = "ttest";
+
+  var writeStream = fs.createWriteStream("framework/scss/components/_" + componentName + ".scss");
+  writeStream.write("// " + componentName);
+  writeStream.end();
+});
+
 gulp.task('build:ds', gulp.parallel(
-    'build:css:cd44:dev', 
-    'build:css:cd44:prod', 
-    'build:js',
-    function() {
-        return gulp.src(assetsFolders, {base: 'framework'})
-                .pipe(gulp.dest('dist'));
-    })
+  'build:css:cd44:dev', 
+  'build:css:cd44:prod', 
+  'build:glyphicons',
+  'build:js',
+  function() {
+      return gulp.src(assetsFolders, {base: 'framework'})
+              .pipe(gulp.dest('dist'));
+  })
 );
 
 gulp.task('build', gulp.parallel(

@@ -4,7 +4,7 @@ group: components
 
 title: Bandeau
 description: Header
-status: En cours
+status: A valider
 
 variations:
 - title: Bandeau principal standard

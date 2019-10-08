@@ -4,7 +4,7 @@ group: components
 
 title: Icônes
 description: Description des icônes et de leur usage
-status: En cours
+status: A valider
 
 variations:
 - title: Icônes
