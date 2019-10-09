@@ -88,6 +88,19 @@ button {
   margin-left: 1.5rem;
 }
 
+// button style link
+.ds44-icoLink {
+    @include ds44-font-sizes(tinyText);
+    display: inline-block;
+    max-width: 4rem;
+    text-transform: uppercase;
+    text-align: center;
+    text-decoration: none;
+}
+.ds44-icoTxtWrapper {
+    display: block;
+}
+
 /* small screens */
 /* ------------- */
 

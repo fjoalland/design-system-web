@@ -1,0 +1,36 @@
+/* ----------------------- */
+/* ==DS44 Footer           */
+/* ----------------------- */
+
+
+.footerLink {
+    @include ds44-font-sizes(smallText);
+    text-decoration: none;
+    display: block;
+    padding: 0 1rem;
+    margin-bottom: $ds44-small-vmargin;
+  }
+
+.ds44-rsFootLink {
+    font-size: 1.4em;
+    display: block;
+}
+.ds44-logoFooter {
+    display: block;
+    margin: 0 auto;
+    width: 130px;
+}
+.ds44-icoLink--footer {
+    margin-top: 5rem;
+}
+
+/* small screens */
+/* ------------- */
+
+@media (max-width: $ds44-large) {
+    
+    footer {
+        text-align: center;
+    }
+
+}

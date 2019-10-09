@@ -2,8 +2,32 @@
 /* ==DS44 Utilities           */
 /* -------------------------- */
 
+/* Positions */
+
+.ds44-posAbs {
+  position: absolute;
+  z-index: 1;
+}
+.ds44-posRel {
+  position: relative;
+}
+.ds44-posTop {
+  top: 0;
+}
+.ds44-posBot {
+  bottom: 0;
+}
+.ds44-posRi {
+  right: 0;
+}
+.ds44-posLe {
+  left: 0;
+}
+
+
 /* Spacers */
 
+// paddings
 .ds44--l-padding {
   padding: $ds44-padding-large; // 2rem
 }
@@ -14,10 +38,11 @@
     padding-left: $ds44-padding-xlarge;
     padding-right: $ds44-padding-xlarge;
 }
-
 .ds44--2xl-padding-l {
     padding-left: $ds44-padding-xlarge*2;
 }
+
+// margins
 .ds44-mb3 {
   margin-bottom: $ds44-components-vmargin; // 3rem
 }
@@ -47,11 +72,17 @@
 .ds44-flex-align-center {  
   justify-content: center;
 }
+.ds44-fse {  
+  justify-content: space-evenly;
+}
 
 /* Grid utils */
 
 .ds44-grid-middle {
   align-items: center;
+}
+.ds44-hasGutter-xxl {
+  gap: 7%;
 }
 
 /* Layout utils */
@@ -78,6 +109,30 @@
 .ds44-bgDark {
   background-color: $ds44-background-dark;
 }
+.ds44-bgGray {
+  background-color: $ds44-light-bg;
+}
 .ds44-darkContext {
   background-color: $ds44-color-inverse!important;
+}
+
+// Thematic color
+.ds44-theme {
+  background-color: $ds44-contextual-color;
+}
+
+/* Icons */
+
+.icon {
+  vertical-align: middle;
+  line-height: 1; 
+  display: inline-block;
+}
+
+// icon size
+.icon::before {
+  font-size: 1.2em;
+}
+.icon--large::before {
+  font-size: 2.5em;
 }
