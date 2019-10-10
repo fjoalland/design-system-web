@@ -4,3 +4,21 @@
     padding: 0;
     list-style: none;
 }
+
+.ds44-footerList {
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* small screens */
+/* ------------- */
+
+@media (max-width: $ds44-small) {
+    
+    .ds44-footerList {
+        display: block;
+        column-count: 2;
+        text-align: left;
+    }
+
+}

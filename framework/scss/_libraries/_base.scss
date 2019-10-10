@@ -44,11 +44,13 @@ body {
 
 .ds44-container-fluid {
   padding: 0 $ds44-container-hmargin;
+  position: relative;
 }
 .ds44-inner-container {
   margin: 0 auto;
   padding: $ds44-container-vmargin $ds44-container-hmargin;
   max-width:$ds44-max-size;
+  position: relative;
 }
 .ds44-alternate-container {
   background-color: $ds44-light-bg;
@@ -310,32 +312,4 @@ blockquote,
 figure {
   margin-left: 0;
   margin-right: 0;
-}
-
-
-/* --------------
-  --- DS44 specific utilities 
-  --- */
-
-
-/* Thematic colors */
-
-.ds44-theme {
-  background-color: $ds44-contextual-color;
-}
-
-/* Icons */
-
-.icon {
-  vertical-align: middle;
-  line-height: 1; 
-  display: inline-block;
-}
-
-// icon size
-.icon::before {
-  font-size: 1.2em;
-}
-.icon--large::before {
-  font-size: 2.5em;
 }
