@@ -11,11 +11,14 @@
 
 .ds44-skiplinks--link {
     position: absolute;
-    top: -5rem;
+    top: -50rem;
     display: block;
     border: 2px solid $ds44-contextual-color;
+    border-top: none;
+    border-radius: 0 0 $ds44-border-radius;
     padding: $ds44-padding-medium $ds44-padding-box;
     transition: box-shadow $ds44-timing-standard ease;
+    background: #fff;
 
     &:focus {
         top: 0;
