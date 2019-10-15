@@ -19,9 +19,9 @@ variations:
 
 ## General guidelines
 
-Les boutons sont utilisés pour déclencher des actions. Eviter l'usage des boutons pour naviguer : préférer les liens. Il est possible de donner à un lien un aspect de bouton, si nécessaire, en lui appliquant les mêmes classes qu'à une balise <button>.
+Les boutons sont utilisés pour déclencher des actions. Eviter l'usage des boutons pour naviguer : préférer les liens. Il est possible de donner à un lien un aspect de bouton, si nécessaire, en lui appliquant les mêmes classes qu'à une balise `<button>`.
 
-Utiliser le bouton contextuel avec la classe `.ds44-btnStd--contextual` pour créer des boutons aux couleurs du site.
+Utiliser le bouton contextuel avec la classe `ds44-btnStd--contextual` pour créer des boutons aux couleurs du site.
 
 ## Usage
 

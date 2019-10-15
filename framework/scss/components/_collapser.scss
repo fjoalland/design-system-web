@@ -28,7 +28,7 @@
 
   &::after {
     content: "\E00E";
-    font-family: "ds44-icons";
+    font-family: $ds44-font-icon;
     font-size: 1.3em;
     width: 2rem;
     height: 2rem;
@@ -61,7 +61,7 @@
 
   &::after {
     content: "\E002";
-    font-family: "ds44-icons";
+    font-family: $ds44-font-icon;
     font-size: 1.2em;
     display: inline-block;
     vertical-align: middle;
