@@ -4,7 +4,7 @@
 
 .ds44-navList {
     list-style: none;
-    margin-top: $ds44-components-vmargin;
+    margin-top: $spacer-extra-large-plus;
 }
 
 .ds44-navListN2 {
@@ -32,22 +32,17 @@
     width: 100%;
     text-align: left;
 
-    &::after {
-        font-family: $ds44-font-icon;
-        font-weight: normal;
-        content: "\E028";
-        width: 3.4rem;
-        height: 3.4rem;
-        display: block;
+    & .icon {
         position: absolute;
         right: 0;
-        top: 0;
-        line-height: 1.2;
-        //transition: right $ds44-timing-faster ease-in;
+        top: -.5rem;
+
+        &::before {
+            line-height: 1;
+        }
     }
 
-    &:hover::after, &:focus::after, &:active::after {
-        //right: .5rem;
+    &:hover .icon, &:focus .icon, &:active .icon {
         animation-name: arrow-move;
         animation-duration: $ds44-timing-x2;
     }
@@ -68,31 +63,24 @@
 
 .ds44-menuBackLink {
     font: bold 1.75em/1 $ds44-font-family-headings; // 28px
+    vertical-align: middle;
 }
 
 .ds44-menuLink, .ds44-menuLink--subLvl {
     position: relative;
     padding-right: 2.5rem;
 
-    &::after {
-        content: "\E002";
-        font-family: $ds44-font-icon;    
-        font-size: 1.2em;    
-        display: inline-block;    
-        vertical-align: middle;    
-        width: 2rem;    
-        height: 3rem;
-        margin-left: 1.5rem;    
-        margin-top: -0.3rem;
+    & .icon {
         position: absolute;
-        top: 0;
-        opacity: 0;
         right: 0;
-        transition: opacity $ds44-timing-faster ease-in;
+        top: 0;
+
+        &::before {
+            line-height: 1;
+        }
     }
 
-    &:hover::after, &:focus::after, &:active::after {
-        opacity: 1;
+    &:hover .icon, &:focus .icon, &:active .icon {
         animation-name: arrow-move;
         animation-duration: $ds44-timing-x2;
     }
