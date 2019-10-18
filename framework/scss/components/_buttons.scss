@@ -21,7 +21,7 @@ button {
 }
 
 .ds44-btnStd {
-    @include ds44-font-sizes(bodySize);
+    font-size: .875em; // 14px
     padding: 0 $ds44-padding-box;
     border-radius: $ds44-border-radius;
     border: 1px solid $ds44-dark;
@@ -39,6 +39,7 @@ button {
 }
 
 .ds44-btnStd--large {
+    font-size: 1em; // 16px
     padding: 0 $ds44-padding-large;
     min-height: $ds44-largeHeight;
 }
@@ -104,6 +105,8 @@ button {
 }
 .ds44-icoTxtWrapper {
     display: block;
+    line-height: 1.2;
+    margin-top: 3px;
 }
 
 /* Specific buttons */

@@ -2,6 +2,9 @@
 /* ==DS44 Footer           */
 /* ----------------------- */
 
+footer {
+    border-top: 1px solid #CCCCCC;
+}
 
 .footerLink {
     @include ds44-font-sizes(smallText);

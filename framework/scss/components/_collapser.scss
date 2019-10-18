@@ -17,30 +17,28 @@
 
 /* row-like button */
 .ds44-collapser_button {
-  font-size: 1.6rem;
+  @include ds44-font-sizes(collapserLinks);
   padding: $ds44-padding-box 3.5rem $ds44-padding-box $ds44-padding-box ;
   display: block;
   width: 100%;
   text-align: left;
   background-color: transparent;
   position: relative;
-  line-height: 1.4;
+  line-height: 1.4;  
 
-  &::after {
-    content: "\E00E";
-    font-family: $ds44-font-icon;
-    font-size: 1.3em;
-    width: 2rem;
-    height: 2rem;
-    display: block;
+  .icon {
     position: absolute;
-    right: 1.5rem;
-    top: 1.3rem;
-    transition: all $ds44-timing-slower ease-in-out;
-    line-height: 1.2;
+    right: 1rem;
+    top: 1.5rem;
+
+    &::before {
+      line-height: .7;
+      transition: transform ease-in-out $ds44-timing-standard;
+      display: block;
+    }
   }
 
-  &.show::after {
+  &.show .icon::before {
     transform: rotate(180deg);
   }
 
@@ -55,34 +53,35 @@
 
 .ds44-collapser_content--link,
 .ds44-collapser_content--buttonLike {
+  @include ds44-font-sizes(collapserLinks);
   text-decoration: $ds44-link-list-decoration;
   margin: $ds44-padding-large;
   display: block;
+  position: relative;
 
-  &::after {
-    content: "\E002";
-    font-family: $ds44-font-icon;
-    font-size: 1.2em;
-    display: inline-block;
-    vertical-align: middle;
-    width: 2rem;
-    height: 2rem;
-    margin-left: 1.5rem;
-    margin-top: -0.8rem; // magic number for vertical align middle issue
+  .icon {
+    position: absolute;
+    right: 1rem;
+    top: 0;
+    transition: all ease-in-out $ds44-timing-standard;
     opacity: 0;
-    transition: all $ds44-timing-faster ease-in;
+
+      &::before {
+          line-height: .7;
+      }
+  }
+
+  &:hover .icon, &:focus .icon, &:active .icon {
+      right: 0;
+      opacity: 1;
   }
 
   &:hover, &:focus, &:active {
     text-decoration: $ds44-link-list-decoration-hover;
-
-    &::after {
-      opacity: 1;
-      background-position-x: 0;
-    }
-
   }
+
 }
+
 .ds44-collapser_content--buttonLike {
   margin: $ds44-padding-box;
 }
