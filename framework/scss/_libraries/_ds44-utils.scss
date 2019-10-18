@@ -2,7 +2,7 @@
 /* ==DS44 Utilities           */
 /* -------------------------- */
 
-/* Positions */
+/* === Positions === */
 
 .ds44-posAbs {
   position: absolute;
@@ -28,7 +28,7 @@
 }
 
 
-/* Spacers */
+/* === Spacers === */
 
 // paddings
 .ds44--l-padding {
@@ -72,7 +72,7 @@
   margin-right: 15%;
 }
 
-/* Flex utils */
+/* === Flex utils === */
 
 .ds44-flex-container {
     display: flex;
@@ -92,7 +92,7 @@
   justify-content: space-evenly;
 }
 
-/* Grid utils */
+/* === Grid utils === */
 
 .ds44-grid-middle {
   align-items: center;
@@ -101,7 +101,7 @@
   gap: 7%;
 }
 
-/* Layout utils */
+/* === Layout utils === */
 
 .ds44-colLeft {
   flex-wrap: nowrap;
@@ -138,57 +138,67 @@
 }
 
 
-/* Width helpers */
+/* === Width helpers === */
 
 .ds44-w100 {
   width: 100%;
 }
 
-/* Color utils */
+/* === Color utils === */
 
-.ds44-bgDark {
-  background-color: $ds44-background-dark;
-  color: $ds44-color-inverse;
-}
-.ds44-bgGray {
-  background-color: $ds44-light-bg;
-}
 .ds44-darkContext {
   color: $ds44-color-inverse!important;
 }
+
+/* === Backgrounds === */
 
 // Thematic color
 .ds44-theme {
   background-color: $ds44-contextual-color;
 }
 
-/* Backgrounds */
+.ds44-bgDark {
+  background-color: $ds44-background-dark;
+  color: $ds44-color-inverse!important;
+}
+
+.ds44-bgGray {
+  background-color: $ds44-light-bg;
+}
 
 .ds44-bgCircle {
   background-image: url(../../../assets/images/backgrounds/bkgd-circle-white.svg);
   background-repeat: no-repeat;
   background-size: 470px;
 }
+
 .ds44-bgTriangle-left {
   background-image: url(../../../assets/images/backgrounds/bkgd-triangle-left-white.svg);
   background-repeat: no-repeat;
   background-size: 470px;
   background-position: left;
 }
+
 .ds44-bgTriangle-right {
   background-image: url(../../../assets/images/backgrounds/bkgd-triangle-right-white.svg);
   background-repeat: no-repeat;
   background-size: 470px;
   background-position: right;
 }
+
 .ds44-wave-white {
   background-image: url(../../../assets/images/backgrounds/bkgd-wave-white.png);
   background-position-y: bottom;
+  background-repeat: repeat-x;
 }
+
 .ds44-wave-grey {
   background-image: url(../../../assets/images/backgrounds/bkgd-wave-light-grey.png);
   background-position-y: bottom;
+  background-repeat: repeat-x;
 }
+
+// Background positions
 .ds44-bg-br {
   background-position: bottom -85px right -140px;
 }
@@ -196,17 +206,21 @@
   background-position: bottom -85px left -140px;
 }
 
-/* Icons */
+/* === Icons === */
 
 .icon {
   vertical-align: middle;
-  line-height: 1; 
+  line-height: .5; 
   display: inline-block;
 }
 
 // icon size
 .icon::before {
-  font-size: 1.2em;
+  font-size: 1.6em;
+  line-height: .5;
+}
+.icon--medium::before {
+  font-size: 1.8em;
 }
 .icon--large::before {
   font-size: 2.5em;
@@ -214,8 +228,27 @@
 .icon--xlarge::before {
   font-size: 3.5em;
 }
+.icon--sizeS::before {
+  font-size: 1.2rem;
+}
+.icon--sizeM::before {
+  font-size: 2rem;
+}
+.icon--sizeL::before {
+  font-size: 3rem;
+}
+.icon--sizeXL::before {
+  font-size: 4.5rem;
+}
 
-/* Overlay */
+// icon margins
+.icon + .ds44-iconInnerText,
+.ds44-iconInnerText + .icon {
+  margin-left: .5rem;
+}
+
+
+/* === Overlay === */
 
 .ds44-navOverlay {
   //position: fixed;
@@ -223,7 +256,7 @@
   width: 100%;
 }
 
-/* Separators */
+/* === Separators === */
 
 .ds44-navSep {
   border: 1px solid $ds44-color-dark-text;

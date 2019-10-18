@@ -97,7 +97,7 @@ h2, .h2-like {
   display: inline-block;
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#ffffff+40,99e6d1+40,99e6d1+65,ffffff+65 */
   background: $ds44-contextual-color; /* Old browsers */
-  background: linear-gradient(to bottom, rgba(255,255,255,1) 55%,$ds44-contextual-color 55%);
+  background: linear-gradient(to bottom, rgba(255,255,255,0) 55%,$ds44-contextual-color 55%);
 }
 
 h3, .h3-like {
@@ -160,9 +160,6 @@ h6, .h6-like {
 
 .ds44-introduction, .ds44-introduction-like, .ds44-component-chapo {
   @include ds44-font-sizes(chapoStyle);
-  @if variable_exists(font-family-headings) and $font-family-headings != $font-family-base{
-    font-family: $font-family-headings;
-  }
   background: transparent;
   font-weight: $weight-bold;
   margin-bottom: $ds44-components-vmargin;
