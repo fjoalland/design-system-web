@@ -3,7 +3,6 @@
 */
   
 
-[type="button"],
 button {
     display: inline-block;
     cursor: pointer;
@@ -81,6 +80,12 @@ button {
     display: inline-block;
     vertical-align: middle;
 }
+.ds44-btnInnerText--bottom {
+    @include ds44-font-sizes(tinyText);
+    text-transform: uppercase;
+    font-weight: bold;
+    display: block;
+}
 
 // icon margins
 .icon + .ds44-btnInnerText,
@@ -99,6 +104,24 @@ button {
 }
 .ds44-icoTxtWrapper {
     display: block;
+}
+
+/* Specific buttons */
+
+.ds44-btnOverlay {
+    right: 5.5%; // identical as inner container padding
+    position: absolute;
+}
+
+.ds44-fullWBtn {
+    width: 100%;
+    text-align: center;
+    padding: $ds44-padding-large;
+    font-weight: bold;
+
+    .ds44-btnInnerText {
+        vertical-align: baseline;
+    }
 }
 
 /* small screens */

@@ -14,6 +14,9 @@
 .ds44-posTop {
   top: 0;
 }
+.ds44-posTopCont {  
+  top: $ds44-components-vmargin;
+}
 .ds44-posBot {
   bottom: 0;
 }
@@ -46,14 +49,27 @@
 .ds44-mb3 {
   margin-bottom: $ds44-components-vmargin; // 3rem
 }
-.ds44-m3 {
+.ds44-mt3 {
+  margin-top: $ds44-components-vmargin; // 3rem
+}
+.ds44-m3c {
   margin: $ds44-components-vmargin auto; // 3rem
+}
+.ds44-m3 {
+  margin: $ds44-components-vmargin; // 3rem
+}
+.ds44-m5 {
+  margin: $ds44-container-vmargin; // 5rem
 }
 .ds44-svm {
   margin-bottom: $ds44-small-vmargin;
 }
 .ds44-mvm {
   margin-bottom: $ds44-medium-vmargin;
+}
+.ds44-xl-fluid-margin {
+  margin-left: 15%;
+  margin-right: 15%;
 }
 
 /* Flex utils */
@@ -97,6 +113,30 @@
   flex: 3;
   text-align: right;
 }
+.ds44-multiCol {
+  column-count: 2;
+  display: block;
+
+  > li { // if multicol is applied to a list, prevent break inside the li element
+    -webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
+          page-break-inside: avoid; /* Firefox */
+               break-inside: avoid; /* IE 10+ */
+               break-inside: avoid-column; /* W3C */
+  }
+}
+
+@media (max-width: $ds44-small) {
+
+  .ds44-multiCol {
+    column-count: 1;
+  }
+
+}
+
+.ds44-xl-gap {
+  column-gap: 15rem;
+}
+
 
 /* Width helpers */
 
@@ -108,17 +148,52 @@
 
 .ds44-bgDark {
   background-color: $ds44-background-dark;
+  color: $ds44-color-inverse;
 }
 .ds44-bgGray {
   background-color: $ds44-light-bg;
 }
 .ds44-darkContext {
-  background-color: $ds44-color-inverse!important;
+  color: $ds44-color-inverse!important;
 }
 
 // Thematic color
 .ds44-theme {
   background-color: $ds44-contextual-color;
+}
+
+/* Backgrounds */
+
+.ds44-bgCircle {
+  background-image: url(../../../assets/images/backgrounds/bkgd-circle-white.svg);
+  background-repeat: no-repeat;
+  background-size: 470px;
+}
+.ds44-bgTriangle-left {
+  background-image: url(../../../assets/images/backgrounds/bkgd-triangle-left-white.svg);
+  background-repeat: no-repeat;
+  background-size: 470px;
+  background-position: left;
+}
+.ds44-bgTriangle-right {
+  background-image: url(../../../assets/images/backgrounds/bkgd-triangle-right-white.svg);
+  background-repeat: no-repeat;
+  background-size: 470px;
+  background-position: right;
+}
+.ds44-wave-white {
+  background-image: url(../../../assets/images/backgrounds/bkgd-wave-white.png);
+  background-position-y: bottom;
+}
+.ds44-wave-grey {
+  background-image: url(../../../assets/images/backgrounds/bkgd-wave-light-grey.png);
+  background-position-y: bottom;
+}
+.ds44-bg-br {
+  background-position: bottom -85px right -140px;
+}
+.ds44-bg-bl {
+  background-position: bottom -85px left -140px;
 }
 
 /* Icons */
@@ -135,4 +210,22 @@
 }
 .icon--large::before {
   font-size: 2.5em;
+}
+.icon--xlarge::before {
+  font-size: 3.5em;
+}
+
+/* Overlay */
+
+.ds44-navOverlay {
+  //position: fixed;
+  //height: 100vh;
+  width: 100%;
+}
+
+/* Separators */
+
+.ds44-navSep {
+  border: 1px solid $ds44-color-dark-text;
+  margin: $ds44-container-vmargin $ds44-components-vmargin;
 }

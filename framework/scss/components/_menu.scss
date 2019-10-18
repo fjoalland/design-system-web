@@ -1,0 +1,87 @@
+/* ----------------------------- */
+/* ==Navigation full page        */
+/* ----------------------------- */
+
+.ds44-navList {
+    list-style: none;
+    margin-top: $spacer-extra-large-plus;
+}
+
+.ds44-navListN2 {
+    list-style: none;
+    margin-top: $spacer-extra-large-plus;
+    margin-bottom: $ds44-components-vmargin;
+    column-rule: 2px solid #000000;
+}
+
+// Arrows animation
+@keyframes arrow-move {
+    0%   { right: 0; }
+    50%  { right: 1rem; }
+    100% { right: 0; }
+}
+
+.ds44-menuBtn {    
+    @include ds44-font-sizes(menuHeaders);
+    font-family: $ds44-font-family-headings;
+    font-weight: bold;
+    margin-top: $ds44-components-vmargin;
+    position: relative;
+    padding-right: 4rem;
+    padding-left: 0;
+    width: 100%;
+    text-align: left;
+
+    & .icon {
+        position: absolute;
+        right: 0;
+        top: -.5rem;
+
+        &::before {
+            line-height: 1;
+        }
+    }
+
+    &:hover .icon, &:focus .icon, &:active .icon {
+        animation-name: arrow-move;
+        animation-duration: $ds44-timing-x2;
+    }
+}
+
+.ds44-menuLink {
+    @include ds44-font-sizes(menuLinks);
+    text-decoration: none;
+    margin-bottom: $ds44-components-vmargin;
+    display: block;
+}
+
+.ds44-rsHeadLink {
+    display: block;
+    margin-left: $spacer-medium-plus; // 3rem;
+    font-size: 1.4em;
+}
+
+.ds44-menuBackLink {
+    font: bold 1.75em/1 $ds44-font-family-headings; // 28px
+    vertical-align: middle;
+}
+
+.ds44-menuLink, .ds44-menuLink--subLvl {
+    position: relative;
+    padding-right: 2.5rem;
+
+    & .icon {
+        position: absolute;
+        right: 0;
+        top: 0;
+
+        &::before {
+            line-height: 1;
+        }
+    }
+
+    &:hover .icon, &:focus .icon, &:active .icon {
+        animation-name: arrow-move;
+        animation-duration: $ds44-timing-x2;
+    }
+}

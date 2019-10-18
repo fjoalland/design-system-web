@@ -52,6 +52,11 @@ body {
   max-width:$ds44-max-size;
   position: relative;
 }
+.ds44-container-fixed {
+  position: fixed;
+  width: 100%;
+  left: 0;
+}
 .ds44-alternate-container {
   background-color: $ds44-light-bg;
 }
