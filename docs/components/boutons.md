@@ -14,6 +14,10 @@ variations:
 - title: Boutons avec icône et texte
   description: Ces boutons paramétrables ont des tailles et des aspects variables. Ils sont toujours construits autour d'une icône et d'un texte.
   pattern: boutons/buttons-icotext.html
+
+- title: Boutons avec icône seule
+  description: Boutons avec icône et libellé caché pour les aides techniques.
+  pattern: boutons/buttons-ico.html
 ---
 
 
@@ -25,17 +29,19 @@ Utiliser le bouton contextuel avec la classe `ds44-btnStd--contextual` pour cré
 
 ## Usage
 
-| Type de bouton          | Objet                                                                            |
-| ----------------------- |----------------------------------------------------------------------------------|
-| Bouton standard         | A remplir avec Julien                                                            |
-| Bouton standard large   |                                                                                  |
+| Type de bouton              | Objet                                                                        |
+| --------------------------- |------------------------------------------------------------------------------|
+| Bouton standard             | A remplir avec Julien                                                        |
+| Bouton standard large       |                                                                              |
+| Bouton fixé en bas de page  | Classe : `ds44-fullWBtn` + éventuelles classes de gestion de couleur. Ajouter un conteneur positionné en fixe autour du bouton : `ds44-container-fixed ds44-posBot`                        |
+
 
 
 ## Icon usage
 
 * Les glyphes-icônes s'utilisent dans des conteneurs de type `<i class="icon"></i>`.
-* Chaque glyphes possède un code appelé par un style. Exemple : la croix est appelée par la classe `icon-cross`. Se référer à la page de preview des icônes pour les noms des classes.
-* Les glyphes sont déclinés en deux tailles : la taille standard et la taille supérieure. Pour la taille supérieure, ajouter la classe `icon--large` sur le conteneur de l'icône.
+* Chaque glyphe possède un code appelé par un style. Exemple : la croix est appelée par la classe `icon-cross`. Se référer à la page de preview des icônes pour les noms des classes.
+* Les glyphes sont déclinés en différentes tailles, relatives ou fixes (se référer à la documentation des icônes).
 * pour des questions d'alignement vertical, dans les boutons contenant des glyphes et du texte, le bloc de texte doit être placé dans un conteur de type `<span class="ds44-btnText>Texte du bouton</span>`.
 
 ## Other rules

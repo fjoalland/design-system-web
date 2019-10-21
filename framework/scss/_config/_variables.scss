@@ -151,11 +151,6 @@ $ds44-hover-dark        : lighten($ds44-background-dark, 25%) !default;
 $ds44-hover-LA          : lighten($ds44-LA, 25%) !default;    
 $ds44-hover-Agenda      : lighten($ds44-Agenda, 25%) !default; 
 
- /*
-$ds44-hover-dark        : transparentize(rgba($ds44-background-dark, 1), 0.25) !default;
-$ds44-hover-LA          : transparentize(rgba($ds44-LA, 1), 0.25) !default;    
-$ds44-hover-Agenda      : transparentize(rgba($ds44-Agenda, 1), 0.25) !default; 
-*/
 
 // ---------------
 // Components zone
@@ -163,7 +158,7 @@ $ds44-hover-Agenda      : transparentize(rgba($ds44-Agenda, 1), 0.25) !default;
 
 // Component: links
 $ds44-link-color                 : $ds44-dark !default;
-$ds44-link-color-hover           : /*darken($link-color, 15%) !default;*/ $ds44-link-color !default;
+$ds44-link-color-hover           : $ds44-link-color !default;
 $ds44-link-decoration            : underline !default;
 $ds44-link-decoration-hover      : none !default;
 $ds44-link-list-decoration       : none !default; // used for menus or link groups
@@ -175,6 +170,7 @@ $ds44-border-radius: 3px !default;
 // Standard box shadow
 
 $ds44-boxShadow : 0px 13px 20px 0px rgba(0,0,0,0.35) !default;
+$ds44-smallShadow : 0px 3px 10px 0px rgba(0,0,0,0.35) !default;
 
 // ---------------
 // Animation zone

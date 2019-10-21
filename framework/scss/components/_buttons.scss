@@ -67,7 +67,31 @@ button {
     }
 }
 
-/* Icon-text buttons */
+/* == Icon-text buttons == */
+
+// Link style buttons
+.ds44-btnIcoText {
+    font-weight: bolder;
+    
+    .icon + .ds44-btnInnerText,
+    .ds44-btnInnerText + .icon {
+        margin-left: 1rem;
+        font-size: .875em; // 14px
+        vertical-align: sub;
+
+        // icons inside text
+        .icon {
+            vertical-align: text-top;
+            margin-left: .5rem;
+            margin-right: .5rem;
+            }
+
+        &:hover, &:focus, &:active {
+            text-decoration: underline;
+        }
+    }
+
+}
 
 // Buttons for header (full height)
 .ds44-btnIcoText--maxi {
@@ -109,7 +133,14 @@ button {
     margin-top: 3px;
 }
 
-/* Specific buttons */
+/* == Icon buttons == */
+
+.ds44-btnIco {
+    border-radius: $ds44-border-radius;
+    padding: $ds44-padding-box;
+}
+
+/* == Specific buttons == */
 
 .ds44-btnOverlay {
     right: 5.5%; // identical as inner container padding
@@ -127,6 +158,51 @@ button {
     }
 }
 
+// Popover - help tool
+
+.ds44-popOver {
+    vertical-align: middle;
+}
+.ds44-popOverBtn {
+    cursor: help;
+    position: relative;
+
+    // generating bubble
+    &:hover::after, &:active::after, &:focus::after {
+        content: attr(aria-label);
+        display: block;
+        position: absolute;
+        right: -110px;
+        bottom: 2.5rem;
+        border-radius: $ds44-border-radius;
+        box-shadow: $ds44-smallShadow;
+        width: 250px;
+        z-index: 10;
+        padding: $spacer-small;
+        background-color: #fff;
+        text-align: left;
+        font-size: 1.4rem;
+    }
+
+    .icon-help {
+        position: relative;
+    }
+
+    // Showing little arrow under the bubble
+    &:hover .icon-help::after, &:focus .icon-help::after, &:active .icon-help::after {
+        content: "";
+        position: absolute;
+        display: block;
+        width: 10px;
+        height: 10px;
+        transform: rotate(45deg);
+        background-color: #fff;
+        top: -12px;
+        left: 5px;
+        z-index: 15;
+    }
+}
+
 /* small screens */
 /* ------------- */
 
@@ -138,7 +214,6 @@ button {
 
 }
 @media (max-width: $ds44-small) {
-
 
     .ds44-btnIcoText--maxi {
 
@@ -163,6 +238,11 @@ button {
         .ds44-btnInnerText + .icon {
           margin-left: 0;
         }
+    }
+    
+    .ds44-fullWBtn {
+        padding: $spacer-tiny;
+        font-size: 1.4rem;
     }
     
 
