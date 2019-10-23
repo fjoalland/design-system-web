@@ -125,18 +125,6 @@
   }
 }
 
-@media (max-width: $ds44-small) {
-
-  .ds44-multiCol {
-    column-count: 1;
-  }
-
-}
-
-.ds44-xl-gap {
-  column-gap: 15rem;
-}
-
 
 /* === Width helpers === */
 
@@ -247,6 +235,14 @@
   margin-left: .5rem;
 }
 
+// Icon modifiers
+
+.ds44-docListIco {
+  position: absolute;
+  left: 0;
+  top: 1px;
+}
+
 
 /* === Overlay === */
 
@@ -261,4 +257,17 @@
 .ds44-navSep {
   border: 1px solid $ds44-color-dark-text;
   margin: $ds44-container-vmargin $ds44-components-vmargin;
+}
+
+
+@media (max-width: $ds44-small) {
+
+  .ds44-multiCol {
+    column-count: 1;
+  }
+
+}
+
+.ds44-xl-gap {
+  column-gap: 15rem;
 }

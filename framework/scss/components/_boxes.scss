@@ -2,13 +2,60 @@
 * CD44 Design System - Boxes
 */
 
+.ds44-box {
+    background-position-y: center;
+
+    &.ds44-wave-white {
+        background-position-y: bottom -280px;
+    }
+    &.ds44-bgCircle {
+        background-position: left -240px bottom -200px;
+    }
+    &.ds44-bgTriangle-left {
+        background-position: left -150px center;
+    }
+}
+
+.ds44-box--push {
+    min-height: 280px;
+}
 
 .ds44-box-heading {
     @include ds44-font-sizes(h4);
     font-weight: $weight-bold;
     font-family: $ds44-font-family-base;
+    background: transparent;
+    padding: 0;
 }
 
 .ds44-innerBoxContainer {
     padding: $ds44-padding-xlarge;
+}
+
+.ds44-boxPic {
+    float: left;
+    margin-right: $spacer-medium;
+}
+
+.ds44-txtExergue {
+    font-size: 1.5em; // 24px
+    display: block;
+}
+
+// Pushs
+
+.ds44-boxPushContent {
+    width: calc(50% + 15px);
+    align-self: center;
+    padding: $ds44-padding-box;
+}
+
+.ds44-boxPushPic {
+    width: calc(50% - 15px);
+    position: relative;
+    align-self: flex-end;
+}
+
+.ds44-pictoStore {
+    height: 32px;
 }

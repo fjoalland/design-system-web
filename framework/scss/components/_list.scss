@@ -10,6 +10,16 @@
     justify-content: center;
 }
 
+.ds44-docListElem {
+    position: relative;
+    padding-left: $ds44-padding-ico;
+    line-height: 1.4;
+
+    &.ds44-cardFile {        
+        padding-top: $spacer-tiny;
+    }
+}
+
 /* small screens */
 /* ------------- */
 

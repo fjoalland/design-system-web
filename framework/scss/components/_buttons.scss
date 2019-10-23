@@ -22,11 +22,10 @@ button {
 
 .ds44-btnStd {
     font-size: .875em; // 14px
-    padding: 0 $ds44-padding-box;
+    padding: $ds44-padding-box;
     border-radius: $ds44-border-radius;
     border: 1px solid $ds44-dark;
     font-weight: bold;
-    background-color: $ds44-light-color;
     line-height: 1;
     min-height: $ds44-normalHeight;
     
@@ -55,7 +54,8 @@ button {
     }
 }
 
-.ds44-btn--contextual {
+.ds44-btn--contextual,
+.ds44-contextualBtnLink {
     background-color: $ds44-contextual-color;
     border-color: $ds44-contextual-color;
 
@@ -118,7 +118,8 @@ button {
   margin-left: 1.5rem;
 }
 
-// button style link
+/* === button style links === */
+
 .ds44-icoLink {
     @include ds44-font-sizes(tinyText);
     display: inline-block;
@@ -131,6 +132,27 @@ button {
     display: block;
     line-height: 1.2;
     margin-top: 3px;
+}
+
+.ds44-btnLink {
+    font-size: .875em; // 14px
+    padding: $ds44-padding-box;
+    border-radius: $ds44-border-radius;
+    border: 1px solid $ds44-dark;
+    display: inline-block;
+    transition: all ease-in-out $ds44-timing-faster;
+    vertical-align: middle;
+    text-decoration: none;
+    font-weight: bold;
+    line-height: 1;
+    min-height: $ds44-normalHeight;
+    
+    &:focus,
+    &:hover,
+    &:active {
+        box-shadow: 0px 13px 20px 0px rgba(0,0,0,0.35);
+        border: 1px solid $ds44-darkgray;
+    }
 }
 
 /* == Icon buttons == */
@@ -168,38 +190,50 @@ button {
     position: relative;
 
     // generating bubble
-    &:hover::after, &:active::after, &:focus::after {
-        content: attr(aria-label);
+    &::after {
+        content: "";
         display: block;
         position: absolute;
         right: -110px;
         bottom: 2.5rem;
         border-radius: $ds44-border-radius;
         box-shadow: $ds44-smallShadow;
-        width: 250px;
         z-index: 10;
-        padding: $spacer-small;
         background-color: #fff;
         text-align: left;
         font-size: 1.4rem;
+        opacity: 0;
+        transition: opacity $ds44-timing-standard ease-in-out;
+    }
+
+    &:hover::after, &:active::after, &:focus::after {
+        content: attr(aria-label);
+        padding: $spacer-small;
+        width: 250px;
+        opacity: 1;
     }
 
     .icon-help {
         position: relative;
     }
-
-    // Showing little arrow under the bubble
-    &:hover .icon-help::after, &:focus .icon-help::after, &:active .icon-help::after {
+    .icon-help::after {
         content: "";
         position: absolute;
         display: block;
-        width: 10px;
-        height: 10px;
         transform: rotate(45deg);
         background-color: #fff;
         top: -12px;
         left: 5px;
         z-index: 15;
+        opacity: 0;
+        transition: all $ds44-timing-standard ease-in-out;
+    }
+
+    // Showing little arrow under the bubble
+    &:hover .icon-help::after, &:focus .icon-help::after, &:active .icon-help::after {
+        width: 10px;
+        height: 10px;
+        opacity: 1;
     }
 }
 
