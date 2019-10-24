@@ -21,7 +21,8 @@
                 currentElementOpened = element;
                 element.classList.toggle('show');
                 panel.style.maxHeight = (panel.style.maxHeight) ? null : panel.scrollHeight + 60 + "px";
-                element.setAttribute('aria-expanded', 'true');
+				panel.style.visibility = 'hidden';
+                element.setAttribute('aria-expanded', 'false');
                 hideAllOtherBlock();
             }
 
@@ -32,8 +33,12 @@
                         let panel = elementToHide.nextElementSibling;
                         elementToHide.classList.remove('show');
                         panel.style.maxHeight = null;
-                        elementToHide.setAttribute('aria-expanded', 'false');
-                    }
+                        // elementToHide.setAttribute('aria-expanded', 'false');
+                    } else {
+						elementToHide.setAttribute('aria-expanded', 'true');
+						const panel = elementToHide.nextElementSibling;
+						panel.style.visibility = 'visible';
+					}
                 });
             }
         };
@@ -68,6 +73,15 @@
             window.document.addEventListener("keyup", (e) => {
                 if (e.key === "Escape") {
                     _closePopup();
+					
+					const elementsShow = document.querySelectorAll('.show');
+					elementsShow.forEach((elementShow) => {
+						console.info('debug ' + elementsShow);
+						if (document.activeElement == elementShow) {
+							// hideAllOtherBlock();
+							elementShow.click();
+						}
+					});
                 }
             });
 
@@ -229,10 +243,10 @@ ds44.expandable('.ds44-collapser_button');
 //Initialisation des composants de popup
 /*
 Utilisation :
-sur un lien, ou bouton ou autre élément html , ajouter ces deux attributs :
+sur un lien, ou boutton ou autre élément html , ajouter ces deux attributs :
 data-js="ds44-modal" data-target="#ds44-modal-exemple"
 
-data-js="ds44-modal" , permet de définir l'élément qui servira à afficher la popup lors d'un clic
+data-js="ds44-modal" , permet de définir l'élément qui servira à afficher la popup lors d'un click
 data-target="#ds44-modal-exemple" , permet de définir la popup, via un id ou une class css unique /!\
  */
 ds44.popup();
@@ -245,7 +259,7 @@ true ou false
 */
 ds44.setFocus('#focusable', true);
 
-//Démonstration sur l'événement click, met en avant l'élément sur lequel on a cliqué
+//Démonstration sur l'événement click , met en avant l'élément sur lequel on a cliqué
 /*
 document.addEventListener('click', function (e) {
 
