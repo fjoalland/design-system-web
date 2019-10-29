@@ -34,6 +34,7 @@ Utiliser le bouton contextuel avec la classe `ds44-btnStd--contextual` pour cré
 | Bouton standard             | A remplir avec Julien                                                        |
 | Bouton standard large       |                                                                              |
 | Bouton fixé en bas de page  | Classe : `ds44-fullWBtn` + éventuelles classes de gestion de couleur. Ajouter un conteneur positionné en fixe autour du bouton : `ds44-container-fixed ds44-posBot`                        |
+| Bouton de tri               | Le sens du tri doit être précisé dynamiquement dans l'attribut `aria-label`  |
 
 
 
