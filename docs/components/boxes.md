@@ -17,7 +17,7 @@ variations:
 - title: Contacts
   description: Différents encadrés pour mettre en valeur des contacts
   pattern: boxes/box-contacts.html
-- title: Blocs liiiiiiiibres
+- title: Blocs libres
   description: Encadrés colorés
   pattern: boxes/box-libres.html
 - title: Equipements financés

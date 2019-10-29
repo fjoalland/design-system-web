@@ -59,3 +59,25 @@
 .ds44-pictoStore {
     height: 32px;
 }
+
+
+@media (max-width: $ds44-small) {
+
+    // Pushs
+    .ds44-box--push {
+        flex-direction: column-reverse;
+        text-align: center;
+        min-height: 0;
+        padding-top: $spacer-small;
+    }
+
+    .ds44-boxPushContent {
+        width: 100%;
+    }
+
+    .ds44-boxPushPic {
+        width: 100%;
+    }
+    
+  
+}
