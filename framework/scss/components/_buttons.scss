@@ -171,6 +171,8 @@ button {
 .ds44-btnOverlay {
     right: 5.5%; // identical as inner container padding
     position: absolute;
+    top: $ds44-components-vmargin;
+    right: $ds44-components-vmargin;
 }
 
 .ds44-fullWBtn {
@@ -281,6 +283,11 @@ button {
     .ds44-fullWBtn {
         padding: $spacer-tiny;
         font-size: 1.4rem;
+    }
+
+    .ds44-btnOverlay {
+        top: $ds44-margin-base;
+        right: $ds44-margin-base;
     }
     
 

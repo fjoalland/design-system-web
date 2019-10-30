@@ -35,6 +35,7 @@ Utiliser le bouton contextuel avec la classe `ds44-btnStd--contextual` pour cré
 | Bouton standard large       |                                                                              |
 | Bouton fixé en bas de page  | Classe : `ds44-fullWBtn` + éventuelles classes de gestion de couleur. Ajouter un conteneur positionné en fixe autour du bouton : `ds44-container-fixed ds44-posBot`                        |
 | Bouton de tri               | Le sens du tri doit être précisé dynamiquement dans l'attribut `aria-label`  |
+| Bouton ouvrant un menu déroulant | L'attribut `aria-expanded` doit varie en fonction de l'ouverture du menu  |
 
 
 
@@ -45,4 +46,6 @@ Utiliser le bouton contextuel avec la classe `ds44-btnStd--contextual` pour cré
 * Les glyphes sont déclinés en différentes tailles, relatives ou fixes (se référer à la documentation des icônes).
 * pour des questions d'alignement vertical, dans les boutons contenant des glyphes et du texte, le bloc de texte doit être placé dans un conteur de type `<span class="ds44-btnText>Texte du bouton</span>`.
 
-## Other rules
+## Règles de codage
+
+* Cas des boutons déclenchant l'ouverture de menus déroulants : un attribut `aria-expanded` est placé sur le bouton, initialisé à `false` tant que le menu est fermé. Cet attribut doit être réinitialisé à `true` lorsque le menu est ouvert.

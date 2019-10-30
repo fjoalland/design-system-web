@@ -5,6 +5,8 @@
 .ds44-navList {
     list-style: none;
     margin-top: $spacer-large;
+    margin-left: $ds44-spacer-std;
+    margin-right: $ds44-spacer-std;
 }
 
 .ds44-navListN2 {
@@ -80,4 +82,27 @@
         right: 0;
         opacity: 1;
     }
+}
+
+
+// ----------
+//   MOBILE
+// ----------
+
+@media (max-width: $ds44-medium) {
+  
+    .ds44-navList {
+        margin-left: $ds44-margin-base;
+        margin-right: $ds44-margin-base;
+        margin-top: $ds44-margin-base;
+    }
+
+    .ds44-navListN2 {
+        margin-top: $spacer-large-plus;
+    }
+
+    .ds44-rsHeadLink {
+        margin: $spacer-small-plus; // 1.5rem;
+    }
+
 }

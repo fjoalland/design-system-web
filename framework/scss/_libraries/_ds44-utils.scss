@@ -247,9 +247,12 @@
 /* === Overlay === */
 
 .ds44-navOverlay {
-  //position: fixed;
-  //height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
   width: 100%;
+  overflow: scroll;
 }
 
 /* === Separators === */
@@ -259,15 +262,27 @@
   margin: $ds44-container-vmargin $ds44-components-vmargin;
 }
 
+.ds44-xl-gap {
+  column-gap: 15rem;
+}
 
-@media (max-width: $ds44-small) {
+@media (max-width: $ds44-medium) {
+
+  .ds44-hide-mobile {
+    display: none;
+  }
+  
+  .ds44-xl-fluid-margin {
+    margin-left: 5.5%;
+    margin-right: 5.5%;
+  }
 
   .ds44-multiCol {
     column-count: 1;
   }
 
-}
+  .ds44-navSep {
+    margin: $ds44-components-vmargin $ds44-margin-base;
+  }
 
-.ds44-xl-gap {
-  column-gap: 15rem;
 }
