@@ -28,9 +28,14 @@ Il existe trois types de titres de page :
 * Le titre simple, sans image ;
 * Le titre centré, sans image.
 
+Un titre est composé soit :
+* D'une balise `<hx>` et d'un ID unique ;
+* D'une balise `<p>` avec un ID unique, un `role="heading"` et un `aria-level="x"`.
+Privilégier la première solution si possible, la balise de titre étant importante en matière de référencement.
+
 ## Usage
 
-Le titre de la page est positionné dans le conteneur `ds44-pageHeaderContainer`. 
+Le titre de la page est positionné dans le conteneur `ds44-pageHeaderContainer`, lui-même peut être positionné dans le corps de la page (`main`) ou dans le header, selon les nécessités d'intégration.
 
 Si le bandeau de titre comporte une image, deux nouveaux conteneurs sont ajoutés :
 * Le conteneur de l'image : `ds44-pageHeaderContainer__pictureContainer`.
@@ -41,5 +46,7 @@ Si le titre ne comporte aucune image, il peut être soit ferré à gauche, soit 
 * Pour le centrer, ajouter la classe `.txtcenter`.
 
 
-## Other rules
+## Règles
+
+* Le fil d'Ariane est affiché au-dessus du titre.
 

@@ -2,14 +2,18 @@
 layout: pattern
 ---
 
-<header class="ds44-pageHeaderContainer">
+<div class="ds44-pageHeaderContainer">
     <picture class="ds44-pageHeaderContainer__pictureContainer">
-        <img src="../../assets/images/ds44-logo--sampleImg--tpl.png" alt="image" style="width: 100%;" />
+        <img src="../../assets/images/header-page-carrefour.jpg" alt="" class="ds44-headerImg" />
     </picture>
     <div class="ds44-titleContainer">
-        <h1 class="h1-like ds44-text--colorInvert">Page main title with image</h1>
-        <ul class="ds44-breadcrumb ds44-text--colorInvert">
-            <li>Breadcrumb</li>
-        </ul>
+        <nav role="navigation" aria-label="Votre position">
+            <ul class="ds44-list ds44-text--colorInvert">
+                <li class="ds44-breadcrumb"><a href="#"><i class="icon icon-home icon--medium" aria-hidden="true"></i><span class="visually-hidden">Accueil</span></a></li>
+                <li class="ds44-breadcrumb"><a href="#">Page précédente</a></li>
+                <li class="ds44-breadcrumb" aria-current="location"><span>Page courante</span></li>
+            </ul>
+        </nav>
+        <h1 class="h1-like ds44-text--colorInvert" id="idTitre1">Titre de page avec image-bandeau</h1>
     </div>
-</header>
+</div>
