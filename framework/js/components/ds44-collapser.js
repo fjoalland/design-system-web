@@ -38,6 +38,11 @@ function performCloseOverlays(querySelector){
         }
         overlay.classList.remove('show');
         overlay.setAttribute("aria-hidden", "true");
+		// Ré-afficher tous les boutons "fermer"
+        const allCloseButtons = document.querySelectorAll('.ds44-btnOverlay--closeOverlay');
+        allCloseButtons.forEach((element) => {
+          element.style.display = "block";
+        });										 
         removeFocusTabListener(overlay);
         timerDisplayNone(overlay,500);
     });
@@ -207,6 +212,15 @@ function removeFocusTabListener(element) {
                 navNivTwo.style.display = 'block';
                 timerShow(navNivTwo, 0);
                 navNivTwo.setAttribute("aria-hidden", "false");
+				// Cacher tous les boutons "Fermer" sauf le bouton de la modale actuelle
+                const allCloseButtons = document.querySelectorAll('.ds44-btnOverlay--closeOverlay');
+                allCloseButtons.forEach((element) => {
+                    if (element != navNivTwo.querySelector('.ds44-btnOverlay--closeOverlay')) {
+                        element.style.display = "none";
+                    } else {
+                        element.style.display = "block";
+                    }
+                });																		
                 navNivTwo.querySelector('.ds44-btnOverlay--closeOverlay').focus();
                 // ajouter l'élément de piège focus sur le menu nv2
                 trapFocus(navNivTwo, navNivOne);
