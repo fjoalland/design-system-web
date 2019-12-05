@@ -168,6 +168,11 @@ h6, .h6-like {
 
   a {
     text-decoration: none;
+
+    &:hover, &:focus, &:active {
+      text-decoration: underline;
+    }
+
   }
   
 }
@@ -289,7 +294,7 @@ li > p:first-child {
   }
 }
 
-ul:not(.ds44-list) {
+ul:not(.ds44-list):not(.ds44-collapser) {
 
   padding-left: $ds44-padding-xlarge;
 
@@ -309,6 +314,7 @@ ul:not(.ds44-list) {
     }
   }
 }
+
 
 /* Max values */
 img,
