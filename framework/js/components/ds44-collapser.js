@@ -236,6 +236,7 @@ function disableAllTabIndexes(element) {
                 element.setAttribute('aria-expanded', 'false');
                 currentElementOpened.setAttribute('aria-expanded', 'true');
                 panel.setAttribute("aria-hidden", !element.classList.contains("show"));
+                panel.style.visibility = element.classList.contains("show") ? "visible" : "hidden";
             }
 
         };
