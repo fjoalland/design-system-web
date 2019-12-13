@@ -89,6 +89,7 @@ function performToggleAriaHidden(element, ariaHiddenValue, exceptionNode) {
             if (!exceptionNode.contains(itFocusElem)) { // on ignore les éléments du bloc à exclure
                 itFocusElem.setAttribute("oldtabindex", itFocusElem.getAttribute("tabindex"));
                 itFocusElem.setAttribute("tabindex", "-1");
+                itFocusElem.setAttribute("aria-hidden", "true");
             }
         });
     } else {
@@ -100,8 +101,9 @@ function performToggleAriaHidden(element, ariaHiddenValue, exceptionNode) {
                 itFocusElem.removeAttribute("tabindex");
             } else {
                 itFocusElem.setAttribute("tabindex", itFocusElem.getAttribute("oldtabindex"));
-                itFocusElem.removeAttribute("oldtabindex");  
+                itFocusElem.removeAttribute("oldtabindex"); 
             }
+            itFocusElem.removeAttribute("aria-hidden");
         });
     }
 }
