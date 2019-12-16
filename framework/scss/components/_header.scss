@@ -149,9 +149,15 @@
         min-height: 245px;
     }
 
-    .ds44-header .ds44-blocBandeau {
-        margin-left: 0 1rem;
+
+    .ds44-rsHeadLink {
+        padding-left: 0;
     }
+
+    .ds44-header .ds44-blocBandeau {
+        margin: 0 1rem;
+    }
+
 }
 
 @media (max-width: $ds44-tiny - 1) {
