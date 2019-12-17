@@ -171,7 +171,7 @@ function disableAllTabIndexes(element) {
             });
 
             let displayMainNavMenu = function (element) {
-                document.querySelector("body").style.overflow = "hidden";
+                timerClass(document.querySelector("body"), "overflow", "hidden", 375);
                 document.querySelector("header#top > *:not(ds44-blocMenu)").setAttribute("aria-hidden", "true");
                 element.setAttribute("aria-expanded","true");
                 let navNivOne = document.querySelector('.ds44-overlay--navNiv1');
