@@ -36,7 +36,8 @@
     @include ds44-font-sizes(menuHeaders);
     font-family: $ds44-font-family-headings;
     font-weight: bold;
-    margin-bottom: $ds44-components-vmargin;
+    margin-bottom: 2.5rem;
+    margin-top: .5rem;
     position: relative;
     padding-right: 6rem;
     padding-left: 0;
