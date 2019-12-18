@@ -6,6 +6,7 @@
 		// Génère dynamiquement la largeur du bandeau en fonction de la page
 	    _ds44_headerAnim.refreshBandeauWidth = function() {
 	    	var bandeau = document.querySelector(".ds44-blocBandeau");
+	    	if (bandeau == undefined) return;
 	    	if (window.innerWidth <= 576) {
 	    		bandeau.style.width = 'calc(100% - 2rem)';
 	    		return;
@@ -19,6 +20,7 @@
 	    // Génère dynamiquement le padding-top du body en fonction de la hauteur du bandeau
 	    _ds44_headerAnim.refreshBodyPadding = function() {
 			var bandeau = document.querySelector(".ds44-blocBandeau");
+			if (bandeau == undefined) return;
 			var body = document.querySelector("body");
 			body.style.paddingTop = (bandeau.offsetHeight - 10) + "px";
 	    }
@@ -27,6 +29,7 @@
 	    //effectuer un scroll vers le haut pour que l'élément soit affiché
 	    _ds44_headerAnim.checkFocusPosition= function() {
 	    	var header = document.querySelector(".ds44-header");
+	    	if (header == undefined) return;
 	    	
 	    	document.addEventListener('keyup', (event) => {
 	    		if (event.key === "Tab") {
@@ -45,6 +48,7 @@
 	    _ds44_headerAnim.enableScrollActions = function() {
 			var lastScroll = 0;
 			var header = document.querySelector(".ds44-header");
+			if (header == undefined) return;
 
 	    	window.addEventListener("scroll", () =>{
 	    		setTimeout(function() {
@@ -78,6 +82,7 @@
     }
 })(window);
 
+if (document.querySelector(".ds44-blocBandeau") != undefined) {
 ds44_headerAnim.checkFocusPosition();
 
 function performAllRefreshes() {
@@ -90,3 +95,6 @@ performAllRefreshes();
 window.onresize = performAllRefreshes;
 
 ds44_headerAnim.enableScrollActions();
+}
+
+
