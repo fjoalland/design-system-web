@@ -22,7 +22,7 @@
 			var bandeau = document.querySelector(".ds44-blocBandeau");
 			if (bandeau == undefined) return;
 			var body = document.querySelector("body");
-			body.style.paddingTop = (bandeau.offsetHeight + 10) + "px";
+			body.style.paddingTop = (bandeau.offsetHeight + 15) + "px";
 	    }
 
 	    // Sur le focus au clavier d'un élément caché sous le header,
@@ -57,6 +57,11 @@
 					if (currentScroll == 0) {
 						header.classList.remove("hidden");
 						header.removeAttribute("aria-hidden");
+						if (document.activeElement == document.querySelector("html"))  {
+							setTimeout(function() {
+						      document.querySelector('.ds44-btn--menu').focus();
+						    }, 100);
+						}
 						return;
 					}
 
