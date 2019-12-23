@@ -82,10 +82,31 @@ Puis simplement lancer `gulp serve` et ouvrir un http://localhost:4000
 #### Solution 2 : Utilisation de Docker
 
 1. Installer Docker et [Docker compose](https://docs.docker.com/compose/install/) 
-2. Pour démarrer le projet : `cd .docker && docker-compose up`
+2. Démarrer le projet : `cd .docker && docker-compose up`
 3. Ouvrez un navigateur à l'adresse : `http://localhost:4000/` pour voir le site (mise à jour automatique au fur et à mesure de l'édition des fichiers).
 
 Si le port 4000 est déja utilisé sur votre machine, vous pouvez le modifier en modifiant la ligne `PORT:4000` du fichier `.docker/.env`
+
+Pour faire évoluer l'image docker :
+1. Faire les modifications désirées dans le fichier .docker/Dockerfile
+2. Compiler l'image : `cd .docker && docker-compose build`
+3. Tester l'image en local : `docker-compose down && docker-compose up`
+4. Partager l'image sur Docker hub : `docker push julienbayle/dsbuilder`
+
+Pour mettre à jour l'image Docker sans compiler (Suite à une mise à jour réalisé et poussée par une autre personne) :
+```bash
+docker-compose pull
+```
+
+Pour lancer une commande dans le conteneur pendant qu'il est démarré. Voici quelques commandes pratiques (A lancer dans un autre terminal ou un git bash que celui dans lequel on a fait docker-compose up):
+
+* Régénération des sprites (la regénration des sprites n'est pas automatique):
+** Sous windows : `winpty docker-compose exec site gulp build:glyphicons`
+** Sous linux : `docker-compose exec site gulp build:glyphicons`
+
+* Compilation Jekyll complète (par défaut, seule une compilation rapide est effectuée à chaque modification)
+** Sous windows : `winpty docker-compose exec site gulp build:jekyll`
+** Sous linux : `docker-compose exec site gulp build:jekyll`
 
 ### Contribuer un nouveau composant
 
