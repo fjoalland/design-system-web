@@ -26,7 +26,7 @@ function timerClass(elem, className, value, timer) {
 // Ferme tous les overlays, et ajoute un focus sur le bouton qui a ouvert le dernier overlay affiché
 function performCloseOverlays(querySelector){
     document.querySelector("body").style.overflow = "initial";
-    document.querySelector("header#top").setAttribute("aria-hidden", "false");
+    document.querySelector("header#topPage").setAttribute("aria-hidden", "false");
     let overlays = document.querySelectorAll(querySelector);
     var foundShownOverlay = false;
     overlays.forEach((overlay)=> {
@@ -186,7 +186,7 @@ function disableAllTabIndexes(element) {
 
             let displayMainNavMenu = function (element) {
                 timerClass(document.querySelector("body"), "overflow", "hidden", 375);
-                document.querySelector("header#top > *:not(ds44-blocMenu)").setAttribute("aria-hidden", "true");
+                document.querySelector("header#topPage > *:not(ds44-blocMenu)").setAttribute("aria-hidden", "true");
                 element.setAttribute("aria-expanded","true");
                 let navNivOne = document.querySelector('.ds44-overlay--navNiv1');
                 isMenuOpened = true; // indiquer qu'on ouvre le menu
