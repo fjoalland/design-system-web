@@ -5,7 +5,13 @@
 # 
 # Encrypt the private key and add $encrypted_xxx_key and $encrypted_xxx_key to the env
 # travis login --org
-# travis encrypt-file deploy_rsa -p --add
+# sous windows :
+# - travis encrypt key_password=sdfjlqdsfjdqsmlj798fds
+# - gpg -c deploy_rsa
+# - Then add secure env variable and "echo $key_password | gpg --passphrase-fd 0 deploy_rsa.gpg" to the defore-reploy
+# sous Linux : 
+# - travis encrypt-file deploy_rsa -p --add
+#   (auto add the line openssl aes-256-cbc -K $encrypted_d68160cf0aa5_key -iv $encrypted_d68160cf0aa5_iv -in deploy_rsa.enc -out deploy_rsa -d)
 # 
 # Copy the public key onto the remote SSH server
 # ssh-copy-id -i deploy_rsa.pub loireatl-ds@ssh.cluster011.hosting.ovh.net
@@ -17,6 +23,10 @@
 # Add the key to github
 # git add deploy_rsa.enc
 # 
+env:
+  global:
+    secure: "CUodewXD3rxjk246jtq7ku25QjzGXcOAuuDaSBcU7yhNNarvXhR+cx9cgjkTViX+1H0fgy9Hi4NITj3823VCZzGn3UCQrbQvQIkIUE8qkV2SDIfd8G/c9Usi3zCQNl4RPY+rd+cgEfb3UJ+xGUOLDTeQl7F5LniDmUCRNctZteXPYpDWq5hR6vyBlV+IywnuDNEbLdDiItn3+i4Ggne2mx86GEBWPsaMpyryyySsmfW/pmYCP7Dj1WTbl4gHQZqlUEZMrPubeM2pbWWm7ZoO0VSA5jYMy6v67TKd8EehyUm3yXjNJje25CfQwvKhJRqBKdM0IaCx3LsJWUWzJhKgD2ZVe2MJCAG0o0S2k7eJzMIEAV4rRrrD3IlEve7heVis/Ner9lrKU6nHm75OSsKbNKa3VGPbnoeKVhXZGF0OWnOXAFrn4ipy1/bGG7O5SPSXTHJsIAHPg+tefiXdE35HZXItaG2hNtb0Na+1SNwxiC0iDt4bq/8aebQZNQXMNF8iaLjuPcM1xZYj1A5maBFEdaxVjdxJyebWwpAO7aR740h/KfuT1bP5QPauyUusSB+wFOUBtx+fn/FmkiKEgb6fyln5E5GBfPXMc5ZvTBm+p3HNjsjexR1t3/I2vHnoEokvEC5aFp2ZTVDK1LdImsUqTSfdqLx+cLohc9pEKSWIAS0="
+
 addons:
   ssh_known_hosts: ssh.cluster011.hosting.ovh.net
   
@@ -29,7 +39,7 @@ script:
 
 # Unlock private key
 before_deploy:
-  - openssl aes-256-cbc -K $encrypted_d68160cf0aa5_key -iv $encrypted_d68160cf0aa5_iv -in deploy_rsa.enc -out deploy_rsa -d
+  - echo $key_password | gpg --passphrase-fd 0 deploy_rsa.gpg
   - eval "$(ssh-agent -s)"
   - chmod 600 deploy_rsa
   - ssh-add deploy_rsa
