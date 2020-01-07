@@ -8,7 +8,8 @@
 # travis encrypt-file deploy_rsa -p --add
 # 
 # Copy the public key onto the remote SSH server
-# ssh-copy-id -i deploy_rsa.pub <ssh-user>@<deploy-host>
+# ssh-copy-id -i deploy_rsa.pub loireatl-ds@ssh.cluster011.hosting.ovh.net
+# ssh-copy-id -i deploy_rsa.pub loireatl-devds@ssh.cluster011.hosting.ovh.net
 # 
 # Remove the key from your computer
 # rm -f deploy_rsa deploy_rsa.pub
@@ -28,14 +29,19 @@ script:
 
 # Unlock private key
 before_deploy:
-  - openssl aes-256-cbc -K $encrypted_01d8626a5554_key -iv $encrypted_01d8626a5554_iv -in deploy_rsa.enc -out deploy_rsa -d
+  - openssl aes-256-cbc -K $encrypted_d68160cf0aa5_key -iv $encrypted_d68160cf0aa5_iv -in deploy_rsa.enc -out deploy_rsa -d
   - eval "$(ssh-agent -s)"
   - chmod 600 deploy_rsa
   - ssh-add deploy_rsa
 
 deploy:
-  provider: script
-  skip_cleanup: true
-  script: rsync -r --delete-after --quiet --exclude .ssh $TRAVIS_BUILD_DIR/dist/ loireatl-ds@ssh.cluster011.hosting.ovh.net:/home/loireatl-ds/
-  on:
-    branch: master
+  - provider: script
+    skip_cleanup: true
+    script: rsync -r --delete-after --quiet --exclude .ssh $TRAVIS_BUILD_DIR/dist/ loireatl-ds@ssh.cluster011.hosting.ovh.net:/home/loireatl-ds/
+    on:
+      branch: master
+  - provider: script
+    skip_cleanup: true
+    script: rsync -r --delete-after --quiet --exclude .ssh $TRAVIS_BUILD_DIR/dist/ loireatl-devds@ssh.cluster011.hosting.ovh.net:/home/loireatl-devds/
+    on:
+      branch: recette
