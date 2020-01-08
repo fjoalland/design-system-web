@@ -1,6 +1,5 @@
 // supprime les éléments focusables ajoutés via JS
 function deleteOtherFocus() {
-	console.log("YAAAY");
 	let hiddenFocusElems = document.querySelectorAll(".ds44-tmpFocusHidden");
 	hiddenFocusElems.forEach((itFocusElem) => {
 		itFocusElem.remove();

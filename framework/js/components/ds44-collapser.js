@@ -281,7 +281,7 @@ function enableAllTabIndexes(element) {
                 let navNivOne = document.querySelector('.ds44-overlay--navNiv1');
                 let navCurrent = element.closest("section.ds44-overlay");
                 timerClass(navNivOne, "display", "block", 0);
-                navNivOne.querySelector('.ds44-menuBtn[data-ssmenu="' + navCurrent.id + '"]').setAttribute("aria-expanded","false");
+                navNivOne.querySelector('.ds44-menuBtn[data-ssmenu="' + navCurrent.id + '"], #ds44-btn-applis').setAttribute("aria-expanded","false");
                 navCurrent.setAttribute("aria-hidden", "true");
                 navCurrent.style.display = 'block';
                 navCurrent.classList.remove('show');
@@ -291,7 +291,7 @@ function enableAllTabIndexes(element) {
                 trapFocus(navNivOne);
                 toggleAriaHiddenSsMenu(navNivOne);
                 setTimeout(function() {
-                    navNivOne.querySelector('.ds44-menuBtn[data-ssmenu="' + navCurrent.id + '"]').focus();
+                    navNivOne.querySelector('.ds44-menuBtn[data-ssmenu="' + navCurrent.id + '"], #ds44-btn-applis').focus();
                 }, 0);
                 timerDisplayNone(navCurrent,500);
             }
