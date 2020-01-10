@@ -10,7 +10,8 @@ $ds44-small          : 36em !default;     // 576px
 $ds44-medium         : 48em !default;     // 768px
 $ds44-large          : 64em !default;     // 1024px
 $ds44-extra-large    : 75em !default;     // 1200px
-$ds44-max-size       : 85.375em !default; // 1366px
+$ds44-max-inner-size : 73.125em !default; // 1170px
+$ds44-max-size       : 100em !default;    // 1600px
 
 // surcharge de la grillade pour réaligner le breakpoint tablette
 $medium: 1020px;
@@ -109,8 +110,10 @@ $ds44-line-height-base : 1.5 !default;
 
 // Heights
 
-$ds44-largeHeight  : 6.5rem !default;
-$ds44-normalHeight : 4.5rem !default;
+$ds44-largeHeight         : 6.5rem !default;
+$ds44-normalHeight        : 4.5rem !default;
+$header-height-large      : 9.9rem;
+$header-height-small      : 7rem;
 
 
 // Margins & paddings

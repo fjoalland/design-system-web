@@ -4,23 +4,30 @@
 /* Main structure */
 
 .ds44-container-fluid {
-    padding: 0 $ds44-container-hmargin;
     position: relative;
+    width: 100%;
 }
 
+.ds44-container-large {
+    position: relative;
+    max-width: $ds44-max-size;
+    margin: 0 auto;
+}
 
 .ds44-inner-container {
   margin: 0 auto;
-  width: 100%;
+  max-width: $ds44-max-inner-size;
   position: relative;
-  padding: $ds44-container-vmargin $ds44-medium-vmargin;
 }
 
+main {
+  padding-top: $header-height-large;
+}
 
 @media (max-width: $ds44-medium) {
 
-  .ds44-inner-container {
-      padding: $ds44-components-vmargin $ds44-padding-box;
+  main {
+    padding-top: $header-height-small;
   }
 
 }
@@ -28,8 +35,7 @@
 @media (min-width: $ds44-extra-large) {
 
   .ds44-inner-container {
-      padding: $ds44-container-vmargin $ds44-container-hmargin;
-      max-width: $ds44-max-size;
+      max-width: $ds44-max-inner-size;
   }
 
 }
@@ -40,7 +46,6 @@
 
   .ds44-inner-container {
     padding: 0 $ds44-padding-large;
-    margin-top: 0;
   }
 }
 
@@ -48,10 +53,6 @@
     position: fixed;
     width: 100%;
     left: 0;
-}
-
-.ds44-alternate-container {
-    background-color: $ds44-light-bg;
 }
 
 .ds44-contenuArticle, .ds44-contenuMedia {
@@ -68,7 +69,7 @@
 
 @media (max-width: $ds44-small) {
 
-    .ds44-container-fluid {
+    .ds44-container-large {
         padding: 0 $ds44-mobile-margins;
     }
 
@@ -104,14 +105,6 @@
     background: transparent;
     font-weight: $weight-bold;
     margin-bottom: $ds44-components-vmargin;
-}
-
-/* Alternate containers and structures */
-
-/* Nouveau container push full width */
-.ds44-container-fluid-alternate {
-  padding: $ds44-padding-large;
-  position: relative;
 }
 
 /* Links */
@@ -150,6 +143,15 @@
   GENERIC MEDIA QUERIES
   === */
 
+
+
+@media (max-width: $ds44-extra-large) {
+
+  .ds44-titleContainer {
+    min-height: 340px;
+  }
+
+}
 
 @media (max-width: $ds44-small) {
 
