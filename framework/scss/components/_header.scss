@@ -48,11 +48,13 @@
 }
 
 .ds44-header {
+    min-height: $header-height-large;
     position: fixed;
     top: 0;
     padding: 0;
     z-index: 900;
     width: 100%;
+    max-width: $ds44-max-size;
     background-color: $ds44-light;
     visibility: visible;
     opacity: 1;
@@ -132,6 +134,13 @@
             }
 
         }
+    }
+}
+
+@media (max-width: $ds44-medium) {
+
+    .ds44-header {
+        min-height: $header-height-small;
     }
 }
 

@@ -3,7 +3,15 @@
 */
 
 .ds44-breadcrumb {
+    margin-left: 3rem;
+}
+
+.ds44-breadcrumb_item {
     display: inline;
+
+    &:first-child {
+        margin-left: -3rem;
+    }
 
     &::after {
         content: "/";
