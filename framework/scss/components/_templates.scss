@@ -11,7 +11,7 @@
 .ds44-container-large {
     position: relative;
     max-width: $ds44-max-size;
-    margin: 0 auto;
+    margin: 0 $ds44-container-large-margin;
 }
 
 .ds44-inner-container {
@@ -24,9 +24,9 @@ body {
   padding-top: $header-height-large;
 }
 
-@media (max-width: $ds44-medium) {
+@media (max-width: $ds44-medium - 1) {
 
-  main {
+  body {
     padding-top: $header-height-small;
   }
 
@@ -59,7 +59,7 @@ body {
   margin: 0 auto $ds44-components-vmargin auto;
 }
 
-@media (max-width: $ds44-medium) {
+@media (max-width: $ds44-medium - .0625) {
 
     .ds44-container-relmob {
         position: relative;
@@ -67,7 +67,7 @@ body {
 
 }
 
-@media (max-width: $ds44-small) {
+@media (max-width: $ds44-small - .0625) {
 
     .ds44-container-large {
         padding: 0 $ds44-mobile-margins;
@@ -143,9 +143,7 @@ body {
   GENERIC MEDIA QUERIES
   === */
 
-
-
-@media (max-width: $ds44-extra-large) {
+@media (max-width: $ds44-extra-large - .0625) {
 
   .ds44-titleContainer {
     min-height: 340px;
@@ -153,7 +151,19 @@ body {
 
 }
 
-@media (max-width: $ds44-small) {
+@media (max-width: $ds44-large - .0625) {
+
+  aside {
+      margin-top: $ds44-components-vmargin;
+  }
+
+  .ds44-container-large {
+      margin: 0 $ds44-components-vmargin;
+  }
+
+}
+
+@media (max-width: $ds44-small - .0625) {
 
   .ds44-titleContainer {
     min-height: 250px;
@@ -163,12 +173,18 @@ body {
     padding: $ds44-padding-base;
   }
 
+  .ds44-container-large {
+      margin: 0 $ds44-margin-base;
+  }
+
 }
 
-@media (max-width: $ds44-large) {
+@media (min-width: $ds44-max-size) {
 
-  aside {
-      margin-top: $ds44-components-vmargin;
-  }
+    .ds44-container-large {
+      margin: 0 auto;
+      padding-left: $ds44-container-large-margin;
+      padding-right: $ds44-container-large-margin;
+    }
 
 }

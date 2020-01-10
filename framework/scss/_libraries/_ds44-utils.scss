@@ -85,6 +85,10 @@
 .ds44--2xl-padding-t {
   padding-top    : $ds44-padding-xlarge*2;
 }
+.ds44--xxl-padding-tb {
+  padding-top    : $ds44-padding-xxlarge; // 5rem
+  padding-bottom : $ds44-padding-xxlarge; // 5rem
+}
 
 // margins
 
@@ -257,6 +261,17 @@
   .ds44-colRight {
     align-self: flex-start;
   }
+
+  .ds44-grid12-offset-1 {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+  
+  .ds44-grid12-offset-2 {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+  
 
 }
 

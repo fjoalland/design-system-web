@@ -54,7 +54,6 @@
     padding: 0;
     z-index: 900;
     width: 100%;
-    max-width: $ds44-max-size;
     background-color: $ds44-light;
     visibility: visible;
     opacity: 1;
@@ -117,11 +116,6 @@
             margin: 0 0 0 1rem;
             min-width: 0;
 
-            &.ds44--xl-padding {
-                padding-left: 1rem;
-                padding-right: 1rem;
-            }
-
             .icon + .ds44-btnInnerText, 
             .ds44-btnInnerText + .icon {
                 margin-left: 0;           
@@ -137,11 +131,12 @@
     }
 }
 
-@media (max-width: $ds44-medium) {
+@media (max-width: $ds44-medium - 1) {
 
     .ds44-header {
-        min-height: $header-height-small;
+        min-height: 0;
     }
+
 }
 
 /* -------------- */
@@ -150,6 +145,12 @@
 
 @media (max-width: $ds44-small - 1) {
 
+    .ds44-header {
+        min-height: $header-height-small;
+        padding: .5rem 0;
+        left: 0;
+    }
+    
     .ds44-logoContainer {
         flex-wrap: wrap;  
 
@@ -157,6 +158,10 @@
             height: 35px;
             max-width: none;
         }      
+    }
+
+    .ds44-logo {
+        padding-left: .5rem;
     }
     
     .ds44-headerImg {
