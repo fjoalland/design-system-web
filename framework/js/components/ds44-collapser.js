@@ -303,6 +303,8 @@ function enableAllTabIndexes(element) {
 
             const ssMenuReturn = document.querySelectorAll(querySelector);
 
+            console.log(ssMenuReturn);
+
             ssMenuReturn.forEach((element) => {
                 element.addEventListener('click', () => {
                     returnSsNavMenu(element);
@@ -338,7 +340,7 @@ function enableAllTabIndexes(element) {
                     const modal = document.querySelector(modalId);
                     if (!isNullOrUndefined(modal)) {
                         toggleMainHeaderFooterAriaHidden(modal);
-                        document.querySelector("main").setAttribute("aria-hidden","true");
+                        document.querySelector("main").setAttribute("aria-hidden", "true");
                         document.querySelector("body").style.overflow = "hidden";
                         ds44_headerAnim.refreshBandeauWidth();
                         _getFocusOnPopup(modal);
@@ -361,6 +363,8 @@ function enableAllTabIndexes(element) {
                                 _closePopup();
                             }
                         });
+
+                        isModalShown = true;
                     }
                 })
             });
@@ -387,6 +391,7 @@ function enableAllTabIndexes(element) {
                     document.querySelector("body").style.overflow = null;
                     ds44_headerAnim.refreshBandeauWidth();
                     toggleMainHeaderFooterAriaHidden(null);
+                    document.querySelector("main").removeAttribute("aria-hidden");
                     currentModal.classList.toggle('show');
                     timerDisplayNone(currentModal, 300);
                     currentModal.setAttribute('aria-hidden', 'true');
@@ -396,6 +401,8 @@ function enableAllTabIndexes(element) {
                     } else if (currentModal.classList.contains("ds44-overlay")) {
                         performCloseOverlays(".ds44-overlay");
                     }
+
+                    isModalShown = false;
                 }
 
             }
@@ -645,7 +652,6 @@ ds44.expandTuileLink();
 // sert pour gérer les liens autour des tuiles
 
 ds44.closeOverlays(".ds44-btnOverlay--closeOverlay");
-ds44.ssMenuReturn('#navApplis .ds44-btnOverlay--closeOverlay');
 // ajoute un listener aux boutons qui ferment les overlays
 
 const classAnimInputForm = "ds44-moveLabel";
