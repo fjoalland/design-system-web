@@ -506,7 +506,24 @@
   GENERIC MEDIA QUERIES
   === */
 
-@media (max-width: $ds44-small) {
+
+@media (min-width: $ds44-medium) {
+
+  .ds44-multiCol--3 {
+    column-count: 2;
+  }
+
+}
+
+@media (min-width: $ds44-large) {
+
+  .ds44-multiCol--3 {
+    column-count: 3;
+  }
+
+}
+
+@media (max-width: $ds44-small - .0625) {
 
   .ds44-bgCircle {
     background-size: 380px;
@@ -529,16 +546,7 @@
 
 }
 
-
-@media (max-width: $ds44-extra-large) {
-
-  .ds44-xl-gap {
-    column-gap: 8rem;
-  }
-
-}
-
-@media (max-width: $ds44-large) {
+@media (max-width: $ds44-large - .0625) {
 
   .ds44-xl-gap {
     column-gap: 5rem;
@@ -546,18 +554,10 @@
 
 }
 
-@media (min-width: $ds44-medium) {
+@media (max-width: $ds44-extra-large - .0625) {
 
-  .ds44-multiCol--3 {
-    column-count: 2;
-  }
-
-}
-
-@media (min-width: $ds44-large) {
-
-  .ds44-multiCol--3 {
-    column-count: 3;
+  .ds44-xl-gap {
+    column-gap: 8rem;
   }
 
 }
