@@ -2,29 +2,7 @@
 (function (window) {
 	function ds44_headerAnim() {
 		var _ds44_headerAnim = {};
-
-		// Génère dynamiquement la largeur du bandeau en fonction de la page
-	    _ds44_headerAnim.refreshBandeauWidth = function() {
-	    	var bandeau = document.querySelector(".ds44-blocBandeau");
-	    	if (bandeau == undefined) return;
-	    	if (window.innerWidth <= 576) {
-	    		bandeau.style.width = 'calc(100% - 2rem)';
-	    		return;
-	    	}
-	    	var referenceComponent = document.querySelector("main .ds44-container-fluid");
-	    	var referenceStyle = window.getComputedStyle(referenceComponent);
-	    	var padding = parseFloat(referenceStyle.paddingLeft) + parseFloat(referenceStyle.paddingRight);
-	    	bandeau.style.width = (referenceComponent.offsetWidth - padding) + "px";
-	    }
-
-	    // Génère dynamiquement le padding-top du body en fonction de la hauteur du bandeau
-	    _ds44_headerAnim.refreshBodyPadding = function() {
-			var bandeau = document.querySelector(".ds44-blocBandeau");
-			if (bandeau == undefined) return;
-			var body = document.querySelector("body");
-			body.style.paddingTop = (bandeau.offsetHeight) + "px";
-	    }
-
+	
 	    // Sur le focus au clavier d'un élément caché sous le header,
 	    //effectuer un scroll vers le haut pour que l'élément soit affiché
 	    _ds44_headerAnim.checkFocusPosition= function() {
@@ -50,9 +28,13 @@
 			var header = document.querySelector(".ds44-header");
 			if (header == undefined) return;
 
+			var headerHeight = header.offsetHeight;
+
 	    	window.addEventListener("scroll", () =>{
 	    		setTimeout(function() {
 	    			const currentScroll = window.pageYOffset;
+	    			var body = document.querySelector("body");
+	    			var bodyTopCoordinate = body.getBoundingClientRect().top + parseInt(body.style.paddingTop);
 
 					if (currentScroll == 0) {
 						header.classList.remove("hidden");
@@ -65,8 +47,10 @@
 						return;
 					}
 
-					if (currentScroll > lastScroll && !header.classList.contains("hidden")) {
-						// Scroll vers le bas
+					if (currentScroll > lastScroll && !header.classList.contains("hidden")
+							&& currentScroll > headerHeight) {
+						// Scroll vers le bas, uniquement si le haut de page est 
+						// en dessous de la hauteur du header
 						header.classList.add("hidden");
 						header.setAttribute("aria-hidden", "true");
 					} else if (currentScroll < lastScroll && header.classList.contains("hidden")) {
@@ -88,18 +72,8 @@
 })(window);
 
 if (document.querySelector(".ds44-blocBandeau") != undefined) {
-ds44_headerAnim.checkFocusPosition();
-
-function performAllRefreshes() {
-	ds44_headerAnim.refreshBandeauWidth();
-	ds44_headerAnim.refreshBodyPadding();
-}
-
-performAllRefreshes();
-
-window.onresize = performAllRefreshes;
-
-ds44_headerAnim.enableScrollActions();
+	ds44_headerAnim.checkFocusPosition();
+	ds44_headerAnim.enableScrollActions();
 }
 
 

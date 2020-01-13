@@ -131,7 +131,7 @@
     font-weight: bold;
 
     &::after {
-        padding-bottom: 3rem!important;
+        padding-bottom: 2rem!important;
     }
 }
 
@@ -169,7 +169,7 @@
     }
 
     .ds44-navListN2 {
-        margin-top: 5rem;
+        margin-top: $ds44-components-vmargin;
     }
 
     .ds44-rsHeadLink {
@@ -178,7 +178,7 @@
     }
     
     .ds44-container-menuBackLink {
-        margin: 1rem;
+        margin: 1rem 1rem 1rem 2rem;
         width: calc(100% - 90px);
     }
 
@@ -223,10 +223,28 @@
         text-align: left;
     }
 
-    .ds44-navListApplis, .ds44-navListApplis > li {
-        margin-left: 0;
-        margin-right: 0;
-        padding-left: 0;
+    .ds44-navListApplis {
+        margin-left: $ds44-large-margin;
+
+        > li {
+            padding-left: 0;
+        }
+    }
+
+    .ds44-navContainer {
+    
+        > .ds44-inner-container {
+            max-height: 100%;
+        }
+    
+    }
+
+}
+
+@media (min-width: $ds44-large) and (max-width: $ds44-max-size) {
+
+    .ds44-navContainer > .ds44-inner-container {
+        max-width: 90%;   
     }
 
 }
