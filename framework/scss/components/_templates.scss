@@ -26,7 +26,15 @@ main {
   padding-top: $header-height-large;
 }
 
-@media (max-width: $ds44-medium - 1) {
+@media (max-width: $ds44-large) {
+
+  body {
+    padding-top: $header-height-medium;
+  }
+
+}
+
+@media (max-width: $ds44-small) {
 
   main {
     padding-top: $header-height-small;
@@ -119,18 +127,18 @@ main {
 
 .ds44-text--colorInvert {
     color: $ds44-light-color;
-  
+
     a {
       color: $ds44-light-color;
     }
-  
+
 }
 
 .ds44-exergue {
     border: 1px solid $ds44-contextual-color;
     padding: $ds44-padding-box $ds44-padding-xlarge;
     margin: $ds44-components-vmargin auto;
-}  
+}
 
 .ds44-smallText {
   @include ds44-font-sizes(smallText);
