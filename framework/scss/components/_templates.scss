@@ -11,22 +11,24 @@
 .ds44-container-large {
     position: relative;
     max-width: $ds44-max-size;
-    margin: 0 $ds44-container-large-margin;
+    margin-left: $ds44-container-large-margin;
+    margin-right: $ds44-container-large-margin;
 }
 
 .ds44-inner-container {
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
   max-width: $ds44-max-inner-size;
   position: relative;
 }
 
-body {
+main {
   padding-top: $header-height-large;
 }
 
 @media (max-width: $ds44-medium - 1) {
 
-  body {
+  main {
     padding-top: $header-height-small;
   }
 
@@ -175,6 +177,11 @@ body {
 
   .ds44-container-large {
       margin: 0 $ds44-margin-base;
+  }
+
+  .ds44-component-chapo {
+      max-width: 85%;
+      display: none;
   }
 
 }
