@@ -331,9 +331,6 @@
 .ds44-alphaGradient--header {
   padding: $ds44-padding-xxlarge $ds44-padding-xlarge $ds44-padding-large $ds44-padding-xlarge;
 }
-.ds44-lightBG {
-  background-color: $ds44-light-bg;
-}
 
 /* === Text utils === */
 
@@ -364,6 +361,10 @@
 }
 
 .ds44-bgGray {
+  background-color: $ds44-light-bg;
+}
+
+.ds44-lightBG {
   background-color: $ds44-light-bg;
 }
 
