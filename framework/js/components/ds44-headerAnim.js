@@ -48,7 +48,7 @@
 					}
 
 					if (currentScroll > lastScroll && !header.classList.contains("hidden")
-							&& bodyTopCoordinate <= 0) {
+							&& currentScroll > headerHeight) {
 						// Scroll vers le bas, uniquement si le haut de page est 
 						// en dessous de la hauteur du header
 						header.classList.add("hidden");
