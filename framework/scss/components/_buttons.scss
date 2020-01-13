@@ -329,6 +329,14 @@ a.ds44-btnStd--retourPage {
         top: $ds44-margin-base;
         right: $ds44-margin-base;
     }
+    .ds44-btnStd--retourPage,
+    a.ds44-btnStd--retourPage {
+    position: relative;
+    top: 40px;
+    left: 16.666%;
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
 
 }
 
@@ -340,6 +348,10 @@ a.ds44-btnStd--retourPage {
     .ds44-btnStd--large {
         padding: $ds44-padding-box;
     }
+    .ds44-btnStd--retourPage,
+    a.ds44-btnStd--retourPage {
+    left: 5%;
+  }
 
 }
 
