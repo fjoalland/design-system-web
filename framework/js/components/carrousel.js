@@ -69,6 +69,7 @@ if(allCarrousel) {
 
       for(var button of [nextEl, prevEl]) {
         button.removeAttribute("aria-label");
+        button.removeAttribute("role");
 
         button.addEventListener("click", (event) => {
 
