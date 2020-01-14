@@ -95,6 +95,9 @@ if(allCarrousel) {
       });
 
     }
+    let spanNotif = element.getElementsByClassName("swiper-notification")[0];
+    //pour que la methode ait lieu apres swipper
+    setTimeout(spanNotif.remove(), 5);
 
   });
 }
