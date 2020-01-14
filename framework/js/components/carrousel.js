@@ -48,8 +48,8 @@ class Carrousel {
           const titleCarrousel = this.getTitleCaroussel(element, index);
 
           var updatePrevAndNextSlideMessage = () => {
-            prevEl.setAttribute("title", this.prevSlideMessageStr+" "+titleCarrousel+" - "+(swiperObj.realIndex+1)+"/"+nbrSlide);
-            nextEl.setAttribute("title", this.nextSlideMessageStr+" "+titleCarrousel+" - "+(swiperObj.realIndex+1)+"/"+nbrSlide);
+            prevEl.setAttribute("title", this.prevSlideMessageStr+" "+titleCarrousel+" - "+(swiperObj.realIndex)+"/"+nbrSlide);
+            nextEl.setAttribute("title", this.nextSlideMessageStr+" "+titleCarrousel+" - "+(swiperObj.realIndex+2)+"/"+nbrSlide);
           };
 
           updatePrevAndNextSlideMessage();
