@@ -68,8 +68,10 @@ if(allCarrousel) {
       titreTuileActive.setAttribute("tabindex", "2");
 
       for(var button of [nextEl, prevEl]) {
+        button.removeAttribute("aria-label");
 
         button.addEventListener("click", (event) => {
+
           titreTuileActive.setAttribute("tabindex", "-1");
           titreTuileActive = arrSlide[swiperObj.activeIndex].querySelector(".ds44-card__title a[href]:not([disabled])");
           titreTuileActive.setAttribute("tabindex", "2");
