@@ -9,6 +9,8 @@ description: Liste de liens de navigation
 variations:
 - title: Fil d'Ariane standard
   pattern: breadcrumb/breadcrumb.html
+- title: Fil d'Ariane sur fond sombre ou image
+  pattern: breadcrumb/breadcrumb--invert.html
 ---
 
 
@@ -18,8 +20,9 @@ Le fil d'Ariane est un composant de navigation utilisé en haut de page pour gui
 
 ## Documentation
 
-Le fil d'Ariane s'insère dans une liste `<ul class="ds44-list ds44-text--colorInvert">`. Couleur intervertie quand le fil est positionné au-dessus d'un bandeau/image.
-Chaque élément de la liste doit comporter une classe `ds44-breadcrumb`.
+Le fil d'Ariane s'insère dans une liste `<ul class="ds44-list ds44-breadcrumb">`. 
+Ajouter la classe de couleur intervertie `ds44-text--colorInvert` quand le fil est positionné au-dessus d'un bandeau/image.
+Chaque élément de la liste doit comporter une classe `ds44-breadcrumb_item`.
 Le premier élément permet de retourner à l'accueil. Le texte est rendu invisible graphiquement via la classe `visually-hidden` et remplacé par une icône.
 
 ...
