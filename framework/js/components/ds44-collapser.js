@@ -303,8 +303,6 @@ function enableAllTabIndexes(element) {
 
             const ssMenuReturn = document.querySelectorAll(querySelector);
 
-            console.log(ssMenuReturn);
-
             ssMenuReturn.forEach((element) => {
                 element.addEventListener('click', () => {
                     returnSsNavMenu(element);
