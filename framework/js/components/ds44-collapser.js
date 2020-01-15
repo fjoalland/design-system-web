@@ -361,7 +361,7 @@ function enableAllTabIndexes(element) {
                             }
                         });
 
-                        isModalShown = true;
+                        document.dispatchEvent(new CustomEvent('modal:show'));
                     }
                 })
             });
@@ -398,7 +398,7 @@ function enableAllTabIndexes(element) {
                         performCloseOverlays(".ds44-overlay");
                     }
 
-                    isModalShown = false;
+                    document.dispatchEvent(new CustomEvent('modal:hide'));
                 }
 
             }
