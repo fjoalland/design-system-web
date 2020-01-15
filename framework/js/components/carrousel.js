@@ -7,9 +7,8 @@ class Carrousel {
 
   constructor() {
     const allCarrousel = document.querySelectorAll(".swipper-carousel-wrap");
-    let allSwiper = [];
 
-    if(allCarrousel) {
+    if(allCarrousel != null) {
       allCarrousel.forEach((element, index) => {
 
         const nextEl = element.getElementsByClassName("swiper-button-next")[0];
@@ -36,12 +35,8 @@ class Carrousel {
           loop: screenWidth >= 768 ? (nbrSlide > nbrMaxSlide) : (nbrSlide > 1),
         });
 
-        allSwiper.push(swiperObj);
-
         if(swiperObj.params.loop) {
 
-          nextEl.classList.remove("swiper-button-disabled");
-          prevEl.classList.remove("swiper-button-disabled");
           const titleCarrousel = this.getTitleCaroussel(element, index);
 
           const updatePrevAndNextSlideMessage = () => {
@@ -63,6 +58,7 @@ class Carrousel {
           var titreTuileActive = arrSlide[swiperObj.activeIndex].querySelector(".ds44-card__title a[href]:not([disabled])");
 
           for(var button of [nextEl, prevEl]) {
+            button.classList.remove("swiper-button-disabled");
             button.removeAttribute("aria-label");
             button.removeAttribute("role");
 
