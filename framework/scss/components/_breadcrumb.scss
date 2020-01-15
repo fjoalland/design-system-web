@@ -42,3 +42,11 @@
     }
 
 }
+
+@media (max-width: $ds44-large - .0625) {
+
+  .ds44-tablette-reduced-mt .ds44-breadcrumb{
+    margin-top: $ds44-margin-base;
+  }
+
+}
