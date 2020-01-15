@@ -55,8 +55,6 @@ class Carrousel {
 
           updatePrevAndNextSlideMessage();
 
-          var titreTuileActive = arrSlide[swiperObj.activeIndex].querySelector(".ds44-card__title a[href]:not([disabled])");
-
           for(var button of [nextEl, prevEl]) {
             button.classList.remove("swiper-button-disabled");
             button.removeAttribute("aria-label");
@@ -64,15 +62,35 @@ class Carrousel {
 
             button.addEventListener("click", (event) => {
 
-              titreTuileActive = arrSlide[swiperObj.activeIndex].querySelector(".ds44-card__title a[href]:not([disabled])");
-
               //pour que la methode ait lieu apres swipper
               setTimeout(updatePrevAndNextSlideMessage, 5);
-              //pour que la methode ait lieu apres l'animation de scroll
-              setTimeout(titreTuileActive.focus(), 150);
-            }, false);
+            });
 
           }
+
+          prevEl.addEventListener("click", (event) => {
+
+            let titreTuileActive = arrSlide[swiperObj.activeIndex].querySelector(".ds44-card__title a[href]:not([disabled])");
+            //pour que la methode ait lieu apres l'animation de scroll
+            setTimeout(() => { titreTuileActive.focus() }, 150);
+
+          });
+
+          nextEl.addEventListener("click", (event) => {
+
+            let nbrSlideWithDuplicate = arrSlide.length;
+
+            let index = swiperObj.activeIndex+(nbrMaxSlide-1);
+            if(swiperObj.activeIndex+(nbrMaxSlide-1) > nbrSlideWithDuplicate) {
+               index = swiperObj.activeIndex+(nbrMaxSlide-1) - nbrSlideWithDuplicate;
+            }
+
+            let titreTuileActive = arrSlide[index].querySelector(".ds44-card__title a[href]:not([disabled])");
+            //pour que la methode ait lieu apres l'animation de scroll
+            setTimeout(() => { titreTuileActive.focus() }, 150);
+
+          });
+
           prevEl.addEventListener("keypress", (event) => fusionneKeyPressedWithClicked(event));
           nextEl.addEventListener("keypress", (event) => fusionneKeyPressedWithClicked(event));
 
