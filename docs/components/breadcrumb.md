@@ -7,9 +7,9 @@ title: Fil d'Ariane
 description: Liste de liens de navigation
 
 variations:
-- title: Fil d'Ariane standard
+- title: Fil Ariane standard
   pattern: breadcrumb/breadcrumb.html
-- title: Fil d'Ariane sur fond sombre ou image
+- title: Fil Ariane sur fond sombre ou image
   pattern: breadcrumb/breadcrumb--invert.html
 ---
 
