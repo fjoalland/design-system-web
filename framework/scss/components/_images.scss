@@ -115,11 +115,16 @@ figure {
     .ds44-legendeContainer.ds44-container-imgRatio {
       padding-top: 0;
     }
-    
+
   .ds44-imgRatio {
       position: relative;
       height: auto;
     }
+
+  .ds44-card__section--horizontal--img .ds44-imgRatio {
+        position: absolute;
+        height: 100%;
+      }
 
 }
 
