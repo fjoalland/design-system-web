@@ -13,7 +13,9 @@ class Carrousel {
       allCarrousel.forEach((element, index) => {
 
         const nextEl = element.getElementsByClassName("swiper-button-next")[0];
+        const innerTextNextEl = nextEl.getElementsByClassName("visually-hidden")[0];
         const prevEl = element.getElementsByClassName("swiper-button-prev")[0];
+        const innerTextPrevEl = prevEl.getElementsByClassName("visually-hidden")[0];
         const swiper = element.getElementsByClassName("swiper-container")[0];
         const arrSlide = swiper.getElementsByClassName("swiper-slide");
         const nbrSlide = arrSlide.length;
@@ -40,16 +42,23 @@ class Carrousel {
 
           nextEl.classList.remove("swiper-button-disabled");
           prevEl.classList.remove("swiper-button-disabled");
+          const titleCarrousel = this.getTitleCaroussel(element, index);
 
           disableAllTabIndexes(element);
           prevEl.setAttribute("tabindex", "1");
           nextEl.setAttribute("tabindex", "3");
+          const updatePrevAndNextSlideMessage = () => {
 
-          const titleCarrousel = this.getTitleCaroussel(element, index);
+            let indexPrevEl = swiperObj.realIndex === 0 ? nbrSlide : swiperObj.realIndex;
+            let indexNextEl = swiperObj.realIndex+2 > nbrSlide ? swiperObj.realIndex+2-nbrSlide : swiperObj.realIndex+2;
 
-          var updatePrevAndNextSlideMessage = () => {
-            prevEl.setAttribute("title", this.prevSlideMessageStr+" "+titleCarrousel+" - "+(swiperObj.realIndex)+"/"+nbrSlide);
-            nextEl.setAttribute("title", this.nextSlideMessageStr+" "+titleCarrousel+" - "+(swiperObj.realIndex+2)+"/"+nbrSlide);
+            let titlePrevEl = this.prevSlideMessageStr+" "+titleCarrousel+" - "+indexPrevEl+"/"+nbrSlide;
+            let titleNextEl = this.nextSlideMessageStr+" "+titleCarrousel+" - "+indexNextEl+"/"+nbrSlide;
+
+            prevEl.setAttribute("title", titlePrevEl);
+            nextEl.setAttribute("title", titleNextEl);
+            innerTextPrevEl.innerText = titlePrevEl;
+            innerTextNextEl.innerText = titleNextEl;
           };
 
           updatePrevAndNextSlideMessage();
