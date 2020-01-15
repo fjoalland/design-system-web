@@ -323,7 +323,7 @@ a.ds44-btnStd--retourPage {
 /* medium screens */
 /* ------------- */
 
-@media (max-width: $ds44-large) {
+@media (max-width: $ds44-large - .0625) {
 
     .ds44-btnOverlay {
         top: $ds44-margin-base;
@@ -343,19 +343,20 @@ a.ds44-btnStd--retourPage {
 /* small screens */
 /* ------------- */
 
-@media (max-width: $ds44-medium) {
+@media (max-width: $ds44-medium - .0625) {
 
     .ds44-btnStd--large {
         padding: $ds44-padding-box;
     }
     .ds44-btnStd--retourPage,
     a.ds44-btnStd--retourPage {
-    left: 5%;
+        left: 5%;
+        top: 1.5rem;
   }
 
 }
 
-@media (max-width: $ds44-small) {
+@media (max-width: $ds44-small - .0625) {
 
     .ds44-btnIcoText--maxi {
 
