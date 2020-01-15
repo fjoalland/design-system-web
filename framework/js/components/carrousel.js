@@ -44,8 +44,6 @@ class Carrousel {
           prevEl.classList.remove("swiper-button-disabled");
           const titleCarrousel = this.getTitleCaroussel(element, index);
 
-          prevEl.setAttribute("tabindex", "1");
-          nextEl.setAttribute("tabindex", "3");
           const updatePrevAndNextSlideMessage = () => {
 
             let indexPrevEl = swiperObj.realIndex === 0 ? nbrSlide : swiperObj.realIndex;
@@ -63,7 +61,6 @@ class Carrousel {
           updatePrevAndNextSlideMessage();
 
           var titreTuileActive = arrSlide[swiperObj.activeIndex].querySelector(".ds44-card__title a[href]:not([disabled])");
-          titreTuileActive.setAttribute("tabindex", "2");
 
           for(var button of [nextEl, prevEl]) {
             button.removeAttribute("aria-label");
@@ -72,7 +69,6 @@ class Carrousel {
             button.addEventListener("click", (event) => {
 
               titreTuileActive = arrSlide[swiperObj.activeIndex].querySelector(".ds44-card__title a[href]:not([disabled])");
-              titreTuileActive.setAttribute("tabindex", "2");
 
               //pour que la methode ait lieu apres swipper
               setTimeout(updatePrevAndNextSlideMessage, 5);
