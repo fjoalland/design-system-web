@@ -44,7 +44,6 @@ class Carrousel {
           prevEl.classList.remove("swiper-button-disabled");
           const titleCarrousel = this.getTitleCaroussel(element, index);
 
-          disableAllTabIndexes(element);
           prevEl.setAttribute("tabindex", "1");
           nextEl.setAttribute("tabindex", "3");
           const updatePrevAndNextSlideMessage = () => {
@@ -72,7 +71,6 @@ class Carrousel {
 
             button.addEventListener("click", (event) => {
 
-              titreTuileActive.setAttribute("tabindex", "-1");
               titreTuileActive = arrSlide[swiperObj.activeIndex].querySelector(".ds44-card__title a[href]:not([disabled])");
               titreTuileActive.setAttribute("tabindex", "2");
 
