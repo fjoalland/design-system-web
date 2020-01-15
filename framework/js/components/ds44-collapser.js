@@ -600,7 +600,7 @@ function enableAllTabIndexes(element) {
         }
 
         _ds44.reactOnInvalidInput = function() {
-            allInputs = document.querySelectorAll("input");
+            allInputs = document.querySelectorAll("input, select");
 
             if (allInputs.length) {
                 allInputs.forEach((itInput) => {
