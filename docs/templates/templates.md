@@ -10,10 +10,8 @@ status: Décrit
 variations:
 - title: Template carrefour
   pattern: templates/template-entryMenu.html
-- title: Template générique 1 col gauche
-  pattern: templates/generique_colgauche.html
 - title: Template générique centre
-  pattern: templates/generique_centre.html
+  pattern: templates/template-generique-centre.html
 ---
 
 ## Utilisation
