@@ -78,4 +78,14 @@ div .swiper-slide {
         width: auto;
     }
 
+    .swipper-carousel-wrap {
+        margin-left: -$ds44-mobile-margins;
+        margin-right: -$ds44-mobile-margins;
+
+        .swiper-container {
+          margin: 0;
+        }
+    }
+
+
 }
