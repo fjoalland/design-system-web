@@ -311,10 +311,6 @@
 
 @media (max-width: $ds44-medium - .0625) {
 
-  .ds44-hide-mobile {
-    display: none!important;
-  }
-
   .ds44-tablette-reduced-pt {
     padding-top: $ds44-padding-base;
   }
@@ -326,6 +322,10 @@
 }
 
 @media (max-width: $ds44-small - .0625) {
+  
+  .ds44-hide-mobile {
+    display: none!important;
+  }
 
   .ds44-hide-smallScreens {
     display: none;
@@ -333,6 +333,10 @@
 
   .ds44-mobile-reduced-pt {
     padding-top: $ds44-padding-base;
+  }
+
+  .ds44-mobile-reduced-pb {
+    padding-bottom: $ds44-padding-base;
   }
 
   .ds44-mobile-reduced-mb {
