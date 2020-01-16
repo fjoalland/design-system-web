@@ -102,9 +102,9 @@ class Carrousel {
 
           nextEl.addEventListener("click", (event) => {
 
-            let index = getIndexDerniereTuileVisible();
+            let indexDerniereTuile = getIndexDerniereTuileVisible();
 
-            let tuileActive = arrSlide[index];
+            let tuileActive = arrSlide[indexDerniereTuile];
             let titreTuileActive = tuileActive.querySelector(".ds44-card__title a[href]:not([disabled])");
 
             for(let tuile of arrSlide) {
@@ -112,7 +112,7 @@ class Carrousel {
             }
             //pour que la methode ait lieu apres l'animation de scroll
             setTimeout(() => {
-              this.updateVisibiliteTuiles(arrSlide, swiperObj.activeIndex, getIndexDerniereTuileVisible());
+              this.updateVisibiliteTuiles(arrSlide, swiperObj.activeIndex, indexDerniereTuile);
               titreTuileActive.focus();
             }, 200);
 
@@ -192,6 +192,25 @@ class Carrousel {
               }
             });
           }
+
+          element.addEventListener("mousedown", (event) => {
+            for(let tuile of arrSlide) {
+              tuile.style.visibility = "visible";
+            }
+            element.setPointerCapture(event.pointerId);
+          });
+
+          element.addEventListener("mouseup", (event) => {
+            //pour que la methode ait lieu apres l'animation de scroll
+            setTimeout(() => {
+              let tuileActive = arrSlide[swiperObj.activeIndex];
+              let titreTuileActive = tuileActive.querySelector(".ds44-card__title a[href]:not([disabled])");
+
+              this.updateVisibiliteTuiles(arrSlide, swiperObj.activeIndex, getIndexDerniereTuileVisible());
+              titreTuileActive.focus();
+              element.releasePointerCapture(event.pointerId);
+            }, 200);
+          });
 
         } else {
 
