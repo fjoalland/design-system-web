@@ -37,9 +37,9 @@ button, a.ds44-btnStd {
     }
 }
 
-.ds44-btnStd--large {
+.ds44-btnStd--large, a.ds44-btnStd--large {
     font-size: 1em; // 16px
-    padding: 0 $ds44-padding-large;
+    padding: $ds44-padding-large;
     min-height: $ds44-largeHeight;
 }
 
