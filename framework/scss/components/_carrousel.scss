@@ -1,5 +1,11 @@
 // Carrousel DS44
-
+.swiper-container {
+  padding: 1rem 2rem 3rem 2rem;
+  margin: 0 calc(5.5% - 2rem);
+}
+.swiper-container .ds44-card {
+  margin-bottom: 0;
+}
 div .swiper-button-next,
 div .swiper-button-prev {
     color: #000;
