@@ -12,6 +12,8 @@ variations:
   pattern: carrousel/carrousel-x4.html
 - title: Slider trois tuiles
   pattern: carrousel/carrousel-x3.html
+- title: Slider dates trois tuiles
+  pattern: carrousel/carrousel-x3--date.html
 ---
 
 
@@ -27,6 +29,7 @@ Selon le nombre de tuiles souhaité dans l'affichage, changer le colonnage de la
 Sur le conteneur interne (`<ul class="ds-44-list ... has-gutter-l">`), choisir la classe adaptée au nombre de tuiles souhaité (se réferer à la doc KNACSS ou à la cheatsheet si nécessaire) :
 - Classe `grid-4-small-1` pour un slider à quatre tuiles ;
 - Classe `grid-3-small-1` pour un slider à trois tuiles.
+
 
 ## FAQ
 
