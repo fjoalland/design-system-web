@@ -392,7 +392,7 @@ function enableAllTabIndexes(element) {
                     document.querySelector("body").style.overflow = null;
                     toggleMainHeaderFooterAriaHidden(null);
                     let main = document.querySelector("main");
-                    if(main !== null) removeAttribute("aria-hidden");
+                    if(main !== null) main.removeAttribute("aria-hidden");
                     currentModal.classList.toggle('show');
                     timerDisplayNone(currentModal, 300);
                     currentModal.setAttribute('aria-hidden', 'true');
