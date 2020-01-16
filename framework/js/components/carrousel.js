@@ -136,11 +136,23 @@ class Carrousel {
               event.shiftKey
             ) {
               event.preventDefault();
-              let blockParentCarrousel = element.parentElement;
-              let blockBeforeCarrousel = blockParentCarrousel.previousElementSibling;
-              let allElementsFocusableBeforeCarrousel = blockBeforeCarrousel.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-              let lastElementFocusableBeforeCarrousel = allElementsFocusableBeforeCarrousel[allElementsFocusableBeforeCarrousel.length-1];
-              lastElementFocusableBeforeCarrousel.focus();
+
+              let carrouselPrecedent = element.previousElementSibling.previousElementSibling.previousElementSibling;
+              let allElementsFocusableCarrouselPrecedent = carrouselPrecedent.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+              let lastElementFocusableCarrouselPrecedent = allElementsFocusableCarrouselPrecedent[allElementsFocusableCarrouselPrecedent.length-1];
+              // on est dans le composant carrousel
+              if(lastElementFocusableCarrouselPrecedent != null) {
+
+                lastElementFocusableCarrouselPrecedent.focus();
+
+              } else {
+
+                let blockParentCarrousel = element.parentElement;
+                let blockBeforeCarrousel = blockParentCarrousel.previousElementSibling;
+                let allElementsFocusableBeforeCarrousel = blockBeforeCarrousel.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                let lastElementFocusableBeforeCarrousel = allElementsFocusableBeforeCarrousel[allElementsFocusableBeforeCarrousel.length-1];
+                lastElementFocusableBeforeCarrousel.focus();
+              }
             }
           });
 
