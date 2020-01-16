@@ -6,7 +6,7 @@ class Onglet {
     let allTabs = document.querySelectorAll(".js-tablist__link");
     if (!(allTabs == null)) {
       allTabs.forEach((tab) => {
-        tab.addEventListener('click', () => processTransitionOnglets(tab, allTabs));
+        tab.addEventListener('click', () => this.processTransitionOnglets(tab, allTabs));
         tab.addEventListener("keypress", (event) => fusionneKeyPressedWithClicked(event));
 
         if(tab.hasAttribute("aria-current")) {
