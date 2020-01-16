@@ -129,7 +129,7 @@ function toggleAriaHiddenSsMenu(exceptionElem) {
 // Passe l'attribut "tabindex" des éléments 'focusables' d'un élément à -1
 function disableAllTabIndexes(element) {
     if (isNullOrUndefined(element)) return;
-    
+
     var focusableEls = element.querySelectorAll(queryCurrentFocusableElements);
 
     focusableEls.forEach((itFocusElem) => {
@@ -140,7 +140,7 @@ function disableAllTabIndexes(element) {
 // Supprime l'attribut "tabindex" des éléments focusables d'un élément
 function enableAllTabIndexes(element) {
     if (isNullOrUndefined(element)) return;
-    
+
     var focusableEls = element.querySelectorAll(queryAllFocusableElements);
 
     focusableEls.forEach((itFocusElem) => {
@@ -338,8 +338,10 @@ function enableAllTabIndexes(element) {
                     const modal = document.querySelector(modalId);
                     if (!isNullOrUndefined(modal)) {
                         toggleMainHeaderFooterAriaHidden(modal);
-                        document.querySelector("main").setAttribute("aria-hidden", "true");
-                        document.querySelector("body").style.overflow = "hidden";
+                        let main = document.querySelector("main");
+                        if(main !== null) main.setAttribute("aria-hidden", "true");
+                        let body = document.querySelector("body");
+                        if(body !== null) body.style.overflow = "hidden";
                         _getFocusOnPopup(modal);
                         modal.style.display = "flex";
                         timerShow(modal, 1);
@@ -387,7 +389,8 @@ function enableAllTabIndexes(element) {
                 if (currentModal) {
                     document.querySelector("body").style.overflow = null;
                     toggleMainHeaderFooterAriaHidden(null);
-                    document.querySelector("main").removeAttribute("aria-hidden");
+                    let main = document.querySelector("main");
+                    if(main !== null) removeAttribute("aria-hidden");
                     currentModal.classList.toggle('show');
                     timerDisplayNone(currentModal, 300);
                     currentModal.setAttribute('aria-hidden', 'true');
