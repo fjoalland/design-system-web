@@ -30,7 +30,6 @@
     font-family: $ds44-font-family-base;
     background: transparent;
     padding: 0;
-    margin-bottom: 0;
     line-height: 1.2em;
 }
 
@@ -114,6 +113,21 @@
 /* =======
   MEDIA QUERIES
   === */
+@media (max-width: $ds44-large) {
+
+  .ds44-grid12-offset-1 .col:last-child{
+    margin-top: 2em;
+  }
+
+}
+
+  // @media (max-width: $ds44-small - 1) {
+  //
+  //   .ds44-grid12-offset-1 .col{
+  //     padding-left: 5%;
+  //     padding-right: 5%;
+  //   }
+  // }
 
 @media (max-width: $ds44-medium) {
 
