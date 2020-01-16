@@ -27,7 +27,7 @@ class Carrousel {
 
         var swiperObj = new Swiper (swiper, {
           direction: 'horizontal',
-          spaceBetween: screenWidth >= 768 ? 16 : 0,
+          spaceBetween: 16,
           watchOverflow: true,
           navigation: {
             nextEl: nextEl,
