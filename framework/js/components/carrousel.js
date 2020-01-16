@@ -39,6 +39,14 @@ class Carrousel {
 
         if(swiperObj.params.loop) {
 
+          setTimeout( () => {
+            for(let tuile of arrSlide) {
+              tuile.style.margin = "0 8px";
+            }
+            arrSlide[0].style.margin = "0 8px 0 0";
+            arrSlide[arrSlide.length-1].style.margin = "0 0 0 8px";
+          }, 5);
+
           let title = element.previousElementSibling.querySelector(".h2-like");
 
           const titleCarrousel = title != null ? title.innerText : "Carrousel n°"+(indexCarrousel+1);
