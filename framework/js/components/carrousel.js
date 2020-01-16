@@ -69,7 +69,7 @@ class Carrousel {
             return index;
           }
 
-          this.updateVisibiliteTuiles(arrSlide, swiperObj.activeIndex, getIndexDerniereTuileVisible());
+          this.updateVisibiliteTuiles(arrSlide, nbrSlide, swiperObj.activeIndex, getIndexDerniereTuileVisible());
 
           for(var button of [nextEl, prevEl]) {
             button.classList.remove("swiper-button-disabled");
@@ -94,7 +94,7 @@ class Carrousel {
             }
             //pour que la methode ait lieu apres l'animation de scroll
             setTimeout(() => {
-              this.updateVisibiliteTuiles(arrSlide, swiperObj.activeIndex, getIndexDerniereTuileVisible());
+              this.updateVisibiliteTuiles(arrSlide, nbrSlide, swiperObj.activeIndex, getIndexDerniereTuileVisible());
               titreTuileActive.focus();
             }, 200);
 
@@ -112,7 +112,7 @@ class Carrousel {
             }
             //pour que la methode ait lieu apres l'animation de scroll
             setTimeout(() => {
-              this.updateVisibiliteTuiles(arrSlide, swiperObj.activeIndex, indexDerniereTuile);
+              this.updateVisibiliteTuiles(arrSlide, nbrSlide, swiperObj.activeIndex, indexDerniereTuile);
               titreTuileActive.focus();
             }, 200);
 
@@ -206,7 +206,7 @@ class Carrousel {
               let tuileActive = arrSlide[swiperObj.activeIndex];
               let titreTuileActive = tuileActive.querySelector(".ds44-card__title a[href]:not([disabled])");
 
-              this.updateVisibiliteTuiles(arrSlide, swiperObj.activeIndex, getIndexDerniereTuileVisible());
+              this.updateVisibiliteTuiles(arrSlide, nbrSlide, swiperObj.activeIndex, getIndexDerniereTuileVisible());
               titreTuileActive.focus();
               element.releasePointerCapture(event.pointerId);
             }, 200);
@@ -233,9 +233,28 @@ class Carrousel {
     this.removeAffichageSansJs();
   }
 
-  updateVisibiliteTuiles(arrSlide, indexPremiereTuileVisible, indexDerniereTuileVisible) {
+  updateVisibiliteTuiles(arrSlide, nbrSlide, indexPremiereTuileVisible, indexDerniereTuileVisible) {
 
-    if(indexDerniereTuileVisible > indexPremiereTuileVisible) {
+    if(indexDerniereTuileVisible === indexPremiereTuileVisible) {
+      let indexTuileVisible = indexDerniereTuileVisible;
+      let indexTuilePrecedente = indexTuileVisible != 0 ? indexTuileVisible - 1 : nbrSlide;
+      let indexTuileSuivante = indexTuileVisible != nbrSlide ? indexTuileVisible + 1 : 0;
+      let index = 0
+      for(let slide of arrSlide) {
+        if (
+          index === indexTuileVisible ||
+          index === indexTuilePrecedente ||
+          index === indexTuileSuivante
+        ) {
+          slide.removeAttribute("aria-hidden");
+          slide.style.visibility= "visible";
+        } else {
+          slide.setAttribute("aria-hidden", "true");
+          slide.style.visibility= "hidden";
+        }
+        index++;
+      }
+    } else if(indexDerniereTuileVisible >= indexPremiereTuileVisible) {
       let index = 0
       for(let slide of arrSlide) {
         if (
