@@ -168,8 +168,8 @@ $ds44-background-dark   : $ds44-dark !default;
 $ds44-light-bg          : $ds44-lightgray !default; // for CD44 light backgrounds
 
 $ds44-hover-dark        : lighten($ds44-background-dark, 25%) !default;
-$ds44-hover-LA          : lighten($ds44-LA, 25%) !default;    
-$ds44-hover-Agenda      : lighten($ds44-Agenda, 25%) !default; 
+$ds44-hover-LA          : lighten($ds44-LA, 25%) !default;
+$ds44-hover-Agenda      : lighten($ds44-Agenda, 25%) !default;
 
 
 // ---------------
@@ -189,7 +189,7 @@ $ds44-border-radius: 3px !default;
 
 // Standard box shadow
 
-$ds44-boxShadow : 0px 13px 20px 0px rgba(0,0,0,0.35) !default;
+$ds44-boxShadow : 0px 13px 16px 0px rgba(0,0,0,0.35) !default;
 $ds44-smallShadow : 0px 3px 10px 0px rgba(0,0,0,0.35) !default;
 
 // ---------------
