@@ -69,7 +69,7 @@ class Carrousel {
             return index;
           }
 
-          this.updateVisibiliteTuiles(arrSlide, swiperObj.activeIndex, getIndexDerniereTuileVisible());
+          this.updateVisibiliteTuiles(arrSlide, nbrSlide, swiperObj.activeIndex, getIndexDerniereTuileVisible());
 
           for(var button of [nextEl, prevEl]) {
             button.classList.remove("swiper-button-disabled");
@@ -94,7 +94,7 @@ class Carrousel {
             }
             //pour que la methode ait lieu apres l'animation de scroll
             setTimeout(() => {
-              this.updateVisibiliteTuiles(arrSlide, swiperObj.activeIndex, getIndexDerniereTuileVisible());
+              this.updateVisibiliteTuiles(arrSlide, nbrSlide, swiperObj.activeIndex, getIndexDerniereTuileVisible());
               titreTuileActive.focus();
             }, 200);
 
@@ -102,9 +102,9 @@ class Carrousel {
 
           nextEl.addEventListener("click", (event) => {
 
-            let index = getIndexDerniereTuileVisible();
+            let indexDerniereTuile = getIndexDerniereTuileVisible();
 
-            let tuileActive = arrSlide[index];
+            let tuileActive = arrSlide[indexDerniereTuile];
             let titreTuileActive = tuileActive.querySelector(".ds44-card__title a[href]:not([disabled])");
 
             for(let tuile of arrSlide) {
@@ -112,7 +112,7 @@ class Carrousel {
             }
             //pour que la methode ait lieu apres l'animation de scroll
             setTimeout(() => {
-              this.updateVisibiliteTuiles(arrSlide, swiperObj.activeIndex, getIndexDerniereTuileVisible());
+              this.updateVisibiliteTuiles(arrSlide, nbrSlide, swiperObj.activeIndex, indexDerniereTuile);
               titreTuileActive.focus();
             }, 200);
 
@@ -136,11 +136,23 @@ class Carrousel {
               event.shiftKey
             ) {
               event.preventDefault();
-              let blockParentCarrousel = element.parentElement;
-              let blockBeforeCarrousel = blockParentCarrousel.previousElementSibling;
-              let allElementsFocusableBeforeCarrousel = blockBeforeCarrousel.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-              let lastElementFocusableBeforeCarrousel = allElementsFocusableBeforeCarrousel[allElementsFocusableBeforeCarrousel.length-1];
-              lastElementFocusableBeforeCarrousel.focus();
+
+              let carrouselPrecedent = element.previousElementSibling.previousElementSibling.previousElementSibling;
+              let allElementsFocusableCarrouselPrecedent = carrouselPrecedent.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+              let lastElementFocusableCarrouselPrecedent = allElementsFocusableCarrouselPrecedent[allElementsFocusableCarrouselPrecedent.length-1];
+              // on est dans le composant carrousel
+              if(lastElementFocusableCarrouselPrecedent != null) {
+
+                lastElementFocusableCarrouselPrecedent.focus();
+
+              } else {
+
+                let blockParentCarrousel = element.parentElement;
+                let blockBeforeCarrousel = blockParentCarrousel.previousElementSibling;
+                let allElementsFocusableBeforeCarrousel = blockBeforeCarrousel.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                let lastElementFocusableBeforeCarrousel = allElementsFocusableBeforeCarrousel[allElementsFocusableBeforeCarrousel.length-1];
+                lastElementFocusableBeforeCarrousel.focus();
+              }
             }
           });
 
@@ -181,6 +193,25 @@ class Carrousel {
             });
           }
 
+          element.addEventListener("mousedown", (event) => {
+            for(let tuile of arrSlide) {
+              tuile.style.visibility = "visible";
+            }
+            element.setPointerCapture(event.pointerId);
+          });
+
+          element.addEventListener("mouseup", (event) => {
+            //pour que la methode ait lieu apres l'animation de scroll
+            setTimeout(() => {
+              let tuileActive = arrSlide[swiperObj.activeIndex];
+              let titreTuileActive = tuileActive.querySelector(".ds44-card__title a[href]:not([disabled])");
+
+              this.updateVisibiliteTuiles(arrSlide, nbrSlide, swiperObj.activeIndex, getIndexDerniereTuileVisible());
+              titreTuileActive.focus();
+              element.releasePointerCapture(event.pointerId);
+            }, 200);
+          });
+
         } else {
 
           disableAllTabIndexes(element);
@@ -202,9 +233,28 @@ class Carrousel {
     this.removeAffichageSansJs();
   }
 
-  updateVisibiliteTuiles(arrSlide, indexPremiereTuileVisible, indexDerniereTuileVisible) {
+  updateVisibiliteTuiles(arrSlide, nbrSlide, indexPremiereTuileVisible, indexDerniereTuileVisible) {
 
-    if(indexDerniereTuileVisible > indexPremiereTuileVisible) {
+    if(indexDerniereTuileVisible === indexPremiereTuileVisible) {
+      let indexTuileVisible = indexDerniereTuileVisible;
+      let indexTuilePrecedente = indexTuileVisible != 0 ? indexTuileVisible - 1 : nbrSlide;
+      let indexTuileSuivante = indexTuileVisible != nbrSlide ? indexTuileVisible + 1 : 0;
+      let index = 0
+      for(let slide of arrSlide) {
+        if (
+          index === indexTuileVisible ||
+          index === indexTuilePrecedente ||
+          index === indexTuileSuivante
+        ) {
+          slide.removeAttribute("aria-hidden");
+          slide.style.visibility= "visible";
+        } else {
+          slide.setAttribute("aria-hidden", "true");
+          slide.style.visibility= "hidden";
+        }
+        index++;
+      }
+    } else if(indexDerniereTuileVisible >= indexPremiereTuileVisible) {
       let index = 0
       for(let slide of arrSlide) {
         if (
