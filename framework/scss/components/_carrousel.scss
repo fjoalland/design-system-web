@@ -74,9 +74,13 @@ div .swiper-slide {
 
 @media screen and (max-width: $ds44-medium) {
 
+  .ds44-carousel-swiper li {
+      width: auto;
+  }
+
     .swipper-carousel-wrap {
-        margin-left: -$ds44-mobile-margins;
-        margin-right: -$ds44-mobile-margins;
+        margin-left: -$ds44-container-hmargin;
+        margin-right: -$ds44-container-hmargin;
 
         .swiper-container {
           margin: 0;
@@ -88,9 +92,11 @@ div .swiper-slide {
 
 @media screen and (max-width: $ds44-small) {
 
-    .ds44-carousel-swiper li {
-        width: auto;
-    }
+    .swipper-carousel-wrap {
+        margin-left: -$ds44-mobile-margins;
+        margin-right: -$ds44-mobile-margins;
+
+      }
 
 
 }
