@@ -31,15 +31,19 @@ if (allTabs) {
     tab.addEventListener("keypress", (event) => fusionneKeyPressedWithClicked(event));
 
     let tabpanel = document.querySelector(tab.getAttribute("href"));
-    let tabpanelExit = tabpanel.children[tabpanel.children.length-1];
+    if (tabpanel !== null) {
 
-    tabpanelExit.addEventListener('click', (event) => { event.preventDefault(); tab.focus(); });
-    tabpanelExit.addEventListener("keypress", (event) => fusionneKeyPressedWithClicked(event));
+      let tabpanelExit = tabpanel.children[tabpanel.children.length-1];
 
-    if(tab.getAttribute("aria-current") == "true") {
-      tab.focus();
-      tabpanel.style["display"] = "block";
-      timerClass(tabpanel, "opacity", "1", 150);
+      tabpanelExit.addEventListener('click', (event) => { event.preventDefault(); tab.focus(); });
+      tabpanelExit.addEventListener("keypress", (event) => fusionneKeyPressedWithClicked(event));
+
+      if(tab.getAttribute("aria-current") == "true") {
+        tab.focus();
+        tabpanel.style["display"] = "block";
+        timerClass(tabpanel, "opacity", "1", 150);
+      }
+
     }
 
   });
