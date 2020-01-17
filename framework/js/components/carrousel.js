@@ -154,7 +154,7 @@ class Carrousel {
 
                 lastElementFocusableCarrouselPrecedent.focus();
 
-              } else {
+              } else { // on est dans une page
 
                 let blockParentCarrousel = element.parentElement;
                 let blockBeforeCarrousel = blockParentCarrousel.previousElementSibling;
