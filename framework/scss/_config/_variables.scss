@@ -94,7 +94,7 @@ $ds44-font-sizes: (
   ),
   menuBackLinks: (
     mobile  : 1.3125em,       // 21px
-    desktop : 1.75em          // 21px
+    desktop : 1.75em          // 28px
   ),
   collapserLinks: (
     mobile  : 1.125em,        // 18px
@@ -103,6 +103,10 @@ $ds44-font-sizes: (
   button: (
     mobile  : .875em,        // 14px
     desktop : .875em         // 14px
+  ),
+  pushTitle : (
+    mobile  : 1.75em,        // 28px
+    desktop : 1.75em         // 28px
   ),
   quotes: (
     mobile  : 2.375em,       // 38px
