@@ -479,7 +479,13 @@
 .ds44-docListIco {
   position: absolute;
   left: 0;
-  top: -1px;
+  top: 1px;
+}
+
+.ds44-docListElem {
+  .ds44-docListIco { // réalignement du picto dossier
+    top: -2px;
+  }
 }
 
 /* === Accessibilité === */
