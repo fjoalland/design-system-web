@@ -4,6 +4,7 @@ class Carrousel {
 
   prevSlideMessageStr = 'Voir le contenu précédent';
   nextSlideMessageStr = 'Voir le contenu suivant';
+  queryTitreTuile = '.ds44-card__title a[href]:not([disabled])';
 
   constructor() {
     const allCarrousel = document.querySelectorAll(".swipper-carousel-wrap");
@@ -95,7 +96,7 @@ class Carrousel {
           prevEl.addEventListener("click", (event) => {
 
             let tuileActive = arrSlide[swiperObj.activeIndex];
-            let titreTuileActive = tuileActive.querySelector(".ds44-card__title a[href]:not([disabled])");
+            let titreTuileActive = tuileActive.querySelector(this.queryTitreTuile);
 
             for(let tuile of arrSlide) {
               tuile.style.visibility = "visible";
@@ -113,7 +114,7 @@ class Carrousel {
             let indexDerniereTuile = getIndexDerniereTuileVisible();
 
             let tuileActive = arrSlide[indexDerniereTuile];
-            let titreTuileActive = tuileActive.querySelector(".ds44-card__title a[href]:not([disabled])");
+            let titreTuileActive = tuileActive.querySelector(this.queryTitreTuile);
 
             for(let tuile of arrSlide) {
               tuile.style.visibility = "visible";
@@ -135,7 +136,7 @@ class Carrousel {
               ! event.shiftKey
             ) {
               event.preventDefault();
-              let titreTuileActive = arrSlide[swiperObj.activeIndex].querySelector(".ds44-card__title a[href]:not([disabled])");
+              let titreTuileActive = arrSlide[swiperObj.activeIndex].querySelector(this.queryTitreTuile);
               titreTuileActive.focus();
             }
 
@@ -146,7 +147,7 @@ class Carrousel {
               event.preventDefault();
 
               let carrouselPrecedent = element.previousElementSibling.previousElementSibling.previousElementSibling;
-              let allElementsFocusableCarrouselPrecedent = carrouselPrecedent.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+              let allElementsFocusableCarrouselPrecedent = carrouselPrecedent.querySelectorAll(queryCurrentFocusableElements);
               let lastElementFocusableCarrouselPrecedent = allElementsFocusableCarrouselPrecedent[allElementsFocusableCarrouselPrecedent.length-1];
               // on est dans le composant carrousel
               if(lastElementFocusableCarrouselPrecedent != null) {
@@ -157,7 +158,7 @@ class Carrousel {
 
                 let blockParentCarrousel = element.parentElement;
                 let blockBeforeCarrousel = blockParentCarrousel.previousElementSibling;
-                let allElementsFocusableBeforeCarrousel = blockBeforeCarrousel.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                let allElementsFocusableBeforeCarrousel = blockBeforeCarrousel.querySelectorAll(queryCurrentFocusableElements);
                 let lastElementFocusableBeforeCarrousel = allElementsFocusableBeforeCarrousel[allElementsFocusableBeforeCarrousel.length-1];
                 lastElementFocusableBeforeCarrousel.focus();
               }
@@ -170,13 +171,13 @@ class Carrousel {
               event.shiftKey
             ) {
               event.preventDefault();
-              let titreTuileActive = arrSlide[getIndexDerniereTuileVisible()].querySelector(".ds44-card__title a[href]:not([disabled])");
+              let titreTuileActive = arrSlide[getIndexDerniereTuileVisible()].querySelector(this.queryTitreTuile);
               titreTuileActive.focus();
             }
           });
 
           for(let tuile of arrSlide) {
-            var focusable = tuile.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+            var focusable = tuile.querySelectorAll(queryCurrentFocusableElements);
             var firstFocusable = focusable[0];
             firstFocusable.addEventListener("keydown", (event) => {
               if (
@@ -212,7 +213,7 @@ class Carrousel {
             //pour que la methode ait lieu apres l'animation de scroll
             setTimeout(() => {
               let tuileActive = arrSlide[swiperObj.activeIndex];
-              let titreTuileActive = tuileActive.querySelector(".ds44-card__title a[href]:not([disabled])");
+              let titreTuileActive = tuileActive.querySelector(this.queryTitreTuile);
 
               this.updateVisibiliteTuiles(arrSlide, nbrSlide, swiperObj.activeIndex, getIndexDerniereTuileVisible());
               titreTuileActive.focus();
@@ -225,7 +226,7 @@ class Carrousel {
           disableAllTabIndexes(element);
           let index = 0
           for(let slide of arrSlide) {
-            slide.querySelector(".ds44-card__title a[href]:not([disabled])").setAttribute("tabindex", index);
+            slide.querySelector(this.queryTitreTuile).setAttribute("tabindex", index);
             index++;
           }
 
