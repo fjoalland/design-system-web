@@ -57,6 +57,7 @@
 }
 .ds44-cardPicture {
     object-fit: cover;
+    min-width: 120px;
 }
 .ds44-cardFile {
     @include ds44-font-sizes(smallText);
@@ -73,7 +74,8 @@
 }
 
 .ds44-card__section--horizontal--img {
-  width: 38%;
+  width: auto;
+  min-width: 38%;
 }
 
 // Calendar card
@@ -111,6 +113,14 @@
 
 /* small screens */
 /* ------------- */
+@media (min-width: $ds44-small) and (max-width: ($ds44-large - .0625)) {
+
+  .ds44-card__section--horizontal--img {
+    min-width: 20%;
+  }
+
+}
+
 
 @media (max-width: $ds44-small) {
 
@@ -133,13 +143,8 @@
         padding-left: $ds44-padding-box;
     }
 
-}
-
-/* Large screens */
-/* ------------- */
-
-@media (max-width: $ds44-large) {
-
-
+    .ds44-cardPicture {
+        min-width: 105px;
+    }
 
 }

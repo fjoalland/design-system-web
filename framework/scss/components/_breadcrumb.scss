@@ -3,7 +3,16 @@
 */
 
 .ds44-breadcrumb {
+    margin-left: 3rem;
+    font-size: 0.875em;
+}
+
+.ds44-breadcrumb_item {
     display: inline;
+
+    &:first-child {
+        margin-left: -3rem;
+    }
 
     &::after {
         content: "/";
@@ -15,4 +24,29 @@
         content: "";
         margin: 0;
     }
+}
+
+.ds44-breadcrumb .icon{
+    margin-top: -5px;
+}
+
+
+/* =======
+  GENERIC MEDIA QUERIES
+  === */
+
+@media (max-width: $ds44-large - .0625) {
+
+  .ds44-tablette-reduced-mt .ds44-breadcrumb{
+    margin-top: $ds44-margin-base;
+  }
+
+}
+
+@media (max-width: $ds44-small - .0625) {
+
+    .ds44-breadcrumb {
+        margin-top: 3rem;
+    }
+
 }

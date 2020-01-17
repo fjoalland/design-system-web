@@ -288,34 +288,63 @@
   SPECIFIC DS44 MEDIA QUERIES
   === */
 
-@media (max-width: $ds44-large) {
-
-  .ds44-hide-tinyToLarge {
-    display: none;
-  } 
-
-}
-
-@media (max-width: $ds44-medium - .0625) {
-
-  .ds44-hide-mobile {
-    display: none!important;
-  }
-
-}
-
-@media (max-width: $ds44-small) {
-
-  .ds44-hide-smallScreens {
-    display: none;
-  }
-
-}
 
 @media (min-width: $ds44-medium) {
 
   .ds44-show-mobile {
     display: none;
-  } 
+  }
+
+}
+
+@media (max-width: $ds44-large - .0625) {
+
+  .ds44-hide-tinyToLarge {
+    display: none;
+  }
+
+  .ds44-m3b-smallScreens {
+    margin-bottom: $ds44-components-margin;
+  }
+
+}
+
+@media (max-width: $ds44-medium - .0625) {
+
+  .ds44-tablette-reduced-pt {
+    padding-top: $ds44-padding-base;
+  }
+
+  .ds44-tablette-reduced-mt {
+    margin-top: $ds44-margin-base;
+  }
+
+}
+
+@media (max-width: $ds44-small - .0625) {
+  
+  .ds44-hide-mobile {
+    display: none!important;
+  }
+
+  .ds44-hide-smallScreens {
+    display: none;
+  }
+
+  .ds44-mobile-reduced-pt {
+    padding-top: $ds44-padding-base;
+  }
+
+  .ds44-mobile-reduced-pb {
+    padding-bottom: $ds44-padding-base;
+  }
+
+  .ds44-mobile-reduced-mb {
+    margin-bottom: $ds44-margin-base;
+  }
+
+  .ds44-mobile-reduced-mt {
+    margin-top: $ds44-margin-base;
+  }
 
 }

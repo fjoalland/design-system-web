@@ -57,7 +57,7 @@
 }
   
 .ds44-tabs__content {
-    padding: 5rem;
+    padding: $ds44-padding-xxlarge;
     opacity: 1;
     transition: all $ds44-timing-standard ease-in-out;
     position: relative;
@@ -75,8 +75,17 @@
     margin: 0;
 }
 
+.ds44-tabs + .ds44-inner-container > .ds44-partage {
+    margin-top: -$ds44-padding-xxlarge; // annule le padding bottom de l'onglet
+}
 
-@media (max-width: $ds44-large) {
+
+/* =======
+  GENERIC MEDIA QUERIES
+  === */
+
+
+@media (max-width: $ds44-large - .0625) {
 
     .ds44-blocBtnOnglets {
         padding-right: 0;
@@ -87,19 +96,18 @@
 
 }
 
-
-@media (max-width: $ds44-small) {  
+@media (max-width: $ds44-small - .0625) {  
 
     .ds44-navOnglets {
         width: 100%;
     }
     
     .ds44-tabs__content {
-        padding: 3rem 1rem;
+        padding: $ds44-padding-xlarge $ds44-padding-base;
     }
   
     .ds44-tabs__list {
-        padding: $ds44-padding-large $ds44-padding-large $ds44-padding-xlarge $ds44-padding-large;
+        padding: $ds44-padding-base/2 $ds44-padding-large $ds44-padding-large+0.5 $ds44-padding-large;
     }
 
     .ds44-tabs__link {
@@ -122,6 +130,7 @@
             border-left: 1px solid $ds44-light;
             margin-left: 0;
             margin-right: 0;
+            width: 33%;
 
             &:first-child {
                 border: 0;
@@ -137,7 +146,7 @@
                 text-align: left;
                 padding: 1rem 2.5rem 1rem 1rem;
                 position: relative;
-                min-height: 60px;
+                min-height: 56px;
                 line-height: 1.2;
                 border-radius: unset;
 
@@ -146,8 +155,8 @@
                     margin-left: 1rem;
                     position: absolute;
                     z-index: 10;
-                    right: .5rem;
-                    top: 1.8rem;
+                    right: .4rem;
+                    top: 1.5rem;
                 }
             }
 
