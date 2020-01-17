@@ -16,7 +16,22 @@ class Onglet {
         let tabpanel = document.querySelector(tab.getAttribute("href"));
         let tabpanelExit = tabpanel.children[tabpanel.children.length-1];
 
-        tabpanelExit.addEventListener('click', (event) => { event.preventDefault(); tab.focus(); });
+        tabpanelExit.addEventListener('click', (event) => {
+          event.preventDefault();
+          tab.focus();
+
+          let header = document.querySelector("header .ds44-header");
+          if(header != null) {
+            let distanceToScroll = header.offsetHeight;
+            let distanceEntreTabPanelExitEtTab = getPositionY(tabpanelExit) - getPositionY(tab) + distanceToScroll;
+            let distanceEntreTabPanelExitEtHautEcran = getPositionY(tabpanelExit) - document.scrollingElement.scrollTop;
+            if(distanceEntreTabPanelExitEtTab > distanceEntreTabPanelExitEtHautEcran) { //si le tab est au dessus de l'ecran visible
+              setTimeout(() => {
+                window.scrollBy(0, -distanceToScroll);
+              }, 10);
+            }
+          }
+        });
         tabpanelExit.addEventListener("keypress", (event) => fusionneKeyPressedWithClicked(event));
 
         if(tab.getAttribute("aria-current") === "true") {
