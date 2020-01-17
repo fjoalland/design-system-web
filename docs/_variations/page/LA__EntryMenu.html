@@ -410,21 +410,7 @@ layout: pattern
 				</div>
 				<div class="col-1 grid-offset ds44-hide-tinyToLarge"></div>
 				<aside class="col-4">
-					<section class="ds44-box ds44-theme ds44-mb3">
-						<div class="ds44-innerBoxContainer">
-							<p role="heading" aria-level="2" class="ds44-box-heading">Près de chez vous</p>
-							<form>
-								<p class="ds44-form__container ds44-form__container--external">
-									<label for="name" class="ds44-formLabel--external">Recherchez un contact</label>
-									<input type="text" id="name" class="ds44-inpStd" required aria-required="true"
-										placeholder="Nom de la commune" title="Nom de la commune" />
-								</p>
-								<p><button class="ds44-btnStd ds44-btn--invert" type="submit"><span
-											class="ds44-btnInnerText" aria-label="Valider votre recherche de contact dans une commune">Valider</span><i
-											class="icon icon-long-arrow-right" aria-hidden="true"></i></button></p>
-							</form>
-						</div>
-					</section>
+					{% include boxes/box-std-form.html title="Près de chez vous" text="Recherchez un contact" placeholder="Nom de la commune" submitText="Valider" ariaLabel="Valider votre recherche de contact dans une commune"%}
 
 					<section id="services1clic">
 						<h2 class="h3-like">Vos services en 1 clic</h2>
