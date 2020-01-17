@@ -319,6 +319,10 @@
     margin-top: $ds44-margin-base;
   }
 
+  .ds44-hide-tiny-to-medium {
+    display: none!important;
+  }
+
 }
 
 @media (max-width: $ds44-small - .0625) {

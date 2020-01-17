@@ -177,6 +177,14 @@
   flex-direction: row-reverse;
 }
 
+@media (max-width: $ds44-medium - .0625) {
+
+  .ds44-tiny-to-med-ftop {
+    justify-content: flex-start;
+  }
+
+}
+
 /* Element properties */
 .ds44-fg1 {
   flex-grow: 1;
@@ -191,7 +199,7 @@
   align-self: flex-end;
 }
 
-@media (max-width: $ds44-medium) {
+@media (max-width: $ds44-medium - .0625) {
 
   .ds44-flex-wrap-medium {
     flex-wrap: wrap;
@@ -212,7 +220,7 @@
 
 }
 
-@media (max-width: $ds44-large) {
+@media (max-width: $ds44-large - .0625) {
 
   .ds44-flex-wrap-large {
     flex-wrap: wrap;
@@ -256,7 +264,7 @@
   padding-right: 16.666%;
 }
 
-@media (max-width: $ds44-small - 1) {
+@media (max-width: $ds44-small - .0625) {
 
   .ds44-colLeft {
     flex-wrap: wrap;
@@ -279,7 +287,7 @@
 
 }
 
-@media (max-width: $ds44-tiny - 1) {
+@media (max-width: $ds44-tiny - .0625) {
 
   .ds44-colLeft {
     flex: 1;
