@@ -48,7 +48,18 @@ class Carrousel {
             arrSlide[arrSlide.length-1].style.margin = "0 0 0 8px";
           }, 5);
 
-          let title = element.previousElementSibling.querySelector(".h2-like");
+          let blocTitle = element.previousElementSibling;
+
+          let title = null;
+
+          if(blocTitle != null) { // on est dans le composant simple
+            title = blocTitle;
+          } else { // on est dans une page
+            blocTitle = element.parentElement.previousElementSibling;
+            if(blocTitle != null) {
+              title = blocTitle.querySelector(".h2-like");
+            }
+          }
 
           const titleCarrousel = title != null ? title.innerText : "Carrousel n°"+(indexCarrousel+1);
 
