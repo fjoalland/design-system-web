@@ -37,7 +37,7 @@ Lorem ipsum
 
 - La classe `ds44-card` donne le contexte de tuile à la section.
 - Dans le cadre de la charte du site Loire-Atlantique, les tuiles placées dans des contextes sombres ou gris doivent recevoir la classe `ds44-darkContext` à côté de la classe `ds44-card` afin d'adapter leur couleur de fond.
-- En raison de leur contexte variable et imprévisible, les titres des tuiles ne sont pas balisés par des `<hn>` mais par des paragraphes (`<p>`) auxquels on pousse un contexte de titre de niveau 2 pour les assistances techniques (via `role="heading"` et `aria-level="2"`).
+- En raison de leur contexte variable et imprévisible, les titres des tuiles ne sont pas balisés par des `<hn>` mais par des paragraphes (`<p>`) auxquels on pousse un contexte de titre pour les assistances techniques (via `role="heading"` et `aria-level="x"`).
 
 ## FAQ
 
