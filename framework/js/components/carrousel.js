@@ -67,7 +67,7 @@ class Carrousel {
           const updatePrevAndNextSlideMessage = () => {
 
             let indexPrevEl = swiperObj.realIndex === 0 ? nbrSlide : swiperObj.realIndex;
-            let indexNextEl = swiperObj.realIndex+2 > nbrSlide ? swiperObj.realIndex+2-nbrSlide : swiperObj.realIndex+2;
+            let indexNextEl = swiperObj.realIndex+nbrMaxSlide+1 > nbrSlide ? swiperObj.realIndex+nbrMaxSlide+1-nbrSlide : swiperObj.realIndex+nbrMaxSlide+1;
 
             let titlePrevEl = this.prevSlideMessageStr+" "+titleCarrousel+" - "+indexPrevEl+"/"+nbrSlide;
             let titleNextEl = this.nextSlideMessageStr+" "+titleCarrousel+" - "+indexNextEl+"/"+nbrSlide;
