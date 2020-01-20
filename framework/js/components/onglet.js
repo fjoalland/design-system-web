@@ -20,14 +20,14 @@ class Onglet {
           event.preventDefault();
           tab.focus();
 
-          let header = document.querySelector("header .ds44-header");
+          let header = document.querySelector("header.ds44-header");
           if(header != null) {
-            let distanceToScroll = header.offsetHeight;
+            let distanceToScroll = header.offsetHeight * 2;
             let distanceEntreTabPanelExitEtTab = getPositionY(tabpanelExit) - getPositionY(tab) + distanceToScroll;
             let distanceEntreTabPanelExitEtHautEcran = getPositionY(tabpanelExit) - document.scrollingElement.scrollTop;
             if(distanceEntreTabPanelExitEtTab > distanceEntreTabPanelExitEtHautEcran) { //si le tab est au dessus de l'ecran visible
               setTimeout(() => {
-                window.scrollBy(0, -distanceToScroll);
+                document.scrollingElement.scrollBy(0, -distanceToScroll);
               }, 10);
             }
           }
