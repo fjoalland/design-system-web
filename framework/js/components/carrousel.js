@@ -177,26 +177,39 @@ class Carrousel {
 
   updateVisibiliteTuiles(arrSlide, nbrSlide, indexPremiereTuileVisible, indexDerniereTuileVisible) {
 
-    if(indexDerniereTuileVisible === indexPremiereTuileVisible) {
+    if(indexDerniereTuileVisible === indexPremiereTuileVisible) { // mobile - 1 tuile d'affiche
       let indexTuileVisible = indexDerniereTuileVisible;
       let indexTuilePrecedente = indexTuileVisible != 0 ? indexTuileVisible - 1 : nbrSlide;
       let indexTuileSuivante = indexTuileVisible != nbrSlide ? indexTuileVisible + 1 : 0;
       let index = 0
       for(let slide of arrSlide) {
-        if (
-          index === indexTuileVisible ||
+        if ( index === indexTuileVisible ) {
+          slide.removeAttribute("aria-hidden");
+          slide.style.visibility= "visible";
+          let allElementsFocusables = slide.querySelectorAll(queryAllFocusableElements);
+          for (let element of allElementsFocusables) {
+            element.removeAttribute("tabindex");
+          }
+        } else if (
           index === indexTuilePrecedente ||
           index === indexTuileSuivante
         ) {
-          slide.removeAttribute("aria-hidden");
-          slide.style.visibility= "visible";
+          slide.setAttribute("aria-hidden", "true");
+          let allElementsFocusables = slide.querySelectorAll(queryAllFocusableElements);
+          for (let element of allElementsFocusables) {
+            element.setAttribute("tabindex", "-1");
+          }
         } else {
           slide.setAttribute("aria-hidden", "true");
           slide.style.visibility= "hidden";
+          let allElementsFocusables = slide.querySelectorAll(queryAllFocusableElements);
+          for (let element of allElementsFocusables) {
+            element.removeAttribute("tabindex");
+          }
         }
         index++;
       }
-    } else if(indexDerniereTuileVisible >= indexPremiereTuileVisible) {
+    } else if(indexDerniereTuileVisible >= indexPremiereTuileVisible) { // desktop - tuiles au milieu de la liste
       let index = 0
       for(let slide of arrSlide) {
         if (
@@ -211,7 +224,7 @@ class Carrousel {
         }
         index++;
       }
-    } else {
+    } else { // desktop - tuiles aux deux extremes de la luste
       let index = 0
       for(let slide of arrSlide) {
         if (
