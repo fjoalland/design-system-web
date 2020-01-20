@@ -4,9 +4,9 @@ class Carrousel {
 
   constructor() {
 
-    const prevSlideMessageStr = 'Voir le contenu précédent';
-    const nextSlideMessageStr = 'Voir le contenu suivant';
-    const queryTitreTuile = '.ds44-card__title a[href]:not([disabled])';
+    this.prevSlideMessageStr = 'Voir le contenu précédent';
+    this.nextSlideMessageStr = 'Voir le contenu suivant';
+    this.queryTitreTuile = '.ds44-card__title a[href]:not([disabled])';
 
     const allCarrousel = document.querySelectorAll(".swipper-carousel-wrap");
 
