@@ -228,12 +228,6 @@ class Carrousel {
               let tuileActive = arrSlide[swiperObj.activeIndex];
               let titreTuileActive = tuileActive.querySelector(this.queryTitreTuile);
 
-          disableAllTabIndexes(element);
-          let index = 0
-          for(let slide of arrSlide) {
-            slide.querySelector(this.queryTitreTuile).setAttribute("tabindex", index);
-            index++;
-          }
               this.updateVisibiliteTuiles(arrSlide, nbrSlide, swiperObj.activeIndex, getIndexDerniereTuileVisible());
               titreTuileActive.focus();
               element.releasePointerCapture(event.pointerId);
