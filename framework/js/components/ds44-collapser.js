@@ -134,6 +134,7 @@ function disableAllTabIndexes(element) {
 
     focusableEls.forEach((itFocusElem) => {
         itFocusElem.setAttribute("tabindex", "-1");
+        itFocusElem.setAttribute("aria-hidden", "true");
     });
 }
 
@@ -145,6 +146,7 @@ function enableAllTabIndexes(element) {
 
     focusableEls.forEach((itFocusElem) => {
         itFocusElem.removeAttribute("tabindex");
+        itFocusElem.removeAttribute("aria-hidden");
     });
 }
 
