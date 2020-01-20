@@ -214,10 +214,12 @@ class Carrousel {
           }
 
           element.addEventListener("mousedown", (event) => {
-            for(let tuile of arrSlide) {
-              tuile.style.visibility = "visible";
+            if(event.buttons === 1) {
+              for(let tuile of arrSlide) {
+                tuile.style.visibility = "visible";
+              }
+              element.setPointerCapture(event.pointerId);
             }
-            element.setPointerCapture(event.pointerId);
           });
 
           element.addEventListener("mouseup", (event) => {
@@ -231,15 +233,6 @@ class Carrousel {
               element.releasePointerCapture(event.pointerId);
             }, 200);
           });
-
-        } else {
-
-          disableAllTabIndexes(element);
-          let index = 0
-          for(let slide of arrSlide) {
-            slide.querySelector(this.queryTitreTuile).setAttribute("tabindex", index);
-            index++;
-          }
 
         }
         let spanNotif = element.getElementsByClassName("swiper-notification")[0];
