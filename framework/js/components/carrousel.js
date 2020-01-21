@@ -151,8 +151,12 @@ class Carrousel {
                 let tuile = arrSlide[i];
                 tuile.style.visibility = "visible";
               }
-              if(element.setPointerCapture) {
-                element.setPointerCapture(event.pointerId);
+              if(typeof element.setPointerCapture === 'function') {
+                try {
+                  element.setPointerCapture(event.pointerId);
+                } catch (e) {
+                  // empeche Edge d'envoyer des erreurs
+                }
               }
             }
           });
@@ -166,8 +170,12 @@ class Carrousel {
               this.updateVisibiliteTuiles(arrSlide, nbrSlide, swiperObj.activeIndex, getIndexDerniereTuileVisible());
               titreTuileActive.focus();
             }, 200);
-            if(element.releasePointerCapture) {
-              element.releasePointerCapture(event.pointerId);
+            if(typeof element.releasePointerCapture === 'function') {
+              try {
+                element.releasePointerCapture(event.pointerId);
+              } catch (e) {
+                // empeche Edge d'envoyer des erreurs
+              }
             }
           });
 
