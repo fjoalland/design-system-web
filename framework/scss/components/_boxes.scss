@@ -73,6 +73,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        padding-right: $ds44-padding-xlarge;
 
         p {
             margin: 0;
@@ -173,6 +174,10 @@
 
     .ds44-boxPushContent {
         max-width: 100%;
+        
+        &--fluid {
+            padding-right: $ds44-padding-box;
+        }
     }
 
     .ds44-box--push {
