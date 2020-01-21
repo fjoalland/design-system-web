@@ -69,6 +69,7 @@
 
     &--fluid {
         width: 100%;
+        max-width: 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -92,7 +93,7 @@
     align-self: flex-end;
 
     &--horizontal {
-        width: calc(20% - 15px);
+        width: calc(30% - 15px);
     }
 
 }
@@ -182,6 +183,21 @@
 
     .ds44-boxPushPic {
         width: 100%;
+    }
+
+}
+
+
+
+
+@media (min-width: $ds44-extra-large) {
+
+    .ds44-boxPushPic {
+
+        &--horizontal {
+            width: calc(20% - 15px);
+        }
+
     }
 
 }
