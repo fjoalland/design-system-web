@@ -3,7 +3,7 @@
 function performCloseOverlays(querySelector){
     deleteOtherFocus();
 
-    document.querySelector("body").style.overflow = "initial";
+    document.querySelector("body").style.overflow = null;
     document.querySelector("header#topPage").setAttribute("aria-hidden", "false");
     let overlays = document.querySelectorAll(querySelector);
     var foundShownOverlay = false;
@@ -129,22 +129,24 @@ function toggleAriaHiddenSsMenu(exceptionElem) {
 // Passe l'attribut "tabindex" des éléments 'focusables' d'un élément à -1
 function disableAllTabIndexes(element) {
     if (isNullOrUndefined(element)) return;
-    
+
     var focusableEls = element.querySelectorAll(queryCurrentFocusableElements);
 
     focusableEls.forEach((itFocusElem) => {
         itFocusElem.setAttribute("tabindex", "-1");
+        itFocusElem.setAttribute("aria-hidden", "true");
     });
 }
 
 // Supprime l'attribut "tabindex" des éléments focusables d'un élément
 function enableAllTabIndexes(element) {
     if (isNullOrUndefined(element)) return;
-    
+
     var focusableEls = element.querySelectorAll(queryAllFocusableElements);
 
     focusableEls.forEach((itFocusElem) => {
         itFocusElem.removeAttribute("tabindex");
+        itFocusElem.removeAttribute("aria-hidden");
     });
 }
 
@@ -303,8 +305,6 @@ function enableAllTabIndexes(element) {
 
             const ssMenuReturn = document.querySelectorAll(querySelector);
 
-            console.log(ssMenuReturn);
-
             ssMenuReturn.forEach((element) => {
                 element.addEventListener('click', () => {
                     returnSsNavMenu(element);
@@ -340,9 +340,10 @@ function enableAllTabIndexes(element) {
                     const modal = document.querySelector(modalId);
                     if (!isNullOrUndefined(modal)) {
                         toggleMainHeaderFooterAriaHidden(modal);
-                        document.querySelector("main").setAttribute("aria-hidden", "true");
-                        document.querySelector("body").style.overflow = "hidden";
-                        ds44_headerAnim.refreshBandeauWidth();
+                        let main = document.querySelector("main");
+                        if(main !== null) main.setAttribute("aria-hidden", "true");
+                        let body = document.querySelector("body");
+                        if(body !== null) body.style.overflow = "hidden";
                         _getFocusOnPopup(modal);
                         modal.style.display = "flex";
                         timerShow(modal, 1);
@@ -364,7 +365,7 @@ function enableAllTabIndexes(element) {
                             }
                         });
 
-                        isModalShown = true;
+                        document.dispatchEvent(new CustomEvent('modal:show'));
                     }
                 })
             });
@@ -389,9 +390,9 @@ function enableAllTabIndexes(element) {
                 const currentModal = document.querySelector('.show[role="dialog"]');
                 if (currentModal) {
                     document.querySelector("body").style.overflow = null;
-                    ds44_headerAnim.refreshBandeauWidth();
                     toggleMainHeaderFooterAriaHidden(null);
-                    document.querySelector("main").removeAttribute("aria-hidden");
+                    let main = document.querySelector("main");
+                    if(main !== null) main.removeAttribute("aria-hidden");
                     currentModal.classList.toggle('show');
                     timerDisplayNone(currentModal, 300);
                     currentModal.setAttribute('aria-hidden', 'true');
@@ -402,7 +403,7 @@ function enableAllTabIndexes(element) {
                         performCloseOverlays(".ds44-overlay");
                     }
 
-                    isModalShown = false;
+                    document.dispatchEvent(new CustomEvent('modal:hide'));
                 }
 
             }
@@ -574,7 +575,7 @@ function enableAllTabIndexes(element) {
         }
 
         _ds44.reactOnInvalidInput = function() {
-            allInputs = document.querySelectorAll("input");
+            allInputs = document.querySelectorAll("input, select");
 
             if (allInputs.length) {
                 allInputs.forEach((itInput) => {
