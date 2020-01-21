@@ -48,7 +48,7 @@ class Carrousel {
             }
             arrSlide[0].style.margin = "0 8px 0 0";
             arrSlide[arrSlide.length-1].style.margin = "0 0 0 8px";
-          }, 100);
+          }, 1000);
 
           let blocTitle = element.previousElementSibling;
 
