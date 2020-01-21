@@ -20,7 +20,7 @@ class Onglet {
           event.preventDefault();
           tab.focus();
 
-          let header = document.querySelector("header.ds44-header");
+          let header = document.querySelector("header");
           if(header != null) {
             let distanceToScroll = header.offsetHeight;
             let distanceEntreTabPanelExitEtTab = getPositionY(tabpanelExit) - getPositionY(tab) + distanceToScroll;
