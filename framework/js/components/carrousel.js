@@ -48,7 +48,7 @@ class Carrousel {
             }
             arrSlide[0].style.margin = "0 8px 0 0";
             arrSlide[arrSlide.length-1].style.margin = "0 0 0 8px";
-          }, 5);
+          }, 100);
 
           let blocTitle = element.previousElementSibling;
 
@@ -151,7 +151,9 @@ class Carrousel {
                 let tuile = arrSlide[i];
                 tuile.style.visibility = "visible";
               }
-              element.setPointerCapture(event.pointerId);
+              if(element.setPointerCapture) {
+                element.setPointerCapture(event.pointerId);
+              }
             }
           });
 
@@ -163,8 +165,10 @@ class Carrousel {
 
               this.updateVisibiliteTuiles(arrSlide, nbrSlide, swiperObj.activeIndex, getIndexDerniereTuileVisible());
               titreTuileActive.focus();
-              element.releasePointerCapture(event.pointerId);
             }, 200);
+            if(element.releasePointerCapture) {
+              element.releasePointerCapture(event.pointerId);
+            }
           });
 
         }
