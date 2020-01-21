@@ -3,8 +3,8 @@
 function performCloseOverlays(querySelector){
     deleteOtherFocus();
 
-    document.querySelector("body").style.overflow = "initial";
-    document.querySelector("header#topPage").removeAttribute("aria-hidden");
+    document.querySelector("body").style.overflow = null;
+    document.querySelector("header#topPage").setAttribute("aria-hidden", "false");
     let overlays = document.querySelectorAll(querySelector);
     var foundShownOverlay = false;
     overlays.forEach((overlay)=> {
