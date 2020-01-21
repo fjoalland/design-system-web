@@ -42,7 +42,8 @@ class Carrousel {
         if(swiperObj.params.loop) {
 
           setTimeout( () => {
-            for(let tuile of arrSlide) {
+            for(let i = 0 ; i > arrSlide.length ; i++) {
+              let tuile = arrSlide[i];
               tuile.style.margin = "0 8px";
             }
             arrSlide[0].style.margin = "0 8px 0 0";
@@ -110,7 +111,8 @@ class Carrousel {
             let tuileActive = arrSlide[swiperObj.activeIndex];
             let titreTuileActive = tuileActive.querySelector(this.queryTitreTuile);
 
-            for(let tuile of arrSlide) {
+            for(let i = 0 ; i > arrSlide.length ; i++) {
+              let tuile = arrSlide[i];
               tuile.style.visibility = "visible";
             }
             //pour que la methode ait lieu apres l'animation de scroll
@@ -128,7 +130,8 @@ class Carrousel {
             let tuileActive = arrSlide[indexDerniereTuile];
             let titreTuileActive = tuileActive.querySelector(this.queryTitreTuile);
 
-            for(let tuile of arrSlide) {
+            for(let i = 0 ; i > arrSlide.length ; i++) {
+              let tuile = arrSlide[i];
               tuile.style.visibility = "visible";
             }
             //pour que la methode ait lieu apres l'animation de scroll
@@ -144,7 +147,8 @@ class Carrousel {
 
           element.addEventListener("mousedown", (event) => {
             if(event.buttons === 1) {
-              for(let tuile of arrSlide) {
+              for(let i = 0 ; i > arrSlide.length ; i++) {
+                let tuile = arrSlide[i];
                 tuile.style.visibility = "visible";
               }
               element.setPointerCapture(event.pointerId);
@@ -181,8 +185,8 @@ class Carrousel {
       let indexTuileVisible = indexDerniereTuileVisible;
       let indexTuilePrecedente = indexTuileVisible != 0 ? indexTuileVisible - 1 : nbrSlide;
       let indexTuileSuivante = indexTuileVisible != nbrSlide ? indexTuileVisible + 1 : 0;
-      let index = 0
-      for(let slide of arrSlide) {
+      for(let index = 0 ; index > arrSlide.length ; index++) {
+        let slide = arrSlide[index];
         if ( index === indexTuileVisible ) {
           slide.removeAttribute("aria-hidden");
           slide.style.visibility= "visible";
@@ -207,11 +211,10 @@ class Carrousel {
             element.removeAttribute("tabindex");
           }
         }
-        index++;
       }
     } else if(indexDerniereTuileVisible >= indexPremiereTuileVisible) { // desktop - tuiles au milieu de la liste
-      let index = 0
-      for(let slide of arrSlide) {
+      for(let index = 0 ; index > arrSlide.length ; index++) {
+        let slide = arrSlide[index];
         if (
           index >= indexPremiereTuileVisible &&
           index <= indexDerniereTuileVisible
@@ -222,11 +225,10 @@ class Carrousel {
           slide.setAttribute("aria-hidden", "true");
           slide.style.visibility= "hidden";
         }
-        index++;
       }
     } else { // desktop - tuiles aux deux extremes de la luste
-      let index = 0
-      for(let slide of arrSlide) {
+      for(let index = 0 ; index > arrSlide.length ; index++) {
+        let slide = arrSlide[index];
         if (
             (
               index >= indexPremiereTuileVisible &&
@@ -243,7 +245,6 @@ class Carrousel {
           slide.setAttribute("aria-hidden", "true");
           slide.setAttribute("style", "display:none;");
         }
-        index++;
       }
     }
   }
@@ -251,7 +252,8 @@ class Carrousel {
   // enleve les classes css de l'affichage sans js
   removeAffichageSansJs() {
     const allWrapper = document.getElementsByClassName("swiper-wrapper");
-    for(let wrapper of allWrapper){
+    for(let index = 0 ; index > allWrapper.length ; index++) {
+      let wrapper = allWrapper[index];
       wrapper.classList.remove("ds44-carousel-swiper");
       wrapper.classList.remove("grid-4-small-1");
       wrapper.classList.remove("grid-3-small-1");
