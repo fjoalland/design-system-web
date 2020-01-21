@@ -152,7 +152,11 @@ class Carrousel {
                 tuile.style.visibility = "visible";
               }
               if(typeof element.setPointerCapture === 'function') {
-                element.setPointerCapture(event.pointerId);
+                try {
+                  element.setPointerCapture(event.pointerId);
+                } catch (e) {
+                  // empeche Edge d'envoyer des erreurs
+                }
               }
             }
           });
@@ -167,7 +171,11 @@ class Carrousel {
               titreTuileActive.focus();
             }, 200);
             if(typeof element.releasePointerCapture === 'function') {
-              element.releasePointerCapture(event.pointerId);
+              try {
+                element.releasePointerCapture(event.pointerId);
+              } catch (e) {
+                // empeche Edge d'envoyer des erreurs
+              }
             }
           });
 
