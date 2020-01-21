@@ -27,7 +27,7 @@ class Onglet {
             let distanceToScroll = header.offsetHeight;
             let distanceEntreTabPanelExitEtTab = getPositionY(tabpanelExit) - getPositionY(tab) + distanceToScroll;
             let distanceEntreTabPanelExitEtHautEcran = getPositionY(tabpanelExit) - document.scrollingElement.scrollTop;
-            if(distanceEntreTabPanelExitEtTab > distanceEntreTabPanelExitEtHautEcran) { //si le tab est au dessus de l'ecran visible
+            if(distanceEntreTabPanelExitEtTab >= distanceEntreTabPanelExitEtHautEcran) { //si le tab est au dessus de l'ecran visible
               document.scrollingElement.scrollBy(0, -distanceToScroll * 2);
             }
           }
