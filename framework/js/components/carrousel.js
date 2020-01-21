@@ -151,7 +151,7 @@ class Carrousel {
                 let tuile = arrSlide[i];
                 tuile.style.visibility = "visible";
               }
-              if(element.setPointerCapture) {
+              if(typeof element.setPointerCapture === 'function') {
                 element.setPointerCapture(event.pointerId);
               }
             }
@@ -166,7 +166,7 @@ class Carrousel {
               this.updateVisibiliteTuiles(arrSlide, nbrSlide, swiperObj.activeIndex, getIndexDerniereTuileVisible());
               titreTuileActive.focus();
             }, 200);
-            if(element.releasePointerCapture) {
+            if(typeof element.releasePointerCapture === 'function') {
               element.releasePointerCapture(event.pointerId);
             }
           });
