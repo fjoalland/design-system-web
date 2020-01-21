@@ -13,7 +13,9 @@ class Onglet {
           tab.classList.add("ds44-tabs__linkSelected");
         }
 
-        let tabpanel = document.querySelector(tab.getAttribute("href"));
+        let hrefTag = this.getTagFromHref(tab.getAttribute("href"));
+
+        let tabpanel = document.querySelector(hrefTag);
         let tabpanelExit = tabpanel.children[tabpanel.children.length-1];
 
         tabpanelExit.addEventListener('click', (event) => {
@@ -47,7 +49,9 @@ class Onglet {
 
     allTabs.forEach((tab) => {
 
-      let tabpanel = document.querySelector(tab.getAttribute("href"));
+      let hrefTag = this.getTagFromHref(tab.getAttribute("href"));
+
+      let tabpanel = document.querySelector(hrefTag);
 
       if (tabClicked === tab) {
         tab.classList.add("ds44-tabs__linkSelected");
@@ -66,6 +70,14 @@ class Onglet {
       }
 
     });
+  }
+
+  // Récupère le tag ID d'un HREF, s'il existe
+  getTagFromHref(href) {
+    if (href.indexOf("#") != -1) {
+      return href.slice(href.indexOf("#"));
+    }
+    return "#";
   }
 
 }
