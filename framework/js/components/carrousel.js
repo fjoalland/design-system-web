@@ -42,7 +42,7 @@ class Carrousel {
         if(swiperObj.params.loop) {
 
           setTimeout( () => {
-            for(let i = 0 ; i > arrSlide.length ; i++) {
+            for(let i = 0 ; i < arrSlide.length ; i++) {
               let tuile = arrSlide[i];
               tuile.style.margin = "0 8px";
             }
@@ -111,7 +111,7 @@ class Carrousel {
             let tuileActive = arrSlide[swiperObj.activeIndex];
             let titreTuileActive = tuileActive.querySelector(this.queryTitreTuile);
 
-            for(let i = 0 ; i > arrSlide.length ; i++) {
+            for(let i = 0 ; i < arrSlide.length ; i++) {
               let tuile = arrSlide[i];
               tuile.style.visibility = "visible";
             }
@@ -130,7 +130,7 @@ class Carrousel {
             let tuileActive = arrSlide[indexDerniereTuile];
             let titreTuileActive = tuileActive.querySelector(this.queryTitreTuile);
 
-            for(let i = 0 ; i > arrSlide.length ; i++) {
+            for(let i = 0 ; i < arrSlide.length ; i++) {
               let tuile = arrSlide[i];
               tuile.style.visibility = "visible";
             }
@@ -147,7 +147,7 @@ class Carrousel {
 
           element.addEventListener("mousedown", (event) => {
             if(event.buttons === 1) {
-              for(let i = 0 ; i > arrSlide.length ; i++) {
+              for(let i = 0 ; i < arrSlide.length ; i++) {
                 let tuile = arrSlide[i];
                 tuile.style.visibility = "visible";
               }
@@ -185,7 +185,7 @@ class Carrousel {
       let indexTuileVisible = indexDerniereTuileVisible;
       let indexTuilePrecedente = indexTuileVisible != 0 ? indexTuileVisible - 1 : nbrSlide;
       let indexTuileSuivante = indexTuileVisible != nbrSlide ? indexTuileVisible + 1 : 0;
-      for(let index = 0 ; index > arrSlide.length ; index++) {
+      for(let index = 0 ; index < arrSlide.length ; index++) {
         let slide = arrSlide[index];
         if ( index === indexTuileVisible ) {
           slide.removeAttribute("aria-hidden");
@@ -213,7 +213,7 @@ class Carrousel {
         }
       }
     } else if(indexDerniereTuileVisible >= indexPremiereTuileVisible) { // desktop - tuiles au milieu de la liste
-      for(let index = 0 ; index > arrSlide.length ; index++) {
+      for(let index = 0 ; index < arrSlide.length ; index++) {
         let slide = arrSlide[index];
         if (
           index >= indexPremiereTuileVisible &&
@@ -227,7 +227,7 @@ class Carrousel {
         }
       }
     } else { // desktop - tuiles aux deux extremes de la luste
-      for(let index = 0 ; index > arrSlide.length ; index++) {
+      for(let index = 0 ; index < arrSlide.length ; index++) {
         let slide = arrSlide[index];
         if (
             (
@@ -252,7 +252,7 @@ class Carrousel {
   // enleve les classes css de l'affichage sans js
   removeAffichageSansJs() {
     const allWrapper = document.getElementsByClassName("swiper-wrapper");
-    for(let index = 0 ; index > allWrapper.length ; index++) {
+    for(let index = 0 ; index < allWrapper.length ; index++) {
       let wrapper = allWrapper[index];
       wrapper.classList.remove("ds44-carousel-swiper");
       wrapper.classList.remove("grid-4-small-1");
