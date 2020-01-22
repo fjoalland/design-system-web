@@ -94,7 +94,7 @@ var isMenuOpened = false;
 function toggleMainHeaderFooterAriaHidden(exceptionNode) {
     let mainElem = document.querySelector("main");
     if (isNullOrUndefined(mainElem)) return;
-    let headerElem = isMenuOpened ? document.querySelector("header .ds44-blocBandeau") : document.querySelector("header");
+    let headerElem = isMenuOpened ? document.querySelector("header .ds44-blocBandeau .ds44-container-large") : document.querySelector("header");
     let footerElem = document.querySelector("footer");
     let ariaHiddenValue = "false" == mainElem.getAttribute("aria-hidden") || isNullOrUndefined(mainElem.getAttribute("aria-hidden"));
     isMenuOpened = false;
@@ -170,7 +170,7 @@ function enableAllTabIndexes(element) {
                 let mainElem = document.querySelector("main");
                 let footerElem = document.querySelector("footer");
                 timerClass(document.querySelector("body"), "overflow", "hidden", 375);
-                document.querySelector("header#topPage > *:not(ds44-blocMenu)").setAttribute("aria-hidden", "true");
+                document.querySelector("header#topPage .ds44-header > *:not(ds44-blocMenu)").setAttribute("aria-hidden", "true");
                 element.setAttribute("aria-expanded","true");
                 let navNivOne = document.querySelector('.ds44-overlay--navNiv1');
                 isMenuOpened = true; // indiquer qu'on ouvre le menu
