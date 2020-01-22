@@ -167,7 +167,7 @@ function enableAllTabIndexes(element) {
             });
 
             let displayMainNavMenu = function (element) {
-                let mainElem = document.querySelector("body");
+                let mainElem = document.querySelector("main");
                 let footerElem = document.querySelector("footer");
                 timerClass(document.querySelector("body"), "overflow", "hidden", 375);
                 document.querySelector("header#topPage > *:not(ds44-blocMenu)").setAttribute("aria-hidden", "true");
