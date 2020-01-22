@@ -45,6 +45,7 @@ a > .ds44-btnStd--large { // gestion de l'alignement des icones dans les boutons
     .icon {
         line-height: 1.1;
     }
+
 }
 
 .ds44-btnStd--large,
@@ -70,7 +71,9 @@ a > .ds44-btnStd--large   // pour wysiwyg
 
 .ds44-btn--contextual,
 a.ds44-btn--contextual,
-.ds44-contextualBtnLink {
+.ds44-contextualBtnLink,
+a > .ds44-btn--contextual, 
+.ds44-btn--contextual > a {
     background-color: $ds44-contextual-color;
     border-color: $ds44-contextual-color;
 
