@@ -3,7 +3,7 @@
 function performCloseOverlays(querySelector){
     deleteOtherFocus();
 
-    document.querySelector("body").style.overflow = "initial";
+    document.querySelector("body").style.overflow = null;
     document.querySelector("header#topPage").setAttribute("aria-hidden", "false");
     let overlays = document.querySelectorAll(querySelector);
     var foundShownOverlay = false;
@@ -134,6 +134,7 @@ function disableAllTabIndexes(element) {
 
     focusableEls.forEach((itFocusElem) => {
         itFocusElem.setAttribute("tabindex", "-1");
+        itFocusElem.setAttribute("aria-hidden", "true");
     });
 }
 
@@ -145,6 +146,7 @@ function enableAllTabIndexes(element) {
 
     focusableEls.forEach((itFocusElem) => {
         itFocusElem.removeAttribute("tabindex");
+        itFocusElem.removeAttribute("aria-hidden");
     });
 }
 
@@ -302,8 +304,6 @@ function enableAllTabIndexes(element) {
         _ds44.menuAppExpander = function (querySelector) {
 
             const ssMenuReturn = document.querySelectorAll(querySelector);
-
-            console.log(ssMenuReturn);
 
             ssMenuReturn.forEach((element) => {
                 element.addEventListener('click', () => {
@@ -575,7 +575,7 @@ function enableAllTabIndexes(element) {
         }
 
         _ds44.reactOnInvalidInput = function() {
-            allInputs = document.querySelectorAll("input");
+            allInputs = document.querySelectorAll("input, select");
 
             if (allInputs.length) {
                 allInputs.forEach((itInput) => {
