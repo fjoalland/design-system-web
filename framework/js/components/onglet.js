@@ -3,17 +3,17 @@
 class Onglet {
 
   constructor() {
-    let allTabs = document.querySelectorAll(".js-tablist__link");
+    let allTabs = document.querySelectorAll('.js-tablist__link');
     if (!(allTabs == null)) {
       allTabs.forEach((tab) => {
         tab.addEventListener('click', () => this.processTransitionOnglets(tab, allTabs));
-        tab.addEventListener("keypress", (event) => fusionneKeyPressedWithClicked(event));
+        tab.addEventListener('keypress', (event) => fusionneKeyPressedWithClicked(event));
 
-        if(tab.hasAttribute("aria-current")) {
-          tab.classList.add("ds44-tabs__linkSelected");
+        if(tab.hasAttribute('aria-current')) {
+          tab.classList.add('ds44-tabs__linkSelected');
         }
 
-        let hrefTag = this.getTagFromHref(tab.getAttribute("href"));
+        let hrefTag = this.getTagFromHref(tab.getAttribute('href'));
 
         let tabpanel = document.querySelector(hrefTag);
         let tabpanelExit = tabpanel.children[tabpanel.children.length-1];
@@ -22,7 +22,7 @@ class Onglet {
           event.preventDefault();
           tab.focus();
 
-          let header = document.querySelector("header .ds44-header");
+          let header = document.querySelector('header .ds44-header');
           if(header != null) {
             let distanceToScroll = header.offsetHeight;
             let distanceEntreTabPanelExitEtTab = getPositionY(tabpanelExit) - getPositionY(tab) + distanceToScroll;
@@ -32,12 +32,12 @@ class Onglet {
             }
           }
         });
-        tabpanelExit.addEventListener("keypress", (event) => fusionneKeyPressedWithClicked(event));
+        tabpanelExit.addEventListener('keypress', (event) => fusionneKeyPressedWithClicked(event));
 
-        if(tab.getAttribute("aria-current") === "true") {
+        if(tab.getAttribute('aria-current') === 'true') {
           tab.focus();
-          tabpanel.style["display"] = "block";
-          timerClass(tabpanel, "opacity", "1", 150);
+          tabpanel.style['display'] = 'block';
+          timerClass(tabpanel, 'opacity', '1', 150);
         }
 
       });
@@ -49,23 +49,23 @@ class Onglet {
 
     allTabs.forEach((tab) => {
 
-      let hrefTag = this.getTagFromHref(tab.getAttribute("href"));
+      let hrefTag = this.getTagFromHref(tab.getAttribute('href'));
 
       let tabpanel = document.querySelector(hrefTag);
 
       if (tabClicked === tab) {
-        tab.classList.add("ds44-tabs__linkSelected");
+        tab.classList.add('ds44-tabs__linkSelected');
 
-        timerClass(tabpanel, "display", "block", 150);
-        timerClass(tabpanel, "opacity", "1", 300);
+        timerClass(tabpanel, 'display', 'block', 150);
+        timerClass(tabpanel, 'opacity', '1', 300);
 
         let tabpanelAnchor = tabpanel.children[0];
         tabpanelAnchor.focus();
 
       } else {
-        tab.classList.remove("ds44-tabs__linkSelected");
+        tab.classList.remove('ds44-tabs__linkSelected');
 
-        tabpanel.style["opacity"] = "0";
+        tabpanel.style['opacity'] = '0';
         timerDisplayNone(tabpanel, 150);
       }
 
@@ -74,10 +74,10 @@ class Onglet {
 
   // Récupère le tag ID d'un HREF, s'il existe
   getTagFromHref(href) {
-    if (href.indexOf("#") != -1) {
-      return href.slice(href.indexOf("#"));
+    if (href.indexOf('#') != -1) {
+      return href.slice(href.indexOf('#'));
     }
-    return "#";
+    return '#';
   }
 
 }
