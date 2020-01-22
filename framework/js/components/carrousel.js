@@ -8,20 +8,20 @@ class Carrousel {
     this.nextSlideMessageStr = 'Voir le contenu suivant';
     this.queryTitreTuile = '.ds44-card__title a[href]:not([disabled])';
 
-    const allCarrousel = document.querySelectorAll(".swipper-carousel-wrap");
+    const allCarrousel = document.querySelectorAll('.swipper-carousel-wrap');
 
     if(allCarrousel != null) {
       allCarrousel.forEach((element, indexCarrousel) => {
 
-        const nextEl = element.getElementsByClassName("swiper-button-next")[0];
-        const innerTextNextEl = nextEl.getElementsByClassName("visually-hidden")[0];
-        const prevEl = element.getElementsByClassName("swiper-button-prev")[0];
-        const innerTextPrevEl = prevEl.getElementsByClassName("visually-hidden")[0];
-        const swiper = element.getElementsByClassName("swiper-container")[0];
-        const arrSlide = swiper.getElementsByClassName("swiper-slide");
+        const nextEl = element.getElementsByClassName('swiper-button-next')[0];
+        const innerTextNextEl = nextEl.getElementsByClassName('visually-hidden')[0];
+        const prevEl = element.getElementsByClassName('swiper-button-prev')[0];
+        const innerTextPrevEl = prevEl.getElementsByClassName('visually-hidden')[0];
+        const swiper = element.getElementsByClassName('swiper-container')[0];
+        const arrSlide = swiper.getElementsByClassName('swiper-slide');
         const nbrSlide = arrSlide.length;
-        const wrapper = element.getElementsByClassName("swiper-wrapper")[0];
-        let nbrMaxSlide = wrapper.classList.contains("grid-3-small-1") ? 3 : 4;
+        const wrapper = element.getElementsByClassName('swiper-wrapper')[0];
+        let nbrMaxSlide = wrapper.classList.contains('grid-3-small-1') ? 3 : 4;
 
         const screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
@@ -44,10 +44,10 @@ class Carrousel {
           setTimeout( () => {
             for(let i = 0 ; i < arrSlide.length ; i++) {
               let tuile = arrSlide[i];
-              tuile.style.margin = "0 8px";
+              tuile.style.margin = '0 8px';
             }
-            arrSlide[0].style.margin = "0 8px 0 0";
-            arrSlide[arrSlide.length-1].style.margin = "0 0 0 8px";
+            arrSlide[0].style.margin = '0 8px 0 0';
+            arrSlide[arrSlide.length-1].style.margin = '0 0 0 8px';
           }, 1000);
 
           let blocTitle = element.previousElementSibling;
@@ -59,22 +59,22 @@ class Carrousel {
           } else { // on est dans une page
             blocTitle = element.parentElement.previousElementSibling;
             if(blocTitle != null) {
-              title = blocTitle.querySelector(".h2-like");
+              title = blocTitle.querySelector('.h2-like');
             }
           }
 
-          const titleCarrousel = title != null ? title.innerText : "Carrousel n°"+(indexCarrousel+1);
+          const titleCarrousel = title != null ? title.innerText : 'Carrousel n°'+(indexCarrousel+1);
 
           const updatePrevAndNextSlideMessage = () => {
 
             let indexPrevEl = swiperObj.realIndex === 0 ? nbrSlide : swiperObj.realIndex;
             let indexNextEl = swiperObj.realIndex+nbrMaxSlide+1 > nbrSlide ? swiperObj.realIndex+nbrMaxSlide+1-nbrSlide : swiperObj.realIndex+nbrMaxSlide+1;
 
-            let titlePrevEl = this.prevSlideMessageStr+" "+titleCarrousel+" - "+indexPrevEl+"/"+nbrSlide;
-            let titleNextEl = this.nextSlideMessageStr+" "+titleCarrousel+" - "+indexNextEl+"/"+nbrSlide;
+            let titlePrevEl = this.prevSlideMessageStr+' '+titleCarrousel+' - '+indexPrevEl+'/'+nbrSlide;
+            let titleNextEl = this.nextSlideMessageStr+' '+titleCarrousel+' - '+indexNextEl+'/'+nbrSlide;
 
-            prevEl.setAttribute("title", titlePrevEl);
-            nextEl.setAttribute("title", titleNextEl);
+            prevEl.setAttribute('title', titlePrevEl);
+            nextEl.setAttribute('title', titleNextEl);
             innerTextPrevEl.innerText = titlePrevEl;
             innerTextNextEl.innerText = titleNextEl;
           };
@@ -94,16 +94,16 @@ class Carrousel {
           this.updateVisibiliteTuiles(arrSlide, nbrSlide, swiperObj.activeIndex, getIndexDerniereTuileVisible());
 
           for(var button of [nextEl, prevEl]) {
-            button.classList.remove("swiper-button-disabled");
-            button.removeAttribute("aria-label");
-            button.removeAttribute("role");
+            button.classList.remove('swiper-button-disabled');
+            button.removeAttribute('aria-label');
+            button.removeAttribute('role');
 
             let ua = navigator.userAgent;
-            if (! ua.includes("Edge/42")) {
-              button.classList.add("ds44-not-edge-42");
+            if (! ua.includes('Edge/42')) {
+              button.classList.add('ds44-not-edge-42');
             }
 
-            button.addEventListener("click", (event) => {
+            button.addEventListener('click', (event) => {
 
               //pour que la methode ait lieu apres swipper
               setTimeout(updatePrevAndNextSlideMessage, 5);
@@ -111,14 +111,14 @@ class Carrousel {
 
           }
 
-          prevEl.addEventListener("click", (event) => {
+          prevEl.addEventListener('click', (event) => {
 
             let tuileActive = arrSlide[swiperObj.activeIndex];
             let titreTuileActive = tuileActive.querySelector(this.queryTitreTuile);
 
             for(let i = 0 ; i < arrSlide.length ; i++) {
               let tuile = arrSlide[i];
-              tuile.style.visibility = "visible";
+              tuile.style.visibility = 'visible';
             }
             //pour que la methode ait lieu apres l'animation de scroll
             setTimeout(() => {
@@ -128,7 +128,7 @@ class Carrousel {
 
           });
 
-          nextEl.addEventListener("click", (event) => {
+          nextEl.addEventListener('click', (event) => {
 
             let indexDerniereTuile = getIndexDerniereTuileVisible();
 
@@ -137,7 +137,7 @@ class Carrousel {
 
             for(let i = 0 ; i < arrSlide.length ; i++) {
               let tuile = arrSlide[i];
-              tuile.style.visibility = "visible";
+              tuile.style.visibility = 'visible';
             }
             //pour que la methode ait lieu apres l'animation de scroll
             setTimeout(() => {
@@ -147,14 +147,14 @@ class Carrousel {
 
           });
 
-          prevEl.addEventListener("keypress", (event) => fusionneKeyPressedWithClicked(event));
-          nextEl.addEventListener("keypress", (event) => fusionneKeyPressedWithClicked(event));
+          prevEl.addEventListener('keypress', (event) => fusionneKeyPressedWithClicked(event));
+          nextEl.addEventListener('keypress', (event) => fusionneKeyPressedWithClicked(event));
 
-          element.addEventListener("mousedown", (event) => {
+          element.addEventListener('mousedown', (event) => {
             if(event.buttons === 1) {
               for(let i = 0 ; i < arrSlide.length ; i++) {
                 let tuile = arrSlide[i];
-                tuile.style.visibility = "visible";
+                tuile.style.visibility = 'visible';
               }
               if(typeof element.setPointerCapture === 'function') {
                 try {
@@ -166,7 +166,7 @@ class Carrousel {
             }
           });
 
-          element.addEventListener("mouseup", (event) => {
+          element.addEventListener('mouseup', (event) => {
             //pour que la methode ait lieu apres l'animation de scroll
             setTimeout(() => {
               let tuileActive = arrSlide[swiperObj.activeIndex];
@@ -185,7 +185,7 @@ class Carrousel {
           });
 
         }
-        let spanNotif = element.getElementsByClassName("swiper-notification")[0];
+        let spanNotif = element.getElementsByClassName('swiper-notification')[0];
         //pour que la methode ait lieu apres swipper
         setTimeout(spanNotif.remove(), 5);
       });
@@ -203,27 +203,27 @@ class Carrousel {
       for(let index = 0 ; index < arrSlide.length ; index++) {
         let slide = arrSlide[index];
         if ( index === indexTuileVisible ) {
-          slide.removeAttribute("aria-hidden");
-          slide.style.visibility= "visible";
+          slide.removeAttribute('aria-hidden');
+          slide.style.visibility= 'visible';
           let allElementsFocusables = slide.querySelectorAll(queryAllFocusableElements);
           for (let element of allElementsFocusables) {
-            element.removeAttribute("tabindex");
+            element.removeAttribute('tabindex');
           }
         } else if (
           index === indexTuilePrecedente ||
           index === indexTuileSuivante
         ) {
-          slide.setAttribute("aria-hidden", "true");
+          slide.setAttribute('aria-hidden', 'true');
           let allElementsFocusables = slide.querySelectorAll(queryAllFocusableElements);
           for (let element of allElementsFocusables) {
-            element.setAttribute("tabindex", "-1");
+            element.setAttribute('tabindex', '-1');
           }
         } else {
-          slide.setAttribute("aria-hidden", "true");
-          slide.style.visibility= "hidden";
+          slide.setAttribute('aria-hidden', 'true');
+          slide.style.visibility= 'hidden';
           let allElementsFocusables = slide.querySelectorAll(queryAllFocusableElements);
           for (let element of allElementsFocusables) {
-            element.removeAttribute("tabindex");
+            element.removeAttribute('tabindex');
           }
         }
       }
@@ -234,11 +234,11 @@ class Carrousel {
           index >= indexPremiereTuileVisible &&
           index <= indexDerniereTuileVisible
         ) {
-          slide.removeAttribute("aria-hidden");
-          slide.style.visibility= "visible";
+          slide.removeAttribute('aria-hidden');
+          slide.style.visibility= 'visible';
         } else {
-          slide.setAttribute("aria-hidden", "true");
-          slide.style.visibility= "hidden";
+          slide.setAttribute('aria-hidden', 'true');
+          slide.style.visibility= 'hidden';
         }
       }
     } else { // desktop - tuiles aux deux extremes de la luste
@@ -254,11 +254,11 @@ class Carrousel {
               index >= 0
             )
         ) {
-          slide.removeAttribute("aria-hidden");
-          slide.removeAttribute("style");
+          slide.removeAttribute('aria-hidden');
+          slide.removeAttribute('style');
         } else {
-          slide.setAttribute("aria-hidden", "true");
-          slide.setAttribute("style", "display:none;");
+          slide.setAttribute('aria-hidden', 'true');
+          slide.setAttribute('style', 'display:none;');
         }
       }
     }
@@ -266,12 +266,12 @@ class Carrousel {
 
   // enleve les classes css de l'affichage sans js
   removeAffichageSansJs() {
-    const allWrapper = document.getElementsByClassName("swiper-wrapper");
+    const allWrapper = document.getElementsByClassName('swiper-wrapper');
     for(let index = 0 ; index < allWrapper.length ; index++) {
       let wrapper = allWrapper[index];
-      wrapper.classList.remove("ds44-carousel-swiper");
-      wrapper.classList.remove("grid-4-small-1");
-      wrapper.classList.remove("grid-3-small-1");
+      wrapper.classList.remove('ds44-carousel-swiper');
+      wrapper.classList.remove('grid-4-small-1');
+      wrapper.classList.remove('grid-3-small-1');
     }
   }
 
