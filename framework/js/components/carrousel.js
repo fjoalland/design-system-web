@@ -98,6 +98,11 @@ class Carrousel {
             button.removeAttribute("aria-label");
             button.removeAttribute("role");
 
+            let ua = navigator.userAgent;
+            if (! ua.includes("Edge/42")) {
+              button.classList.add("ds44-not-edge-42");
+            }
+
             button.addEventListener("click", (event) => {
 
               //pour que la methode ait lieu apres swipper
@@ -183,10 +188,8 @@ class Carrousel {
         let spanNotif = element.getElementsByClassName("swiper-notification")[0];
         //pour que la methode ait lieu apres swipper
         setTimeout(spanNotif.remove(), 5);
-
       });
     }
-
     // besoin de garder les classes pour l'initialisation des caroussel avec js, donc on les enleve qu'a la fin
     this.removeAffichageSansJs();
   }
