@@ -98,6 +98,11 @@ class Carrousel {
             button.removeAttribute("aria-label");
             button.removeAttribute("role");
 
+            let ua = navigator.userAgent;
+            if (! ua.includes("Edge/42")) {
+              button.classList.add("ds44-not-edge-42");
+            }
+
             button.addEventListener("click", (event) => {
 
               //pour que la methode ait lieu apres swipper
@@ -185,8 +190,6 @@ class Carrousel {
         setTimeout(spanNotif.remove(), 5);
       });
     }
-
-    this.addStyleForNotEdge();
     // besoin de garder les classes pour l'initialisation des caroussel avec js, donc on les enleve qu'a la fin
     this.removeAffichageSansJs();
   }
@@ -258,17 +261,6 @@ class Carrousel {
           slide.setAttribute("style", "display:none;");
         }
       }
-    }
-  }
-
-  addStyleForNotEdge(element) {
-    let ua = navigator.userAgent;
-    if (! ua.includes("Edge")) {
-      var styleElem = document.head.appendChild(document.createElement("style"));
-
-      styleElem.innerHTML =
-      "div .swiper-button-next::after, div .swiper-button-prev::after { font-size: 25px; }"
-      + "div .swiper-button-next i::before, div .swiper-button-prev i::before { content: none; }";
     }
   }
 
