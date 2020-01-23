@@ -20,7 +20,7 @@ class Onglet {
         }
         let tabPanelExit = tabPanel.children[tabPanel.children.length-1];
 
-        tabPanelExit.addEventListener('click', this.scrollVersOnglet.bind(this));
+        tabPanelExit.addEventListener('click', this.retourneVersOnglet.bind(this));
         tabPanelExit.addEventListener('keypress', window.fusionneKeyPressedWithClicked);
 
         if(tab.getAttribute('aria-current') === 'true') {
@@ -33,7 +33,7 @@ class Onglet {
   }
 
   // effectue une transition des display:none sur les contenus des onglets
-  processTransitionOnglets() {
+  processTransitionOnglets(evt) {
 
     let allTabs = document.querySelectorAll('.js-tablist__link');
     allTabs.forEach((tab) => {
@@ -45,7 +45,7 @@ class Onglet {
           return;
       }
 
-      if (tab.classList.contains("ds44-tabs__linkSelected")) {
+      if (tab === evt.target) {
         tab.classList.add('ds44-tabs__linkSelected');
 
         timerClass(tabPanel, 'display', 'block', 150);
@@ -67,7 +67,7 @@ class Onglet {
     });
   }
 
-  scrollVersOnglet(evt) {
+  retourneVersOnglet(evt) {
       evt.preventDefault();
 
       let tabDestination = null;
@@ -76,11 +76,10 @@ class Onglet {
           if (tab.classList.contains("ds44-tabs__linkSelected")) {
               tabDestination = tab;
           }
+      });
+      if(tabDestination != null) {
+          tabDestination.focus();
       }
-      if(!tabDestination) {
-          return;
-      }
-      tabDestination.focus();
 
       let header = document.querySelector('header .ds44-header');
       if(!header) {
