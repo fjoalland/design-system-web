@@ -93,6 +93,26 @@ class Tooltip {
         if (evt.type === showEventType) {
             // Show tooltip bubble
             tooltipBubble.setAttribute(this.ATTR_HIDDEN, 'false');
+
+            // Remove positioning
+            MiscDom.removeClasses(tooltipBubble, ['bottom', 'left']);
+            tooltipBubble.style.width = '';
+
+            // Determine positioning
+            const tooltipBubbleOffset = MiscDom.getOffset(tooltipBubble);
+            if(tooltipBubbleOffset.top < 10) {
+                // Put it below if not enough room above
+                MiscDom.addClasses(tooltipBubble, 'bottom');
+            }
+            if((tooltipBubbleOffset.left + tooltipBubble.offsetWidth) > (window.innerWidth - 10)) {
+                // Put it on the left if not enough room on the right
+                MiscDom.addClasses(tooltipBubble, 'left');
+
+                // If there's not enough room on the left hand side, crop the width
+                if(tooltipBubble.offsetWidth > tooltipBubbleOffset.left) {
+                    tooltipBubble.style.width = (tooltipBubbleOffset.left + 40) + 'px';
+                }
+            }
         } else if (evt.type === hideEventType || (evt.type === 'keydown' && evt.keyCode === 27)) {
             // Hide tooltip bubble
             tooltipBubble.setAttribute(this.ATTR_HIDDEN, 'true');
