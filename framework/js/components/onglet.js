@@ -5,7 +5,7 @@ class Onglet {
   constructor() {
     let allTabs = document.querySelectorAll('.js-tablist__link');
     allTabs.forEach((tab) => {
-        tab.addEventListener('click', this.processTransitionOnglets.bind(this, tab, allTabs));
+        tab.addEventListener('click', this.processTransitionOnglets.bind(this, tab));
         tab.addEventListener('keypress', window.fusionneKeyPressedWithClicked);
 
         if(tab.hasAttribute('aria-current')) {
@@ -49,8 +49,9 @@ class Onglet {
   }
 
   // effectue une transition des display:none sur les contenus des onglets
-  processTransitionOnglets(tabClicked, allTabs) {
-
+  processTransitionOnglets(tabClicked) {
+      
+    let allTabs = document.querySelectorAll('.js-tablist__link');
     allTabs.forEach((tab) => {
 
       let hrefTag = this.getTagFromHref(tab.getAttribute('href'));
