@@ -103,11 +103,13 @@
         font-size: 1.125em;
     }
 }
-.ds44-cardLocalisation {
-    font-size: .8125em;
 
-    .icon {
-        font-size: 1.2em;
+.ds44-card.ds44-container-imgRatio--tuileMiseEnAvant,
+.ds44-card--verticalPicture {
+    font-size: 1.4rem;
+
+    .ds44-cardLocalisation .icon{
+      font-size: 1.6rem;
     }
 }
 
