@@ -24,6 +24,12 @@
         display: block;
         padding-left: $ds44-padding-ico;
     }
+
+    i + a {
+        display: inline-block;
+        vertical-align: top;
+        width: calc(100% - 25px); // retrait du lien pour caler l'icone à gauche
+    }
 }
 
 /* small screens */
