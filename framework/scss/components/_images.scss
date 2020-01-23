@@ -28,11 +28,13 @@
   padding-top: 41.93%;
 }
 
+
+
 /* legend block positionnement */
 .ds44-legendeContainer .ds44-blockAbsolute {
   position: absolute;
   z-index: 1;
-  width: 30%;
+  width: 30vw;
 }
 .ds44-legendeContainer .ds44-blockAbsolute--br {
   bottom: 0;
@@ -95,10 +97,25 @@ figure {
   MEDIA QUERIES
   === */
 
-@media (max-width: $ds44-large) {
+
+@media (min-width: $ds44-large - .625) {
+
+  .grid-12-small-1 .ds44-legendeContainer{
+    padding-top: 85%;
+  }
+  .grid-12-small-1 .col-6{
+    margin-right: $ds44-medium-vmargin;
+  }
+  .grid-12-small-1 .col-6:last-of-type{
+    margin-right: 0;
+  }
+
+}
+
+@media (max-width: $ds44-large - .625) {
 
     .ds44-legendeContainer .ds44-blockAbsolute {
-      width: 50%;
+      width: 50vw;
     }
     .ds44-legendeContainer.ds44-container-imgRatio {
       height: auto;
@@ -106,25 +123,16 @@ figure {
 
 }
 
-@media (max-width: $ds44-medium) {
+@media (max-width: $ds44-medium - .625) {
 
     .ds44-legendeContainer .ds44-blockAbsolute {
-      width: 60%;
+      width: 60vw;
     }
 
     .ds44-legendeContainer.ds44-container-imgRatio {
-      padding-top: 0;
+      padding-top: 85%;
     }
 
-  .ds44-imgRatio {
-      position: relative;
-      height: auto;
-    }
-
-  .ds44-card  .ds44-imgRatio {
-        position: absolute;
-        height: 100%;
-      }
 
   .ds44-card__section--horizontal--img .ds44-imgRatio {
         position: absolute;
@@ -133,20 +141,25 @@ figure {
 
 }
 
-@media (max-width: $ds44-small) {
-
-  .ds44-legendeContainer.ds44-container-imgRatio {
-    height: auto;
+@media (min-width: $ds44-small - .625) {
+  .ds44-container-imgRatio--tuileMiseEnAvant .ds44-card__title {
+      font-size: 2.4rem; // 24px
   }
+}
 
-  .ds44-legendeContainer.ds44-container-imgRatio .ds44-imgRatio {
+@media (max-width: $ds44-small - .625) {
+
+  .ds44-legendeContainer.ds44-container-imgRatio .ds44-imgRatio ,
+  .ds44-legendeContainer.ds44-container-imgRatio{
     height: auto;
+    position: relative;
+    padding-top: 0%;
   }
 
   .ds44-legendeContainer .ds44-blockAbsolute {
     position: relative;
     z-index: 1;
-    width: 100%;
+    width: 100vw;
     bottom: 0;
     left: 0;
   }
