@@ -8,18 +8,6 @@ function performCloseOverlays(querySelector){
     let overlays = document.querySelectorAll(querySelector);
     var foundShownOverlay = false;
     overlays.forEach((overlay)=> {
-        if (overlay.classList.contains("show") && !foundShownOverlay) {
-            if ("nav1" == overlay.id) {
-                document.querySelector(".ds44-btn--menu").focus();
-                foundShownOverlay = true;
-            } else if (overlay.closest("#nav1") !== null) {
-                document.querySelector(".ds44-btn--menu").focus();
-                foundShownOverlay = true;
-            } else {
-                overlay.previousElementSibling.focus();
-                foundShownOverlay = true;
-            }
-        }
         overlay.classList.remove('show');
         overlay.setAttribute("aria-hidden", "true");
         // Ré-afficher tous les boutons "fermer"
@@ -29,15 +17,6 @@ function performCloseOverlays(querySelector){
         });
         Utils.timerDisplayNone(overlay,500);
     });
-    if (!foundShownOverlay) {
-        // Rien n'a été trouvé : on focus sur l'élément "bouton" le plus proche de l'élément courant
-        let activeElement = document.activeElement;
-        if (document.querySelector("#menu").contains(activeElement)) {
-            document.querySelector("button.ds44-btn--menu").focus();
-        } else {
-            activeElement.closest("section").parent().querySelector("button.ds44-stdBtn").focus();
-        }
-    }
 
     let overlayBtns = document.querySelectorAll('.ds44-btn--menu, .ds44-overlay--navNiv1 .ds44-ds44-menuBtn');
     overlayBtns.forEach((btn)=> {
@@ -46,6 +25,8 @@ function performCloseOverlays(querySelector){
 
     toggleMainHeaderFooterAriaHidden(null);
     document.querySelector("footer").setAttribute("aria-hidden","false");
+
+    document.dispatchEvent(new CustomEvent('overlay:hide'));
 }
 
 // Cacher tous les boutons "Fermer" sauf le bouton de la modale actuelle
