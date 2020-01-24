@@ -4,10 +4,9 @@ class Onglet {
 
   constructor() {
     let allTabs = document.querySelectorAll('.js-tablist__link');
-    if (!(allTabs == null)) {
-      allTabs.forEach((tab) => {
-        tab.addEventListener('click', () => this.processTransitionOnglets(tab, allTabs));
-        tab.addEventListener('keypress', (event) => fusionneKeyPressedWithClicked(event));
+    allTabs.forEach((tab) => {
+        tab.addEventListener('click', this.processTransitionOnglets.bind(this));
+        tab.addEventListener('keypress', window.fusionneKeyPressedWithClicked);
 
         if(tab.hasAttribute('aria-current')) {
           tab.classList.add('ds44-tabs__linkSelected');
@@ -15,68 +14,91 @@ class Onglet {
 
         let hrefTag = this.getTagFromHref(tab.getAttribute('href'));
 
-        let tabpanel = document.querySelector(hrefTag);
-        let tabpanelExit = tabpanel.children[tabpanel.children.length-1];
+        let tabPanel = document.querySelector(hrefTag);
+        if(!tabPanel || !tabPanel.children.length) {
+            return;
+        }
+        let tabPanelExit = tabPanel.children[tabPanel.children.length-1];
 
-        tabpanelExit.addEventListener('click', (event) => {
-          event.preventDefault();
-          tab.focus();
-
-          let header = document.querySelector('header .ds44-header');
-          if(header != null) {
-            let distanceToScroll = header.offsetHeight;
-            let distanceEntreTabPanelExitEtTab = getPositionY(tabpanelExit) - getPositionY(tab) + distanceToScroll;
-            let distanceEntreTabPanelExitEtHautEcran = getPositionY(tabpanelExit) - document.scrollingElement.scrollTop;
-            if(distanceEntreTabPanelExitEtTab >= distanceEntreTabPanelExitEtHautEcran) { //si le tab est au dessus de l'ecran visible
-              document.scrollingElement.scrollBy(0, -distanceToScroll * 2);
-            }
-          }
-        });
-        tabpanelExit.addEventListener('keypress', (event) => fusionneKeyPressedWithClicked(event));
+        tabPanelExit.addEventListener('click', this.retourneVersOnglet.bind(this));
+        tabPanelExit.addEventListener('keypress', window.fusionneKeyPressedWithClicked);
 
         if(tab.getAttribute('aria-current') === 'true') {
           tab.focus();
-          tabpanel.style['display'] = 'block';
-          timerClass(tabpanel, 'opacity', '1', 150);
+          tabPanel.style['display'] = 'block';
+          window.timerClass(tabPanel, 'opacity', '1', 150);
         }
 
-      });
-    }
+    });
   }
 
   // effectue une transition des display:none sur les contenus des onglets
-  processTransitionOnglets(tabClicked, allTabs) {
+  processTransitionOnglets(evt) {
 
+    let allTabs = document.querySelectorAll('.js-tablist__link');
     allTabs.forEach((tab) => {
 
       let hrefTag = this.getTagFromHref(tab.getAttribute('href'));
 
-      let tabpanel = document.querySelector(hrefTag);
+      let tabPanel = document.querySelector(hrefTag);
+      if(!tabPanel) {
+          return;
+      }
 
-      if (tabClicked === tab) {
+      if (tab === evt.target) {
         tab.classList.add('ds44-tabs__linkSelected');
 
-        timerClass(tabpanel, 'display', 'block', 150);
-        timerClass(tabpanel, 'opacity', '1', 300);
+        timerClass(tabPanel, 'display', 'block', 150);
+        timerClass(tabPanel, 'opacity', '1', 300);
 
-        let tabpanelAnchor = tabpanel.children[0];
-        tabpanelAnchor.focus();
+        let tabPanelAnchor = tabPanel.children[0];
+        if(!tabPanelAnchor) {
+            return;
+        }
+        tabPanelAnchor.focus();
 
       } else {
         tab.classList.remove('ds44-tabs__linkSelected');
 
-        tabpanel.style['opacity'] = '0';
-        timerDisplayNone(tabpanel, 150);
+        tabPanel.style['opacity'] = 0;
+        window.timerDisplayNone(tabPanel, 150);
       }
 
     });
   }
 
+  retourneVersOnglet(evt) {
+      evt.preventDefault();
+
+      let tabDestination = null;
+      let allTabs = document.querySelectorAll('.js-tablist__link');
+      allTabs.forEach((tab) => {
+          if (tab.classList.contains("ds44-tabs__linkSelected")) {
+              tabDestination = tab;
+          }
+      });
+      if(tabDestination != null) {
+          tabDestination.focus();
+      }
+
+      let header = document.querySelector('header .ds44-header');
+      if(!header) {
+          return;
+      }
+      let distanceToScroll = header.offsetHeight;
+      let distanceEntreTabPanelExitEtTab = getPositionY(evt.target) - getPositionY(tabDestination) + distanceToScroll;
+      let distanceEntreTabPanelExitEtHautEcran = getPositionY(evt.target) - document.scrollingElement.scrollTop;
+      if(distanceEntreTabPanelExitEtTab >= distanceEntreTabPanelExitEtHautEcran) { //si le tab est au dessus de l'ecran visible
+          document.scrollingElement.scrollBy(0, -distanceToScroll * 2);
+      }
+  }
+
   // Récupère le tag ID d'un HREF, s'il existe
   getTagFromHref(href) {
-    if (href.indexOf('#') != -1) {
+    if (href.indexOf('#') !== -1) {
       return href.slice(href.indexOf('#'));
     }
+
     return '#';
   }
 
