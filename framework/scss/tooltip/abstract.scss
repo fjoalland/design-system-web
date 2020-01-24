@@ -1,11 +1,14 @@
 .simpletooltip_container {
   position: relative;
-  display: inline-block;
   cursor: help;
 
   button {
     padding: 0;
     cursor: help;
+
+    .icon {
+      display: inline;
+    }
   }
 
   .simpletooltip {
@@ -20,18 +23,18 @@
     box-shadow: $ds44-smallShadow;
     font-size: 1.4rem;
     padding: $spacer-small;
-    left: -1.5rem;
-    bottom: 2rem;
+    left: -1.8rem;
+    bottom: 2.125rem;
     max-width: 30rem;
 
     &.bottom {
       bottom: auto;
-      top: 100%;
+      top: calc(100% + 0.45rem);
     }
 
     &.left {
       left: auto;
-      right: -1.9rem;
+      right: -2.2rem;
     }
 
     &[aria-hidden="true"] {
@@ -41,13 +44,13 @@
     &::before {
       position: absolute;
       left: 2.5rem;
-      bottom: -0.375rem;
+      bottom: -0.4375rem;
       margin-left: -0.3125rem;
       content: '';
       speak: none;
       z-index: 666;
-      width: 0.6875rem;
-      height: 0.6875rem;
+      width: 0.875rem;
+      height: 0.875rem;
       pointer-events: none;
       transform: rotate(45deg);
       background-color: #ffffff;
@@ -58,7 +61,7 @@
 
     &.bottom::before {
       bottom: auto;
-      top: -0.375rem;
+      top: -0.4375rem;
       transform: rotate(225deg);
     }
 

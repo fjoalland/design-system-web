@@ -75,7 +75,7 @@ class Tooltip {
             tooltipButton = element;
             showEventType = 'focus';
             hideEventType = 'blur';
-        } else if(MiscDom.hasClass(element, this.TOOLTIP_SIMPLE_CONTAINER) === true) {
+        } else if (MiscDom.hasClass(element, this.TOOLTIP_SIMPLE_CONTAINER) === true) {
             tooltipButton = element.querySelector('[' + this.ATTR_DESCRIBEDBY + ']');
             showEventType = 'mouseenter';
             hideEventType = 'mouseleave';
@@ -100,16 +100,16 @@ class Tooltip {
 
             // Determine positioning
             const tooltipBubbleOffset = MiscDom.getOffset(tooltipBubble);
-            if(tooltipBubbleOffset.top < 10) {
+            if (tooltipBubbleOffset.top < 10) {
                 // Put it below if not enough room above
                 MiscDom.addClasses(tooltipBubble, 'bottom');
             }
-            if((tooltipBubbleOffset.left + tooltipBubble.offsetWidth) > (window.innerWidth - 10)) {
+            if ((tooltipBubbleOffset.left + tooltipBubble.offsetWidth) > (window.innerWidth - 10)) {
                 // Put it on the left if not enough room on the right
                 MiscDom.addClasses(tooltipBubble, 'left');
 
                 // If there's not enough room on the left hand side, crop the width
-                if(tooltipBubble.offsetWidth > tooltipBubbleOffset.left) {
+                if (tooltipBubble.offsetWidth > tooltipBubbleOffset.left) {
                     tooltipBubble.style.width = (tooltipBubbleOffset.left + 40) + 'px';
                 }
             }
@@ -120,4 +120,5 @@ class Tooltip {
     }
 }
 
+// Singleton
 new Tooltip();
