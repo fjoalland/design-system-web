@@ -3,7 +3,7 @@
 */
 
 
-button, a.ds44-btnStd {
+button, a.ds44-btnStd, a > .ds44-btnStd, .ds44-btnStd > a  {
     display: inline-block;
     cursor: pointer;
     user-select: none;
@@ -20,7 +20,7 @@ button, a.ds44-btnStd {
     }
 }
 
-.ds44-btnStd, a.ds44-btnStd {
+.ds44-btnStd, a.ds44-btnStd, a > .ds44-btnStd, .ds44-btnStd > a {
     @include ds44-font-sizes(button);
     padding: $ds44-padding-box;
     border-radius: $ds44-border-radius;
@@ -37,13 +37,28 @@ button, a.ds44-btnStd {
     }
 }
 
-.ds44-btnStd--large {
-    font-size: 1em; // 16px
-    padding: 0 $ds44-padding-large;
+a > .ds44-btnStd, 
+.ds44-btnStd > a, 
+.ds44-btnStd--large > a,
+a > .ds44-btnStd--large { // gestion de l'alignement des icones dans les boutons wysiwyg
+
+    .icon {
+        line-height: 1.1;
+    }
+
+}
+
+.ds44-btnStd--large,
+a.ds44-btnStd--large,
+.ds44-btnStd--large > a,  // pour wysiwyg
+a > .ds44-btnStd--large   // pour wysiwyg
+{
+    @include ds44-font-sizes(largeButton);  // 16px
+    padding: $ds44-padding-large;
     min-height: $ds44-largeHeight;
 }
 
-.ds44-btn--invert, a.ds44-btn--invert {
+.ds44-btn--invert, a.ds44-btn--invert, a > .ds44-btn--invert, .ds44-btn--invert > a {
     background-color: $ds44-background-dark;
     color: $ds44-color-inverse;
 
@@ -56,7 +71,9 @@ button, a.ds44-btnStd {
 
 .ds44-btn--contextual,
 a.ds44-btn--contextual,
-.ds44-contextualBtnLink {
+.ds44-contextualBtnLink,
+a > .ds44-btn--contextual, 
+.ds44-btn--contextual > a {
     background-color: $ds44-contextual-color;
     border-color: $ds44-contextual-color;
 
@@ -218,6 +235,7 @@ a.ds44-btnStd--retourPage {
     top: 20px;
     left: 20px;
     max-width: 14%;
+    text-align: center;
 }
 
 
