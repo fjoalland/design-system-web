@@ -14,12 +14,8 @@ class MiscDom {
             classNames = [classNames];
         }
 
-        if (element.classList) {
-            for (let index in classNames) {
-                element.classList.add(classNames[index]); // IE 10+
-            }
-        } else {
-            element.className += ' ' + classNames.join(' '); // IE 8+
+        for (let index in classNames) {
+            element.classList.add(classNames[index]);
         }
     }
 
@@ -29,20 +25,12 @@ class MiscDom {
         }
 
         for (let index in classNames) {
-            if (element.classList) {
-                element.classList.remove(classNames[index]); // IE 10+
-            } else {
-                element.className = element.className.replace(classNames[index], ''); // IE 8+
-            }
+            element.classList.remove(classNames[index]);
         }
     }
 
     static hasClass(element, className) {
-        if (element.classList) {
-            return element.classList.contains(className); // IE 10+
-        } else {
-            return new RegExp('(^| )' + className + '( |$)', 'gi').test(element.className); // IE 8+ ?
-        }
+        return element.classList.contains(className);
     }
 
     static getOffset(element) {
