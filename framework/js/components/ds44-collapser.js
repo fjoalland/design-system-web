@@ -62,8 +62,8 @@ var isMenuOpened = false;
 // puis applique une modification de tabindex en fonction de la modification
 function toggleMainHeaderFooterAriaHidden(exceptionNode) {
     let mainElem = document.querySelector("main");
-    if (isNullOrUndefined(mainElem)) return;
-    let headerElem = isMenuOpened ? document.querySelector("header .ds44-blocBandeau .ds44-container-large") : document.querySelector("header");
+    if (mainElem == null) return;
+    let headerElem = isMenuOpened ? document.querySelector("header .ds44-blocBandeau") : document.querySelector("header");
     let footerElem = document.querySelector("footer");
     let ariaHiddenValue = "false" == mainElem.getAttribute("aria-hidden") || mainElem.getAttribute("aria-hidden") == null;
     isMenuOpened = false;
@@ -134,10 +134,10 @@ function enableAllTabIndexes(element) {
             });
 
             let displayMainNavMenu = function (element) {
-                let mainElem = document.querySelector("main");
+                let mainElem = document.querySelector("body");
                 let footerElem = document.querySelector("footer");
-                timerClass(document.querySelector("body"), "overflow", "hidden", 375);
-                document.querySelector("header#topPage .ds44-header > *:not(ds44-blocMenu)").setAttribute("aria-hidden", "true");
+                document.querySelector("body").style.overflow = 'hidden';
+                Utils.accessibilityHide(document.querySelector("header#topPage > *:not(ds44-blocMenu)"));
                 element.setAttribute("aria-expanded","true");
                 let navNivOne = document.querySelector('.ds44-overlay--navNiv1');
                 isMenuOpened = true; // indiquer qu'on ouvre le menu
@@ -284,7 +284,7 @@ function enableAllTabIndexes(element) {
                 navApplis.classList.add('show');
                 Utils.accessibilityShow(navApplis);
                 hideCloseButtons(navApplis.querySelector('.ds44-btnOverlay--closeOverlay'));
-                navApplis.querySelector('.ds44-btn-backOverlay').focus();
+                navApplis.querySelector('.ds44-btnOverlay--closeOverlay').focus();
                 // ajouter l'élément de piège focus sur le menu nv2
                 disableAllTabIndexes(document.querySelector("header"));
                 enableAllTabIndexes(navApplis);
