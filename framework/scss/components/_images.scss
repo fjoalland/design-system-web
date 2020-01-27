@@ -104,10 +104,11 @@ figure {
     padding-top: 85%;
   }
   .grid-12-small-1 .col-6{
-    margin-right: $ds44-medium-vmargin;
+    margin-right: $ds44-medium-vmargin/2;
   }
   .grid-12-small-1 .col-6:last-of-type{
     margin-right: 0;
+    margin-left: $ds44-medium-vmargin/2;
   }
 
 }
