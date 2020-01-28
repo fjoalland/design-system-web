@@ -23,6 +23,7 @@ function performCloseOverlays(querySelector){
     });
 
     toggleMainHeaderFooterAriaHidden(null);
+    document.dispatchEvent(new CustomEvent('overlay:hide'));
     Utils.accessibilityShow(document.querySelector("footer"));
 }
 
