@@ -272,11 +272,11 @@ function enableAllTabIndexes(element) {
 
             ssMenuReturn.forEach((element) => {
                 element.addEventListener('click', () => {
-                    returnSsNavMenu(element);
+                    openApplisMenu(element);
                 })
             });
 
-            let returnSsNavMenu = function (element) {
+            let openApplisMenu = function (element) {
                 element.setAttribute("aria-expanded","true");
                 let navNivOne = document.querySelector('.ds44-overlay--navNiv1');
                 let navApplis = document.querySelector("#navApplis");
@@ -284,7 +284,7 @@ function enableAllTabIndexes(element) {
                 navApplis.classList.add('show');
                 Utils.accessibilityShow(navApplis);
                 hideCloseButtons(navApplis.querySelector('.ds44-btnOverlay--closeOverlay'));
-                navApplis.querySelector('.ds44-btnOverlay--closeOverlay').focus();
+                navApplis.querySelector('.ds44-btn-backOverlay').focus();
                 // ajouter l'élément de piège focus sur le menu nv2
                 disableAllTabIndexes(document.querySelector("header"));
                 enableAllTabIndexes(navApplis);
