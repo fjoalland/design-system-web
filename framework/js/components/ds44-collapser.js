@@ -24,8 +24,8 @@ function performCloseOverlays(querySelector){
     });
 
     toggleMainHeaderFooterAriaHidden(null);
+    document.querySelector("footer").setAttribute("aria-hidden","false");
     document.dispatchEvent(new CustomEvent('overlay:hide'));
-    Utils.accessibilityShow(document.querySelector("footer"));
 }
 
 // Cacher tous les boutons "Fermer" sauf le bouton de la modale actuelle
