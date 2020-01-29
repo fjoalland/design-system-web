@@ -11,10 +11,7 @@ function performCloseOverlays(querySelector){
         overlay.classList.remove('show');
         overlay.setAttribute("aria-hidden", "true");
         // Ré-afficher tous les boutons "fermer"
-        const allCloseButtons = document.querySelectorAll('.ds44-btnOverlay--closeOverlay');
-        allCloseButtons.forEach((element) => {
-          element.style.display = "block";
-        });
+        Buttons.displayAllCloseBtns();
         timerDisplayNone(overlay,500);
     });
 
@@ -342,6 +339,7 @@ function enableAllTabIndexes(element) {
                     Utils.accessibilityHide(currentModal);
                     if (currentModal.classList.contains("ds44-modal-container")) {
                         document.querySelector('[data-js="ds44-modal"][data-target="#'+ currentModal.id +'"]').focus();
+                        Buttons.displayAllCloseBtns();
                     } else if (currentModal.classList.contains("ds44-overlay")) {
                         performCloseOverlays(".ds44-overlay");
                     }
