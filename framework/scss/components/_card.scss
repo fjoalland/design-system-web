@@ -26,7 +26,7 @@
             line-height: normal;
         }
 
-        h4 {
+        .ds44-cardTitle {
             padding-top: 1rem !important;
         }
     }
@@ -103,7 +103,7 @@
     object-fit: cover;
     min-width: 120px;
 
-    @media (max-width: $ds44-small) {
+    @media (max-width: $ds44-small - .0625) {
         min-width: 105px;
     }
 }
@@ -122,7 +122,7 @@
 .ds44-card__section--horizontal {
     padding: $ds44-padding-small $ds44-padding-xlarge;
 
-    @media (max-width: $ds44-small) {
+    @media (max-width: $ds44-small - .0625) {
         padding-right: $ds44-padding-box;
         padding-left: $ds44-padding-box;
     }
@@ -132,7 +132,7 @@
     width: auto;
     min-width: 38%;
 
-    @media (min-width: $ds44-small) and (max-width: ($ds44-large - .0625)) {
+    @media (min-width: $ds44-small - .0625) and (max-width: ($ds44-large - .0625)) {
         min-width: 20%;
     }
 }
@@ -146,7 +146,7 @@
     min-height: 14rem;
     min-width: 14rem;
 
-    @media (max-width: $ds44-small) {
+    @media (max-width: $ds44-small - .0625) {
         padding-left: $spacer-small;
         padding-right: $spacer-small;
         min-width: 10rem;
@@ -183,7 +183,7 @@
 
 .ds44-card--horizontal {
     .ds44-card__img {
-        @media (max-width: $ds44-small) {
+        @media (max-width: $ds44-small - .0625) {
             min-height: 100%;
         }
     }
