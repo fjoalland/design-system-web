@@ -18,26 +18,30 @@
             opacity: 1;
         }
     }
-    .ds44-cardLocalisation .icon{
-      line-height: 1;
+
+    .ds44-cardLocalisation .icon {
+        line-height: 1;
     }
 }
+
 .ds44-cardArrow {
-        position: absolute;
-        right: 1rem;
-        bottom: 1rem;
-        opacity: 0;
-        color: $ds44-contextual-color;
-        transition-duration: $ds44-timing-standard;
-        transition-property: opacity;
-        transition-timing-function: ease;
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    opacity: 0;
+    color: $ds44-contextual-color;
+    transition-duration: $ds44-timing-standard;
+    transition-property: opacity;
+    transition-timing-function: ease;
 }
+
 .ds44-card--verticalPicture {
     background-color: $ds44-lightgray;
     height: 100%;
 }
+
 .ds44-card__section {
-    padding:  $ds44-padding-medium $ds44-padding-box;
+    padding: $ds44-padding-medium $ds44-padding-box;
 
 }
 
@@ -51,6 +55,7 @@
         text-decoration: none;
     }
 }
+
 .ds44-card__title {
     margin-bottom: $headings-margin-bottom;
     padding: 0;
@@ -60,14 +65,17 @@
     background: transparent;
     font-family: $ds44-font-family-base;
 }
+
 .ds44-cardPicture {
     object-fit: cover;
     min-width: 120px;
 }
+
 .ds44-cardFile {
     @include ds44-font-sizes(smallText);
     color: $ds44-gray;
 }
+
 .ds44-theme .ds44-cardFile {
     color: $ds44-darkgray;
 }
@@ -75,39 +83,44 @@
 // Horizontal card specific styles
 
 .ds44-card__section--horizontal {
-    padding:  $ds44-padding-small $ds44-padding-xlarge;
+    padding: $ds44-padding-small $ds44-padding-xlarge;
 }
 
 .ds44-card__section--horizontal--img {
-  width: auto;
-  min-width: 38%;
+    width: auto;
+    min-width: 38%;
 }
 
 // Calendar card
 
 .ds44-card__dateContainer {
-    padding:  $ds44-padding-small;
+    padding: $ds44-padding-small;
     background-color: $ds44-contextual-color;
     text-align: center;
     min-height: 14rem;
     min-width: 14rem;
 }
+
 .ds44-cardDateNumber {
     font: bold 2.375em/1 $ds44-font-family-headings;
     display: block;
 }
+
 .ds44-cardDateMonth {
     font: normal 1.5em/1 $ds44-font-family-headings;
     display: block;
 }
+
 .ds44-cardMultiDates { // if card displays multiple dates (range)
     .ds44-cardDateNumber {
         font-size: 2.1875em;
     }
+
     .ds44-cardDateMonth {
         font-size: 1.125em;
     }
 }
+
 .ds44-cardLocalisation {
     font-size: .8125em;
 
@@ -118,21 +131,21 @@
 
 /* large screens */
 /* ------------- */
-@media (min-width: $ds44-large ) and (max-width: ($ds44-extra-large - .0625)) {
+@media (min-width: $ds44-large) and (max-width: ($ds44-extra-large - .0625)) {
 
-  .ds44-card__dateContainer {
-      min-width: 9rem;
-  }
+    .ds44-card__dateContainer {
+        min-width: 9rem;
+    }
 
 }
 
 /* medium screens */
 /* ------------- */
-@media (min-width: $ds44-medium ) and (max-width: ($ds44-large - .0625)) {
+@media (min-width: $ds44-medium) and (max-width: ($ds44-large - .0625)) {
 
-  .ds44-card__dateContainer {
-      min-width: 6rem;
-  }
+    .ds44-card__dateContainer {
+        min-width: 6rem;
+    }
 
 }
 
@@ -140,9 +153,9 @@
 /* ------------- */
 @media (min-width: $ds44-small) and (max-width: ($ds44-large - .0625)) {
 
-  .ds44-card__section--horizontal--img {
-    min-width: 20%;
-  }
+    .ds44-card__section--horizontal--img {
+        min-width: 20%;
+    }
 
 }
 
