@@ -12,7 +12,6 @@ function performCloseOverlays(querySelector){
         overlay.setAttribute("aria-hidden", "true");
         // Ré-afficher tous les boutons "fermer"
         Buttons.displayAllCloseBtns();
-        timerDisplayNone(overlay,500);
     });
 
     let overlayBtns = document.querySelectorAll('.ds44-btn--menu, .ds44-overlay--navNiv1 .ds44-ds44-menuBtn');
@@ -344,6 +343,8 @@ function enableAllTabIndexes(element) {
 
                     document.dispatchEvent(new CustomEvent('modal:hide'));
                 }
+
+                Buttons.displayAllCloseBtns();
 
             }
 
