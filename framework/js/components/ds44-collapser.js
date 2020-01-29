@@ -40,33 +40,6 @@ function hideCloseButtons(exceptionElem) {
     });
 }
 
-// Effectue les actions liées à la méthode toggleMainHeaderFooterAriaHidden
-function performToggleTabindex(exceptionNode, ariaHiddenValue) {
-    var focusableEls = document.querySelectorAll(queryAllFocusableElements);
-    if (ariaHiddenValue) {
-        // on ajoute tabindex=-1 sur le main et ses sous-éléments interactifs
-        focusableEls.forEach((itFocusElem) => {
-            if (!exceptionNode.contains(itFocusElem)) { // on ignore les éléments du bloc à exclure
-                itFocusElem.setAttribute("oldtabindex", itFocusElem.getAttribute("tabindex"));
-                itFocusElem.setAttribute("tabindex", "-1");
-                itFocusElem.setAttribute("aria-hidden", "true");
-            }
-        });
-    } else {
-        // on retire l'attribut tabindex sur le main et ses sous-éléments interactifs
-        focusableEls.forEach((itFocusElem) => {
-            if (isNullOrUndefined(itFocusElem.getAttribute("oldtabindex"))) {
-                itFocusElem.removeAttribute("oldtabindex");
-                itFocusElem.removeAttribute("tabindex");
-            } else {
-                itFocusElem.setAttribute("tabindex", itFocusElem.getAttribute("oldtabindex"));
-                itFocusElem.removeAttribute("oldtabindex");
-            }
-            itFocusElem.removeAttribute("aria-hidden");
-        });
-    }
-}
-
 var isMenuOpened = false;
 
 // Modifie la valeur de l'attribut "aria-hidden" de <main>, <header> et <footer>,
@@ -90,7 +63,7 @@ function toggleMainHeaderFooterAriaHidden(exceptionNode) {
     if (!isNullOrUndefined(footerElem)) {
         footerElem.setAttribute("aria-hidden", ariaHiddenValue);
     }
-    performToggleTabindex(exceptionNode, ariaHiddenValue);
+    TabIndex.performAccessibilityChecks();
 }
 
 // Modifie la valeur 'aria-hidden' des éléments section#menu section.ds44-overlay en 'true' sauf pour l'élément en paramètre
@@ -332,7 +305,6 @@ function enableAllTabIndexes(element) {
                         modal.setAttribute('aria-hidden', 'false');
                         modal.removeAttribute("tabindex");
                         disableAllTabIndexes(document.querySelector("section.ds44-ongletsContainer"));
-                        enableAllTabIndexes(modal);
                         trapFocus(modal);
                         const closeButton = modal.querySelector('[data-js="ds44-modal-action-close"]');
                         hideCloseButtons(closeButton);
@@ -356,15 +328,6 @@ function enableAllTabIndexes(element) {
             window.document.addEventListener("keyup", (e) => {
                 if (e.key === "Escape") {
                     _closePopup();
-
-                    const elementsShow = document.querySelectorAll('.show');
-                    elementsShow.forEach((elementShow) => {
-                        console.info('debug ' + elementsShow);
-                        if (document.activeElement == elementShow) {
-                            // hideAllOtherBlock();
-                            elementShow.click();
-                        }
-                    });
                 }
             });
 

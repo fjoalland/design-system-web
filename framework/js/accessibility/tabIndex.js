@@ -3,10 +3,10 @@
 class TabIndex {
 
 	constructor() {
-		this.performAccessibilityChecks();
+		TabIndex.performAccessibilityChecks();
 	}
 
-	performAccessibilityChecks() {
+	static performAccessibilityChecks() {
 		let allAriaHiddenElements = document.querySelectorAll('[aria-hidden="true"]');
 		if (!allAriaHiddenElements) return;
 
