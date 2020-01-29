@@ -26,7 +26,7 @@ class Onglet {
         if(tab.getAttribute('aria-current') === 'true') {
           tab.focus();
           tabPanel.style['display'] = 'block';
-          window.timerClass(tabPanel, 'opacity', '1', 150);
+          Utils.timerClass(tabPanel, 'opacity', '1', 150);
         }
 
     });
@@ -48,8 +48,8 @@ class Onglet {
       if (tab === evt.target) {
         tab.classList.add('ds44-tabs__linkSelected');
 
-        timerClass(tabPanel, 'display', 'block', 150);
-        timerClass(tabPanel, 'opacity', '1', 300);
+        Utils.timerClass(tabPanel, 'display', 'block', 150);
+        Utils.timerClass(tabPanel, 'opacity', '1', 300);
 
         let tabPanelAnchor = tabPanel.children[0];
         if(!tabPanelAnchor) {
@@ -61,7 +61,7 @@ class Onglet {
         tab.classList.remove('ds44-tabs__linkSelected');
 
         tabPanel.style['opacity'] = 0;
-        window.timerDisplayNone(tabPanel, 150);
+        Utils.timerDisplayNone(tabPanel, 150);
       }
 
     });

@@ -153,18 +153,20 @@ function enableAllTabIndexes(element) {
                 document.querySelector("header#topPage > *:not(ds44-blocMenu)").setAttribute("aria-hidden", "true");
                 element.setAttribute("aria-expanded","true");
                 let navNivOne = document.querySelector('.ds44-overlay--navNiv1');
+                Utils.accessibilityShow(navNivOne);
+                console.log(navNivOne.querySelector('.ds44-btnOverlay--closeOverlay'));
                 isMenuOpened = true; // indiquer qu'on ouvre le menu
                 toggleMainHeaderFooterAriaHidden(navNivOne);
                 isMenuOpened = true; // duplicata pour qu'une fermeture d'overlay se souvienne que le menu est ouvert
-                navNivOne.style.display = 'block';
-                timerShow(navNivOne, 0);
-                navNivOne.removeAttribute("aria-hidden");
+                navNivOne.style.visibility = 'visible';
+                navNivOne.classList.add('show');
                 navNivOne.querySelector('.ds44-btnOverlay--closeOverlay').focus();
-                if (!isNullOrUndefined(mainElem)) mainElem.setAttribute("aria-hidden","true");
-                if (!isNullOrUndefined(footerElem)) footerElem.setAttribute("aria-hidden","true");
+                if (!mainElem) mainElem.setAttribute("aria-hidden","true");
+                if (!footerElem) footerElem.setAttribute("aria-hidden","true");
                 // ajouter l'élément de piège focus sur le menu nv1
                 trapFocus(navNivOne);
                 toggleAriaHiddenSsMenu(navNivOne);
+                console.log(navNivOne.querySelector('.ds44-btnOverlay--closeOverlay'));
             }
         }
 
@@ -374,10 +376,8 @@ function enableAllTabIndexes(element) {
                     let main = document.querySelector("main");
                     if(main !== null) main.removeAttribute("aria-hidden");
                     currentModal.classList.toggle('show');
-                    timerDisplayNone(currentModal, 300);
-                    currentModal.setAttribute('aria-hidden', 'true');
+                    Utils.accessibilityHide(currentModal);
                     if (currentModal.classList.contains("ds44-modal-container")) {
-                        currentModal.setAttribute("tabindex", "-1");
                         document.querySelector('[data-js="ds44-modal"][data-target="#'+ currentModal.id +'"]').focus();
                     } else if (currentModal.classList.contains("ds44-overlay")) {
                         performCloseOverlays(".ds44-overlay");
