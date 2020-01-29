@@ -97,7 +97,7 @@ div .swiper-slide {
     margin-right: 0px;
 }
 
-@media screen and (max-width: $ds44-medium - .0625) {
+@media screen and (max-width: $ds44-medium -.0625) {
 
   .ds44-carousel-swiper li {
       width: auto;
@@ -118,15 +118,15 @@ div .swiper-slide {
     height: auto;
     background: #000;
     padding: 15px 20px;
-  }
+}
 
-  div .swiper-button-next.ds44-not-edge-42::after, div .swiper-button-prev.ds44-not-edge-42::after {
-      font-size: 15px;
-  }
+div .swiper-button-next::after, div .swiper-button-prev::after {
+    font-size: 15px;
+}
 
 }
 
-@media screen and (max-width: $ds44-small - .0625) {
+@media screen and (max-width: $ds44-small -.0625) {
 
     .swipper-carousel-wrap {
         margin-left: -$ds44-mobile-margins;

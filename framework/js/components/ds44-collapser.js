@@ -24,7 +24,6 @@ function performCloseOverlays(querySelector){
 
     toggleMainHeaderFooterAriaHidden(null);
     document.dispatchEvent(new CustomEvent('overlay:hide'));
-    Utils.accessibilityShow(document.querySelector("footer"));
 }
 
 // Cacher tous les boutons "Fermer" sauf le bouton de la modale actuelle
@@ -273,11 +272,11 @@ function enableAllTabIndexes(element) {
 
             ssMenuReturn.forEach((element) => {
                 element.addEventListener('click', () => {
-                    openApplisMenu(element);
+                    returnSsNavMenu(element);
                 })
             });
 
-            let openApplisMenu = function (element) {
+            let returnSsNavMenu = function (element) {
                 element.setAttribute("aria-expanded","true");
                 let navNivOne = document.querySelector('.ds44-overlay--navNiv1');
                 let navApplis = document.querySelector("#navApplis");
@@ -285,7 +284,7 @@ function enableAllTabIndexes(element) {
                 navApplis.classList.add('show');
                 Utils.accessibilityShow(navApplis);
                 hideCloseButtons(navApplis.querySelector('.ds44-btnOverlay--closeOverlay'));
-                navApplis.querySelector('.ds44-btn-backOverlay').focus();
+                navApplis.querySelector('.ds44-btnOverlay--closeOverlay').focus();
                 // ajouter l'élément de piège focus sur le menu nv2
                 disableAllTabIndexes(document.querySelector("header"));
                 enableAllTabIndexes(navApplis);
