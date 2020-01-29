@@ -104,6 +104,11 @@ main {
       box-sizing: border-box;
       display: flex;
       justify-content: flex-start;
+
+      hr {
+        margin: 1em 0 1em;
+        background-color: #939393;
+      }
     }
 }
 
