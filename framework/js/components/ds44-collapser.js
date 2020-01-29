@@ -124,7 +124,6 @@ function enableAllTabIndexes(element) {
                 element.setAttribute("aria-expanded","true");
                 let navNivOne = document.querySelector('.ds44-overlay--navNiv1');
                 Utils.accessibilityShow(navNivOne);
-                console.log(navNivOne.querySelector('.ds44-btnOverlay--closeOverlay'));
                 isMenuOpened = true; // indiquer qu'on ouvre le menu
                 toggleMainHeaderFooterAriaHidden(navNivOne);
                 isMenuOpened = true; // duplicata pour qu'une fermeture d'overlay se souvienne que le menu est ouvert
@@ -136,7 +135,6 @@ function enableAllTabIndexes(element) {
                 // ajouter l'élément de piège focus sur le menu nv1
                 trapFocus(navNivOne);
                 toggleAriaHiddenSsMenu(navNivOne);
-                console.log(navNivOne.querySelector('.ds44-btnOverlay--closeOverlay'));
             }
         }
 
