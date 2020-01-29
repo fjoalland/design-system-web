@@ -123,6 +123,26 @@
     }
 }
 
+/* large screens */
+/* ------------- */
+@media (min-width: $ds44-large ) and (max-width: ($ds44-extra-large - .0625)) {
+
+  .ds44-card__dateContainer {
+      min-width: 9rem;
+  }
+
+}
+
+/* medium screens */
+/* ------------- */
+@media (min-width: $ds44-medium ) and (max-width: ($ds44-large - .0625)) {
+
+  .ds44-card__dateContainer {
+      min-width: 6rem;
+  }
+
+}
+
 /* small screens */
 /* ------------- */
 @media (min-width: $ds44-small) and (max-width: ($ds44-large - .0625)) {
