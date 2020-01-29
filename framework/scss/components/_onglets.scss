@@ -57,20 +57,16 @@
 }
 
 .ds44-tabs__content {
-    padding: 0;
-    opacity: 0;
-    transition: visibility $ds44-timing-standard ease-in-out;
+    padding: $ds44-padding-xxlarge;
+    opacity: 1;
+    transition: all $ds44-timing-standard ease-in-out;
     position: relative;
-    visibility: hidden;
-    height: 0;
+}
 
-    &.show {
-        padding: $ds44-padding-xxlarge;
-        transition: opacity $ds44-timing-standard ease-in-out;
-        visibility: visible;
-        opacity: 1;
-        height: auto;
-    }
+[aria-hidden="true"].ds44-tabs__content {
+    display: none;
+    opacity: 0;
+    transition: all $ds44-timing-standard ease-in-out;
 }
 
 .ds44-blocBtnOnglets {

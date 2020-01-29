@@ -25,13 +25,26 @@ class Utils {
     static accessibilityHide(element) {
         if (!element) return;
         element.setAttribute('aria-hidden', 'true');
-        element.setAttribute('tab-index', '-1');
+        TabIndex.disableTabIndex(element);
     }
 
     static accessibilityShow(element) {
         if (!element) return;
         element.removeAttribute('aria-hidden');
-        element.removeAttribute('tab-index');
+        TabIndex.enableTabIndex(element);
+    }
+
+    // Ajoute le style css "display: none" sur un élément après un timer
+    static timerDisplayNone(elem, timer) {
+        setTimeout(function() {
+            elem.style.display = 'none';
+        }, timer);
+    }
+
+    static timerClass(elem, className, value, timer) {
+        setTimeout(function() {
+            elem.style[className] = value;
+        }, timer);
     }
 
 }

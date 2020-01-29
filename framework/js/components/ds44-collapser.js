@@ -11,10 +11,7 @@ function performCloseOverlays(querySelector){
         overlay.classList.remove('show');
         Utils.accessibilityHide(overlay);
         // Ré-afficher tous les boutons "fermer"
-        const allCloseButtons = document.querySelectorAll('.ds44-btnOverlay--closeOverlay');
-        allCloseButtons.forEach((element) => {
-          element.style.visibility = "visible";
-        });
+        Buttons.displayAllCloseBtns();
     });
 
     let overlayBtns = document.querySelectorAll('.ds44-btn--menu, .ds44-overlay--navNiv1 .ds44-ds44-menuBtn');
@@ -31,9 +28,9 @@ function hideCloseButtons(exceptionElem) {
     const allCloseButtons = document.querySelectorAll('.ds44-btnOverlay--closeOverlay');
     allCloseButtons.forEach((element) => {
         if (element != exceptionElem) {
-            element.style.visibility = "hidden";
+            element.style.display = "none";
         } else {
-            element.style.visibility = "visible";
+            element.style.display = "block";
         }
     });
 }
@@ -140,15 +137,15 @@ function enableAllTabIndexes(element) {
                 Utils.accessibilityHide(document.querySelector("header#topPage > *:not(ds44-blocMenu)"));
                 element.setAttribute("aria-expanded","true");
                 let navNivOne = document.querySelector('.ds44-overlay--navNiv1');
+                Utils.accessibilityShow(navNivOne);
                 isMenuOpened = true; // indiquer qu'on ouvre le menu
                 toggleMainHeaderFooterAriaHidden(navNivOne);
                 isMenuOpened = true; // duplicata pour qu'une fermeture d'overlay se souvienne que le menu est ouvert
                 navNivOne.style.visibility = 'visible';
                 navNivOne.classList.add('show');
-                Utils.accessibilityShow(navNivOne);
                 navNivOne.querySelector('.ds44-btnOverlay--closeOverlay').focus();
-                if (mainElem !== null) mainElem.setAttribute("aria-hidden","true");
-                if (footerElem !== null) footerElem.setAttribute("aria-hidden","true");
+                if (!mainElem) mainElem.setAttribute("aria-hidden","true");
+                if (!footerElem) footerElem.setAttribute("aria-hidden","true");
                 // ajouter l'élément de piège focus sur le menu nv1
                 trapFocus(navNivOne);
                 toggleAriaHiddenSsMenu(navNivOne);
@@ -358,9 +355,8 @@ function enableAllTabIndexes(element) {
                     let main = document.querySelector("main");
                     if(main !== null) Utils.accessibilityShow(main);
                     currentModal.classList.toggle('show');
-                    currentModal.setAttribute('aria-hidden', 'true');
+                    Utils.accessibilityHide(currentModal);
                     if (currentModal.classList.contains("ds44-modal-container")) {
-                        currentModal.setAttribute("tabindex", "-1");
                         document.querySelector('[data-js="ds44-modal"][data-target="#'+ currentModal.id +'"]').focus();
                     } else if (currentModal.classList.contains("ds44-overlay")) {
                         performCloseOverlays(".ds44-overlay");
@@ -368,6 +364,8 @@ function enableAllTabIndexes(element) {
 
                     document.dispatchEvent(new CustomEvent('modal:hide'));
                 }
+
+                Buttons.displayAllCloseBtns();
 
             }
 

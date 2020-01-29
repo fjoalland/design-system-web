@@ -25,8 +25,8 @@ class Onglet {
 
         if(tab.getAttribute('aria-current') === 'true') {
           tab.focus();
-          tabPanel.classList.add('show');
-          Utils.accessibilityShow(tabPanel);
+          tabPanel.style['display'] = 'block';
+          Utils.timerClass(tabPanel, 'opacity', '1', 150);
         }
 
     });
@@ -34,8 +34,6 @@ class Onglet {
 
   // effectue une transition des display:none sur les contenus des onglets
   processTransitionOnglets(evt) {
-
-    evt.preventDefault();
 
     let allTabs = document.querySelectorAll('.js-tablist__link');
     allTabs.forEach((tab) => {
@@ -50,8 +48,8 @@ class Onglet {
       if (tab === evt.target) {
         tab.classList.add('ds44-tabs__linkSelected');
 
-        Utils.accessibilityShow(tabPanel);
-        tabPanel.classList.add('show');
+        Utils.timerClass(tabPanel, 'display', 'block', 150);
+        Utils.timerClass(tabPanel, 'opacity', '1', 300);
 
         let tabPanelAnchor = tabPanel.children[0];
         if(!tabPanelAnchor) {
@@ -62,8 +60,8 @@ class Onglet {
       } else {
         tab.classList.remove('ds44-tabs__linkSelected');
 
-        Utils.accessibilityHide(tabPanel);
-        tabPanel.classList.remove('show');
+        tabPanel.style['opacity'] = 0;
+        Utils.timerDisplayNone(tabPanel, 150);
       }
 
     });
