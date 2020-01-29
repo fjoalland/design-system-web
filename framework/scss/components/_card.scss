@@ -23,6 +23,9 @@
         position: absolute;
         height: 100%;
       }
+    .ds44-cardLocalisation .icon{
+      line-height: 1;
+    }
 }
 .ds44-cardArrow {
         position: absolute;
@@ -41,9 +44,6 @@
 .ds44-card__section {
     padding:  $ds44-padding-medium $ds44-padding-box;
 
-    .ds44-cardLocalisation .icon{
-      line-height: 1;
-    }
 }
 
 .ds44-card__globalLink {
