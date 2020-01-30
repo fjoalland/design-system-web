@@ -14,7 +14,7 @@ class OverlaySrcFocus {
 
     // Ajoute un attribut à un élément pour le désigner en tant que source d'une ouverture d'overlay
     designElementAsOverlaySrc(evt) {
-        evt.currentTarget.setAttribute('data-src-overlay','true');
+        evt.currentTarget.setAttribute('data-src-overlay', 'true');
     }
 
     // Retire l'attribut désignant un élément comme source d'ouverture d'overlay et focus sur cet élément

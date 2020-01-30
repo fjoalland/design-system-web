@@ -25,7 +25,7 @@ layout: pattern
         navNivTwo.querySelector('.ds44-btn-backOverlay').focus();
         // ajouter l'élément de piège focus sur le menu nv2
         disableAllTabIndexes(document.querySelector("header"));
-        trapFocus(navNivTwo);
+        MiscEvent.dispatch('focus:addLoop', {'element': navNivTwo});
         toggleAriaHiddenSsMenu(navNivTwo);
     }
     </script>

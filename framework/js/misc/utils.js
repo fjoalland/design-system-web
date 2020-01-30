@@ -1,20 +1,17 @@
 'use strict';
 
 class Utils {
-
-    constructor() {}
-
     static fusionneKeyPressedWithClicked(event) {
-      if(event.key === "Enter" || event.key === " " || event.key === "Spacebar") {
-        event.preventDefault();
-        event.target.click();
-      }
+        if (event.key === "Enter" || event.key === " " || event.key === "Spacebar") {
+            event.preventDefault();
+            event.target.click();
+        }
     }
 
     static getPositionY(element) {
         var yPosition = 0;
 
-        while(element) {
+        while (element) {
             yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
             element = element.offsetParent;
         }
@@ -36,15 +33,14 @@ class Utils {
 
     // Ajoute le style css "display: none" sur un élément après un timer
     static timerDisplayNone(elem, timer) {
-        setTimeout(function() {
+        setTimeout(function () {
             elem.style.display = 'none';
         }, timer);
     }
 
     static timerClass(elem, className, value, timer) {
-        setTimeout(function() {
+        setTimeout(function () {
             elem.style[className] = value;
         }, timer);
     }
-
 }
