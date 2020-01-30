@@ -151,6 +151,14 @@
         padding-right: $spacer-small;
         min-width: 10rem;
     }
+
+    @media (min-width: $ds44-large - .0625) and (max-width: ($ds44-extra-large - .0625)) {
+        min-width: 9rem;
+    }
+
+    @media (min-width: $ds44-medium - .0625) and (max-width: ($ds44-large - .0625)) {
+        min-width: 6rem;
+    }
 }
 
 .ds44-cardDateNumber {
@@ -177,7 +185,8 @@
     font-size: .8125em;
 
     .icon {
-        font-size: 1.2em;
+        font-size: 1.2rem;
+        line-height: 1;
     }
 }
 
