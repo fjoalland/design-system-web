@@ -18,7 +18,6 @@ var jekyllDir = "docs/",
     scssFile = 'framework/scss/cd44.scss',
     scssFileSwiper = 'node_modules/swiper/css/swiper.min.css',
     cssDest = 'dist/css',
-    jsAccessFiles = 'framework/js/accessibility/*.js',
     jsMiscFiles = 'framework/js/misc/*.js',
     jsComponentFiles = 'framework/js/**/*.js',
     jsFileSwiper = 'node_modules/swiper/js/swiper.min.js',
@@ -66,7 +65,7 @@ gulp.task('build:css:cd44:prod', function () {
 });
 
 gulp.task('build:js', function () {
-    return gulp.src([jsFileSwiper, jsAccessFiles, jsMiscFiles, jsComponentFiles])
+    return gulp.src([jsFileSwiper, jsMiscFiles, jsComponentFiles])
         .pipe(concat('cd44.js'))
         .pipe(gulp.dest(jsDest));
 });
