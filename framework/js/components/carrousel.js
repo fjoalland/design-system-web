@@ -185,7 +185,7 @@ class Carrousel {
                 if (index === indexTuileVisible) {
                     slide.removeAttribute('aria-hidden');
                     slide.style.visibility = 'visible';
-                    let allElementsFocusables = slide.querySelectorAll(AccessibilityFocus.getEnabledElementsSelector());
+                    let allElementsFocusables = slide.querySelectorAll(Accessibility.getEnabledElementsSelector());
                     for (let element of allElementsFocusables) {
                         element.removeAttribute('tabindex');
                     }
@@ -196,7 +196,7 @@ class Carrousel {
                     index === indexTuileSuivante
                 ) {
                     slide.setAttribute('aria-hidden', 'true');
-                    let allElementsFocusables = slide.querySelectorAll(AccessibilityFocus.getEnabledElementsSelector());
+                    let allElementsFocusables = slide.querySelectorAll(Accessibility.getEnabledElementsSelector());
                     for (let element of allElementsFocusables) {
                         element.setAttribute('tabindex', '-1');
                     }
@@ -205,7 +205,7 @@ class Carrousel {
                 } else {
                     slide.setAttribute('aria-hidden', 'true');
                     slide.style.visibility = 'hidden';
-                    let allElementsFocusables = slide.querySelectorAll(AccessibilityFocus.getEnabledElementsSelector());
+                    let allElementsFocusables = slide.querySelectorAll(Accessibility.getEnabledElementsSelector());
                     for (let element of allElementsFocusables) {
                         element.removeAttribute('tabindex');
                     }

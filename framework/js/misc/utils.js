@@ -19,28 +19,16 @@ class Utils {
         return yPosition;
     }
 
-    static accessibilityHide(element) {
-        if (!element) return;
-        element.setAttribute('aria-hidden', 'true');
-        TabIndex.disableTabIndex(element);
-    }
-
-    static accessibilityShow(element) {
-        if (!element) return;
-        element.removeAttribute('aria-hidden');
-        TabIndex.enableTabIndex(element);
-    }
-
     // Ajoute le style css "display: none" sur un élément après un timer
-    static timerDisplayNone(elem, timer) {
+    static timerDisplayNone(element, timer) {
         setTimeout(function () {
-            elem.style.display = 'none';
+            element.style.display = 'none';
         }, timer);
     }
 
-    static timerClass(elem, className, value, timer) {
+    static timerClass(element, className, value, timer) {
         setTimeout(function () {
-            elem.style[className] = value;
+            element.style[className] = value;
         }, timer);
     }
 }
