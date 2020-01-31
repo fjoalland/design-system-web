@@ -393,6 +393,10 @@
   background-color: $ds44-light-bg;
 }
 
+.ds44-img50{
+  background: linear-gradient(to bottom, #f5f5f5 50%, #FFFFFF 50%);
+}
+
 // Dégradé du header
 .ds44-alphaGradient {
   background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,.5) 30%, rgba(0,0,0,.6) 40%, rgba(0,0,0,.75) 70%);
@@ -507,7 +511,7 @@
 /* === Text effects === */
 
 .ds44-txtBulle {
-  @include ds44-font-sizes(bigText);  
+  @include ds44-font-sizes(bigText);
   @if variable_exists(ds44-font-family-headings) and $ds44-font-family-headings != $ds44-font-family-base{
     font-family: $ds44-font-family-headings;
   }
@@ -573,12 +577,12 @@
   .ds44-separator {
     height: auto;
     padding: $ds44-padding-xlarge;
-    
+
     &::before {
       height: 2px;
       width: 100%;
     }
-  
+
   }
 
 }
@@ -627,6 +631,9 @@
   .ds44-xl-margin-tb {
     margin-top     : $ds44-components-margin;  // 3rem
     margin-bottom  : $ds44-components-vmargin; // 3rem
+  }
+  .ds44--mobile--m-padding-b {
+    padding-bottom   : $ds44-padding-medium; // 1rem
   }
 
 }
