@@ -8,8 +8,6 @@ class Overlay {
         this.clickOutListener = this.clickOut.bind(this);
 
         // Events
-        MiscEvent.addListener('overlay:showCloseButtons', this.showCloseButtons.bind(this));
-        MiscEvent.addListener('overlay:hideCloseButtons', this.hideCloseButtons.bind(this));
         MiscEvent.addListener('keyUp:escape', this.hideListener);
 
         // Ajouter un event listener sur les boutons qui ouvrent un overlay / modale
@@ -68,7 +66,6 @@ class Overlay {
             MiscEvent.dispatch('focus:set', {'element': closeButton});
         }
 
-        this.hideCloseButtons(closeButton);
         MiscEvent.dispatch('accessibility:show', {'element': this.modal});
         MiscEvent.dispatch('focus:addLoop', {'element': this.modal});
         MiscEvent.dispatch('overlay:show', {'element': this.modal});
@@ -104,7 +101,6 @@ class Overlay {
 
         document.body.style.overflow = null;
         this.modal.classList.remove('show');
-        this.showCloseButtons();
 
         if (this.triggerElement) {
             MiscEvent.dispatch('focus:set', {'element': this.triggerElement})
@@ -114,47 +110,14 @@ class Overlay {
         this.modal = null;
 
         MiscEvent.dispatch('overlay:hide');
-    }
-
-    // Ré-afficher tous les boutons 'fermer'
-    showCloseButtons() {
-        document
-            .querySelectorAll('.ds44-btnOverlay--closeOverlay')
-            .forEach((element) => {
-                element.style.display = 'block';
-            });
-    }
-
-    // Cacher tous les boutons 'Fermer' sauf le bouton de la modale actuelle
-    hideCloseButtons(evt, currentElement) {
-        if (!currentElement) {
-            if (
-                !evt ||
-                !evt.detail ||
-                !evt.detail.element
-            ) {
-                return;
-            }
-
-            currentElement = evt.detail.element
-        }
-
-        document
-            .querySelectorAll('.ds44-btnOverlay--closeOverlay')
-            .forEach((element) => {
-                if (element == currentElement) {
-                    element.style.display = 'block';
-                } else {
-                    element.style.display = 'none';
-                }
-            });
+        MiscEvent.dispatch('accessibility:reinstate');
     }
 
     focusOut(evt) {
         evt.stopPropagation();
 
         if (!evt.target || !this.modal.contains(evt.target)) {
-            this.modal.querySelector('input, button, textarea, a, select').focus();
+            MiscEvent.dispatch('focus:set', {'element': this.modal.querySelector('input, button, textarea, a, select')});
             return;
         }
 

@@ -7,7 +7,7 @@ class Input {
         };
 
         document
-            .querySelectorAll('input, select')
+            .querySelectorAll('input, select, textarea')
             .forEach((element) => {
                 if(element.previousElementSibling) {
                     element.previousElementSibling.classList.remove(this.mainClassName);

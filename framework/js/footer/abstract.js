@@ -2,15 +2,17 @@
 
 class Footer {
     constructor() {
-        MiscEvent.addListener('overlay:show', this.showOverlay.bind(this));
-        MiscEvent.addListener('overlay:hide', this.hideOverlay.bind(this));
+        MiscEvent.addListener('overlay:show', this.show.bind(this));
+        MiscEvent.addListener('overlay:hide', this.hide.bind(this));
+        MiscEvent.addListener('menu:show', this.show.bind(this));
+        MiscEvent.addListener('menu:hide', this.hide.bind(this));
     }
 
-    showOverlay() {
+    show() {
         MiscEvent.dispatch('accessibility:hide', {'element': document.querySelector('footer')});
     }
 
-    hideOverlay() {
+    hide() {
         MiscEvent.dispatch('accessibility:show', {'element': document.querySelector('footer')});
     }
 }
