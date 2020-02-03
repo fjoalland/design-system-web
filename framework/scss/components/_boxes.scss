@@ -141,12 +141,12 @@
 
 @media (max-width: $ds44-large - .0625) {
 
-  .ds44-grid12-offset-1 .col{
+  .ds44-box .col{
     margin-top: 2em;
     padding: 0;
   }
 
-  .ds44-grid12-offset-1 .col:first-child{
+  .ds44-box .col:first-child{
     margin-top: 0;
   }
 
