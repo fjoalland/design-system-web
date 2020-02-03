@@ -180,8 +180,17 @@ class Accessibility {
         }
     }
 
-    reinstate() {
-        document
+    reinstate(evt) {
+        let rootElement = document;
+        if (
+            evt &&
+            evt.detail &&
+            evt.detail.element
+        ) {
+            rootElement = evt.detail.element;
+        }
+
+        rootElement
             .querySelectorAll('[data-bkp-aria-hidden]')
             .forEach((element) => {
                 if (element.getAttribute('data-bkp-aria-hidden') === '') {
@@ -195,7 +204,7 @@ class Accessibility {
                 element.removeAttribute('data-bkp-aria-hidden');
             });
 
-        document
+        rootElement
             .querySelectorAll('[data-bkp-tabindex]')
             .forEach((element) => {
                 if (element.getAttribute('data-bkp-tabindex') === '') {

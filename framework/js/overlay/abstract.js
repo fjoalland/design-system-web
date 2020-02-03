@@ -21,6 +21,12 @@ class Overlay {
             .forEach((element) => {
                 MiscEvent.addListener('click', this.hideListener, element);
             });
+
+        document
+            .querySelectorAll('.ds44-modal-container')
+            .forEach((element) => {
+                MiscEvent.dispatch('accessibility:hide', {'element': element});
+            });
     }
 
     // Ouvre un overlay

@@ -1,5 +1,3 @@
-'use strict';
-
 class Header {
     constructor() {
         this.lastScroll = 0;
@@ -17,7 +15,7 @@ class Header {
     // Sur le focus au clavier d'un élément caché sous le header, effectuer un scroll vers le haut pour que l'élément soit affiché
     checkFocusPosition() {
         if (this.isTabEnabled) {
-            const header = document.querySelector('.ds44-header');
+            const header = document.querySelector('header .ds44-header');
             const activeElement = document.activeElement;
             if (
                 !header ||
@@ -40,7 +38,7 @@ class Header {
 
     // Gérer le comportement du header en fonction des scrolls
     scroll() {
-        const header = document.querySelector('.ds44-header');
+        const header = document.querySelector('header .ds44-header');
         if (!header) {
             return;
         }
@@ -50,7 +48,7 @@ class Header {
             header.classList.remove('hidden');
             MiscEvent.dispatch('accessibility:show', {'element': header});
             if (document.activeElement === document.querySelector('html')) {
-                MiscEvent.dispatch('focus:set', {'element': document.querySelector('.ds44-btn--menu')});
+                MiscEvent.dispatch('focus:set', {'element': document.querySelector('header .ds44-btn--menu')});
             }
             return;
         }

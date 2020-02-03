@@ -1,5 +1,3 @@
-'use strict';
-
 class Main {
     constructor() {
         MiscEvent.addListener('overlay:show', this.show.bind(this));

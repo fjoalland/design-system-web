@@ -1,5 +1,3 @@
-'use strict';
-
 class Footer {
     constructor() {
         MiscEvent.addListener('overlay:show', this.show.bind(this));

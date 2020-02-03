@@ -1,6 +1,7 @@
 class Menu {
     constructor() {
-        this.triggerElement = null;
+        this.triggerMainMenuElement = null;
+        this.triggerSubMenuElement = null;
         this.menu = null;
 
         this.hideMainListener = this.hideMain.bind(this);
@@ -29,6 +30,11 @@ class Menu {
             .forEach((element) => {
                 MiscEvent.addListener('click', this.hideSubMenu.bind(this), element);
             });
+
+        const menu = document.querySelector('header .ds44-blocMenu');
+        if (menu) {
+            MiscEvent.dispatch('accessibility:hide', {'element': menu});
+        }
     }
 
     showMain(evt) {
@@ -41,7 +47,7 @@ class Menu {
         }
 
         // Get corresponding menu
-        const menu = document.querySelector('.ds44-blocMenu');
+        const menu = document.querySelector('header .ds44-blocMenu');
         if (!menu) {
             return;
         }
@@ -59,7 +65,7 @@ class Menu {
         }
 
         // Record the element that triggered the overlay
-        this.triggerElement = evt.currentTarget;
+        this.triggerMainMenuElement = evt.currentTarget;
         this.menu = menu;
 
         // Show menu
@@ -117,11 +123,11 @@ class Menu {
                 subMenu.removeAttribute('aria-expanded');
             });
 
-        if (this.triggerElement) {
-            MiscEvent.dispatch('focus:set', {'element': this.triggerElement})
+        if (this.triggerMainMenuElement) {
+            MiscEvent.dispatch('focus:set', {'element': this.triggerMainMenuElement})
         }
 
-        this.triggerElement = null;
+        this.triggerMainMenuElement = null;
         this.menu = null;
 
         MiscEvent.dispatch('menu:hide');
@@ -151,10 +157,12 @@ class Menu {
         }
 
         // Get corresponding close button
-        const closeButton = subMenu.querySelector('.ds44-btnOverlay--closeOverlay');
-        if (!closeButton) {
+        const backButton = subMenu.querySelector('.ds44-btn-backOverlay');
+        if (!backButton) {
             return;
         }
+
+        this.triggerSubMenuElement = evt.currentTarget;
 
         mainMenu.removeAttribute('aria-expanded');
         MiscEvent.dispatch('accessibility:hide', {'element': mainMenu});
@@ -164,7 +172,7 @@ class Menu {
         subMenu.classList.add('show');
         MiscEvent.dispatch('accessibility:show', {'element': subMenu});
 
-        MiscEvent.dispatch('focus:set', {'element': closeButton});
+        MiscEvent.dispatch('focus:set', {'element': backButton});
         MiscEvent.dispatch('focus:addLoop', {'element': subMenu});
     }
 
@@ -199,7 +207,12 @@ class Menu {
         mainMenu.setAttribute('aria-expanded', 'true');
         MiscEvent.dispatch('accessibility:show', {'element': mainMenu});
 
-        MiscEvent.dispatch('focus:set', {'element': closeButton});
+        if (this.triggerSubMenuElement) {
+            MiscEvent.dispatch('focus:set', {'element': this.triggerSubMenuElement})
+            this.triggerSubMenuElement = null;
+        } else {
+            MiscEvent.dispatch('focus:set', {'element': closeButton});
+        }
         MiscEvent.dispatch('focus:addLoop', {'element': mainMenu});
     }
 
