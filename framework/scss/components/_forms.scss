@@ -13,13 +13,13 @@
 ::-moz-placeholder {  /* Firefox 19+ */
     color: $ds44-dark;
     font-family: $ds44-font-family-base;
-} 
+}
 
 :-ms-input-placeholder {
     color: $ds44-dark;
     font-family: $ds44-font-family-base;
 }
- 
+
  /**
   * Input basics
   */
@@ -40,22 +40,24 @@
     font-weight: normal;
     margin-bottom: 0;
 
-    .ds44-labelTypePlaceholder, 
+    .ds44-labelTypePlaceholder,
     .ds44-labelTypePlaceholderLarge {
         position: absolute;
         top: $ds44-padding-medium;
         left: $ds44-padding-box;
         transition: all $ds44-timing-standard ease-in-out;
+        color: $ds44-gray;
 
         &.ds44-moveLabel {
             font-size: .8125em; // 13px instead of 14px
             top: -$ds44-padding-medium*2;
             left: 0;
+            color: $ds44-dark;
         }
     }
 
     .ds44-labelTypePlaceholderLarge {
-        top: $ds44-padding-large;    
+        top: $ds44-padding-large;
         font-size: 1.6rem;
     }
 }
@@ -108,7 +110,7 @@
 .ds44-format {
     color: $ds44-color-soft-text;
 }
- 
+
 /**
  * Moteurs de recherche à facettes
  */
@@ -140,7 +142,7 @@
      font-size: 1.6rem;
 }
 
- 
+
 /**
  * Autocompletion fields
  */
@@ -165,7 +167,7 @@
     }
 }
 
- 
+
  /**
   * Error messages
   */
@@ -185,11 +187,11 @@
 }
 
 
- 
+
 /* ----------------------------- */
 /* ------- MEDIA QUERIES ------- */
 /* ----------------------------- */
- 
+
 
 /* medium screens */
 /* ------------- */
@@ -226,5 +228,5 @@
             }
         }
     }
-  
+
 }
