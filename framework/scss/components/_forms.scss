@@ -138,8 +138,14 @@
     background-color: $ds44-light-color;
 }
 
+.ds44-labelStd {
+     font-size: 1.4rem;
+     line-height: 1rem;
+}
+
 .ds44-labelLarge {
      font-size: 1.6rem;
+     line-height: 1rem;
 }
 
 
@@ -187,6 +193,39 @@
 }
 
 
+ /**
+  * Champs liés : Thèmes sous-thèmes, Lieu rayon, etc...
+  */
+
+.ds44-champsLies .ds44-inpStd,
+.ds44-champsLies .ds44-inpLarge {
+    &--first {
+      border-radius: 3px 0 0 3px;
+    }
+}
+
+.ds44-champsLies .ds44-inpStd,
+.ds44-champsLies .ds44-inpLarge {
+    &--last {
+      border-radius: 0 3px 3px 0;
+      margin-left: -1px;
+
+      &.ds44-inputDisabled p{
+        color: #ccc;
+      }
+    }
+}
+
+.ds44-inputDisabled {
+  background: $ds44-lightgray ;
+}
+
+.ds44-inpStd  {
+    & .ds44-btnIco {
+      padding: 0.5rem 1.5rem ;
+    }
+}
+
 
 /* ----------------------------- */
 /* ------- MEDIA QUERIES ------- */
@@ -226,6 +265,23 @@
             .icon {
                 float: right;
             }
+        }
+    }
+
+
+    .ds44-champsLies .ds44-inpStd,
+    .ds44-champsLies .ds44-inpLarge {
+        &--first {
+          border-radius: 3px 3px 0 0;
+        }
+    }
+
+    .ds44-champsLies .ds44-inpStd,
+    .ds44-champsLies .ds44-inpLarge {
+        &--last {
+          border-radius: 0 0 3px 3px;
+          margin: -1px 0 0 0;
+
         }
     }
 
