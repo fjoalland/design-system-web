@@ -33,7 +33,7 @@
 }
 
 .ds44-formLabel {
-    @include ds44-font-sizes(smallText);
+    @include ds44-font-sizes(button);
     color: $ds44-graytext-color;
     display: block;
     position: relative;
@@ -76,7 +76,7 @@
 }
 
 .ds44-inpStd {
-    @include ds44-font-sizes(smallText);
+    @include ds44-font-sizes(button);
     border-radius: $ds44-border-radius;
     padding: $ds44-padding-medium $ds44-padding-box;
     border: 1px solid $ds44-gray;
@@ -90,7 +90,7 @@
 }
 
 .ds44-inpLarge {
-    @include ds44-font-sizes(bodySize);
+    @include ds44-font-sizes(largeButton);
     border-radius: $ds44-border-radius;
     padding: $ds44-padding-large;
     border: 1px solid $ds44-gray;
