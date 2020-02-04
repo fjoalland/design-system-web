@@ -134,6 +134,7 @@
         transition: background-size $ds44-timing-faster ease-out;
         background-position: center;
         background-size: 0rem;
+        cursor: pointer;
     }
 }
 
@@ -153,6 +154,62 @@ input[type=checkbox],
 
     &.ds44-boxError + .ds44-boxLabel::before {
         border-color: $ds44-error;
+    }
+}
+
+.ds44-radioLabel { // label for checkboxes and radiobuttons
+    @include ds44-font-sizes(smallText); // 14px
+    margin-right: $ds44-components-margin;
+    padding-left: 3rem;
+    display: inline-block;
+
+    &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: .3rem;
+        left: 0;
+        border: 1px solid $ds44-dark;
+        border-radius: 20px;
+        height: 1.6rem;
+        width: 1.6rem;
+        background-color: $ds44-light-color;
+        transition: all $ds44-timing-faster ease-out;
+        cursor: pointer;
+    }
+
+    &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: .7rem;
+        left: .4rem;
+        border-radius: 20px;
+        height: .8rem;
+        width: .8rem;
+        background-color: $ds44-dark;
+        transition: opacity $ds44-timing-faster ease-out;
+        cursor: pointer;
+        opacity: 0;
+    }
+}
+
+input[type=radio],
+.ds44-radio {
+    position: absolute;
+    left: -9999px;
+
+    &:focus + .ds44-radioLabel::before {
+        outline: 1px dotted $ds44-dark;
+    }
+
+    &:checked + .ds44-radioLabel::after {
+        opacity: 1;
+    }
+
+    &.ds44-boxError + .ds44-radioLabel::before {
+        border-color: $ds44-error;
+        background-color: $ds44-light-color;
     }
 }
 
