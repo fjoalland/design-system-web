@@ -33,7 +33,7 @@
 }
 
 .ds44-formLabel {
-    @include ds44-font-sizes(smallText);
+    @include ds44-font-sizes(button);
     color: $ds44-graytext-color;
     display: block;
     position: relative;
@@ -76,7 +76,7 @@
 }
 
 .ds44-inpStd {
-    @include ds44-font-sizes(smallText);
+    @include ds44-font-sizes(button);
     border-radius: $ds44-border-radius;
     padding: $ds44-padding-medium $ds44-padding-box;
     border: 1px solid $ds44-gray;
@@ -90,7 +90,7 @@
 }
 
 .ds44-inpLarge {
-    @include ds44-font-sizes(bodySize);
+    @include ds44-font-sizes(largeButton);
     border-radius: $ds44-border-radius;
     padding: $ds44-padding-large;
     border: 1px solid $ds44-gray;
@@ -185,8 +185,14 @@ input[type=checkbox],
     background-color: $ds44-light-color;
 }
 
+.ds44-labelStd {
+     font-size: 1.4rem;
+     line-height: 1rem;
+}
+
 .ds44-labelLarge {
      font-size: 1.6rem;
+     line-height: 1rem;
 }
 
 
@@ -235,6 +241,39 @@ input[type=checkbox],
 }
 
 
+ /**
+  * Champs liés : Thèmes sous-thèmes, Lieu rayon, etc...
+  */
+
+.ds44-champsLies .ds44-inpStd,
+.ds44-champsLies .ds44-inpLarge {
+    &--first {
+      border-radius: 3px 0 0 3px;
+    }
+}
+
+.ds44-champsLies .ds44-inpStd,
+.ds44-champsLies .ds44-inpLarge {
+    &--last {
+      border-radius: 0 3px 3px 0;
+      margin-left: -1px;
+
+      &.ds44-inputDisabled p{
+        color: #ccc;
+      }
+    }
+}
+
+.ds44-inputDisabled {
+  background: $ds44-lightgray ;
+}
+
+.ds44-inpStd  {
+    & .ds44-btnIco {
+      padding: 0.5rem 1.5rem ;
+    }
+}
+
 
 /* ----------------------------- */
 /* ------- MEDIA QUERIES ------- */
@@ -274,6 +313,23 @@ input[type=checkbox],
             .icon {
                 float: right;
             }
+        }
+    }
+
+
+    .ds44-champsLies .ds44-inpStd,
+    .ds44-champsLies .ds44-inpLarge {
+        &--first {
+          border-radius: 3px 3px 0 0;
+        }
+    }
+
+    .ds44-champsLies .ds44-inpStd,
+    .ds44-champsLies .ds44-inpLarge {
+        &--last {
+          border-radius: 0 0 3px 3px;
+          margin: -1px 0 0 0;
+
         }
     }
 

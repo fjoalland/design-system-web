@@ -4,14 +4,14 @@ group: components
 status: A valider
 
 title: Formulaires
-description: 
+description:
 
 variations:
 - title: Champs standards
-  description: 
+  description:
   pattern: forms/form--input-std.html
 - title: Champ autocompletion
-  description: 
+  description:
   pattern: forms/form--input-autocomplete.html
 - title: Messages d erreur
   description:
@@ -19,6 +19,9 @@ variations:
 - title: Recherche à facettes
   description: Ensemble de composants de formulaire dédié aux recherches
   pattern: forms/form--recherche-facettes.html
+- title: Champs liés
+  description: Quand deux champs sont liés, le sous-thèmes n'est accessible qu'après avoir validé le premier champ.
+  pattern: forms/form--champs-lies.html
 ---
 
 ## Usage
@@ -53,5 +56,3 @@ Sur le champ en erreur, déclarer  :
 
 
 ## FAQ
-
-
