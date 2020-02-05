@@ -7,11 +7,11 @@ class Footer {
     }
 
     show() {
-        MiscEvent.dispatch('accessibility:hide', {'element': document.querySelector('footer')});
+        MiscAccessibility.hide(document.querySelector('footer'));
     }
 
     hide() {
-        MiscEvent.dispatch('accessibility:show', {'element': document.querySelector('footer')});
+        MiscAccessibility.show(document.querySelector('footer'));
     }
 }
 

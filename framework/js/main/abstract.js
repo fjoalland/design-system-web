@@ -7,11 +7,11 @@ class Main {
     }
 
     show() {
-        MiscEvent.dispatch('accessibility:hide', {'element': document.querySelector('main')});
+        MiscAccessibility.hide(document.querySelector('main'));
     }
 
     hide() {
-        MiscEvent.dispatch('accessibility:show', {'element': document.querySelector('main')});
+        MiscAccessibility.show(document.querySelector('main'));
     }
 }
 

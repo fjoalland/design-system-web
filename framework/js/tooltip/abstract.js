@@ -56,7 +56,7 @@ class Tooltip {
         bubble.setAttribute('id', this.TOOLTIP_SIMPLE_LABEL_ID + hashId);
         MiscDom.addClasses(bubble, [bubbleClassName, this.TOOLTIP_SIMPLE]);
         bubble.setAttribute(this.ATTR_ROLE, this.ROLE);
-        MiscEvent.dispatch('accessibility:hide', {'element': bubble});
+        MiscAccessibility.hide(bubble, true);
         bubble.setAttribute(this.DATA_HASH_ID, hashId);
         bubble.innerHTML = content;
 
@@ -91,7 +91,7 @@ class Tooltip {
 
         if (evt.type === showEventType) {
             // Show tooltip bubble
-            MiscEvent.dispatch('accessibility:show', {'element': tooltipBubble});
+            MiscAccessibility.show(tooltipBubble, true);
 
             // Remove positioning
             MiscDom.removeClasses(tooltipBubble, ['bottom', 'left']);
@@ -114,7 +114,7 @@ class Tooltip {
             }
         } else if (evt.type === hideEventType || (evt.type === 'keydown' && evt.keyCode === 27)) {
             // Hide tooltip bubble
-            MiscEvent.dispatch('accessibility:hide', {'element': tooltipBubble});
+            MiscAccessibility.hide(tooltipBubble, true);
         }
     }
 }
