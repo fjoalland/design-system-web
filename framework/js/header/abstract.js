@@ -5,11 +5,13 @@ class Header {
 
         // Bind events
         MiscEvent.addListener('scroll', this.scroll.bind(this), window);
-        MiscEvent.addListener('overlay:show', this.showOverlay.bind(this));
-        MiscEvent.addListener('overlay:hide', this.hideOverlay.bind(this));
-        MiscEvent.addListener('menu:show', this.showMenu.bind(this));
-        MiscEvent.addListener('menu:hide', this.hideMenu.bind(this));
+        MiscEvent.addListener('overlay:show', this.hide.bind(this));
+        MiscEvent.addListener('overlay:hide', this.show.bind(this));
+        MiscEvent.addListener('menu:show', this.hide.bind(this));
+        MiscEvent.addListener('menu:hide', this.show.bind(this));
         MiscEvent.addListener('keyUp:tab', this.checkFocusPosition.bind(this));
+
+        this.show();
     }
 
     // Sur le focus au clavier d'un élément caché sous le header, effectuer un scroll vers le haut pour que l'élément soit affiché
@@ -46,9 +48,9 @@ class Header {
         const currentScroll = window.pageYOffset;
         if (currentScroll === 0) {
             header.classList.remove('hidden');
-            MiscEvent.dispatch('accessibility:show', {'element': header});
+            MiscAccessibility.show(header.querySelector('.ds44-container-large'));
             if (document.activeElement === document.querySelector('html')) {
-                MiscEvent.dispatch('focus:set', {'element': document.querySelector('header .ds44-btn--menu')});
+                MiscAccessibility.setFocus(document.querySelector('header .ds44-btn--menu'));
             }
             return;
         }
@@ -61,43 +63,31 @@ class Header {
             // Scroll vers le bas, uniquement si le haut de page est
             // en dessous de la hauteur du header
             header.classList.add('hidden');
-            MiscEvent.dispatch('accessibility:hide', {'element': header});
+            MiscAccessibility.hide(header.querySelector('.ds44-container-large'));
         } else if (
             currentScroll < this.lastScroll &&
             header.classList.contains('hidden')
         ) {
             // up
             header.classList.remove('hidden');
-            MiscEvent.dispatch('accessibility:show', {'element': header});
+            MiscAccessibility.show(header.querySelector('.ds44-container-large'));
         }
 
         this.lastScroll = currentScroll;
     }
 
-    showOverlay() {
-        this.isTabEnabled = false;
-
-        MiscEvent.dispatch('accessibility:hide', {'element': document.querySelector('header')});
-    }
-
-    hideOverlay() {
+    show() {
         this.isTabEnabled = true;
 
-        MiscEvent.dispatch('accessibility:show', {'element': document.querySelector('header')});
+        MiscAccessibility.show(document.querySelector('header'));
+        MiscAccessibility.hide(document.querySelector('header .ds44-blocMenu'));
     }
 
-    showMenu() {
+    hide() {
         this.isTabEnabled = false;
 
-        MiscEvent.dispatch('accessibility:hide', {'element': document.querySelector('header')});
-        MiscEvent.dispatch('accessibility:show', {'element': document.querySelector('header .ds44-overlay--navNiv1')});
-    }
-
-    hideMenu() {
-        this.isTabEnabled = true;
-
-        MiscEvent.dispatch('accessibility:show', {'element': document.querySelector('header')});
-        MiscEvent.dispatch('accessibility:hide', {'element': document.querySelector('header .ds44-overlay--navNiv1')});
+        MiscAccessibility.hide(document.querySelector('header'));
+        MiscAccessibility.show(document.querySelector('header .ds44-blocMenu'));
     }
 }
 

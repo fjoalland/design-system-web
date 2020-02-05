@@ -57,7 +57,6 @@ class Tab {
         }
 
         // Hide others
-        MiscEvent.dispatch('accessibility:reinstate', {'element': tabPanel});
         document
             .querySelectorAll('.js-tablist__link')
             .forEach((tabHandle) => {
@@ -70,14 +69,14 @@ class Tab {
                 tabHandle.classList.remove('ds44-tabs__linkSelected');
                 tabPanel.style.opacity = 0;
                 Utils.timerClass(tabPanel, 'display', 'none', 150);
-                MiscEvent.dispatch('accessibility:hide', {'element': tabPanel});
+                MiscAccessibility.hide(tabPanel, true);
             });
 
         // Show selected tab
         tabHandle.classList.add('ds44-tabs__linkSelected');
         Utils.timerClass(tabPanel, 'opacity', '1', 300);
         Utils.timerClass(tabPanel, 'display', 'block', 150);
-        MiscEvent.dispatch('accessibility:show', {'element': tabPanel});
+        MiscAccessibility.show(tabPanel, true);
     }
 
     back(evt) {
@@ -104,7 +103,7 @@ class Tab {
             }
         }
 
-        MiscEvent.dispatch('focus:set', {'element': currentTabHandle});
+        MiscAccessibility.setFocus(currentTabHandle);
         window.scrollTo(0, Utils.getPositionY(currentTabHandle) - headerHeight)
     }
 

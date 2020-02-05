@@ -30,11 +30,6 @@ class Menu {
             .forEach((element) => {
                 MiscEvent.addListener('click', this.hideSubMenu.bind(this), element);
             });
-
-        const menu = document.querySelector('header .ds44-blocMenu');
-        if (menu) {
-            MiscEvent.dispatch('accessibility:hide', {'element': menu});
-        }
     }
 
     showMain(evt) {
@@ -74,9 +69,9 @@ class Menu {
         mainMenu.setAttribute('aria-expanded', 'true');
 
         // Set focus in menu
-        MiscEvent.dispatch('focus:set', {'element': closeButton});
+        MiscAccessibility.setFocus(closeButton);
 
-        MiscEvent.dispatch('focus:addLoop', {'element': mainMenu});
+        MiscAccessibility.addFocusLoop(mainMenu);
         MiscEvent.dispatch('menu:show', {'element': mainMenu});
 
         MiscEvent.addListener('click', this.hideMainListener, closeButton);
@@ -111,27 +106,28 @@ class Menu {
         MiscEvent.removeListener('focusout', this.focusOutListener, this.menu);
         MiscEvent.removeListener('click', this.clickOutListener, document.body);
 
-        MiscEvent.dispatch('focus:removeLoop');
+        MiscAccessibility.removeFocusLoop();
 
         document.body.style.overflow = null;
         mainMenu.classList.remove('show');
         mainMenu.removeAttribute('aria-expanded');
+        MiscAccessibility.show(mainMenu, true);
         document
             .querySelectorAll('header .ds44-blocMenu .ds44-overlay')
             .forEach((subMenu) => {
                 subMenu.classList.remove('show');
                 subMenu.removeAttribute('aria-expanded');
+                MiscAccessibility.hide(subMenu, true);
             });
 
         if (this.triggerMainMenuElement) {
-            MiscEvent.dispatch('focus:set', {'element': this.triggerMainMenuElement})
+            MiscAccessibility.setFocus(this.triggerMainMenuElement)
         }
 
         this.triggerMainMenuElement = null;
         this.menu = null;
 
         MiscEvent.dispatch('menu:hide');
-        MiscEvent.dispatch('accessibility:reinstate');
     }
 
     showSubMenu(evt) {
@@ -165,15 +161,15 @@ class Menu {
         this.triggerSubMenuElement = evt.currentTarget;
 
         mainMenu.removeAttribute('aria-expanded');
-        MiscEvent.dispatch('accessibility:hide', {'element': mainMenu});
-        MiscEvent.dispatch('focus:removeLoop');
+        MiscAccessibility.hide(mainMenu, true);
+        MiscAccessibility.removeFocusLoop();
 
         subMenu.setAttribute('aria-expanded', 'true');
         subMenu.classList.add('show');
-        MiscEvent.dispatch('accessibility:show', {'element': subMenu});
+        MiscAccessibility.show(subMenu, true);
 
-        MiscEvent.dispatch('focus:set', {'element': backButton});
-        MiscEvent.dispatch('focus:addLoop', {'element': subMenu});
+        MiscAccessibility.setFocus(backButton);
+        MiscAccessibility.addFocusLoop(subMenu);
     }
 
     hideSubMenu() {
@@ -201,19 +197,19 @@ class Menu {
 
         subMenu.removeAttribute('aria-expanded');
         subMenu.classList.remove('show');
-        MiscEvent.dispatch('accessibility:hide', {'element': subMenu});
-        MiscEvent.dispatch('focus:removeLoop');
+        MiscAccessibility.hide(subMenu, true);
+        MiscAccessibility.removeFocusLoop();
 
         mainMenu.setAttribute('aria-expanded', 'true');
-        MiscEvent.dispatch('accessibility:show', {'element': mainMenu});
+        MiscAccessibility.show(mainMenu, true);
 
         if (this.triggerSubMenuElement) {
-            MiscEvent.dispatch('focus:set', {'element': this.triggerSubMenuElement})
+            MiscAccessibility.setFocus(this.triggerSubMenuElement)
             this.triggerSubMenuElement = null;
         } else {
-            MiscEvent.dispatch('focus:set', {'element': closeButton});
+            MiscAccessibility.setFocus(closeButton);
         }
-        MiscEvent.dispatch('focus:addLoop', {'element': mainMenu});
+        MiscAccessibility.addFocusLoop(mainMenu);
     }
 
     focusOut(evt) {
@@ -221,7 +217,7 @@ class Menu {
             return;
         }
 
-        MiscEvent.dispatch('focus:set', {'element': this.menu});
+        MiscAccessibility.setFocus(this.menu);
     }
 
     clickOut(evt) {

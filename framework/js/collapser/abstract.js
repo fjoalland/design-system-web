@@ -43,7 +43,7 @@ class Collapser {
         element.classList.add('show');
         element.setAttribute('aria-expanded', 'true');
         panel.style.maxHeight = (panel.style.maxHeight ? null : panel.scrollHeight + 60 + 'px');
-        MiscEvent.dispatch('accessibility:show', {'element': panel});
+        MiscAccessibility.show(panel, true);
         panel.style.visibility = 'visible';
     }
 
@@ -77,7 +77,7 @@ class Collapser {
         element.classList.remove('show');
         element.removeAttribute('aria-expanded');
         panel.style.maxHeight = (panel.style.maxHeight ? null : panel.scrollHeight + 60 + 'px');
-        MiscEvent.dispatch('accessibility:hide', {'element': panel});
+        MiscAccessibility.hide(panel, true);
         panel.style.visibility = 'hidden';
     }
 

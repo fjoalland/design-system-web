@@ -17,7 +17,7 @@ class Overlay {
                 MiscEvent.addListener('click', this.show.bind(this), element);
             });
         document
-            .querySelectorAll('.ds44-btnOverlay--closeOverlay')
+            .querySelectorAll('.ds44-modal-container .ds44-btnOverlay--closeOverlay')
             .forEach((element) => {
                 MiscEvent.addListener('click', this.hideListener, element);
             });
@@ -25,7 +25,7 @@ class Overlay {
         document
             .querySelectorAll('.ds44-modal-container')
             .forEach((element) => {
-                MiscEvent.dispatch('accessibility:hide', {'element': element});
+                MiscAccessibility.hide(element);
             });
     }
 
@@ -67,13 +67,13 @@ class Overlay {
         // Set focus in modal
         const firstField = this.modal.querySelector('input, button, textarea, a, select')
         if (firstField) {
-            MiscEvent.dispatch('focus:set', {'element': firstField});
+            MiscAccessibility.setFocus(firstField);
         } else {
-            MiscEvent.dispatch('focus:set', {'element': closeButton});
+            MiscAccessibility.setFocus(closeButton);
         }
 
-        MiscEvent.dispatch('accessibility:show', {'element': this.modal});
-        MiscEvent.dispatch('focus:addLoop', {'element': this.modal});
+        MiscAccessibility.show(this.modal);
+        MiscAccessibility.addFocusLoop(this.modal);
         MiscEvent.dispatch('overlay:show', {'element': this.modal});
 
         MiscEvent.addListener('click', this.hideListener, closeButton);
@@ -102,32 +102,31 @@ class Overlay {
         MiscEvent.removeListener('focusout', this.focusOutListener, this.modal);
         MiscEvent.removeListener('click', this.clickOutListener, document.body);
 
-        MiscEvent.dispatch('accessibility:hide', {'element': this.modal});
-        MiscEvent.dispatch('focus:removeLoop');
+        MiscAccessibility.hide(this.modal);
+        MiscAccessibility.removeFocusLoop();
 
         document.body.style.overflow = null;
         this.modal.classList.remove('show');
 
         if (this.triggerElement) {
-            MiscEvent.dispatch('focus:set', {'element': this.triggerElement})
+            MiscAccessibility.setFocus(this.triggerElement)
         }
 
         this.triggerElement = null;
         this.modal = null;
 
         MiscEvent.dispatch('overlay:hide');
-        MiscEvent.dispatch('accessibility:reinstate');
     }
 
     focusOut(evt) {
         evt.stopPropagation();
 
         if (!evt.target || !this.modal.contains(evt.target)) {
-            MiscEvent.dispatch('focus:set', {'element': this.modal.querySelector('input, button, textarea, a, select')});
+            MiscAccessibility.setFocus(this.modal.querySelector('input, button, textarea, a, select'));
             return;
         }
 
-        MiscEvent.dispatch('focus:set', {'element': this.modal});
+        MiscAccessibility.setFocus(this.modal);
     }
 
     clickOut(evt) {
