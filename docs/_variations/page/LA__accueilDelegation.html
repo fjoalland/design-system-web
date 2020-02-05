@@ -25,11 +25,11 @@ layout: pattern
 		      <div class="ds44-innerBoxContainer">
 		        <p role="heading" aria-level="2" class="ds44-box-heading">Le Département est présent près de chez vous</p>
 		        <hr/>
-		        <img src="../../assets/images/deleg-st_nazaire.png" alt="Carte Délégation de Saint-Nazaire"/>
+		        <img src="../../assets/images/deleg-st_nazaire.png" alt=""/>
 		        <p class="mts h4-like" role="heading" aria-level="3">Délégation de Saint-Nazaire</p>
 		        <p class="ds44-docListElem mtm"><i class="icon icon-marker ds44-docListIco" aria-hidden="true"></i>12, place Pierre Sémard<br />CS 30423<br />44616 Saint-Nazaire Cedex</p>
 		        <p class="ds44-docListElem mtm"><i class="icon icon-phone ds44-docListIco" aria-hidden="true"></i>02 49 77 41 40</p>
-		        <p class="ds44-docListElem mtm"><i class="icon icon-mail ds44-docListIco" aria-hidden="true"></i><a href="mailto:contact@loire-atlantique.fr" aria-label="Contacter : Délégztion Saint-Nazaire par mail">contact@loire-atlantique.fr</a></p>
+		        <p class="ds44-docListElem mtm"><i class="icon icon-mail ds44-docListIco" aria-hidden="true"></i><a href="mailto:contact@loire-atlantique.fr" aria-label="Contacter : Délégation Saint-Nazaire par mail - contact@loire-atlantique.fr">contact@loire-atlantique.fr</a></p>
 		      </div>
 		    </section>
 		  </div>
@@ -46,39 +46,20 @@ layout: pattern
 	</section>
 
 	<section class="ds44-container-fluid ds44-lightBG ds44-wave-white ds44-mtb3 ds44--xl-padding-tb">
-		<div class="ds44-inner-container ds44--m-padding-b">
+		<div class="ds44-inner-container ds44--mobile--m-padding-b">
 			<header class="txtcenter">
 				<h2 class="h2-like center">En ce moment</h2>
 				<p class="ds44-component-chapo ds44-centeredBlock">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut</p>
 			</header>
 		</div>
-		<div class="ds44-container-large grid-12-small-1">
-		  <div class="col-6">
-		    <div class="ds44-card ds44-legendeContainer ds44-container-imgRatio ds44-container-imgRatio--tuileMiseEnAvant">
-		    	<img src="../../assets/images/sample-img-6.jpg" alt="" class="ds44-w100 ds44-imgRatio" id="image1">
-		    	<div class="ds44-theme ds44-innerBoxContainer ds44-blockAbsolute ds44-blockAbsolute--bl">
-		        <p role="heading" aria-level="2" class="ds44-card__title"><a href="#" class="ds44-card__globalLink">Exposition Précieux poisons d’Amazonie</a></p>
-		        <p>Du 29/06/19 au 01/09/19</p>
-		        <p class="ds44-cardLocalisation"><i class="icon icon-marker" aria-hidden="true"></i><span class="ds44-iconInnerText">Domaine Garenne Lemot</span></p>
-		    	</div>
-		    </div>
-		  </div>
-		  <div class="col-6">
-		    <div class="ds44-card ds44-legendeContainer ds44-container-imgRatio ds44-container-imgRatio--tuileMiseEnAvant">
-		    	<img src="../../assets/images/sample-img-6.jpg" alt="" class="ds44-w100 ds44-imgRatio" id="image1">
-		    	<div class="ds44-theme ds44-innerBoxContainer ds44-blockAbsolute ds44-blockAbsolute--bl">
-		        <p role="heading" aria-level="2" class="ds44-card__title"><a href="#" class="ds44-card__globalLink">Exposition Précieux poisons d’Amazonie</a></p>
-		        <p>Du 29/06/19 au 01/09/19</p>
-		        <p class="ds44-cardLocalisation"><i class="icon icon-marker" aria-hidden="true"></i><span class="ds44-iconInnerText">Domaine Garenne Lemot</span></p>
-		    	</div>
-		    </div>
-		  </div>
+		<div class="ds44-container-large">
+			{% include card/card--miseEnAvant--2col.html title="Exposition Précieux poisons d’Amazonie" date="Du 29/06/19 au 01/09/19" localisation="Domaine Garenne Lemot"%}
 		</div>
 		{% include carrousel/carrousel-x4--bgGrey.html %}
 	</section>
 
 
-	<section class="ds44-container-fluid ds44--xl-padding-t ds44-mt3">
+	<section class="ds44-container-fluid ds44--l-padding-t ds44-mt3">
 		<div class="ds44-inner-container">
 			<header class="txtcenter">
 				<h2 class="h2-like center">Vos rendez-vous</h2>
@@ -97,7 +78,7 @@ layout: pattern
 		    <div class="ds44-boxPushContent ds44-boxPushContent--fluid">
 		      <p role="heading" aria-level="2" class="ds44-pushTitle">Un événement à partager ?</p>
 		      <p class="txtcenter">Annoncez vos événements sur infolocale pour qu’ils apparaissent dans notre agenda</p>
-		      <p><button class="ds44-btnStd" type="button" title="Contribuer aux événements sur infolocale"><span class="ds44-btnInnerText">Contribuer</span><i class="icon icon-long-arrow-right" aria-hidden="true"></i></button></p>
+		      <p><a href="#" class="ds44-btnStd" type="button" title="Contribuer aux événements sur infolocale"><span class="ds44-btnInnerText">Contribuer</span><i class="icon icon-long-arrow-right" aria-hidden="true"></i></a></p>
 		    </div>
 		  </div>
 		</div>

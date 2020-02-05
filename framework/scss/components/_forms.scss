@@ -13,49 +13,51 @@
 ::-moz-placeholder {  /* Firefox 19+ */
     color: $ds44-dark;
     font-family: $ds44-font-family-base;
-} 
+}
 
 :-ms-input-placeholder {
     color: $ds44-dark;
     font-family: $ds44-font-family-base;
 }
- 
+
  /**
   * Input basics
   */
 
 .ds44-form__container {
     position: relative;
-    margin: $ds44-medium-vmargin 0;
+    margin: $ds44-large-vmargin 0;
 }
 .ds44-form__container--external {
-    margin: 0 0 $ds44-medium-vmargin 0;
+    margin: 0 0 $ds44-large-vmargin 0;
 }
 
 .ds44-formLabel {
-    @include ds44-font-sizes(smallText);
+    @include ds44-font-sizes(button);
     color: $ds44-graytext-color;
     display: block;
     position: relative;
     font-weight: normal;
     margin-bottom: 0;
 
-    .ds44-labelTypePlaceholder, 
+    .ds44-labelTypePlaceholder,
     .ds44-labelTypePlaceholderLarge {
         position: absolute;
         top: $ds44-padding-medium;
         left: $ds44-padding-box;
         transition: all $ds44-timing-standard ease-in-out;
+        color: $ds44-gray;
 
         &.ds44-moveLabel {
             font-size: .8125em; // 13px instead of 14px
             top: -$ds44-padding-medium*2;
             left: 0;
+            color: $ds44-dark;
         }
     }
 
     .ds44-labelTypePlaceholderLarge {
-        top: $ds44-padding-large;    
+        top: $ds44-padding-large;
         font-size: 1.6rem;
     }
 }
@@ -74,7 +76,7 @@
 }
 
 .ds44-inpStd {
-    @include ds44-font-sizes(smallText);
+    @include ds44-font-sizes(button);
     border-radius: $ds44-border-radius;
     padding: $ds44-padding-medium $ds44-padding-box;
     border: 1px solid $ds44-gray;
@@ -88,7 +90,7 @@
 }
 
 .ds44-inpLarge {
-    @include ds44-font-sizes(bodySize);
+    @include ds44-font-sizes(largeButton);
     border-radius: $ds44-border-radius;
     padding: $ds44-padding-large;
     border: 1px solid $ds44-gray;
@@ -108,7 +110,111 @@
 .ds44-format {
     color: $ds44-color-soft-text;
 }
+
+/**
+ * Checkboxes & radiobuttons
+ */
+
+.ds44-boxLabel { // label for checkboxes and radiobuttons
+    @include ds44-font-sizes(smallText); // 14px
+    margin-right: $ds44-components-margin;
+    padding-left: 3rem;
+    display: inline-block;
+
+    &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: .3rem;
+        left: 0;
+        border: 1px solid $ds44-dark;
+        border-radius: 2px;
+        height: 1.6rem;
+        width: 1.6rem;
+        transition: background-size $ds44-timing-faster ease-out;
+        background-position: center;
+        background-size: 0rem;
+        cursor: pointer;
+    }
+}
+
+input[type=checkbox],
+.ds44-checkbox {
+    position: absolute;
+    left: -9999px;
+
+    &:focus + .ds44-boxLabel::before {
+        outline: 1px dotted $ds44-dark;
+    }
+
+    &:checked + .ds44-boxLabel::before {
+        background: url(../../../assets/images/cd44-check-black.png) no-repeat center;
+        background-size: 1rem;
+    }
+
+    &.ds44-boxError + .ds44-boxLabel::before {
+        border-color: $ds44-error;
+    }
+}
+
+.ds44-radioLabel { // label for checkboxes and radiobuttons
+    @include ds44-font-sizes(smallText); // 14px
+    margin-right: $ds44-components-margin;
+    padding-left: 3rem;
+    display: inline-block;
+
+    &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: .3rem;
+        left: 0;
+        border: 1px solid $ds44-dark;
+        border-radius: 20px;
+        height: 1.6rem;
+        width: 1.6rem;
+        background-color: $ds44-light-color;
+        transition: all $ds44-timing-faster ease-out;
+        cursor: pointer;
+    }
+
+    &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: .7rem;
+        left: .4rem;
+        border-radius: 20px;
+        height: .8rem;
+        width: .8rem;
+        background-color: $ds44-dark;
+        transition: opacity $ds44-timing-faster ease-out;
+        cursor: pointer;
+        opacity: 0;
+    }
+}
+
+input[type=radio],
+.ds44-radio {
+    position: absolute;
+    left: -9999px;
+
+    &:focus + .ds44-radioLabel::before {
+        outline: 1px dotted $ds44-dark;
+    }
+
+    &:checked + .ds44-radioLabel::after {
+        opacity: 1;
+    }
+
+    &.ds44-boxError + .ds44-radioLabel::before {
+        border-color: $ds44-error;
+        background-color: $ds44-light-color;
+    }
+}
+
  
+
 /**
  * Moteurs de recherche à facettes
  */
@@ -136,35 +242,100 @@
     background-color: $ds44-light-color;
 }
 
+.ds44-labelStd {
+     font-size: 1.4rem;
+     line-height: 1rem;
+}
+
 .ds44-labelLarge {
      font-size: 1.6rem;
+     line-height: 1rem;
 }
 
- 
- /**
-  * Error messages
-  */
 
-.ds44-error {
-    border-color: $ds44-error-red;
+/**
+ * Autocompletion fields
+ */
+
+.ds44-autocomp-container {
+    padding: $ds44-padding-medium;
+    box-shadow: $ds44-boxShadow;
+    background-color: $ds44-light-color;
 }
+.ds44-autocomp-list {
+    padding: $ds44-padding-xlarge $ds44-padding-large;
+}
+.ds44-autocomp-list_elem {
+    font-size: 1.125em; // 18px
+    margin-bottom: $ds44-large-vmargin;
 
-.ds44-errorMsg-container {
-    @include ds44-font-sizes(errMsg);
-    background-color: $ds44-error-red-bg;
-    padding: $ds44-padding-small $ds44-padding-box;
-
-    .icon {
-        color: $ds44-error-red;
+    &:focus,
+    &:hover,
+    &:active {
+      text-decoration: underline;
+      cursor: pointer;
     }
 }
 
 
- 
+/**
+* Error messages
+*/
+
+
+.ds44-error {
+    border-color: $ds44-error;
+}
+
+.ds44-errorMsg-container {
+    @include ds44-font-sizes(errMsg);
+    background-color: $ds44-error-bg;
+    padding: $ds44-padding-small $ds44-padding-box;
+
+    .icon {
+        color: $ds44-error;
+    }
+}
+
+
+ /**
+  * Champs liés : Thèmes sous-thèmes, Lieu rayon, etc...
+  */
+
+.ds44-champsLies .ds44-inpStd,
+.ds44-champsLies .ds44-inpLarge {
+    &--first {
+      border-radius: 3px 0 0 3px;
+    }
+}
+
+.ds44-champsLies .ds44-inpStd,
+.ds44-champsLies .ds44-inpLarge {
+    &--last {
+      border-radius: 0 3px 3px 0;
+      margin-left: -1px;
+
+      &.ds44-inputDisabled p{
+        color: #ccc;
+      }
+    }
+}
+
+.ds44-inputDisabled {
+  background: $ds44-lightgray ;
+}
+
+.ds44-inpStd  {
+    & .ds44-btnIco {
+      padding: 0.5rem 1.5rem ;
+    }
+}
+
+
 /* ----------------------------- */
 /* ------- MEDIA QUERIES ------- */
 /* ----------------------------- */
- 
+
 
 /* medium screens */
 /* ------------- */
@@ -201,5 +372,22 @@
             }
         }
     }
-  
+
+
+    .ds44-champsLies .ds44-inpStd,
+    .ds44-champsLies .ds44-inpLarge {
+        &--first {
+          border-radius: 3px 3px 0 0;
+        }
+    }
+
+    .ds44-champsLies .ds44-inpStd,
+    .ds44-champsLies .ds44-inpLarge {
+        &--last {
+          border-radius: 0 0 3px 3px;
+          margin: -1px 0 0 0;
+
+        }
+    }
+
 }

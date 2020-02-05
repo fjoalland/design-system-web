@@ -68,7 +68,7 @@
 /* medium screens */
 /* -------------- */
 
-@media (min-width: $ds44-medium) and (max-width: ($ds44-large - 1)) {
+@media (min-width: $ds44-medium) and (max-width: ($ds44-large - .0625)) {
 
   /* layouts for medium screens */
   .medium-hidden {
@@ -131,7 +131,7 @@
 /* small screens */
 /* ------------- */
 
-@media (min-width: $ds44-small) and (max-width: ($ds44-medium - 1)) {
+@media (min-width: $ds44-small) and (max-width: ($ds44-medium - .0625)) {
 
   /* layouts for small screens */
   .small-hidden {
@@ -200,7 +200,7 @@
 /* tiny screens */
 /* ------------ */
 
-@media (max-width: $ds44-small - 1) {
+@media (max-width: $ds44-small - .0625) {
 
   /* quick small resolution reset */
   .mod,
@@ -303,20 +303,8 @@
     display: none !important;
   }
 
-  .ds44-m3b-smallScreens {
-    margin-bottom: $ds44-components-margin !important;
-  }
-
-  .ds44-stl-m3t {
-    margin-top: $ds44-components-margin !important;
-  }
-
-  .ds44-stl-m5t {
-    margin-top: $ds44-container-vmargin !important;
-  }
-
-  .ds44-stl-m6t {
-    margin-top: $ds44-container-large-margin !important;
+  .ds44-ttl-pt9 {
+    margin-top: $ds44-margin-base *9 !important;
   }
 
   .ds44-stl-center {
