@@ -4,7 +4,7 @@ class MiscAccessibility {
     }
 
     static getProtectedElementsSelector() {
-        return ['i'];
+        return ['i', 'sup'];
     }
 
     // Fonction qui va forcer le focus à faire une boucle sur un élément
