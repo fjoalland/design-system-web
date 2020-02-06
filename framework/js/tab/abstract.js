@@ -16,8 +16,8 @@ class Tab {
                 }
 
                 const tabPanelExit = tabPanel.children[tabPanel.children.length - 1];
-                tabHandle.addEventListener('click', this.change.bind(this));
-                tabPanelExit.addEventListener('click', this.back.bind(this));
+                MiscEvent.addListener('click', this.change.bind(this), tabHandle);
+                MiscEvent.addListener('click', this.back.bind(this), tabPanelExit);
             });
 
         let selectedTabHandle = null;
@@ -34,7 +34,6 @@ class Tab {
             }
         }
         if (selectedTabHandle) {
-            selectedTabHandle.classList.add('ds44-tabs__linkSelected');
             selectedTabHandle.click();
         }
     }
