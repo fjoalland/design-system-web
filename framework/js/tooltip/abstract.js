@@ -39,7 +39,6 @@ class Tooltip {
         const wrapper = document.createElement('span');
         MiscDom.addClasses(wrapper, wrapperClassName);
         wrapper.setAttribute(this.DATA_HASH_ID, hashId);
-        wrapper.setAttribute('role', 'presentation');
         element.parentNode.insertBefore(wrapper, element);
         wrapper.appendChild(element);
 
