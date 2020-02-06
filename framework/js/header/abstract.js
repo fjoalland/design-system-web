@@ -79,15 +79,13 @@ class Header {
     show() {
         this.isTabEnabled = true;
 
-        MiscAccessibility.show(document.querySelector('header'));
-        MiscAccessibility.hide(document.querySelector('header .ds44-blocMenu'));
+        MiscAccessibility.show(document.querySelector('header .ds44-container-large'));
     }
 
     hide() {
         this.isTabEnabled = false;
 
-        MiscAccessibility.hide(document.querySelector('header'));
-        MiscAccessibility.show(document.querySelector('header .ds44-blocMenu'));
+        MiscAccessibility.hide(document.querySelector('header .ds44-container-large'));
     }
 }
 
