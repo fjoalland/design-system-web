@@ -18,10 +18,11 @@ class Tooltip {
             .forEach(this.create.bind(this));
 
         // Bind events
-        ['mouseenter', 'focus', 'mouseleave', 'blur', 'keydown']
+        ['mouseenter', 'focus', 'mouseleave', 'blur']
             .forEach(eventType => {
                 document.body.addEventListener(eventType, this.showHide.bind(this), true);
             });
+        MiscEvent.addListener('keyDown:escape', this.hideAll.bind(this));
     }
 
     create(element) {
@@ -112,10 +113,19 @@ class Tooltip {
                     tooltipBubble.style.width = (tooltipBubbleOffset.left + 40) + 'px';
                 }
             }
-        } else if (evt.type === hideEventType || (evt.type === 'keydown' && evt.keyCode === 27)) {
+        } else if (evt.type === hideEventType) {
             // Hide tooltip bubble
             MiscAccessibility.hide(tooltipBubble, true);
         }
+    }
+
+    hideAll() {
+        document
+            .querySelectorAll('.' + this.TOOLTIP_SIMPLE + '.' + this.TOOLTIP_SIMPLE_RAW)
+            .forEach((tooltipBubble) => {
+                // Hide tooltip bubble
+                MiscAccessibility.hide(tooltipBubble, true);
+            })
     }
 }
 
