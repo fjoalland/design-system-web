@@ -3,6 +3,10 @@ class MiscAccessibility {
         return ['a[href]', 'link[href]', 'button', 'textarea', 'input:not([type="hidden"])', 'select', 'object', 'area'].map(selector => selector + ':not([disabled])');
     }
 
+    static getProtectedElementsSelector() {
+        return ['i'];
+    }
+
     // Fonction qui va forcer le focus à faire une boucle sur un élément
     // en ajoutant deux inputs 'hidden' qui peuvent être focus, au début
     // et à la fin
@@ -73,15 +77,17 @@ class MiscAccessibility {
             return;
         }
 
-        if(force !== true) {
-            MiscAccessibility.record(element);
-        } else {
-            MiscAccessibility.reinstate(element);
-        }
+        if (MiscAccessibility.getProtectedElementsSelector().indexOf(element.tagName.toLowerCase()) === -1) {
+            if (force !== true) {
+                MiscAccessibility.record(element);
+            } else {
+                MiscAccessibility.reinstate(element);
+            }
 
-        element.removeAttribute('aria-hidden');
-        if (element.closest(MiscAccessibility.getEnabledElementsSelector()) === element) {
-            element.removeAttribute('tabindex');
+            element.removeAttribute('aria-hidden');
+            if (element.closest(MiscAccessibility.getEnabledElementsSelector()) === element) {
+                element.removeAttribute('tabindex');
+            }
         }
 
         Array.from(element.children).map((childElement) => {
@@ -94,15 +100,17 @@ class MiscAccessibility {
             return;
         }
 
-        if(force !== true) {
-            MiscAccessibility.record(element);
-        } else {
-            MiscAccessibility.reinstate(element);
-        }
+        if (MiscAccessibility.getProtectedElementsSelector().indexOf(element.tagName.toLowerCase()) === -1) {
+            if (force !== true) {
+                MiscAccessibility.record(element);
+            } else {
+                MiscAccessibility.reinstate(element);
+            }
 
-        element.setAttribute('aria-hidden', true);
-        if (element.closest(MiscAccessibility.getEnabledElementsSelector()) === element) {
-            element.setAttribute('tabindex', '-1');
+            element.setAttribute('aria-hidden', true);
+            if (element.closest(MiscAccessibility.getEnabledElementsSelector()) === element) {
+                element.setAttribute('tabindex', '-1');
+            }
         }
 
         Array.from(element.children).map((childElement) => {
