@@ -1,6 +1,6 @@
 ---
 layout: component-detail
-group: transverse_components
+group: components
 
 title: Page utile
 description: Composant de retour d'expérience sur la page

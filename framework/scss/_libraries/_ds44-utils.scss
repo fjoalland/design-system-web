@@ -548,6 +548,10 @@
   padding: 1.2rem 1.5rem 1.5rem 1.5rem;
   display: inline-block;
   line-height: 1;
+
+  &.ds44-theme {
+    background-color: $ds44-contextual-color;
+  }
 }
 
 /* === Accessibilité === */

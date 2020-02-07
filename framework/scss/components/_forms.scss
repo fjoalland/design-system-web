@@ -64,6 +64,13 @@
         top: $ds44-padding-large;
         font-size: 1.6rem;
     }
+
+    .ds44-labelTypeInfoComp{
+        position: absolute;
+        top: -$ds44-large-vmargin;
+        right: $ds44-padding-box;
+        color: $ds44-gray;
+    }
 }
 
 .ds44-formLabel--external {
