@@ -16,8 +16,8 @@ class Tab {
                 }
 
                 const tabPanelExit = tabPanel.children[tabPanel.children.length - 1];
-                tabHandle.addEventListener('click', this.change.bind(this));
-                tabPanelExit.addEventListener('click', this.back.bind(this));
+                MiscEvent.addListener('click', this.change.bind(this), tabHandle);
+                MiscEvent.addListener('click', this.back.bind(this), tabPanelExit);
             });
 
         let selectedTabHandle = null;
@@ -34,7 +34,6 @@ class Tab {
             }
         }
         if (selectedTabHandle) {
-            selectedTabHandle.classList.add('ds44-tabs__linkSelected');
             selectedTabHandle.click();
         }
     }
@@ -68,14 +67,14 @@ class Tab {
 
                 tabHandle.classList.remove('ds44-tabs__linkSelected');
                 tabPanel.style.opacity = 0;
-                Utils.timerClass(tabPanel, 'display', 'none', 150);
+                MiscUtils.timerClass(tabPanel, 'display', 'none', 150);
                 MiscAccessibility.hide(tabPanel, true);
             });
 
         // Show selected tab
         tabHandle.classList.add('ds44-tabs__linkSelected');
-        Utils.timerClass(tabPanel, 'opacity', '1', 300);
-        Utils.timerClass(tabPanel, 'display', 'block', 150);
+        MiscUtils.timerClass(tabPanel, 'opacity', '1', 300);
+        MiscUtils.timerClass(tabPanel, 'display', 'block', 150);
         MiscAccessibility.show(tabPanel, true);
     }
 
@@ -104,7 +103,7 @@ class Tab {
         }
 
         MiscAccessibility.setFocus(currentTabHandle);
-        window.scrollTo(0, Utils.getPositionY(currentTabHandle) - headerHeight)
+        window.scrollTo(0, MiscUtils.getPositionY(currentTabHandle) - headerHeight)
     }
 
     move(evt) {

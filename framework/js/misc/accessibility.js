@@ -1,6 +1,10 @@
 class MiscAccessibility {
     static getEnabledElementsSelector() {
-        return ['a[href]', 'link[href]', 'button', 'textarea', 'input:not([type="hidden"])', 'select', 'object'].map(selector => selector + ':not([disabled])');
+        return ['a[href]', 'link[href]', 'button', 'textarea', 'input:not([type="hidden"])', 'select', 'object', 'area'].map(selector => selector + ':not([disabled])');
+    }
+
+    static getProtectedElementsSelector() {
+        return ['i', 'sup'];
     }
 
     // Fonction qui va forcer le focus à faire une boucle sur un élément
@@ -68,46 +72,54 @@ class MiscAccessibility {
         }
     }
 
-    static show(element, force = false) {
+    static show(element, force = false, bubble = true) {
         if (!element) {
             return;
         }
 
-        if(force !== true) {
-            MiscAccessibility.record(element);
-        } else {
-            MiscAccessibility.reinstate(element);
+        if (MiscAccessibility.getProtectedElementsSelector().indexOf(element.tagName.toLowerCase()) === -1) {
+            if (force !== true) {
+                MiscAccessibility.record(element);
+            } else {
+                MiscAccessibility.reinstate(element);
+            }
+
+            element.removeAttribute('aria-hidden');
+            if (element.closest(MiscAccessibility.getEnabledElementsSelector()) === element) {
+                element.removeAttribute('tabindex');
+            }
         }
 
-        element.removeAttribute('aria-hidden');
-        if (element.closest(MiscAccessibility.getEnabledElementsSelector()) === element) {
-            element.removeAttribute('tabindex');
+        if (bubble) {
+            Array.from(element.children).map((childElement) => {
+                MiscAccessibility.show(childElement);
+            });
         }
-
-        Array.from(element.children).map((childElement) => {
-            MiscAccessibility.show(childElement);
-        });
     }
 
-    static hide(element, force = false) {
+    static hide(element, force = false, bubble = true) {
         if (!element) {
             return;
         }
 
-        if(force !== true) {
-            MiscAccessibility.record(element);
-        } else {
-            MiscAccessibility.reinstate(element);
+        if (MiscAccessibility.getProtectedElementsSelector().indexOf(element.tagName.toLowerCase()) === -1) {
+            if (force !== true) {
+                MiscAccessibility.record(element);
+            } else {
+                MiscAccessibility.reinstate(element);
+            }
+
+            element.setAttribute('aria-hidden', true);
+            if (element.closest(MiscAccessibility.getEnabledElementsSelector()) === element) {
+                element.setAttribute('tabindex', '-1');
+            }
         }
 
-        element.setAttribute('aria-hidden', true);
-        if (element.closest(MiscAccessibility.getEnabledElementsSelector()) === element) {
-            element.setAttribute('tabindex', '-1');
+        if (bubble) {
+            Array.from(element.children).map((childElement) => {
+                MiscAccessibility.hide(childElement);
+            });
         }
-
-        Array.from(element.children).map((childElement) => {
-            MiscAccessibility.hide(childElement);
-        });
     }
 
     static record(element) {

@@ -603,6 +603,7 @@
   }
 }
 
+
 @media (max-width: $ds44-large - .0625) {
 
   .ds44-separator {
@@ -625,6 +626,17 @@
   position: absolute;
   top: -50rem;
 }
+
+
+
+/* === Surcharges === */
+
+.visually-hidden {
+  margin: 0!important;
+}
+
+
+
 
 /* =======
   GENERIC MEDIA QUERIES

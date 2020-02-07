@@ -2,6 +2,7 @@
 layout: component-detail
 group: components
 
+
 title: Page utile
 description: Composant de retour d'expérience sur la page
 status: Brouillon

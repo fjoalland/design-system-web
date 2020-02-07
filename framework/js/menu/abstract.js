@@ -30,6 +30,8 @@ class Menu {
             .forEach((element) => {
                 MiscEvent.addListener('click', this.hideSubMenu.bind(this), element);
             });
+
+        MiscAccessibility.hide(document.querySelector('header .ds44-blocMenu'));
     }
 
     showMain(evt) {
@@ -66,7 +68,12 @@ class Menu {
         // Show menu
         document.body.style.overflow = 'hidden';
         mainMenu.classList.add('show');
-        mainMenu.setAttribute('aria-expanded', 'true');
+        MiscAccessibility.show(this.menu);
+        this.menu
+            .querySelectorAll('section.ds44-overlay')
+            .forEach((subMenu) => {
+                MiscAccessibility.hide(subMenu);
+            });
 
         // Set focus in menu
         MiscAccessibility.setFocus(closeButton);
@@ -110,15 +117,12 @@ class Menu {
 
         document.body.style.overflow = null;
         mainMenu.classList.remove('show');
-        mainMenu.removeAttribute('aria-expanded');
-        MiscAccessibility.show(mainMenu, true);
         document
             .querySelectorAll('header .ds44-blocMenu .ds44-overlay')
             .forEach((subMenu) => {
                 subMenu.classList.remove('show');
-                subMenu.removeAttribute('aria-expanded');
-                MiscAccessibility.hide(subMenu, true);
             });
+        MiscAccessibility.hide(this.menu);
 
         if (this.triggerMainMenuElement) {
             MiscAccessibility.setFocus(this.triggerMainMenuElement)
@@ -160,13 +164,11 @@ class Menu {
 
         this.triggerSubMenuElement = evt.currentTarget;
 
-        mainMenu.removeAttribute('aria-expanded');
-        MiscAccessibility.hide(mainMenu, true);
+        MiscAccessibility.hide(mainMenu);
         MiscAccessibility.removeFocusLoop();
 
-        subMenu.setAttribute('aria-expanded', 'true');
         subMenu.classList.add('show');
-        MiscAccessibility.show(subMenu, true);
+        MiscAccessibility.show(subMenu);
 
         MiscAccessibility.setFocus(backButton);
         MiscAccessibility.addFocusLoop(subMenu);
@@ -184,8 +186,8 @@ class Menu {
             return;
         }
 
-        const subMenu = this.menu.querySelector('.ds44-overlay[aria-expanded="true"]');
-        if (!subMenu) {
+        const subMenu = this.menu.querySelector('.ds44-overlay.show:not(.ds44-overlay--navNiv1)');
+            if (!subMenu) {
             return;
         }
 
@@ -195,13 +197,11 @@ class Menu {
             return;
         }
 
-        subMenu.removeAttribute('aria-expanded');
         subMenu.classList.remove('show');
-        MiscAccessibility.hide(subMenu, true);
+        MiscAccessibility.hide(subMenu);
         MiscAccessibility.removeFocusLoop();
 
-        mainMenu.setAttribute('aria-expanded', 'true');
-        MiscAccessibility.show(mainMenu, true);
+        MiscAccessibility.show(mainMenu);
 
         if (this.triggerSubMenuElement) {
             MiscAccessibility.setFocus(this.triggerSubMenuElement)
