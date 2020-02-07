@@ -332,7 +332,7 @@ input[type=radio],
     label {
         display: block;
         color: $ds44-dark;
-        font-size: 1em;
+        @include ds44-font-sizes(bodySize);
 
         &:hover,
         &:focus,
