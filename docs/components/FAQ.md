@@ -12,7 +12,7 @@ variations:
   pattern: FAQ/FAQ-basPage.html
 - title: Boite Tchat
   description: Composant que l'on trouve en overlay fullscreen au clic sur le btn type "tchat" fix
-  pattern: FAQ/FAQ-basPage.html
+  pattern: FAQ/FAQ-tchat.html
 ---
 
 
