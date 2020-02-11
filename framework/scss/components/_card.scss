@@ -38,6 +38,20 @@
         }
     }
 
+    &.ds44-cardIsFocus {
+          background-color: $ds44-contextual-color !important;
+          border-color :  $ds44-gray;
+
+          hr {
+            color: $ds44-gray;
+            background-color: $ds44-gray;
+          }
+
+          .ds44-cardPartner {
+              background: $ds44-light ;
+          }
+    }
+
     &:focus,
     &:hover,
     &:active {
