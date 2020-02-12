@@ -27,6 +27,10 @@
 .ds44-form__container {
     position: relative;
     margin: $ds44-large-vmargin 0;
+
+    &.ds44-checkBox-radio_list {
+      margin: $ds44-large-vmargin/2 0;
+    }
 }
 .ds44-form__container--external {
     margin: 0 0 $ds44-large-vmargin 0;
@@ -311,7 +315,7 @@ input[type=radio],
 }
 
 .ds44-select-list_elem {
-    margin-bottom: $ds44-large-vmargin;
+    margin-bottom: $ds44-large-vmargin/2;
 
     &:focus,
     &:hover,
