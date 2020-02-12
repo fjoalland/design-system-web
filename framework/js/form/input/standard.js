@@ -1,13 +1,13 @@
-class InputSimple extends FieldAbstract {
+class FormInputStandard extends FormField {
     constructor() {
         super(
             'input[type="text"]:not([aria-autocomplete="list"]), ' +
             'input[type="email"]:not([aria-autocomplete="list"]), ' +
             'input[type="number"]:not([aria-autocomplete="list"])',
-            'inputSimple'
+            'inputStandard'
         );
     }
 }
 
 // Singleton
-new InputSimple();
+new FormInputStandard();

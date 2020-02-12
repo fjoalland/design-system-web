@@ -2,10 +2,11 @@ class Form {
     constructor() {
         this.hasBeenChecked = false;
         this.validationCategories = {
-            'inputSimple': null,
+            'inputStandard': null,
             'inputAutocomplete': null,
             'textarea': null,
-            'checkbox': null
+            'checkbox': null,
+            'radio': null
         };
 
         document

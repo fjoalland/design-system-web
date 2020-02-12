@@ -7,10 +7,10 @@
         <div class="ds44-listSelect">
             <ul class="ds44-list" role="listbox" id="listbox{{ include.number }}">
                 <li class="ds44-select-list_elem" role="option" id="selected_option">
-                    {% include forms/inc-radio.html label="Choix" number="x1" selected="checked" %}
+                    {% include forms/inc-radio.html name="inc-select-std" label="Choix 1" value="1" checked="checked" %}
                 </li>
                 <li class="ds44-select-list_elem" role="option">
-                    {% include forms/inc-radio.html label="Choix" number="x2" %}
+                    {% include forms/inc-radio.html name="inc-select-std" label="Choix 2" value="2" %}
                 </li>
             </ul>            
         </div>

@@ -13,16 +13,16 @@
               <div role="combobox" aria-expanded="true" aria-owns="listbox{{ include.number }}" aria-activedescendant="selected_option" aria-labelledby="{{ include.label }}">
                   <ul class="ds44-list ds44-mt-std" role="listbox" id="listbox{{ include.number }}">
                       <li class="ds44-utile-list_elem" role="option" id="selected_option">
-                          {% include forms/inc-radio.html label="L’information n’est pas assez complète" number="x1" %}
+                          {% include forms/inc-radio.html name="bloc-utile" label="L’information n’est pas assez complète" value="1" %}
                       </li>
                       <li class="ds44-utile-list_elem" role="option">
-                          {% include forms/inc-radio.html label="L’information est trop compliquée" number="x2" %}
+                          {% include forms/inc-radio.html name="bloc-utile" label="L’information est trop compliquée" value="2" %}
                       </li>
                       <li class="ds44-utile-list_elem" role="option">
-                          {% include forms/inc-radio.html label="Il y a trop à lire" number="x3" %}
+                          {% include forms/inc-radio.html name="bloc-utile" label="Il y a trop à lire" value="3" %}
                       </li>
                       <li class="ds44-utile-list_elem" role="option">
-                          {% include forms/inc-radio.html label="Autre" number="x4" %}
+                          {% include forms/inc-radio.html name="bloc-utile" label="Autre" value="4" %}
                       </li>
                   </ul>
               </div>
