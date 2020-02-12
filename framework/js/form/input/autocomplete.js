@@ -1,7 +1,7 @@
 // TODO : Afficher "Aucun occurence trouvée"
 // TODO : Dans l'autocomplete en séléction seule, la suppression totale pose problème
 
-class InputAutoComplete extends FieldAbstract {
+class FormInputAutoComplete extends FormField {
     constructor() {
         super(
             'input[aria-autocomplete="list"]',
@@ -441,4 +441,4 @@ class InputAutoComplete extends FieldAbstract {
 }
 
 // Singleton
-new InputAutoComplete();
+new FormInputAutoComplete();

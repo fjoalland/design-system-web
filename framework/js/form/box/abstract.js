@@ -1,10 +1,11 @@
-class Checkbox {
-    constructor() {
+class FormBox {
+    constructor(category) {
         this.objects = [];
         this.errorMessage = 'Veuillez cocher un élément';
+        this.category = category;
 
         document
-            .querySelectorAll('.ds44-form__checkbox_container')
+            .querySelectorAll('.ds44-form__' + this.category + '_container')
             .forEach((element) => {
                 this.create(element);
             });
@@ -16,7 +17,7 @@ class Checkbox {
         const object = {
             'id': MiscUtils.generateId(),
             'name': element.getAttribute('data-name'),
-            'checkboxElements': element.querySelectorAll('input[type="checkbox"]'),
+            'inputElements': element.querySelectorAll('input[type="' + this.category + '"]'),
             'containerElement': element,
             'isRequired': (element.getAttribute('data-required') === 'true' ? true : false),
         }
@@ -24,18 +25,22 @@ class Checkbox {
         const objectIndex = (this.objects.length - 1);
 
         if (object.isRequired) {
-            object.checkboxElements.forEach((checkboxElement) => {
-                MiscEvent.addListener('click', this.toggleCheck.bind(this, objectIndex), checkboxElement);
+            object.inputElements.forEach((inputElement) => {
+                MiscEvent.addListener('click', this.toggleCheck.bind(this, objectIndex), inputElement);
             });
         }
     }
 
     toggleCheck(objectIndex, evt) {
-        if(evt.currentTarget.checked) {
-            evt.currentTarget.setAttribute('aria-checked', 'true');
-        } else {
-            evt.currentTarget.removeAttribute('aria-checked');
-        }
+        const object = this.objects[objectIndex];
+
+        object.inputElements.forEach((inputElement) => {
+            if(inputElement.checked) {
+                inputElement.setAttribute('aria-checked', 'true');
+            } else {
+                inputElement.removeAttribute('aria-checked');
+            }
+        });
     }
 
     validate(evt) {
@@ -65,7 +70,7 @@ class Checkbox {
         MiscEvent.dispatch(
             'form:validation',
             {
-                'category': 'checkbox',
+                'category': this.category,
                 'isValid': isValid,
                 'data': data
             },
@@ -77,12 +82,12 @@ class Checkbox {
         const object = this.objects[objectIndex];
 
         let data = {};
-        object.checkboxElements.forEach((checkboxElement) => {
-            if(checkboxElement.checked) {
+        object.inputElements.forEach((inputElement) => {
+            if(inputElement.checked) {
                 if(!data[object.name]) {
                     data[object.name] = [];
                 }
-                data[object.name].push(checkboxElement.value);
+                data[object.name].push(inputElement.value);
             }
         });
         return data;
@@ -96,19 +101,19 @@ class Checkbox {
             errorElement.remove();
         }
 
-        let hasOneCheckedCheckbox = false;
-        object.checkboxElements.forEach((checkboxElement) => {
-            if (checkboxElement.checked) {
-                hasOneCheckedCheckbox = true;
+        let hasOneCheckedInput = false;
+        object.inputElements.forEach((inputElement) => {
+            if (inputElement.checked) {
+                hasOneCheckedInput = true;
             }
 
-            checkboxElement.removeAttribute('aria-invalid');
-            checkboxElement.removeAttribute('aria-label');
-            checkboxElement.removeAttribute('aria-describedby')
-            checkboxElement.classList.remove('ds44-boxError');
+            inputElement.removeAttribute('aria-invalid');
+            inputElement.removeAttribute('aria-label');
+            inputElement.removeAttribute('aria-describedby')
+            inputElement.classList.remove('ds44-boxError');
         });
 
-        if (hasOneCheckedCheckbox !== true) {
+        if (hasOneCheckedInput !== true) {
             this.showError(objectIndex);
             return false;
         }
@@ -142,14 +147,11 @@ class Checkbox {
         errorTextElement.innerHTML = this.errorMessage;
         errorMessageElement.appendChild(errorTextElement);
 
-        object.checkboxElements.forEach((checkboxElement) => {
-            checkboxElement.classList.add('ds44-boxError');
-            checkboxElement.setAttribute('aria-invalid', 'true');
-            checkboxElement.setAttribute('aria-label', this.errorMessage);
-            checkboxElement.setAttribute('aria-describedby', errorMessageElementId)
+        object.inputElements.forEach((inputElement) => {
+            inputElement.classList.add('ds44-boxError');
+            inputElement.setAttribute('aria-invalid', 'true');
+            inputElement.setAttribute('aria-label', this.errorMessage);
+            inputElement.setAttribute('aria-describedby', errorMessageElementId)
         });
     }
 }
-
-// Singleton
-new Checkbox();

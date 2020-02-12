@@ -1,8 +1,8 @@
-class Textarea extends FieldAbstract {
+class FormTextarea extends FormField {
     constructor() {
         super('textarea', 'textarea');
     }
 }
 
 // Singleton
-new Textarea();
+new FormTextarea();
