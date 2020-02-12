@@ -282,6 +282,11 @@ input[type=radio],
     }
 }
 
+.ds44-selectValue {
+    @include ds44-font-sizes(largeButton);
+    position: absolute;
+}
+
 .ds44-selectLabel {
     cursor: pointer;
     @include ds44-font-sizes(largeButton);

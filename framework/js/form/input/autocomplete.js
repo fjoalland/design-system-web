@@ -41,12 +41,12 @@ class FormInputAutoComplete extends FormField {
         if (object.autoCompleterListElement) {
             object.autoCompleterListElement.setAttribute('id', 'owned_listbox_' + object.id);
         }
-        if (element.getAttribute('data-mode') === this.SELECT_ONLY_MODE) {
+        if (object.textElement.getAttribute('data-mode') === this.SELECT_ONLY_MODE) {
             object.mode = this.SELECT_ONLY_MODE;
         } else {
             object.mode = this.FREE_TEXT_MODE;
         }
-        element.setAttribute('aria-owns', 'owned_listbox_' + object.id);
+        object.textElement.setAttribute('aria-owns', 'owned_listbox_' + object.id);
 
         this.hide(objectIndex);
 

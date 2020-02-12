@@ -25,7 +25,7 @@ class FormField {
             'textElement': element,
             'labelElement': MiscDom.getPreviousSibling(element, 'span'),
             'containerElement': element.closest('.ds44-form__container'),
-        }
+        };
         this.objects.push(object);
         const objectIndex = (this.objects.length - 1);
 
@@ -115,7 +115,7 @@ class FormField {
         }
 
         object.textElement.removeAttribute('aria-invalid');
-        object.textElement.removeAttribute('aria-describedby')
+        object.textElement.removeAttribute('aria-describedby');
         object.textElement.classList.remove('ds44-error');
 
         if (object.containerElement) {
@@ -187,11 +187,11 @@ class FormField {
 
         object.textElement.classList.add('ds44-error');
         object.textElement.setAttribute('aria-invalid', 'true');
-        object.textElement.setAttribute('aria-describedby', errorMessageElementId)
+        object.textElement.setAttribute('aria-describedby', errorMessageElementId);
     }
 
     formatErrorMessage(errorMessage, labelElement) {
         return errorMessage
-            .replace('{fieldName}', labelElement.innerText.replace(/\*$/, ''))
+            .replace('{fieldName}', labelElement.innerText.replace(/\*$/, ''));
     }
 }
