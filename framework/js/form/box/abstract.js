@@ -24,11 +24,9 @@ class FormBox {
         this.objects.push(object);
         const objectIndex = (this.objects.length - 1);
 
-        if (object.isRequired) {
-            object.inputElements.forEach((inputElement) => {
-                MiscEvent.addListener('click', this.toggleCheck.bind(this, objectIndex), inputElement);
-            });
-        }
+        object.inputElements.forEach((inputElement) => {
+            MiscEvent.addListener('click', this.toggleCheck.bind(this, objectIndex), inputElement);
+        });
     }
 
     toggleCheck(objectIndex, evt) {
@@ -82,11 +80,9 @@ class FormBox {
         const object = this.objects[objectIndex];
 
         let data = {};
+        data[object.name] = [];
         object.inputElements.forEach((inputElement) => {
             if(inputElement.checked) {
-                if(!data[object.name]) {
-                    data[object.name] = [];
-                }
                 data[object.name].push(inputElement.value);
             }
         });
@@ -95,6 +91,10 @@ class FormBox {
 
     checkValidity(objectIndex) {
         const object = this.objects[objectIndex];
+
+        if (!object.isRequired) {
+            return true;
+        }
 
         let errorElement = object.containerElement.querySelector('.ds44-errorMsg-container');
         if (errorElement) {

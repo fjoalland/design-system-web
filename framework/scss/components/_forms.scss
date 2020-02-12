@@ -429,7 +429,8 @@ input[type=radio],
     padding: $ds44-padding-xlarge $ds44-padding-large;
 }
 
-.ds44-autocomp-list_elem {
+.ds44-autocomp-list_elem,
+.ds44-autocomp-list_no_elem {
     @include ds44-font-sizes(formListElem);
     margin-bottom: $ds44-large-vmargin;
 
@@ -448,6 +449,24 @@ input[type=radio],
         &:active {
             cursor: pointer;
             text-decoration: none;
+        }
+    }
+}
+
+.ds44-autocomp-list_no_elem {
+    &:focus,
+    &:hover,
+    &:active {
+        text-decoration: none;
+        cursor: default;
+    }
+
+    label {
+        &:hover,
+        &:focus,
+        &:active {
+            text-decoration: none;
+            cursor: default;
         }
     }
 }
