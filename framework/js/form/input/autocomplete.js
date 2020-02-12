@@ -94,6 +94,11 @@ class FormInputAutoComplete extends FormField {
         }
 
         object.currentElementValue = object.textElement.value;
+        if (object.currentElementValue) {
+            object.textElement.setAttribute('value', object.currentElementValue);
+        } else {
+            object.textElement.removeAttribute('value');
+        }
     }
 
     write(objectIndex) {
@@ -176,7 +181,7 @@ class FormInputAutoComplete extends FormField {
             childElement.remove();
         });
 
-        if(Object.keys(results).length === 0) {
+        if (Object.keys(results).length === 0) {
             // No result
             let elementAutoCompleterListItem = document.createElement('li');
             elementAutoCompleterListItem.classList.add('ds44-autocomp-list_no_elem');
@@ -251,6 +256,7 @@ class FormInputAutoComplete extends FormField {
         ) {
             object.textElement.value = null;
             object.currentElementValue = null;
+            object.textElement.removeAttribute('value');
             this.blur(objectIndex);
         }
 
@@ -475,6 +481,11 @@ class FormInputAutoComplete extends FormField {
         object.valueElement.value = newValue;
         object.metadataElement.value = newMetadata;
         object.currentElementValue = newText;
+        if (object.currentElementValue) {
+            object.textElement.setAttribute('value', object.currentElementValue);
+        } else {
+            object.textElement.removeAttribute('value');
+        }
     }
 }
 
