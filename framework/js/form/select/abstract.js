@@ -462,7 +462,7 @@ class FormSelect extends FormField {
 
         let errorIconElement = document.createElement('i');
         errorIconElement.classList.add('icon');
-        errorIconElement.classList.add('icon-cross');
+        errorIconElement.classList.add('icon-attention');
         errorIconElement.classList.add('icon--sizeM');
         errorIconElement.setAttribute('aria-hidden', 'true');
         errorMessageElement.appendChild(errorIconElement);
