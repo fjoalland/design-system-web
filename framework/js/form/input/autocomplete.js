@@ -52,8 +52,8 @@ class FormInputAutoComplete extends FormField {
 
         MiscEvent.addListener('keyDown:*', this.record.bind(this, objectIndex));
         MiscEvent.addListener('keyUp:escape', this.hide.bind(this, objectIndex));
-        MiscEvent.addListener('keyUp:spacebar', this.selectOption.bind(this, objectIndex));
-        MiscEvent.addListener('keyUp:enter', this.selectOption.bind(this, objectIndex));
+        MiscEvent.addListener('keyPress:spacebar', this.selectOption.bind(this, objectIndex));
+        MiscEvent.addListener('keyPress:enter', this.selectOption.bind(this, objectIndex));
         MiscEvent.addListener('keyUp:arrowup', this.previousOption.bind(this, objectIndex));
         MiscEvent.addListener('keyUp:arrowdown', this.nextOption.bind(this, objectIndex));
 
