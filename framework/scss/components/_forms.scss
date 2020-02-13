@@ -47,6 +47,10 @@
         left: $ds44-padding-box;
         transition: all $ds44-timing-standard ease-in-out;
         color: $ds44-gray;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: calc(100% - 40px);
+        white-space: nowrap;
 
         &.ds44-moveLabel {
             font-size: .8125em; // 13px instead of 14px
@@ -474,6 +478,15 @@ input[type=radio],
             cursor: default;
         }
     }
+}
+
+// ellipsis
+.ds44-selectDisplay {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: calc(100% - 40px);
+    display: block;
+    white-space: nowrap;
 }
 
 
