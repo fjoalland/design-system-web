@@ -98,10 +98,46 @@ class Form {
                 return false;
             }
 
-            // Send data
-            console.log(JSON.stringify(data))
+            // Organize data
+            const formattedData = {};
+            for (let dataKey in data) {
+                let dataValue = data[dataKey];
 
-            // Everything valid, submit the form eventually
+                try {
+                    // Try if it is JSON
+                    dataValue = JSON.parse(dataValue);
+                } catch (ex) {
+                }
+                if (
+                    typeof dataValue === 'object' &&
+                    dataValue.metadata
+                ) {
+                    dataValue.metadata = JSON.parse(dataValue.metadata);
+                }
+                formattedData[dataKey] = dataValue
+            }
+
+            if (element.getAttribute('data-is-ajax') === 'true') {
+                // Ajax submission
+                MiscEvent.dispatch(
+                    'search:refresh',
+                    {
+                        'parameters': formattedData,
+                        'reset': true
+                    });
+
+                return;
+            }
+
+            // Regular submission
+            const formData = MiscForm.jsonToFormData(formattedData);
+            for (var [key, value] of formData.entries()) {
+                let hiddenInputElement = document.createElement('input');
+                hiddenInputElement.setAttribute('type', 'hidden');
+                hiddenInputElement.setAttribute('name', key);
+                hiddenInputElement.value = value;
+                element.appendChild(hiddenInputElement);
+            }
             element.submit();
         } catch (ex) {
             evt.stopPropagation();
