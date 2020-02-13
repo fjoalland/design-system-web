@@ -316,6 +316,12 @@ input[type=radio],
     &.ds44-boxError {
         border-color: $ds44-error;
     }
+
+    &.ds44-error {
+        .ds44-btnIco .icon {
+            color: $ds44-error;
+        }
+    }
 }
 
 .ds44-selectValue {

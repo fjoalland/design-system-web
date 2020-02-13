@@ -421,10 +421,13 @@ class FormSelect extends FormField {
         if (!object.valueElement) {
             return;
         }
+        if (!object.shapeElement) {
+            return;
+        }
 
         object.valueElement.removeAttribute('aria-invalid');
         object.valueElement.removeAttribute('aria-describedby');
-        object.valueElement.classList.remove('ds44-error');
+        object.shapeElement.classList.remove('ds44-error');
 
         if (object.containerElement) {
             let elementError = object.containerElement.querySelector('.ds44-errorMsg-container');
@@ -445,6 +448,9 @@ class FormSelect extends FormField {
     invalid(objectIndex) {
         const object = this.objects[objectIndex];
         if (!object.labelElement) {
+            return;
+        }
+        if (!object.shapeElement) {
             return;
         }
 
@@ -472,7 +478,7 @@ class FormSelect extends FormField {
         errorTextElement.innerHTML = this.formatErrorMessage(this.errorMessages['valueMissing'], object.labelElement);
         errorMessageElement.appendChild(errorTextElement);
 
-        object.valueElement.classList.add('ds44-error');
+        object.shapeElement.classList.add('ds44-error');
         object.valueElement.setAttribute('aria-invalid', 'true');
         object.valueElement.setAttribute('aria-describedby', errorMessageElementId);
     }
