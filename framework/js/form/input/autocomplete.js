@@ -418,20 +418,27 @@ class FormInputAutoComplete extends FormField {
         if (!object.textElement) {
             return;
         }
-        if (!object.autoCompleterListElement) {
+        if (!object.autoCompleterElement) {
             return;
         }
 
         const currentItem = evt.currentTarget;
-        const selectedListItem = object.autoCompleterListElement.querySelector('.selected_option');
+        const selectedListItem = object.autoCompleterElement.querySelector('.selected_option');
         if (selectedListItem) {
             selectedListItem.classList.remove('selected_option');
             selectedListItem.removeAttribute('id');
             selectedListItem.removeAttribute('aria-selected');
+            selectedListItem.removeAttribute('aria-pressed');
         }
         currentItem.classList.add('selected_option');
         currentItem.setAttribute('id', 'selected_option_' + object.id);
         currentItem.setAttribute('aria-selected', 'true');
+        if(
+            evt &&
+            evt.currentTarget.tagName.toLowerCase() === 'button'
+        ) {
+            currentItem.setAttribute('aria-pressed', 'true');
+        }
         object.textElement.setAttribute('aria-activedescendant', 'selected_option_' + object.id);
 
         if (this[currentItem.getAttribute('data-value')]) {
