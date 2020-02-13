@@ -145,6 +145,11 @@ textarea {
     right: 0;
     top: calc(50% - 13px);
     display: none;
+    padding-right: 1rem;
+
+    .ds44-formLabel--external & {
+        top: calc(50% + 3px);
+    }
 }
 
 /**
@@ -525,8 +530,16 @@ input[type=radio],
     background-color: $ds44-error-bg;
     padding: $ds44-padding-small $ds44-padding-box;
 
+    .ds44-msgErrorText {
+      margin: $ds44-paragraph-margin-bottom 0;
+    }
+
     .icon {
         color: $ds44-error;
+    }
+
+    .ds44-iconInnerText{
+      vertical-align: middle;
     }
 }
 
