@@ -30,6 +30,10 @@
         vertical-align: top;
         width: calc(100% - 25px); // retrait du lien pour caler l'icone à gauche
     }
+
+    &:first-child:after {
+      padding-bottom: 0;
+    }
 }
 
 /* small screens */
