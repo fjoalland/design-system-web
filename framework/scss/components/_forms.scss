@@ -151,6 +151,7 @@ textarea {
     top: calc(50% - 13px);
     display: none;
     padding-right: 1rem;
+    color: $ds44-color-soft-text;
 
     .ds44-formLabel--external & {
         top: calc(50% + 3px);
@@ -524,7 +525,7 @@ input[type=radio],
     width: calc(100% - 40px);
     display: block;
     white-space: nowrap;
-    color: $ds44-graytext-color;
+    color: $ds44-color-soft-text;
 }
 
 
