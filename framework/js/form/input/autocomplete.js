@@ -51,7 +51,6 @@ class FormInputAutoComplete extends FormField {
         this.hide(objectIndex);
 
         MiscEvent.addListener('keyDown:*', this.record.bind(this, objectIndex));
-        MiscEvent.addListener('keyUp:*', this.write.bind(this, objectIndex));
         MiscEvent.addListener('keyUp:escape', this.hide.bind(this, objectIndex));
         MiscEvent.addListener('keyUp:spacebar', this.selectOption.bind(this, objectIndex));
         MiscEvent.addListener('keyUp:enter', this.selectOption.bind(this, objectIndex));
@@ -102,6 +101,8 @@ class FormInputAutoComplete extends FormField {
     }
 
     write(objectIndex) {
+        super.write(objectIndex);
+
         const object = this.objects[objectIndex];
         if (!object.textElement) {
             return;
@@ -111,6 +112,22 @@ class FormInputAutoComplete extends FormField {
         }
 
         this.autoComplete(objectIndex);
+    }
+
+    reset(objectIndex) {
+        const object = this.objects[objectIndex];
+        if (!object.textElement) {
+            return;
+        }
+
+        this.setNewValue(
+            objectIndex,
+            null,
+            null,
+            null
+        );
+        this.showHideResetButton(objectIndex);
+        MiscAccessibility.setFocus(object.textElement);
     }
 
     autoComplete(objectIndex) {
@@ -304,6 +321,8 @@ class FormInputAutoComplete extends FormField {
         MiscAccessibility.hide(object.autoCompleterElement, true);
         object.textElement.setAttribute('aria-expanded', 'false');
         object.isExpanded = false;
+
+        this.showHideResetButton(objectIndex);
     }
 
     highlightSearch(result, search) {
@@ -347,7 +366,7 @@ class FormInputAutoComplete extends FormField {
                 selectedListItem === lastListItem
             ) {
                 // Select first
-                MiscAccessibility.setFocus(object.autoCompleterListElement.querySelector('.ds44-autocomp-list_elem'))
+                MiscAccessibility.setFocus(object.autoCompleterListElement.querySelector('.ds44-autocomp-list_elem'));
             } else {
                 // Select next
                 MiscAccessibility.setFocus(MiscDom.getNextSibling(selectedListItem));
