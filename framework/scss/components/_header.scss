@@ -101,6 +101,8 @@
     .ds44-header .ds44-colRight .ds44-btnIcoText--maxi .icon::before {
         min-height: 30px;
         font-size: 5rem;
+        margin: 0 auto;
+        text-align: center;
     }
 
     // when reduced, header column right and buttons gain flex display
