@@ -40,6 +40,9 @@ class MiscUrl {
         for (let key in sortedParameters) {
             let value = sortedParameters[key];
 
+            if(typeof value === 'object') {
+                value = JSON.stringify(value);
+            }
             newUrl += key.toLowerCase() + (value ? '=' + window.decodeURIComponent(value) : '') + '&';
         }
         document.location.href = newUrl.replace(/&$/, '');
