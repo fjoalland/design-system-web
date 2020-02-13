@@ -4,7 +4,7 @@ class FormField {
         this.objects = [];
         this.mainClassName = 'ds44-moveLabel';
         this.errorMessages = {
-            'default': 'Le champ "{fieldName}" n\'est pas valide',
+            'default': '"{fieldName}" n\'est pas valide',
             'valueMissing': 'Veuillez renseigner : {fieldName}',
             'patternMismatch': 'Veuillez renseigner "{fieldName}" avec le bon format',
         };
