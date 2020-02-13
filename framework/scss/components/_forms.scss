@@ -62,9 +62,10 @@ input {
         text-overflow: ellipsis;
         width: calc(100% - 40px);
         white-space: nowrap;
+        cursor: text;
 
         &.ds44-moveLabel {
-            font-size: .8125em; // 13px instead of 14px
+            font-size: 1.3rem; // 13px instead of 14px
             top: -$ds44-padding-medium*2;
             left: 0;
             color: $ds44-dark;
@@ -530,7 +531,7 @@ input[type=radio],
     width: calc(100% - 40px);
     display: block;
     white-space: nowrap;
-    color: $ds44-color-soft-text;
+    color: $ds44-color-dark-text;
 }
 
 
@@ -550,6 +551,7 @@ input[type=radio],
 
     .ds44-msgErrorText {
       margin: $ds44-paragraph-margin-bottom 0;
+      color: $ds44-color-dark-text;
     }
 
     .icon {
