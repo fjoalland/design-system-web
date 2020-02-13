@@ -10,14 +10,10 @@ class FormSelect extends FormField {
         super.create(element);
 
         // Create corresponding hidden input to store the value
-        const isRequired = (element.getAttribute('data-required') === 'true');
         let valueElement = document.createElement('input');
         valueElement.classList.add('ds44-input-value');
         valueElement.setAttribute('type', 'hidden');
         valueElement.setAttribute('aria-hidden', 'true');
-        if (isRequired) {
-            valueElement.setAttribute('required', '');
-        }
         element.parentNode.insertBefore(valueElement, element);
 
         const objectIndex = (this.objects.length - 1);
@@ -25,14 +21,18 @@ class FormSelect extends FormField {
         object.valueElement = valueElement;
         object.shapeElement = null;
         object.labelElement = null;
+        object.buttonElement = null;
         object.buttonIconElement = null;
+        object.buttonTextElement = null;
         if (object.containerElement) {
             object.shapeElement = object.containerElement.querySelector('.ds44-select__shape');
             object.labelElement = object.containerElement.querySelector('.ds44-selectLabel');
+            object.buttonElement = object.containerElement.querySelector('.ds44-btnOpen');
             object.buttonIconElement = object.containerElement.querySelector('.ds44-btnOpen .icon');
+            object.buttonTextElement = object.containerElement.querySelector('.ds44-btnOpen .visually-hidden');
         }
         object.isExpanded = false;
-        object.isRequired = isRequired;
+        object.isRequired = (element.getAttribute('data-required') === 'true');
 
         this.hide(objectIndex);
 
@@ -61,9 +61,6 @@ class FormSelect extends FormField {
             object.selectButtonElement = object.selectContainerElement.querySelector('.ds44-btnSelect');
         }
         if (object.selectListElement) {
-            object.selectListElement.setAttribute('id', 'owned_listbox_' + object.id);
-            object.textElement.setAttribute('aria-owns', 'owned_listbox_' + object.id);
-
             object.hasRadioButtons = !!object.selectListElement.querySelector('.ds44-select-list_elem input[type="radio"]');
             object.hasCheckBoxes = !!object.selectListElement.querySelector('.ds44-select-list_elem input[type="checkbox"]');
 
@@ -128,10 +125,13 @@ class FormSelect extends FormField {
 
     show(objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
+        if (!object.buttonElement) {
             return;
         }
         if (!object.buttonIconElement) {
+            return;
+        }
+        if (!object.buttonTextElement) {
             return;
         }
         if (!object.selectContainerElement) {
@@ -140,18 +140,24 @@ class FormSelect extends FormField {
 
         object.selectContainerElement.classList.remove('hidden');
         MiscAccessibility.show(object.selectContainerElement, true);
-        object.textElement.setAttribute('aria-expanded', 'true');
+        object.buttonElement.setAttribute('aria-expanded', 'true');
         object.buttonIconElement.classList.remove('icon-down');
         object.buttonIconElement.classList.add('icon-up');
+        object.buttonTextElement.innerText = object.buttonTextElement.innerText.replace('Ouvrir' , 'Fermer');
         object.isExpanded = true;
+
+        this.nextOption(objectIndex);
     }
 
     hide(objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
+        if (!object.buttonElement) {
             return;
         }
         if (!object.buttonIconElement) {
+            return;
+        }
+        if (!object.buttonTextElement) {
             return;
         }
         if (!object.selectContainerElement) {
@@ -160,15 +166,18 @@ class FormSelect extends FormField {
 
         object.selectContainerElement.classList.add('hidden');
         MiscAccessibility.hide(object.selectContainerElement, true);
-        object.textElement.setAttribute('aria-expanded', 'false');
+        object.buttonElement.setAttribute('aria-expanded', 'false');
         object.buttonIconElement.classList.add('icon-down');
         object.buttonIconElement.classList.remove('icon-up');
+        object.buttonTextElement.innerText = object.buttonTextElement.innerText.replace('Fermer' , 'Ouvrir');
         object.isExpanded = false;
     }
 
     nextOption(objectIndex, evt) {
-        evt.preventDefault();
-        evt.stopPropagation();
+        if(evt) {
+            evt.preventDefault();
+            evt.stopPropagation();
+        }
 
         const object = this.objects[objectIndex];
         if (!object.selectListElement) {
@@ -195,7 +204,6 @@ class FormSelect extends FormField {
                     // Select first
                     const firstListItem = object.selectListElement.querySelector(firstListItemSelector);
                     MiscAccessibility.setFocus(firstListItem);
-                    firstListItem.checked = true;
                 }
             } else {
                 const lastListItem = object.selectListElement.querySelector(lastListItemSelector);
@@ -218,8 +226,10 @@ class FormSelect extends FormField {
     }
 
     previousOption(objectIndex, evt) {
-        evt.preventDefault();
-        evt.stopPropagation();
+        if(evt) {
+            evt.preventDefault();
+            evt.stopPropagation();
+        }
 
         const object = this.objects[objectIndex];
         if (!object.containerElement) {
@@ -246,7 +256,6 @@ class FormSelect extends FormField {
                     // Select last
                     const lastListItem = object.selectListElement.querySelector(lastListItemSelector);
                     MiscAccessibility.setFocus(lastListItem);
-                    lastListItem.checked = true;
                 }
             } else {
                 const firstListItem = object.selectListElement.querySelector(firstListItemSelector);
@@ -332,17 +341,10 @@ class FormSelect extends FormField {
                         listElement.classList.add('selected_option');
                         listElement.setAttribute('aria-selected', 'true');
                         listInputElement.setAttribute('aria-checked', 'true');
-                        if (object.hasRadioButtons) {
-                            listElement.setAttribute('id', 'selected_option_' + object.id);
-                            object.textElement.setAttribute('aria-activedescendant', 'selected_option_' + object.id);
-                        }
                     } else {
                         listElement.classList.remove('selected_option');
                         listElement.removeAttribute('aria-selected');
                         listInputElement.removeAttribute('aria-checked');
-                        if (object.hasRadioButtons) {
-                            listElement.removeAttribute('id');
-                        }
                     }
                 });
 
@@ -354,11 +356,11 @@ class FormSelect extends FormField {
             selectedListItem.classList.remove('selected_option');
             selectedListItem.removeAttribute('id');
             selectedListItem.removeAttribute('aria-selected');
+            selectedListItem.removeAttribute('aria-checked');
         }
         currentItem.classList.add('selected_option');
-        currentItem.setAttribute('id', 'selected_option_' + object.id);
         currentItem.setAttribute('aria-selected', 'true');
-        object.textElement.setAttribute('aria-activedescendant', 'selected_option_' + object.id);
+        currentItem.setAttribute('aria-checked', 'true');
 
         // Record click straight away as there is no validate button
         this.record(objectIndex);
@@ -371,6 +373,9 @@ class FormSelect extends FormField {
 
         const object = this.objects[objectIndex];
         if (!object.textElement) {
+            return;
+        }
+        if (!object.buttonElement) {
             return;
         }
         if (!object.valueElement) {
@@ -404,7 +409,7 @@ class FormSelect extends FormField {
             object.labelElement.classList.add('ds44-moveSelectLabel');
         }
 
-        MiscAccessibility.setFocus(object.textElement);
+        MiscAccessibility.setFocus(object.buttonElement);
 
         this.hide(objectIndex);
 
