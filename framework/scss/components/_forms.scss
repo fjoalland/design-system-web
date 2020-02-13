@@ -8,16 +8,19 @@
 ::-webkit-input-placeholder {
     color: $ds44-dark;
     font-family: $ds44-font-family-base;
+    @include ds44-font-sizes(button);
 }
 
 ::-moz-placeholder {  /* Firefox 19+ */
     color: $ds44-dark;
     font-family: $ds44-font-family-base;
+    @include ds44-font-sizes(button);
 }
 
 :-ms-input-placeholder {
     color: $ds44-dark;
     font-family: $ds44-font-family-base;
+    @include ds44-font-sizes(button);
 }
 
  /**
@@ -100,6 +103,7 @@ textarea {
 
 .ds44-inpStd {
     @include ds44-font-sizes(input);
+    font-family: $ds44-font-family-base;
     border-radius: $ds44-border-radius;
     padding: $ds44-padding-medium $ds44-padding-ico $ds44-padding-medium $ds44-padding-box;
     border: 1px solid $ds44-gray;
