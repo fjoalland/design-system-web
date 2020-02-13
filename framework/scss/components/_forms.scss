@@ -47,7 +47,7 @@
     .ds44-labelTypePlaceholder,
     .ds44-labelTypePlaceholderLarge {
         position: absolute;
-        top: $ds44-padding-medium;
+        top: $ds44-padding-base*1.2 ;
         left: $ds44-padding-box;
         transition: all $ds44-timing-standard ease-in-out;
         color: $ds44-gray;
