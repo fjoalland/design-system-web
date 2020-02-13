@@ -1,6 +1,3 @@
-// TODO : Afficher "Aucun occurence trouvée"
-// TODO : Dans l'autocomplete en séléction seule, la suppression totale pose problème
-
 class FormInputAutoComplete extends FormField {
     constructor() {
         super(
@@ -44,12 +41,12 @@ class FormInputAutoComplete extends FormField {
         if (object.autoCompleterListElement) {
             object.autoCompleterListElement.setAttribute('id', 'owned_listbox_' + object.id);
         }
-        if (element.getAttribute('data-mode') === this.SELECT_ONLY_MODE) {
+        if (object.textElement.getAttribute('data-mode') === this.SELECT_ONLY_MODE) {
             object.mode = this.SELECT_ONLY_MODE;
         } else {
             object.mode = this.FREE_TEXT_MODE;
         }
-        element.setAttribute('aria-owns', 'owned_listbox_' + object.id);
+        object.textElement.setAttribute('aria-owns', 'owned_listbox_' + object.id);
 
         this.hide(objectIndex);
 
@@ -97,6 +94,11 @@ class FormInputAutoComplete extends FormField {
         }
 
         object.currentElementValue = object.textElement.value;
+        if (object.currentElementValue) {
+            object.textElement.setAttribute('value', object.currentElementValue);
+        } else {
+            object.textElement.removeAttribute('value');
+        }
     }
 
     write(objectIndex) {
@@ -127,13 +129,16 @@ class FormInputAutoComplete extends FormField {
             return;
         }
 
-        if (object.mode === this.FREE_TEXT_MODE) {
+        if (
+            object.mode === this.FREE_TEXT_MODE ||
+            !object.textElement.value
+        ) {
             this.setNewValue(
                 objectIndex,
                 object.textElement.value,
                 object.textElement.value
             );
-        } else if (object.mode === this.SELECT_ONLY_MODE) {
+        } else {
             object.valueElement.value = null;
             object.metadataElement.value = null;
         }
@@ -156,7 +161,7 @@ class FormInputAutoComplete extends FormField {
     }
 
     autoCompleteError(objectIndex) {
-        this.autoCompleteFill(objectIndex, {'data': {}, 'total': 0});
+        this.autoCompleteFill(objectIndex, {});
     }
 
     autoCompleteFill(objectIndex, results) {
@@ -176,29 +181,32 @@ class FormInputAutoComplete extends FormField {
             childElement.remove();
         });
 
-        for (let key in results.data) {
+        if (Object.keys(results).length === 0) {
+            // No result
             let elementAutoCompleterListItem = document.createElement('li');
-            elementAutoCompleterListItem.classList.add('ds44-autocomp-list_elem');
-            elementAutoCompleterListItem.setAttribute('role', 'option');
-            elementAutoCompleterListItem.setAttribute('data-text', results.data[key].name);
-            if (object.mode === this.FREE_TEXT_MODE) {
-                elementAutoCompleterListItem.setAttribute('data-value', results.data[key].name);
-            } else {
-                elementAutoCompleterListItem.setAttribute('data-value', key);
-            }
-            elementAutoCompleterListItem.setAttribute('data-metadata', (results.data[key].metadata ? JSON.stringify(results.data[key].metadata) : null));
-            elementAutoCompleterListItem.setAttribute('tabindex', '0');
-            elementAutoCompleterListItem.innerHTML = this.highlightSearch(results.data[key].name, object.textElement.value);
+            elementAutoCompleterListItem.classList.add('ds44-autocomp-list_no_elem');
+            elementAutoCompleterListItem.innerHTML = 'Aucun résultat trouvé';
             object.autoCompleterListElement.appendChild(elementAutoCompleterListItem);
+        } else {
+            // Some result
+            for (let key in results) {
+                let elementAutoCompleterListItem = document.createElement('li');
+                elementAutoCompleterListItem.classList.add('ds44-autocomp-list_elem');
+                elementAutoCompleterListItem.setAttribute('role', 'option');
+                elementAutoCompleterListItem.setAttribute('data-text', results[key].name);
+                if (object.mode === this.FREE_TEXT_MODE) {
+                    elementAutoCompleterListItem.setAttribute('data-value', results[key].name);
+                } else {
+                    elementAutoCompleterListItem.setAttribute('data-value', key);
+                }
+                elementAutoCompleterListItem.setAttribute('data-metadata', (results[key].metadata ? JSON.stringify(results[key].metadata) : null));
+                elementAutoCompleterListItem.setAttribute('tabindex', '0');
+                elementAutoCompleterListItem.innerHTML = this.highlightSearch(results[key].name, object.textElement.value);
+                object.autoCompleterListElement.appendChild(elementAutoCompleterListItem);
 
-            MiscEvent.addListener('focus', this.fakeSelect.bind(this, objectIndex), elementAutoCompleterListItem);
-            MiscEvent.addListener('mousedown', this.select.bind(this, objectIndex), elementAutoCompleterListItem);
-        }
-
-        const elementAutoCompleterTotal = object.autoCompleterElement.querySelector('.ds44-lightLink');
-        if (elementAutoCompleterTotal) {
-            const total = (parseInt(results.total, 10) - Object.keys(results.data).length);
-            elementAutoCompleterTotal.innerHTML = total + ' ' + (total > 1 ? 'suggestions supplémentaires' : 'suggestion supplémentaire');
+                MiscEvent.addListener('focus', this.fakeSelect.bind(this, objectIndex), elementAutoCompleterListItem);
+                MiscEvent.addListener('mousedown', this.select.bind(this, objectIndex), elementAutoCompleterListItem);
+            }
         }
 
         this.show(objectIndex);
@@ -248,6 +256,7 @@ class FormInputAutoComplete extends FormField {
         ) {
             object.textElement.value = null;
             object.currentElementValue = null;
+            object.textElement.removeAttribute('value');
             this.blur(objectIndex);
         }
 
@@ -406,6 +415,20 @@ class FormInputAutoComplete extends FormField {
         currentItem.setAttribute('aria-selected', 'true');
         object.textElement.setAttribute('aria-activedescendant', 'selected_option_' + object.id);
 
+        if (this[currentItem.getAttribute('data-value')]) {
+            // Call corresponding function
+            this[currentItem.getAttribute('data-value')](objectIndex, currentItem);
+            return;
+        }
+
+        this.selectRecord(objectIndex, currentItem);
+    }
+
+    selectRecord(objectIndex, currentItem) {
+        const object = this.objects[objectIndex];
+        if (!object.textElement) {
+            return;
+        }
 
         this.setNewValue(
             objectIndex,
@@ -419,6 +442,27 @@ class FormInputAutoComplete extends FormField {
         this.hide(objectIndex);
 
         this.checkValidity(objectIndex);
+    }
+
+    aroundMe(objectIndex, currentItem) {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(this.aroundMeSuccess.bind(this, objectIndex, currentItem));
+
+            return;
+        }
+
+        this.selectRecord(objectIndex, currentItem);
+    }
+
+    aroundMeSuccess(objectIndex, currentItem, position) {
+        currentItem.setAttribute(
+            'data-metadata',
+            JSON.stringify({
+                'latitude': position.coords.latitude,
+                'longitude': position.coords.longitude
+            })
+        );
+        this.selectRecord(objectIndex, currentItem);
     }
 
     setNewValue(objectIndex, newText, newValue, newMetadata = null) {
@@ -437,6 +481,11 @@ class FormInputAutoComplete extends FormField {
         object.valueElement.value = newValue;
         object.metadataElement.value = newMetadata;
         object.currentElementValue = newText;
+        if (object.currentElementValue) {
+            object.textElement.setAttribute('value', object.currentElementValue);
+        } else {
+            object.textElement.removeAttribute('value');
+        }
     }
 }
 
