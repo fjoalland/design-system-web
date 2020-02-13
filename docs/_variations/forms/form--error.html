@@ -37,6 +37,24 @@ layout: pattern
     <div><input type="submit" class="ds44-btnStd" value="Tester le champ adresse" /></div>
 </form>
 <hr />
+<form>
+    {% include forms/inc-select-simple.html id="select1" label="Select simple large" required="true" requiredStar='<sup aria-hidden="true">*</sup>' size="ds44-inpLarge" %}
+    <div><input type="submit" class="ds44-btnStd" value="Tester le select simple" /></div>
+</form>
+<hr />
+<form>
+    {% include forms/inc-select-std.html id="select2" label="Select à radios" required="true" requiredStar='<sup aria-hidden="true">*</sup>' size="ds44-inpStd" %}
+    <div><input type="submit" class="ds44-btnStd" value="Tester le select à radios" /></div>
+</form>
+<hr />
+<form>
+    {% include forms/inc-select-multiple.html id="select3" label="Select à cases" required="true" requiredStar='<sup aria-hidden="true">*</sup>' size="ds44-inpStd" %}
+    <div><input type="submit" class="ds44-btnStd" value="Tester le select à cases" /></div>
+</form>
+<hr />
+
+
+
 <!--
 <hr />
 

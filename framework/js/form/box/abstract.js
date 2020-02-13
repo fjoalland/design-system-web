@@ -19,8 +19,8 @@ class FormBox {
             'name': element.getAttribute('data-name'),
             'inputElements': element.querySelectorAll('input[type="' + this.category + '"]'),
             'containerElement': element,
-            'isRequired': (element.getAttribute('data-required') === 'true' ? true : false),
-        }
+            'isRequired': (element.getAttribute('data-required') === 'true'),
+        };
         this.objects.push(object);
         const objectIndex = (this.objects.length - 1);
 
@@ -29,7 +29,7 @@ class FormBox {
         });
     }
 
-    toggleCheck(objectIndex, evt) {
+    toggleCheck(objectIndex) {
         const object = this.objects[objectIndex];
 
         object.inputElements.forEach((inputElement) => {
@@ -109,7 +109,7 @@ class FormBox {
 
             inputElement.removeAttribute('aria-invalid');
             inputElement.removeAttribute('aria-label');
-            inputElement.removeAttribute('aria-describedby')
+            inputElement.removeAttribute('aria-describedby');
             inputElement.classList.remove('ds44-boxError');
         });
 
