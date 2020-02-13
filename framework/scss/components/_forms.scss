@@ -27,6 +27,10 @@
 .ds44-form__container {
     position: relative;
     margin: $ds44-large-vmargin 0;
+
+    &.ds44-checkBox-radio_list {
+      margin: $ds44-large-vmargin/2 0;
+    }
 }
 .ds44-form__container--external {
     margin: 0 0 $ds44-large-vmargin 0;
@@ -43,7 +47,7 @@
     .ds44-labelTypePlaceholder,
     .ds44-labelTypePlaceholderLarge {
         position: absolute;
-        top: $ds44-padding-medium;
+        top: 1.1rem;
         left: $ds44-padding-box;
         transition: all $ds44-timing-standard ease-in-out;
         color: $ds44-gray;
@@ -86,10 +90,14 @@
     }
 }
 
+textarea {
+    font-family: $ds44-font-family-base;
+}
+
 .ds44-inpStd {
-    @include ds44-font-sizes(button);
+    @include ds44-font-sizes(input);
     border-radius: $ds44-border-radius;
-    padding: $ds44-padding-medium $ds44-padding-box;
+    padding: $ds44-padding-medium $ds44-padding-ico $ds44-padding-medium $ds44-padding-box;
     border: 1px solid $ds44-gray;
     min-width: 100%;
     vertical-align: middle;
@@ -101,7 +109,7 @@
 }
 
 .ds44-inpLarge {
-    @include ds44-font-sizes(largeButton);
+    @include ds44-font-sizes(input);
     border-radius: $ds44-border-radius;
     padding: $ds44-padding-large;
     border: 1px solid $ds44-gray;
@@ -120,6 +128,15 @@
 
 .ds44-format {
     color: $ds44-color-soft-text;
+}
+
+/* Bouton de reset de champ */
+
+.ds44-reset {
+    position: absolute;
+    right: 0;
+    top: calc(50% - 13px);
+    display: none;
 }
 
 /**
@@ -311,7 +328,7 @@ input[type=radio],
 }
 
 .ds44-select-list_elem {
-    margin-bottom: $ds44-large-vmargin;
+    margin-bottom: $ds44-large-vmargin/2;
 
     &:focus,
     &:hover,
@@ -429,7 +446,8 @@ input[type=radio],
     padding: $ds44-padding-xlarge $ds44-padding-large;
 }
 
-.ds44-autocomp-list_elem {
+.ds44-autocomp-list_elem,
+.ds44-autocomp-list_no_elem {
     @include ds44-font-sizes(formListElem);
     margin-bottom: $ds44-large-vmargin;
 
@@ -448,6 +466,24 @@ input[type=radio],
         &:active {
             cursor: pointer;
             text-decoration: none;
+        }
+    }
+}
+
+.ds44-autocomp-list_no_elem {
+    &:focus,
+    &:hover,
+    &:active {
+        text-decoration: none;
+        cursor: default;
+    }
+
+    label {
+        &:hover,
+        &:focus,
+        &:active {
+            text-decoration: none;
+            cursor: default;
         }
     }
 }

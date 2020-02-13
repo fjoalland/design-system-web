@@ -18,13 +18,23 @@ layout: pattern
 </form>
 <hr />
 <form>
-    {% include forms/inc-input-autocomp.html id="name10" label="Champ texte libre" requiredStar='<sup aria-hidden="true">*</sup>' required='required aria-required="true"' options='data-mode="free-text"' %}
-    <div><input type="submit" class="ds44-btnStd" value="Tester le champ" /></div>
+    {% include forms/inc-radios.html name="radio1" choices="m:Homme,f:Femme" required="true" %}
+    <div><input type="submit" class="ds44-btnStd" value="Tester les radios" /></div>
 </form>
 <hr />
 <form>
-    {% include forms/inc-radios.html name="radio1" choices="m:Homme,f:Femme" required="true" %}
-    <div><input type="submit" class="ds44-btnStd" value="Tester les radios" /></div>
+    {% include forms/inc-input-autocomp.html id="name10" label="Champ texte libre" requiredStar='<sup aria-hidden="true">*</sup>' required='required aria-required="true"' options='data-mode="free-text"' %}
+    <div><input type="submit" class="ds44-btnStd" value="Tester le champ autocomplétion" /></div>
+</form>
+<hr />
+<form>
+    {% include forms/inc-input-city.html id="inc-input-city" label="Champ commune" requiredStar='<sup aria-hidden="true">*</sup>' required='required aria-required="true"' options='data-mode="select-only"' %}
+    <div><input type="submit" class="ds44-btnStd" value="Tester le champ commune" /></div>
+</form>
+<hr />
+<form>
+    {% include forms/inc-input-autocomp.html id="name11" label="Champ adresse" requiredStar='<sup aria-hidden="true">*</sup>' required='required aria-required="true"' options='data-mode="select-only"' %}
+    <div><input type="submit" class="ds44-btnStd" value="Tester le champ adresse" /></div>
 </form>
 <hr />
 <!--
