@@ -51,6 +51,10 @@
         left: $ds44-padding-box;
         transition: all $ds44-timing-standard ease-in-out;
         color: $ds44-gray;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: calc(100% - 40px);
+        white-space: nowrap;
 
         &.ds44-moveLabel {
             font-size: .8125em; // 13px instead of 14px
@@ -90,10 +94,14 @@
     }
 }
 
+textarea {
+    font-family: $ds44-font-family-base;
+}
+
 .ds44-inpStd {
-    @include ds44-font-sizes(button);
+    @include ds44-font-sizes(input);
     border-radius: $ds44-border-radius;
-    padding: $ds44-padding-medium $ds44-padding-box;
+    padding: $ds44-padding-medium $ds44-padding-ico $ds44-padding-medium $ds44-padding-box;
     border: 1px solid $ds44-gray;
     min-width: 100%;
     vertical-align: middle;
@@ -105,7 +113,7 @@
 }
 
 .ds44-inpLarge {
-    @include ds44-font-sizes(largeButton);
+    @include ds44-font-sizes(input);
     border-radius: $ds44-border-radius;
     padding: $ds44-padding-large;
     border: 1px solid $ds44-gray;
@@ -124,6 +132,15 @@
 
 .ds44-format {
     color: $ds44-color-soft-text;
+}
+
+/* Bouton de reset de champ */
+
+.ds44-reset {
+    position: absolute;
+    right: 0;
+    top: calc(50% - 13px);
+    display: none;
 }
 
 /**
@@ -284,6 +301,11 @@ input[type=radio],
     &.ds44-boxError {
         border-color: $ds44-error;
     }
+}
+
+.ds44-selectValue {
+    @include ds44-font-sizes(largeButton);
+    position: absolute;
 }
 
 .ds44-selectLabel {
@@ -473,6 +495,15 @@ input[type=radio],
             cursor: default;
         }
     }
+}
+
+// ellipsis
+.ds44-selectDisplay {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: calc(100% - 40px);
+    display: block;
+    white-space: nowrap;
 }
 
 
