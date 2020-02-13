@@ -106,6 +106,7 @@ textarea {
 }
 
 .ds44-inpStd {
+    color: $ds44-color-dark-text;
     @include ds44-font-sizes(input);
     font-family: $ds44-font-family-base;
     border-radius: $ds44-border-radius;
@@ -121,6 +122,7 @@ textarea {
 }
 
 .ds44-inpLarge {
+    color: $ds44-color-dark-text;
     @include ds44-font-sizes(input);
     font-family: $ds44-font-family-base;
     border-radius: $ds44-border-radius;
@@ -178,6 +180,7 @@ textarea {
         border-radius: 2px;
         height: 1.6rem;
         width: 1.6rem;
+        background-color: #fff;
         transition: background-size $ds44-timing-faster ease-out;
         background-position: center;
         background-size: 0rem;
@@ -200,7 +203,7 @@ input[type=checkbox],
     }
 
     &:checked + .ds44-boxLabel::before {
-        background: url(../../../assets/images/cd44-check-black.png) no-repeat center;
+        background: #FFF url(../../../assets/images/cd44-check-black.png) no-repeat center;
         background-size: 1rem;
     }
 
@@ -369,7 +372,7 @@ input[type=radio],
     label {
         @include ds44-font-sizes(formListElem);
         display: block;
-        color: $ds44-dark;
+        color: $ds44-color-dark-text;
 
         &:hover,
         &:focus,
@@ -389,7 +392,7 @@ input[type=radio],
 
     label {
         display: block;
-        color: $ds44-dark;
+        color: $ds44-color-dark-text;
         @include ds44-font-sizes(bodySize);
 
         &:hover,
@@ -415,6 +418,7 @@ input[type=radio],
 
     label {
         @include ds44-font-sizes(formListElem);
+        color: $ds44-color-dark-text;
         min-width: calc(100% - 4.5rem);
         cursor: pointer;
     }
@@ -470,6 +474,7 @@ input[type=radio],
     position: absolute;
     width: 100%;
     z-index: 10;
+    color: $ds44-color-dark-text;
 }
 
 .ds44-autocomp-list {
