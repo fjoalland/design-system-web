@@ -7,7 +7,10 @@ class Form {
             'textarea': null,
             'checkbox': null,
             'radio': null,
-            'selectStandard': null
+            'selectStandard': null,
+            'selectRadio': null,
+            'selectCheckbox': null,
+            'selectMultilevel': null
         };
 
         document
