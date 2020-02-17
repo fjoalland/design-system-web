@@ -34,10 +34,7 @@ class Collapser {
             element = evt.detail.element
         }
 
-        if (
-            !element ||
-            element.classList.contains('show')
-        ) {
+        if (!element) {
             return;
         }
 
@@ -68,17 +65,14 @@ class Collapser {
             }
         }
 
-        if (
-            !element ||
-            !element.classList.contains('show')
-        ) {
+        if (!element) {
             return;
         }
 
         const panel = element.nextElementSibling;
         element.classList.remove('show');
         element.setAttribute('aria-expanded', 'false');
-        panel.style.maxHeight = (panel.style.maxHeight ? null : panel.scrollHeight + 60 + 'px');
+        panel.style.maxHeight = null;
         MiscAccessibility.hide(panel, true);
         panel.style.visibility = 'hidden';
     }

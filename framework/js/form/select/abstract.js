@@ -1,11 +1,4 @@
 class FormSelect extends FormField {
-    constructor() {
-        super(
-            '.ds44-selectDisplay',
-            'selectStandard'
-        );
-    }
-
     create(element) {
         super.create(element);
 
@@ -39,17 +32,12 @@ class FormSelect extends FormField {
         MiscEvent.addListener('keyUp:escape', this.hide.bind(this, objectIndex));
         MiscEvent.addListener('keyUp:arrowup', this.previousOption.bind(this, objectIndex));
         MiscEvent.addListener('keyUp:arrowdown', this.nextOption.bind(this, objectIndex));
-        MiscEvent.addListener('keyPress:spacebar', this.selectOption.bind(this, objectIndex));
-        MiscEvent.addListener('keyPress:enter', this.selectOption.bind(this, objectIndex));
         if (object.shapeElement) {
             MiscEvent.addListener('click', this.showHide.bind(this, objectIndex), object.shapeElement);
         }
-        if (object.containerElement) {
-            MiscEvent.addListener('focusout', this.focusOut.bind(this, objectIndex), object.containerElement);
-        }
+        MiscEvent.addListener('focusout', this.focusOut.bind(this, objectIndex), object.containerElement);
+        MiscEvent.addListener('click', this.focusOut.bind(this, objectIndex), document.body);
 
-        object.hasRadioButtons = false;
-        object.hasCheckBoxes = false;
         object.selectContainerElement = null;
         if (object.containerElement) {
             object.selectContainerElement = object.containerElement.querySelector('.ds44-select-container');
@@ -61,20 +49,10 @@ class FormSelect extends FormField {
             object.selectButtonElement = object.selectContainerElement.querySelector('.ds44-btnSelect');
         }
         if (object.selectListElement) {
-            object.hasRadioButtons = !!object.selectListElement.querySelector('.ds44-select-list_elem input[type="radio"]');
-            object.hasCheckBoxes = !!object.selectListElement.querySelector('.ds44-select-list_elem input[type="checkbox"]');
-
             object.selectListElement
                 .querySelectorAll('.ds44-select-list_elem')
                 .forEach((listElement) => {
                     MiscEvent.addListener('mousedown', this.select.bind(this, objectIndex), listElement);
-
-                    if (
-                        object.hasRadioButtons ||
-                        object.hasCheckBoxes
-                    ) {
-                        MiscEvent.addListener('change', this.select.bind(this, objectIndex), listElement.querySelector('input'));
-                    }
                 });
         }
         if (object.selectButtonElement) {
@@ -114,8 +92,7 @@ class FormSelect extends FormField {
 
         if (
             evt &&
-            object.containerElement.contains(evt.target) &&
-            object.containerElement.contains(evt.relatedTarget)
+            object.containerElement.contains(evt.target)
         ) {
             return;
         }
@@ -139,7 +116,7 @@ class FormSelect extends FormField {
         }
 
         object.selectContainerElement.classList.remove('hidden');
-        MiscAccessibility.show(object.selectContainerElement, true);
+        MiscAccessibility.show(object.selectContainerElement);
         object.buttonElement.setAttribute('aria-expanded', 'true');
         object.buttonIconElement.classList.remove('icon-down');
         object.buttonIconElement.classList.add('icon-up');
@@ -165,7 +142,7 @@ class FormSelect extends FormField {
         }
 
         object.selectContainerElement.classList.add('hidden');
-        MiscAccessibility.hide(object.selectContainerElement, true);
+        MiscAccessibility.hide(object.selectContainerElement);
         object.buttonElement.setAttribute('aria-expanded', 'false');
         object.buttonIconElement.classList.add('icon-down');
         object.buttonIconElement.classList.remove('icon-up');
@@ -185,42 +162,16 @@ class FormSelect extends FormField {
         }
 
         if (object.isExpanded) {
-            let firstListItemSelector = '.ds44-select-list_elem input';
-            let selectedListItemSelector = '.ds44-select-list_elem input:focus';
-            let lastListItemSelector = '.ds44-select-list_elem:last-child input';
+            const listItems = this.getListItems(object.selectListElement);
             if (
-                !object.hasRadioButtons &&
-                !object.hasCheckBoxes
+                !listItems.selected ||
+                listItems.selected === listItems.last
             ) {
-                firstListItemSelector = '.ds44-select-list_elem';
-                selectedListItemSelector = '.ds44-select-list_elem:focus';
-                lastListItemSelector = '.ds44-select-list_elem:last-child';
-            }
-
-            const selectedListItem = object.selectListElement.querySelector(selectedListItemSelector);
-            if (object.hasRadioButtons) {
-                // Is radio button, don't mess with up and down keys
-                if (!selectedListItem) {
-                    // Select first
-                    const firstListItem = object.selectListElement.querySelector(firstListItemSelector);
-                    MiscAccessibility.setFocus(firstListItem);
-                }
+                // Select first
+                MiscAccessibility.setFocus(listItems.first)
             } else {
-                const lastListItem = object.selectListElement.querySelector(lastListItemSelector);
-                if (
-                    !selectedListItem ||
-                    selectedListItem === lastListItem
-                ) {
-                    // Select first
-                    MiscAccessibility.setFocus(object.selectListElement.querySelector(firstListItemSelector))
-                } else {
-                    // Select next
-                    if (object.hasCheckBoxes) {
-                        MiscAccessibility.setFocus(MiscDom.getNextSibling(selectedListItem.closest('.ds44-select-list_elem')).querySelector('input'));
-                    } else {
-                        MiscAccessibility.setFocus(MiscDom.getNextSibling(selectedListItem.closest('.ds44-select-list_elem')));
-                    }
-                }
+                // Select next
+                MiscAccessibility.setFocus(listItems.next);
             }
         }
     }
@@ -237,133 +188,30 @@ class FormSelect extends FormField {
         }
 
         if (object.isExpanded) {
-            let firstListItemSelector = '.ds44-select-list_elem:first-child input';
-            let selectedListItemSelector = '.ds44-select-list_elem input:focus';
-            let lastListItemSelector = '.ds44-select-list_elem:last-child input';
+            const listItems = this.getListItems(object.selectListElement);
             if (
-                !object.hasRadioButtons &&
-                !object.hasCheckBoxes
+                !listItems.selected ||
+                listItems.selected === listItems.first
             ) {
-                firstListItemSelector = '.ds44-select-list_elem:first-child';
-                selectedListItemSelector = '.ds44-select-list_elem:focus';
-                lastListItemSelector = '.ds44-select-list_elem:last-child';
-            }
-
-            const selectedListItem = object.selectListElement.querySelector(selectedListItemSelector);
-            if (object.hasRadioButtons) {
-                // Is radio button, don't mess with up and down keys
-                if (!selectedListItem) {
-                    // Select last
-                    const lastListItem = object.selectListElement.querySelector(lastListItemSelector);
-                    MiscAccessibility.setFocus(lastListItem);
-                }
+                // Select last
+                MiscAccessibility.setFocus(listItems.last)
             } else {
-                const firstListItem = object.selectListElement.querySelector(firstListItemSelector);
-                if (
-                    !selectedListItem ||
-                    selectedListItem === firstListItem
-                ) {
-                    // Select last
-                    MiscAccessibility.setFocus(object.selectListElement.querySelector(lastListItemSelector))
-                } else {
-                    // Select previous
-                    if (object.hasCheckBoxes) {
-                        MiscAccessibility.setFocus(MiscDom.getPreviousSibling(selectedListItem.closest('.ds44-select-list_elem')).querySelector('input'));
-                    } else {
-                        MiscAccessibility.setFocus(MiscDom.getPreviousSibling(selectedListItem.closest('.ds44-select-list_elem')));
-                    }
-                }
+                // Select previous
+                MiscAccessibility.setFocus(listItems.previous);
             }
         }
     }
 
-    selectOption(objectIndex, evt) {
-        evt.preventDefault();
-
-        const object = this.objects[objectIndex];
-        if (!object.selectListElement) {
-            return;
-        }
-
-        if (
-            !object.hasRadioButtons &&
-            !object.hasCheckBoxes &&
-            document.activeElement &&
-            document.activeElement.classList.contains('ds44-select-list_elem') &&
-            object.selectListElement.contains(document.activeElement)
-        ) {
-            MiscEvent.dispatch('mousedown', null, document.activeElement);
-        }
+    getListItems(parentElement) {
+        // Abstract method
     }
 
     select(objectIndex, evt) {
-        evt.preventDefault();
+        // Abstract method
+    }
 
-        const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.selectListElement) {
-            return;
-        }
-
-        const currentItem = evt.currentTarget.closest('.ds44-select-list_elem');
-        object.textElement.removeAttribute('aria-activedescendant');
-        if (
-            object.hasRadioButtons ||
-            object.hasCheckBoxes
-        ) {
-            const currentListInputElement = currentItem.querySelector('input');
-
-            object.selectListElement
-                .querySelectorAll('.ds44-select-list_elem')
-                .forEach((listElement) => {
-                    let listInputElement = listElement.querySelector('input');
-                    if (
-                        (
-                            evt.type === 'mousedown' &&
-                            (
-                                (
-                                    listInputElement === currentListInputElement &&
-                                    !listInputElement.checked
-                                ) ||
-                                (
-                                    listInputElement !== currentListInputElement &&
-                                    listInputElement.checked
-                                )
-                            )
-                        ) ||
-                        (
-                            evt.type === 'change' &&
-                            listInputElement.checked
-                        )
-                    ) {
-                        listElement.classList.add('selected_option');
-                        listElement.setAttribute('aria-selected', 'true');
-                        listInputElement.setAttribute('aria-checked', 'true');
-                    } else {
-                        listElement.classList.remove('selected_option');
-                        listElement.removeAttribute('aria-selected');
-                        listInputElement.removeAttribute('aria-checked');
-                    }
-                });
-
-            return;
-        }
-
-        const selectedListItem = object.selectListElement.querySelector('.selected_option');
-        if (selectedListItem) {
-            selectedListItem.classList.remove('selected_option');
-            selectedListItem.removeAttribute('id');
-            selectedListItem.removeAttribute('aria-selected');
-            selectedListItem.removeAttribute('aria-checked');
-        }
-        currentItem.classList.add('selected_option');
-        currentItem.setAttribute('aria-selected', 'true');
-        currentItem.setAttribute('aria-checked', 'true');
-
-        // Record click straight away as there is no validate button
-        this.record(objectIndex);
+    getDomData(listElement) {
+        // Abstract method
     }
 
     record(objectIndex, evt) {
@@ -390,13 +238,9 @@ class FormSelect extends FormField {
         object.selectListElement
             .querySelectorAll('.selected_option')
             .forEach((listElement) => {
-                if (object.hasRadioButtons || object.hasCheckBoxes) {
-                    values.push(listElement.querySelector('input').getAttribute('value'));
-                    texts.push(listElement.querySelector('label').innerText);
-                } else {
-                    values.push(listElement.getAttribute('data-value'));
-                    texts.push(listElement.innerText);
-                }
+                const domData = this.getDomData(listElement);
+                values.push(domData.value);
+                texts.push(domData.text);
             });
         if (values.length === 0) {
             // No value
@@ -483,6 +327,3 @@ class FormSelect extends FormField {
         object.valueElement.setAttribute('aria-describedby', errorMessageElementId);
     }
 }
-
-// Singleton
-new FormSelect();

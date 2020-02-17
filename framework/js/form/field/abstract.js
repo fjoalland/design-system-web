@@ -9,11 +9,19 @@ class FormField {
             'patternMismatch': 'Veuillez renseigner "{fieldName}" avec le bon format',
         };
 
-        document
-            .querySelectorAll(selector)
-            .forEach((element) => {
-                this.create(element);
-            });
+        if(typeof selector === 'object') {
+            // Elements passed as parameter, not text selector
+            selector
+                .forEach((element) => {
+                    this.create(element);
+                });
+        } else {
+            document
+                .querySelectorAll(selector)
+                .forEach((element) => {
+                    this.create(element);
+                });
+        }
 
         MiscEvent.addListener('form:validate', this.validate.bind(this));
     }
