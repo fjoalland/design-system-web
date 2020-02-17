@@ -4,18 +4,32 @@ group: components
 status: A valider
 
 title: Formulaires
-description: 
+description:
 
 variations:
-- title: Champ standard
-  description: 
+- title: Champs standards
+  description:
   pattern: forms/form--input-std.html
-- title: Champ large
-  description: Champ élargi
-  pattern: forms/form--input-large.html
-- title: Champ avec label extérieur
-  description: Type de champ comprenant un label au-dessus et un placeholder à l'intérieur
-  pattern: forms/form--input-externalLabel.html
+
+- title: Selects
+  description:
+  pattern: forms/form--select.html
+
+- title: Champ autocompletion
+  description:
+  pattern: forms/form--input-autocomplete.html
+
+- title: Messages d erreur
+  description:
+  pattern: forms/form--error.html
+
+- title: Recherche à facettes
+  description: Ensemble de composants de formulaire dédié aux recherches
+  pattern: forms/form--recherche-facettes.html
+
+- title: Champs liés
+  description: Quand deux champs sont liés, le sous-thèmes n'est accessible qu'après avoir validé le premier champ.
+  pattern: forms/form--champs-lies.html
 ---
 
 ## Usage
@@ -23,13 +37,17 @@ variations:
 Les champs de formulaire peuvent être soit obligatoires soit optionnels. S'ils sont obligatoires, placer l'attribut `required` dans la balise `input`.
 Ajouter l'attribut `disabled` si le champ n'est pas saisissable mais doit rester visible.
 
-### Note d'intégration
+### Cases à cocher et boutons radios
 
-Pour l'instant, le système de déplacement du label fonctionne en pur CSS mais nécessite deux éléments obligatoires :
-1. Il faut que le label soit placé directement en dessous du champ ;
-2. Le champ doit posséder un attribut required (true).
+Pour des questions de design, les cases à cocher et boutons radios ont été refaits via CSS. Ce qui impose une façon de coder : **les inputs checkbox ou radio doivent obligatoirement être codés à gauche du label dans le HTML, sans aucune balise entre les deux**.
 
-Ces deux inconvénients pourront être solutionnés par l'ajout de JS.
+Dans le cas où on voudrait changer la position des cases par rapport au label, il faudrait recréer des styles spécifiques.
+
+### Faux selects
+
+Les selects du DS n'emploient pas de balises `<select>`. Ils sont reconstruits en HTML/CSS/JS + aria.
+Le JS ajoute la classe `ds44-moveSelectLabel` sur le titre du select quand un élément est sélectionné, de façon à faire sortir le (faux) label du champ.
+
 
 ## Accessibilité
 
@@ -38,27 +56,14 @@ Les champs obligatoires doivent comporter une séquence à gérer en dur et en J
 * Un attribut aria-required="true"
 * Un attribut aria-invalid géré en JS : à "true" si le formulaire est validé mais sans l'élément requis. A "false" si l'élément requis est présent au moment de la validation. Si le contrôle est effectué côté serveur, le patch aria devient optionnel.
 
-## Effective form design
+### Messages d'erreur
 
-All forms are comprised of 6 elements:
+Sur le champ en erreur, déclarer  :
+* le focus sur le premier élément de formulaire en erreur ;
+* un attribut aria-invalid=”true” (dynamiquement et uniquement en cas d’erreur ) ;
+* un attribut aria-hidden=”true” sur le chevron vers le bas de l'élément d'ouverture  Intaria-invalid="true"
+* un attribut id de valeur unique dans la balise <p> ou <ul> englobant le message d’erreur ;
+* un attribut aria-describedby dans le champ en erreur où la valeur de aria-describedby reprend la valeur de l’attribut id du message d’erreur.
 
-* Labels: Inform users what the corresponding input fields mean.
-* Input fields: Enable users to provide information. Information can be entered through a variety of different input fields ranging from text fields, checkboxes, and many other types.
-* Help text: Provides assistance on how to fill out a field. Help text is optional.
-* Placeholder text: Hints at what goes into a field. Placeholder text is optional.
-* Actions: Allow users to submit a form.
-* Validation: Ensures the data submitted by the user conforms to acceptable parameters.
-
-![Form usage](../assets/images/form-usage-1.png)
-
-## Form logic
-
-* Radio Buttons are used when there is a list of two or more options that are mutually exclusive and the user must select exactly one choice. In other words, clicking a non-selected radio button will deselect whatever other button was previously selected in the list.
-* Checkboxes are used when there are lists of options and the user may select any number of choices, including zero, one, or several. In other words, each checkbox is independent of all other checkboxes in the list, so checking one box doesn’t uncheck the others. A stand-alone checkbox, or a toggle can be used for a single option that the user can turn on or off.
-* For fields in which a single selection is required and there are a large number of possible options, consider using a Select element.
-
-![Form usage](../assets/images/form-usage-4.png)
 
 ## FAQ
-
-

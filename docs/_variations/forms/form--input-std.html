@@ -1,8 +1,30 @@
 ---
 layout: pattern
 ---
-<form>
-    <div class="ds44-form__container">        
-        <label for="name" class="ds44-formLabel"><span class="ds44-labelTypePlaceholder ds44-moveLabel">Nom du champ</span> <input type="text" id="name" class="ds44-inpStd" required aria-required="true" /></label>
-    </div>
-</form>
+
+{% include forms/input-std.html label="Champ standard" required="true" %}
+
+{% include forms/input-std.html label="Champ large" required="true" class="ds44-inpLarge" %}
+
+{% include forms/inc-input-labelExt.html label="Champ avec label exterieur" required="true" placeholder="Placeholder" title="Placeholder" %}
+
+{% include forms/input-std-infoComp.html label="Champ standard avec info complémentaire" infoComp="Info complémentaire" required="true" %}
+
+<p role="heading" aria-level="2" class="h3-like">Cases à cocher et boutons radio</p>
+
+{% include forms/inc-checkboxes.html choices="m:Homme,f:Femme" required="true" %}
+
+{% include forms/inc-radios.html name="radio1" choices="m:Homme,f:Femme" required="true" %}
+
+<p role="heading" aria-level="2" class="h3-like">Cases à cocher et boutons radio en liste horizontale</p>
+
+{% include forms/inc-checkboxes.html choices="m:Homme,f:Femme" required="true" list="true" %}
+
+{% include forms/inc-radios.html name="radio2" choices="m:Homme,f:Femme" required="true" list="true" %}
+
+<hr />
+
+
+<p role="heading" aria-level="2" class="h3-like">Textarea</p>
+
+{% include forms/inc-textarea.html label="Votre message ici" required="true" %}

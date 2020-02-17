@@ -7,17 +7,21 @@
 
     &.ds44-wave-white {
         background-position-y: bottom -280px;
+        height:100%;
     }
     &.ds44-bgCircle {
         background-position: left -240px bottom -200px;
+        height:100%;
     }
     &.ds44-bgTriangle-left {
         background-position: left -150px center;
+        height:100%;
     }
 }
 
 .ds44-box--push {
     min-height: 280px;
+    height: 100%;
 }
 
 .ds44-box__img {
@@ -63,7 +67,7 @@
 }
 
 .ds44-boxPushContent {
-    max-width: calc(50% + 15px);
+    max-width: calc(55% + 15px);
     align-self: center;
     padding: $ds44-padding-box;
 
@@ -101,13 +105,14 @@
 
 .ds44-pictoStore {
     height: 32px;
+    margin-bottom: 10px;
 }
 
 
 // Média
 
 .ds44-mediaIndicator {
-    padding: 1.5rem;
+    padding: 1rem 1.5rem ;
     border-radius: $ds44-border-radius;
     position: absolute;
     left: 1.5rem;
@@ -122,19 +127,31 @@
 /* =======
   MEDIA QUERIES
   === */
-@media (max-width: $ds44-large - .0625) {
 
-  .ds44-grid12-offset-1 .col:last-child{
-    margin-top: 2em;
+@media (min-width: $ds44-large - .625) {
+
+  .grid-12-small-1 .colPush{
+    margin-right: $ds44-medium-vmargin;
+  }
+  .grid-12-small-1 .colPush:last-of-type{
+    margin-right: 0;
   }
 
 }
 
 @media (max-width: $ds44-large - .0625) {
 
-  .ds44-grid12-offset-1 .col:last-child{
+  .ds44-box .col{
     margin-top: 2em;
     padding: 0;
+  }
+
+  .ds44-box .col:first-child{
+    margin-top: 0;
+  }
+
+  .grid-12-small-1 .colPush{
+    margin-bottom:  $ds44-medium-vmargin;
   }
 
 }

@@ -1,0 +1,70 @@
+---
+layout: pattern
+---
+
+<form>
+    {% include forms/input-std.html label="Champ standard" required="true" %}
+    <div><input type="submit" class="ds44-btnStd" value="Tester le champ" /></div>
+</form>
+<hr />
+<form>
+    {% include forms/inc-textarea.html label="Champ textarea" required="true" %}
+    <div><input type="submit" class="ds44-btnStd" value="Tester le champ" /></div>
+</form>
+<hr />
+<form>
+    {% include forms/inc-checkboxes.html choices="m:Homme,f:Femme" required="true" %}
+    <div><input type="submit" class="ds44-btnStd" value="Tester les cases" /></div>
+</form>
+<hr />
+<form>
+    {% include forms/inc-radios.html name="radio1" choices="m:Homme,f:Femme" required="true" %}
+    <div><input type="submit" class="ds44-btnStd" value="Tester les radios" /></div>
+</form>
+<hr />
+<form>
+    {% include forms/inc-input-autocomp.html label="Champ texte libre" required="true" attributes='data-mode="free-text"' %}
+    <div><input type="submit" class="ds44-btnStd" value="Tester le champ autocomplétion" /></div>
+</form>
+<hr />
+<form>
+    {% include forms/inc-input-city.html label="Champ commune" required="true" attributes='data-mode="select-only"' %}
+    <div><input type="submit" class="ds44-btnStd" value="Tester le champ commune" /></div>
+</form>
+<hr />
+<form>
+    {% include forms/inc-input-autocomp.html label="Champ adresse" required="true" attributes='data-mode="select-only"' %}
+    <div><input type="submit" class="ds44-btnStd" value="Tester le champ adresse" /></div>
+</form>
+<hr />
+<form>
+    {% include forms/inc-select-simple.html label="Select simple large" required="true" class="ds44-inpLarge" %}
+    <div><input type="submit" class="ds44-btnStd" value="Tester le select simple" /></div>
+</form>
+<hr />
+<form>
+    {% include forms/inc-select-std.html label="Select à radios" required="true" %}
+    <div><input type="submit" class="ds44-btnStd" value="Tester le select à radios" /></div>
+</form>
+<hr />
+<form>
+    {% include forms/inc-select-multiple.html label="Select à cases" required="true" %}
+    <div><input type="submit" class="ds44-btnStd" value="Tester le select à cases" /></div>
+</form>
+<hr />
+
+
+
+<!--
+
+{% include forms/inc-select-multiple.html
+    label="Label select"
+    number="4"
+    requiredStar='<sup aria-hidden="true">*</sup>'
+    required='required aria-required="true"'
+    error="ds44-boxError"
+    class="ds44-inpLarge"
+    errorMsg='<div class="ds44-errorMsg-container"><p id="msgErrorChk4" class="ds44-msgErrorText"><i class="icon icon-cross icon--sizeM" aria-hidden="true"></i> <span class="ds44-iconInnerText">Veuillez sélectionner un élément</span></p></div>'
+%}
+<div><input type="submit" class="ds44-btnStd" value="Tester le select multiple" /></div>
+-->

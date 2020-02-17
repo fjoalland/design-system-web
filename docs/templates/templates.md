@@ -4,7 +4,7 @@ group: templates
 permalink: /components/templates.html
 
 title: Templates
-description: Modèles de structures génériques permettant de constituer les pages. 
+description: Modèles de structures génériques permettant de constituer les pages.
 status: Décrit
 
 variations:
@@ -12,6 +12,8 @@ variations:
   pattern: templates/template-entryMenu.html
 - title: Template générique centre
   pattern: templates/template-generique-centre.html
+- title: Template home
+  pattern: templates/template-home.html
 ---
 
 ## Utilisation
@@ -38,6 +40,7 @@ Le conteneur fluide `ds44-container-fluid` sert de conteneur principal pour chaq
 - `ds44-wave-white` -> vague blanche ;
 - `ds44-wave-grey` -> vague grise ;
 - `ds44-lightBG` -> affiche un fond gris afin de marquer l'alternance des lignes.
+- `ds44-whiteBG` -> affiche un fond blanc.
 
 Le conteneur fluide prend la largeur de la page.
 Il peut être complété par le conteneur interne qui fixe les contenus à une taille maximale déterminée par la variable `$ds44-max-inner-size` avec des marges internes latérales (`$ds44-container-large-margin` = 60px pour le site Loire Atlantique).

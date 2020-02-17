@@ -2,7 +2,10 @@
 layout: pattern
 ---
 
-{% include header/header.html %}
+{% include header/inc-header.html
+  logo='<picture class="ds44-logo"><img src="../../assets/images/logo-loire-atlantique.svg" alt="Retour à l&apos;accueil du site loire-atlantique.fr"></picture>'
+  variante1='<button type="button" class="ds44-btnIcoText--maxi ds44--xl-padding" id="open-search"><span class="ds44-btnInnerText">Rechercher</span><i class="icon icon-magnifier icon--large" aria-hidden="true"></i></button>'
+%}
 
 <main role="main" id="content">
 
@@ -18,14 +21,14 @@ layout: pattern
 				</div>
 			</div>
 		</div>
-		<div class="ds44-img50 ds44--xl-padding-tb">
+		<div class="ds44-img50 ds44--l-padding-tb">
 			<div class="ds44-inner-container">
 				<div class="ds44-grid12-offset-1">
           <section class="ds44-box ds44-theme">
             <div class="ds44-innerBoxContainer">
 							<div class="ds44-grid12-offset-1">
 								<div class="ds44--l-padding ds44-lightBG ds44-mb3">
-									<p class="ds44-docListElem mts"><strong><i class="icon icon-user ds44-docListIco" aria-hidden="true"></i>Lorem ipsum dolor sit amet consectur</strong></p>
+									<p class="ds44-docListElem mts"><strong><i class="icon icon-attention ds44-docListIco" aria-hidden="true"></i>Lorem ipsum dolor sit amet consectur</strong></p>
 								</div>
 							</div>
               <div class="grid-2-small-1 ds44-grid12-offset-1">
@@ -149,12 +152,13 @@ layout: pattern
         <div class="ds44-grid12-offset-2">
           <div class="ds44-wsg-encadreApplat">
             <p role="heading" aria-level="2" class="ds44-box-heading">Autres lieux associés :</p>
-            <p class="ds44-docListElem mtm"><i class="icon icon-marker ds44-docListIco" aria-hidden="true"></i>
-              <a href="#mailto:contact@loire-atlantique.fr" aria-label="Contacter l'Espace départemental des solidarités : contact@loire-atlantique.fr">Espace départemental des solidarités</a></p>
+            <div class="ds44-docListElem mtm"><i class="icon icon-marker ds44-docListIco" aria-hidden="true"></i>
+              <a href="#mailto:contact@loire-atlantique.fr" aria-label="Contacter l'Espace départemental des solidarités : contact@loire-atlantique.fr">Espace départemental des solidarités</a>
               <p>
               Le Loroux-Bottereaux-Vallet - site du Loroux-Bottereaux<br />
               15 route de Barbechatedit<br />
               44430 Loroux-Bottereau<br /></p>
+						</div>
           </div>
         </div>
       </div>
@@ -164,12 +168,8 @@ layout: pattern
 
 	</article>
 
+		{% include page-utile/bloc-utile.html %}
 
-	<section class="ds44-container-fluid ds44-lightBG ds44-wave-white ds44--xl-padding-tb">
-		<header class="txtcenter ds44--xl-padding-tb">
-			<h2 class="h2-like" id="idTitre7">Cette page vous a-t-elle été utile ?</h2>
-		</header>
-	</section>
 
 </main>
 

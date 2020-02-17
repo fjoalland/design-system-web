@@ -1,0 +1,22 @@
+---
+layout: pattern
+---
+
+<div style="height: 700px;">
+    {% include menu/navigation-pdcv.html surcharge='style="opacity:1; right:0;"' %}
+</div>
+
+<script>
+    const navPdcv = document.querySelector("#nav-pdcv");
+    if (navPdcv) {
+        navPdcv.style.display = 'block';
+        navPdcv.style.visibility = 'visible';
+        navPdcv.classList.add('show');
+    }
+    
+
+    let allHiddenElems = document.querySelectorAll('[aria-hidden="true"]');
+    allHiddenElems.forEach((element) => {
+        element.removeAttribute('aria-hidden');
+    });
+</script>

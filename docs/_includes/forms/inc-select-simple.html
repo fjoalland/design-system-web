@@ -1,0 +1,23 @@
+{% include forms/_variables.html %}
+
+{% if include.required == 'true' %}
+    {% assign attributes = attributes | append : ' data-required="true" ' %}
+{% endif %}
+
+{% capture mainContent %}
+{% include forms/parts/select.html %}
+<div class="ds44-select-container hidden" role="combobox" id="list-select-{{ id }}">
+    <div class="ds44-listSelect">
+        <ul class="ds44-list" role="listbox" id="listbox-{{ id }}">
+            <li class="ds44-select-list_elem" role="option" data-value="1" tabindex="0">
+                Option 1
+            </li>
+            <li class="ds44-select-list_elem" role="option" data-value="2" tabindex="0">
+                Option 2
+            </li>
+        </ul>
+    </div>
+</div>
+{% endcapture %}
+
+{% include forms/parts/container.html content=mainContent %}
