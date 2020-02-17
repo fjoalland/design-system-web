@@ -14,10 +14,12 @@
     {% assign mainClass = 'ds44-inpStd' %}
 {% endif %}
 
-{% if mainClass == 'ds44-inpLarge' %}
+{% if mainClass contains 'ds44-inpLarge' %}
     {% assign placeholderClass = 'ds44-labelTypePlaceholderLarge' %}
+    {% assign iconClass = 'icon--sizeXL' %}
 {% else %}
     {% assign placeholderClass = 'ds44-labelTypePlaceholder' %}
+    {% assign iconClass = 'icon--sizeL' %}
 {% endif %}
 
 {% if include.required == 'true' %}
@@ -50,12 +52,6 @@
     {% assign attributes = include.attributes %}
 {% else %}
     {% assign attributes = '' %}
-{% endif %}
-
-{% if mainClass == 'ds44-inpLarge' %}
-    {% assign iconClass = 'icon--sizeXL' %}
-{% else %}
-    {% assign iconClass = 'icon--sizeL' %}
 {% endif %}
 
 {% if include.labelClass %}
