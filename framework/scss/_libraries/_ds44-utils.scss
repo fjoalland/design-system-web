@@ -387,6 +387,11 @@
 
 .ds44-textLegend {
   color: $ds44-gray ;
+
+  &--mentions {
+    @include ds44-font-sizes(errMsg);
+  }
+  
 }
 
 /* === BORDERS === */
