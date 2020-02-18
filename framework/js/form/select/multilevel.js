@@ -20,12 +20,10 @@ class FormSelectMultilevel extends FormSelectCheckbox {
                 selects.push(element);
             });
 
-        if (selects.length > 0) {
-            super(
-                selects,
-                'selectMultilevel'
-            );
-        }
+        super(
+            selects,
+            'selectMultilevel'
+        );
     }
 
     create(element) {

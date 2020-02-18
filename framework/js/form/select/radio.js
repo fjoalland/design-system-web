@@ -17,12 +17,10 @@ class FormSelectRadio extends FormSelect {
                 selects.push(element);
             });
 
-        if (selects.length > 0) {
-            super(
-                selects,
-                'selectRadio'
-            );
-        }
+        super(
+            selects,
+            'selectRadio'
+        );
     }
 
     create(element) {

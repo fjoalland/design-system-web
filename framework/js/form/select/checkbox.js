@@ -29,12 +29,10 @@ class FormSelectCheckbox extends FormSelect {
                 selects.push(element);
             });
 
-        if (selects.length > 0) {
-            super(
-                selects,
-                'selectCheckbox'
-            );
-        }
+        super(
+            selects,
+            'selectCheckbox'
+        );
     }
 
     create(element) {

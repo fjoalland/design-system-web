@@ -20,12 +20,10 @@ class FormSelectStandard extends FormSelect {
                 selects.push(element);
             });
 
-        if (selects.length > 0) {
-            super(
-                selects,
-                'selectStandard'
-            );
-        }
+        super(
+            selects,
+            'selectStandard'
+        );
     }
 
     create(element) {
