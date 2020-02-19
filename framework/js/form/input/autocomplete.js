@@ -84,7 +84,11 @@ class FormInputAutoComplete extends FormField {
     getData(objectIndex) {
         const object = this.objects[objectIndex];
         if (!object.valueElement) {
-            return;
+            return null;
+        }
+
+        if (!object.valueElement.value) {
+            return null;
         }
 
         let data = {};
@@ -448,7 +452,7 @@ class FormInputAutoComplete extends FormField {
         currentItem.classList.add('selected_option');
         currentItem.setAttribute('id', 'selected_option_' + object.id);
         currentItem.setAttribute('aria-selected', 'true');
-        if(
+        if (
             evt &&
             evt.currentTarget.tagName.toLowerCase() === 'button'
         ) {

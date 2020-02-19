@@ -143,7 +143,11 @@ class FormSelect extends FormField {
     getData(objectIndex) {
         const object = this.objects[objectIndex];
         if (!object.valueElement) {
-            return;
+            return null;
+        }
+
+        if (!object.valueElement.value) {
+            return null;
         }
 
         let data = {};
@@ -374,7 +378,11 @@ class FormSelect extends FormField {
             }
         }
 
-        if (object.isRequired && !object.valueElement.value) {
+        if (
+            object.isRequired &&
+            !object.shapeElement.classList.contains('ds44-inputDisabled') &&
+            !object.valueElement.value
+        ) {
             this.invalid(objectIndex);
 
             return false;

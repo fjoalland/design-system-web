@@ -49,7 +49,7 @@ class FormBox {
 
         // Has a linked field
         const data = this.getData(objectIndex);
-        if (data[object.name].length == 0) {
+        if (!data) {
             // Disable linked field
             MiscEvent.dispatch('field:disable', null, secondLinkedFieldElement);
         } else {
@@ -82,7 +82,7 @@ class FormBox {
         const object = this.objects[objectIndex];
 
         object.inputElements.forEach((inputElement) => {
-            if(inputElement.checked) {
+            if (inputElement.checked) {
                 inputElement.setAttribute('aria-checked', 'true');
             } else {
                 inputElement.removeAttribute('aria-checked');
@@ -110,10 +110,12 @@ class FormBox {
 
             if (this.checkValidity(objectIndex) === false) {
                 isValid = false;
-                break;
+            } else {
+                const newData = this.getData(objectIndex);
+                if (newData) {
+                    data = Object.assign(data, newData);
+                }
             }
-
-            data = Object.assign(data, this.getData(objectIndex));
         }
 
         MiscEvent.dispatch(
@@ -130,13 +132,19 @@ class FormBox {
     getData(objectIndex) {
         const object = this.objects[objectIndex];
 
-        let data = {};
-        data[object.name] = [];
+        const inputElementValues = [];
         object.inputElements.forEach((inputElement) => {
-            if(inputElement.checked) {
-                data[object.name].push(inputElement.value);
+            if (inputElement.checked) {
+                inputElementValues.push(inputElement.value);
             }
         });
+        if (inputElementValues.length === 0) {
+            return null;
+        }
+
+        let data = {};
+        data[object.name] = inputElementValues;
+
         return data;
     }
 
@@ -154,7 +162,10 @@ class FormBox {
 
         let hasOneCheckedInput = false;
         object.inputElements.forEach((inputElement) => {
-            if (inputElement.checked) {
+            if (
+                inputElement.checked ||
+                inputElement.disabled
+            ) {
                 hasOneCheckedInput = true;
             }
 

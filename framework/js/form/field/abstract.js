@@ -173,10 +173,12 @@ class FormField {
 
             if (this.checkValidity(objectIndex) === false) {
                 isValid = false;
-                break;
+            } else {
+                const newData = this.getData(objectIndex);
+                if (newData) {
+                    data = Object.assign(data, newData);
+                }
             }
-
-            data = Object.assign(data, this.getData(objectIndex));
         }
 
         MiscEvent.dispatch(
@@ -193,7 +195,11 @@ class FormField {
     getData(objectIndex) {
         const object = this.objects[objectIndex];
         if (!object.textElement) {
-            return;
+            return null;
+        }
+
+        if (!object.textElement.value) {
+            return null;
         }
 
         let data = {};
