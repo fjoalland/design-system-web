@@ -23,17 +23,17 @@ layout: pattern
 </form>
 <hr />
 <form>
-    {% include forms/inc-input-autocomp.html label="Champ texte libre" required="true" attributes='data-mode="free-text"' %}
+    {% include forms/inc-input-autocomp.html label="Champ texte libre" required="true" attributes='data-url="/autocomplete.json" data-mode="free-text"' %}
     <div><input type="submit" class="ds44-btnStd" value="Tester le champ autocomplétion" /></div>
 </form>
 <hr />
 <form>
-    {% include forms/inc-input-city.html label="Champ commune" required="true" attributes='data-mode="select-only"' %}
+    {% include forms/inc-input-city.html label="Champ commune" required="true" attributes='data-url="/autocomplete.json" data-mode="select-only"' %}
     <div><input type="submit" class="ds44-btnStd" value="Tester le champ commune" /></div>
 </form>
 <hr />
 <form>
-    {% include forms/inc-input-autocomp.html label="Champ adresse" required="true" attributes='data-mode="select-only"' %}
+    {% include forms/inc-input-autocomp.html label="Champ adresse" required="true" attributes='data-url="/autocomplete.json" data-mode="select-only"' %}
     <div><input type="submit" class="ds44-btnStd" value="Tester le champ adresse" /></div>
 </form>
 <hr />

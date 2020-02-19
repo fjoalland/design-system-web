@@ -1,7 +1,7 @@
 {% include forms/_variables.html %}
 
 {% capture mainContent %}
-<input type="text" id="{{ id }}" class="{{ mainClass }}" role="combobox" aria-autocomplete="list" autocomplete="off" data-url="/autocomplete.json" {{ requiredAttributes }} {{ title }} {{ attributes }} />{% include forms/parts/reset.html %}
+<input type="text" id="{{ id }}" class="{{ mainClass }}" role="combobox" aria-autocomplete="list" autocomplete="off" {{ requiredAttributes }} {{ title }} {{ attributes }} />{% include forms/parts/reset.html %}
 <div class="ds44-autocomp-container hidden">
     <div class="ds44-autocomp-list">
         <ul class="ds44-list" role="listbox"></ul>
