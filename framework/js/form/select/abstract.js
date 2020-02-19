@@ -52,12 +52,16 @@ class FormSelect extends FormField {
             object.selectListElement
                 .querySelectorAll('.ds44-select-list_elem')
                 .forEach((listElement) => {
-                    MiscEvent.addListener('mousedown', this.select.bind(this, objectIndex), listElement);
+                    this.setListElementEvents(listElement, objectIndex);
                 });
         }
         if (object.selectButtonElement) {
             MiscEvent.addListener('click', this.record.bind(this, objectIndex), object.selectButtonElement);
         }
+    }
+
+    setListElementEvents(listElement, objectIndex) {
+        MiscEvent.addListener('mousedown', this.select.bind(this, objectIndex), listElement);
     }
 
     enableDisableLinkedField(objectIndex) {
@@ -80,16 +84,22 @@ class FormSelect extends FormField {
         }
 
         // Has a linked field
-        if (!object.valueElement.value) {
+        let data = object.valueElement.value;
+        if (!data) {
             // Disable linked field
             MiscEvent.dispatch('field:disable', null, secondLinkedFieldElement);
         } else {
             // Enabled linked field
-            MiscEvent.dispatch('field:enable', null, secondLinkedFieldElement);
+            try {
+                // Try if it is JSON
+                data = JSON.parse(data);
+            } catch (ex) {
+            }
+            MiscEvent.dispatch('field:enable', {'data': data}, secondLinkedFieldElement);
         }
     }
 
-    enable(objectIndex) {
+    enable(objectIndex, evt) {
         const object = this.objects[objectIndex];
         if (!object.shapeElement) {
             return;
@@ -100,6 +110,10 @@ class FormSelect extends FormField {
 
         object.shapeElement.classList.remove('ds44-inputDisabled');
         object.buttonElement.removeAttribute('tabindex');
+
+        if (object.textElement.getAttribute('data-url')) {
+            this.autoComplete(objectIndex, (evt || {}).detail);
+        }
     }
 
     disable(objectIndex) {
@@ -245,6 +259,79 @@ class FormSelect extends FormField {
         object.buttonIconElement.classList.remove('icon-up');
         object.buttonTextElement.innerText = object.buttonTextElement.innerText.replace('Fermer', 'Ouvrir');
         object.isExpanded = false;
+    }
+
+    autoComplete(objectIndex, parameters) {
+        const object = this.objects[objectIndex];
+        if (!object.textElement) {
+            return;
+        }
+
+        let urlParameters = null;
+        if (parameters) {
+            urlParameters = '?' + new URLSearchParams(parameters).toString()
+        }
+
+        MiscRequest.send(
+            object.textElement.getAttribute('data-url') + urlParameters,
+            this.autoCompleteSuccess.bind(this, objectIndex),
+            this.autoCompleteError.bind(this, objectIndex)
+        );
+    }
+
+    autoCompleteSuccess(objectIndex, results) {
+        this.autoCompleteFill(objectIndex, results);
+    }
+
+    autoCompleteError(objectIndex) {
+        this.autoCompleteFill(objectIndex, {});
+    }
+
+    autoCompleteFill(objectIndex, results) {
+        const object = this.objects[objectIndex];
+        if (!object.textElement) {
+            return;
+        }
+        if (!object.selectListElement) {
+            return;
+        }
+        const subSelectListElement = object.selectListElement.querySelector('.ds44-list');
+        if (!subSelectListElement) {
+            return;
+        }
+
+        object.textElement.removeAttribute('aria-activedescendant');
+        Array.from(subSelectListElement.children).map((childElement) => {
+            childElement.remove();
+        });
+
+        if (Object.keys(results).length === 0) {
+            // No result
+            let elementSelectListItem = document.createElement('li');
+            elementSelectListItem.classList.add('ds44-select-list_no_elem');
+            elementSelectListItem.innerHTML = 'Aucun résultat trouvé';
+            subSelectListElement.appendChild(elementSelectListItem);
+        } else {
+            // Some result
+            for (let key in results) {
+                let elementSelectListItem = this.getListElement(key, results[key]);
+                subSelectListElement.appendChild(elementSelectListItem);
+
+                this.setListElementEvents(elementSelectListItem, objectIndex);
+            }
+        }
+    }
+
+    getListElement(key, value) {
+        let elementSelectListItem = document.createElement('li');
+        elementSelectListItem.classList.add('ds44-select-list_elem');
+        elementSelectListItem.setAttribute('role', 'option');
+        elementSelectListItem.setAttribute('data-text', value);
+        elementSelectListItem.setAttribute('data-value', key);
+        elementSelectListItem.setAttribute('tabindex', '0');
+        elementSelectListItem.innerHTML = value;
+
+        return elementSelectListItem;
     }
 
     nextOption(objectIndex, evt) {

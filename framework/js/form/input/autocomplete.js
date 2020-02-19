@@ -204,9 +204,6 @@ class FormInputAutoComplete extends FormField {
         if (!object.textElement) {
             return;
         }
-        if (!object.autoCompleterElement) {
-            return;
-        }
         if (!object.autoCompleterListElement) {
             return;
         }

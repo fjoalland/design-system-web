@@ -120,12 +120,18 @@ class FormField {
         }
 
         // Has a linked field
-        if (!object.textElement.value) {
+        let data = object.textElement.value;
+        if (!data) {
             // Disable linked field
             MiscEvent.dispatch('field:disable', null, secondLinkedFieldElement);
         } else {
             // Enabled linked field
-            MiscEvent.dispatch('field:enable', null, secondLinkedFieldElement);
+            try {
+                // Try if it is JSON
+                data = JSON.parse(data);
+            } catch (ex) {
+            }
+            MiscEvent.dispatch('field:enable', {'data': data}, secondLinkedFieldElement);
         }
     }
 

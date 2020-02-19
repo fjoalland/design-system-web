@@ -48,13 +48,18 @@ class FormBox {
         }
 
         // Has a linked field
-        const data = this.getData(objectIndex);
+        let data = this.getData(objectIndex);
         if (!data) {
             // Disable linked field
             MiscEvent.dispatch('field:disable', null, secondLinkedFieldElement);
         } else {
             // Enabled linked field
-            MiscEvent.dispatch('field:enable', null, secondLinkedFieldElement);
+            try {
+                // Try if it is JSON
+                data = JSON.parse(data);
+            } catch (ex) {
+            }
+            MiscEvent.dispatch('field:enable', {'data': data}, secondLinkedFieldElement);
         }
     }
 

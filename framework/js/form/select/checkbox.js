@@ -35,18 +35,13 @@ class FormSelectCheckbox extends FormSelect {
         );
     }
 
-    create(element) {
-        super.create(element);
-
-        const objectIndex = (this.objects.length - 1);
-        const object = this.objects[objectIndex];
-        if (object.selectListElement) {
-            object.selectListElement
-                .querySelectorAll('.ds44-select-list_elem input')
-                .forEach((listInputElement) => {
-                    MiscEvent.addListener('change', this.select.bind(this, objectIndex), listInputElement);
-                });
+    setListElementEvents(listElement, objectIndex) {
+        const listInputElement = listElement.querySelector('input');
+        if(!listInputElement) {
+            return;
         }
+
+        MiscEvent.addListener('change', this.select.bind(this, objectIndex), listInputElement);
     }
 
     getListItems(parentElement) {
