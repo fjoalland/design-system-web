@@ -8,8 +8,8 @@ description: Modèle de page basée sur le template "centré".
 status: A valider
 
 variations:
-- title: Page type "Annuaire"
-  pattern: page/LA__annuaire.html
+- title: Page type "Accueil Annuaire"
+  pattern: page/LA__accueilAnnuaire.html
 - title: Template carrefour
   pattern: templates/template-entryMenu.html
 ---
