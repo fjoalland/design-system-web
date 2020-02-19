@@ -68,6 +68,19 @@ class FormInputAutoComplete extends FormField {
         }
     }
 
+    disable(objectIndex) {
+        this.setNewValue(
+            objectIndex,
+            null,
+            null,
+            null
+        );
+
+        super.disable(objectIndex);
+
+        this.hide(objectIndex);
+    }
+
     getData(objectIndex) {
         const object = this.objects[objectIndex];
         if (!object.valueElement) {
@@ -127,6 +140,7 @@ class FormInputAutoComplete extends FormField {
             null
         );
         this.showHideResetButton(objectIndex);
+        this.enableDisableLinkedField(objectIndex);
         MiscAccessibility.setFocus(object.textElement);
     }
 
@@ -323,6 +337,7 @@ class FormInputAutoComplete extends FormField {
         object.isExpanded = false;
 
         this.showHideResetButton(objectIndex);
+        this.enableDisableLinkedField(objectIndex);
     }
 
     highlightSearch(result, search) {

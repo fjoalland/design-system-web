@@ -9,7 +9,7 @@ class FormField {
             'patternMismatch': 'Veuillez renseigner "{fieldName}" avec le bon format',
         };
 
-        if(typeof selector === 'object') {
+        if (typeof selector === 'object') {
             // Elements passed as parameter, not text selector
             selector
                 .forEach((element) => {
@@ -47,10 +47,12 @@ class FormField {
         MiscEvent.addListener('invalid', this.invalid.bind(this, objectIndex), element);
         MiscEvent.addListener('form:validate', this.validate.bind(this, objectIndex));
         MiscEvent.addListener('keyUp:*', this.write.bind(this, objectIndex));
-        if(object.resetButton) {
+        MiscEvent.addListener('field:enable', this.enable.bind(this, objectIndex), object.containerElement);
+        MiscEvent.addListener('field:disable', this.disable.bind(this, objectIndex), object.containerElement);
+        if (object.resetButton) {
             MiscEvent.addListener('click', this.reset.bind(this, objectIndex), object.resetButton);
         }
-        if(object.labelElement) {
+        if (object.labelElement) {
             MiscEvent.addListener('click', this.focusOnTextElement.bind(this, objectIndex), object.labelElement);
         }
     }
@@ -65,6 +67,7 @@ class FormField {
         }
 
         this.showHideResetButton(objectIndex);
+        this.enableDisableLinkedField(objectIndex);
     }
 
     reset(objectIndex) {
@@ -75,6 +78,7 @@ class FormField {
 
         object.textElement.value = null;
         this.showHideResetButton(objectIndex);
+        this.enableDisableLinkedField(objectIndex);
         MiscAccessibility.setFocus(object.textElement);
     }
 
@@ -87,13 +91,68 @@ class FormField {
             return;
         }
 
-        if(!object.textElement.value) {
+        if (!object.textElement.value) {
             // Hide reset button
             object.resetButton.style.display = 'none';
         } else {
             // Hide reset button
             object.resetButton.style.display = 'block';
         }
+    }
+
+    enableDisableLinkedField(objectIndex) {
+        const object = this.objects[objectIndex];
+        if (!object.textElement) {
+            return;
+        }
+
+        const linkedFieldsContainerElement = object.containerElement.closest('.ds44-champsLies');
+        if (!linkedFieldsContainerElement) {
+            return;
+        }
+
+        const secondLinkedFieldElement = MiscDom.getNextSibling(object.containerElement);
+        if (
+            !secondLinkedFieldElement ||
+            secondLinkedFieldElement === object.containerElement
+        ) {
+            return;
+        }
+
+        // Has a linked field
+        if (!object.textElement.value) {
+            // Disable linked field
+            MiscEvent.dispatch('field:disable', null, secondLinkedFieldElement);
+        } else {
+            // Enabled linked field
+            MiscEvent.dispatch('field:enable', null, secondLinkedFieldElement);
+        }
+    }
+
+    enable(objectIndex) {
+        const object = this.objects[objectIndex];
+        if (!object.textElement) {
+            return;
+        }
+
+        object.textElement.removeAttribute('disabled');
+    }
+
+    disable(objectIndex) {
+        const object = this.objects[objectIndex];
+        if (!object.textElement) {
+            return;
+        }
+        if (!object.labelElement) {
+            return;
+        }
+
+        object.textElement.value = null;
+        object.textElement.setAttribute('disabled', 'true');
+        object.labelElement.classList.remove('ds44-moveLabel');
+
+        this.showHideResetButton(objectIndex);
+        this.enableDisableLinkedField(objectIndex);
     }
 
     validate(evt) {

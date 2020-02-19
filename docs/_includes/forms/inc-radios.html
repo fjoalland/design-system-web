@@ -12,6 +12,6 @@
         {% assign value = choice[0] %}
         {% assign label = choice[1] %}
 
-        {% include forms/inc-radio.html name=include.name value=value label=label list=include.list %}
+        {% include forms/inc-radio.html name=include.name value=value label=label list=include.list attributes=include.inputAttributes %}
     {% endfor %}
 </div>

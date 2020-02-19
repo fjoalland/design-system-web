@@ -27,6 +27,55 @@ class FormBox {
         object.inputElements.forEach((inputElement) => {
             MiscEvent.addListener('click', this.toggleCheck.bind(this, objectIndex), inputElement);
         });
+        MiscEvent.addListener('field:enable', this.enable.bind(this, objectIndex), object.containerElement);
+        MiscEvent.addListener('field:disable', this.disable.bind(this, objectIndex), object.containerElement);
+    }
+
+    enableDisableLinkedField(objectIndex) {
+        const object = this.objects[objectIndex];
+
+        const linkedFieldsContainerElement = object.containerElement.closest('.ds44-champsLies');
+        if (!linkedFieldsContainerElement) {
+            return;
+        }
+
+        const secondLinkedFieldElement = MiscDom.getNextSibling(object.containerElement);
+        if (
+            !secondLinkedFieldElement ||
+            secondLinkedFieldElement === object.containerElement
+        ) {
+            return;
+        }
+
+        // Has a linked field
+        const data = this.getData(objectIndex);
+        if (data[object.name].length == 0) {
+            // Disable linked field
+            MiscEvent.dispatch('field:disable', null, secondLinkedFieldElement);
+        } else {
+            // Enabled linked field
+            MiscEvent.dispatch('field:enable', null, secondLinkedFieldElement);
+        }
+    }
+
+    enable(objectIndex) {
+        const object = this.objects[objectIndex];
+
+        object.inputElements.forEach((inputElement) => {
+            inputElement.removeAttribute('disabled');
+        });
+    }
+
+    disable(objectIndex) {
+        const object = this.objects[objectIndex];
+
+        object.inputElements.forEach((inputElement) => {
+            inputElement.setAttribute('disabled', 'true');
+            inputElement.checked = false;
+            inputElement.removeAttribute('aria-checked');
+        });
+
+        this.enableDisableLinkedField(objectIndex);
     }
 
     toggleCheck(objectIndex) {
@@ -39,6 +88,8 @@ class FormBox {
                 inputElement.removeAttribute('aria-checked');
             }
         });
+
+        this.enableDisableLinkedField(objectIndex);
     }
 
     validate(evt) {
