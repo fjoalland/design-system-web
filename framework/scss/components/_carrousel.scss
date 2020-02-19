@@ -11,6 +11,7 @@
 
       .swiper-wrapper {
         margin: 0;
+        grid-gap:0;
 
         .swiper-slide {
           width: 100%;
@@ -18,7 +19,7 @@
         }
       }
     }
-    
+
     .ds44-btnIco {
       position: absolute;
       bottom: 0;
