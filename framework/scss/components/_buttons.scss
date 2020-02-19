@@ -18,6 +18,10 @@ button, a.ds44-btnStd, a > .ds44-btnStd, .ds44-btnStd > a  {
     &:focus {
         -webkit-tap-highlight-color: transparent;
     }
+
+    .ds44-inputDisabled & {
+        cursor: default;
+    }
 }
 
 .ds44-btnStd, a.ds44-btnStd, a > .ds44-btnStd, .ds44-btnStd > a {

@@ -60,6 +60,86 @@ class FormSelect extends FormField {
         }
     }
 
+    enableDisableLinkedField(objectIndex) {
+        const object = this.objects[objectIndex];
+        if (!object.valueElement) {
+            return;
+        }
+
+        const linkedFieldsContainerElement = object.containerElement.closest('.ds44-champsLies');
+        if (!linkedFieldsContainerElement) {
+            return;
+        }
+
+        const secondLinkedFieldElement = MiscDom.getNextSibling(object.containerElement);
+        if (
+            !secondLinkedFieldElement ||
+            secondLinkedFieldElement === object.containerElement
+        ) {
+            return;
+        }
+
+        // Has a linked field
+        if (!object.valueElement.value) {
+            // Disable linked field
+            MiscEvent.dispatch('field:disable', null, secondLinkedFieldElement);
+        } else {
+            // Enabled linked field
+            MiscEvent.dispatch('field:enable', null, secondLinkedFieldElement);
+        }
+    }
+
+    enable(objectIndex) {
+        const object = this.objects[objectIndex];
+        if (!object.shapeElement) {
+            return;
+        }
+        if (!object.buttonElement) {
+            return;
+        }
+
+        object.shapeElement.classList.remove('ds44-inputDisabled');
+        object.buttonElement.removeAttribute('tabindex');
+    }
+
+    disable(objectIndex) {
+        const object = this.objects[objectIndex];
+        if (!object.shapeElement) {
+            return;
+        }
+        if (!object.labelElement) {
+            return;
+        }
+        if (!object.buttonElement) {
+            return;
+        }
+        if (!object.valueElement) {
+            return;
+        }
+        if (!object.textElement) {
+            return;
+        }
+        if (!object.selectListElement) {
+            return;
+        }
+
+        object.selectListElement
+            .querySelectorAll('.selected_option')
+            .forEach((listElement) => {
+                listElement.classList.remove('.selected_option');
+            });
+
+        object.shapeElement.classList.add('ds44-inputDisabled');
+        object.labelElement.classList.remove('ds44-moveSelectLabel');
+        object.buttonElement.setAttribute('tabindex', '-1');
+        object.valueElement.value = null;
+        object.textElement.innerText = null;
+
+        this.showHideResetButton(objectIndex);
+        this.enableDisableLinkedField(objectIndex);
+        this.hide(objectIndex);
+    }
+
     getData(objectIndex) {
         const object = this.objects[objectIndex];
         if (!object.valueElement) {
@@ -100,8 +180,11 @@ class FormSelect extends FormField {
         this.hide(objectIndex);
     }
 
-    show(objectIndex) {
+    show(objectIndex, evt) {
         const object = this.objects[objectIndex];
+        if (!object.shapeElement) {
+            return;
+        }
         if (!object.buttonElement) {
             return;
         }
@@ -115,12 +198,22 @@ class FormSelect extends FormField {
             return;
         }
 
+        if (object.shapeElement.classList.contains('ds44-inputDisabled')) {
+            // Don't show if disabled
+            if (evt) {
+                evt.stopPropagation();
+                evt.preventDefault();
+            }
+
+            return;
+        }
+
         object.selectContainerElement.classList.remove('hidden');
         MiscAccessibility.show(object.selectContainerElement);
         object.buttonElement.setAttribute('aria-expanded', 'true');
         object.buttonIconElement.classList.remove('icon-down');
         object.buttonIconElement.classList.add('icon-up');
-        object.buttonTextElement.innerText = object.buttonTextElement.innerText.replace('Ouvrir' , 'Fermer');
+        object.buttonTextElement.innerText = object.buttonTextElement.innerText.replace('Ouvrir', 'Fermer');
         object.isExpanded = true;
 
         this.nextOption(objectIndex);
@@ -146,12 +239,12 @@ class FormSelect extends FormField {
         object.buttonElement.setAttribute('aria-expanded', 'false');
         object.buttonIconElement.classList.add('icon-down');
         object.buttonIconElement.classList.remove('icon-up');
-        object.buttonTextElement.innerText = object.buttonTextElement.innerText.replace('Fermer' , 'Ouvrir');
+        object.buttonTextElement.innerText = object.buttonTextElement.innerText.replace('Fermer', 'Ouvrir');
         object.isExpanded = false;
     }
 
     nextOption(objectIndex, evt) {
-        if(evt) {
+        if (evt) {
             evt.preventDefault();
             evt.stopPropagation();
         }
@@ -177,7 +270,7 @@ class FormSelect extends FormField {
     }
 
     previousOption(objectIndex, evt) {
-        if(evt) {
+        if (evt) {
             evt.preventDefault();
             evt.stopPropagation();
         }
@@ -245,7 +338,7 @@ class FormSelect extends FormField {
         if (values.length === 0) {
             // No value
             object.valueElement.value = null;
-            object.textElement.innerText = '';
+            object.textElement.innerText = null;
             object.labelElement.classList.remove('ds44-moveSelectLabel');
         } else {
             object.valueElement.value = JSON.stringify(values);
@@ -258,6 +351,7 @@ class FormSelect extends FormField {
         this.hide(objectIndex);
 
         this.checkValidity(objectIndex);
+        this.enableDisableLinkedField(objectIndex);
     }
 
     checkValidity(objectIndex) {

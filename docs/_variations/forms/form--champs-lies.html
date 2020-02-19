@@ -2,6 +2,7 @@
 layout: pattern
 ---
 
+<br>
 <form>
     <div class="ds44-fieldContainer ds44-champsLies">
         {% include forms/input-std.html class="ds44-inpLarge" label="Nom du thème" required="true" %}
@@ -9,20 +10,11 @@ layout: pattern
     </div>
 </form>
 <br>
-<hr />
+<hr/>
 <br>
 <form>
     <div class="ds44-fieldContainer ds44-champsLies">
         {% include forms/input-std.html label="Nom du thème" required="true" %}
-        {% include forms/inc-select-simple.html label="Nom du sous-thème" required="true" class="ds44-inpStd ds44-inputDisabled" %}
-    </div>
-</form>
-<br>
-<hr />
-<br>
-<form>
-    <div class="ds44-fieldContainer ds44-champsLies">
-        {% include forms/input-std.html label="Nom du thème" required="true" %}
-        {% include forms/inc-select-simple.html label="Nom du sous-thème" required="true" %}
+        {% include forms/inc-select-multiple.html label="Nom du sous-thème" required="true" class="ds44-inpStd ds44-inputDisabled" %}
     </div>
 </form>
