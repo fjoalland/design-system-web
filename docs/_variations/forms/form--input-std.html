@@ -6,9 +6,9 @@ layout: pattern
 
 {% include forms/input-std.html label="Champ large" required="true" class="ds44-inpLarge" %}
 
-{% include forms/inc-input-labelExt.html label="Champ avec label exterieur" required="true" placeholder="Placeholder" title="Placeholder" %}
+{% include forms/input-std.html label="Champ avec label exterieur" labelClass="ds44-formLabel--external" required="true" placeholder="Placeholder" title="Placeholder" %}
 
-{% include forms/input-std-infoComp.html label="Champ standard avec info complémentaire" infoComp="Info complémentaire" required="true" %}
+{% include forms/input-std.html label="Champ standard avec info complémentaire" explanation="Info complémentaire" required="true" %}
 
 <p role="heading" aria-level="2" class="h3-like">Cases à cocher et boutons radio</p>
 
@@ -34,4 +34,5 @@ layout: pattern
 
 <p role="heading" aria-level="2" class="h3-like">Date picker</p>
 
-{% include forms/inc-date-picker.html %}
+{% include forms/inc-date-picker.html label="Le" placeholder="jj / mm / aaaa" title="le : jour / mois / année" explanation="Ex : 20/05/2020"%}
+{% include forms/inc-date-picker.html label="Jusqu'au" placeholder="jj / mm / aaaa" title="jusqu’au : jour / mois / année" explanation="Ex : 20/05/2020"%}

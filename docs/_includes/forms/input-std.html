@@ -1,7 +1,13 @@
 {% include forms/_variables.html %}
 
+{% if include.explanation %}
+    {% capture explanation %}
+        <span class="ds44-labelTypeInfoComp">{{ include.explanation }}</span>
+    {% endcapture %}
+{% endif %}
+
 {% capture mainContent %}
-<input type="text" id="{{ id }}" class="{{ mainClass }}" {{ requiredAttributes }} {{ title }} {{ attributes }} />{% include forms/parts/reset.html %}
+<input type="text" id="{{ id }}" class="{{ mainClass }}" {{ requiredAttributes }} {{ title }} {{ attributes }} {{ placeholder }} />{{ explanation }}{% include forms/parts/reset.html %}
 {% endcapture %}
 
 {% capture labelContent %}
