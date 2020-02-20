@@ -1,7 +1,6 @@
 class CollapserStandard {
     constructor() {
         MiscEvent.addListener('keyUp:escape', this.hide.bind(this));
-        MiscEvent.addListener('keyUp:tab', this.manageFocus.bind(this));
 
         //Bind event on click
         document
@@ -75,26 +74,6 @@ class CollapserStandard {
         panel.style.maxHeight = null;
         MiscAccessibility.hide(panel, true);
         panel.style.visibility = 'hidden';
-    }
-
-    manageFocus() {
-        if (!document.activeElement) {
-            return;
-        }
-
-        const element = document.activeElement.closest('.ds44-collapser_element');
-        if(!element) {
-            return;
-        }
-
-        const button = element.querySelector('.ds44-collapser_button')
-        if(!button) {
-            return;
-        }
-
-        if (!button.classList.contains('show')) {
-            button.click();
-        }
     }
 }
 
