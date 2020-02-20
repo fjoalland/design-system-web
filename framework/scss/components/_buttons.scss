@@ -21,6 +21,14 @@ button, a.ds44-btnStd, a > .ds44-btnStd, .ds44-btnStd > a  {
 
     .ds44-inputDisabled & {
         cursor: default;
+
+        * {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            outline: none;
+        }
     }
 }
 
@@ -203,7 +211,29 @@ a > .ds44-btn--contextual,
 }
 
 .ds44-btnOpen {
-    top: .75rem;
+    top: 0;
+    width: 100%;
+    text-align: right;
+    height: 100%;
+
+    &.ds44-btnIco {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .icon {
+        line-height: normal;
+
+        &:before {
+            line-height: normal;
+            margin-top: -1rem;
+            display: inline-block;
+        }
+
+        &.icon--sizeL:before {
+            margin-top: -0.5rem;
+        }
+    }
 }
 
 /* == Specific buttons == */

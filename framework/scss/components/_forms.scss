@@ -412,6 +412,14 @@ input[type=radio],
 
     .ds44-inputDisabled & {
         cursor: default;
+
+        * {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            outline: none;
+        }
     }
 }
 
@@ -674,6 +682,14 @@ input[type=radio],
     .ds44-inputDisabled {
         background: $ds44-lightgray;
         cursor: default;
+
+        * {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            outline: none;
+        }
     }
 }
 
@@ -791,8 +807,8 @@ input[type=radio],
         }
 
         > .ds44-form__container:first-of-type {
-          width: 100%;
-          margin: 0;
+            width: 100%;
+            margin: 0;
 
             input,
             .ds44-select__shape {
@@ -801,8 +817,8 @@ input[type=radio],
         }
 
         > .ds44-form__container:last-of-type {
-          width: 100%;
-          margin: 0;
+            width: 100%;
+            margin: 0;
 
             input,
             .ds44-select__shape {
