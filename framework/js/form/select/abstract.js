@@ -83,7 +83,7 @@ class FormSelectAbstract extends FormFieldAbstract {
 
         if (object.textElement.getAttribute('data-url')) {
             let autoCompleteParameters = null;
-            if(
+            if (
                 evt &&
                 evt.detail &&
                 evt.detail.data
@@ -428,6 +428,14 @@ class FormSelectAbstract extends FormFieldAbstract {
 
         this.checkValidity(objectIndex);
         this.enableDisableLinkedField(objectIndex);
+
+        if (object.textElement.getAttribute('data-auto-submit')) {
+            // Auto submit
+            const formElement = object.textElement.closest('form');
+            if (formElement) {
+                MiscEvent.dispatch('submit', null, formElement);
+            }
+        }
     }
 
     checkValidity(objectIndex) {
