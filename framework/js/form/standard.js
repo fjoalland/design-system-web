@@ -111,12 +111,6 @@ class FormStandard {
                     dataValue = JSON.parse(dataValue);
                 } catch (ex) {
                 }
-                if (
-                    typeof dataValue === 'object' &&
-                    dataValue.metadata
-                ) {
-                    dataValue.metadata = JSON.parse(dataValue.metadata);
-                }
                 formattedData[dataKey] = dataValue
             }
 

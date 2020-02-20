@@ -64,41 +64,6 @@ class FormSelectAbstract extends FormFieldAbstract {
         MiscEvent.addListener('mousedown', this.select.bind(this, objectIndex), listElement);
     }
 
-    enableDisableLinkedField(objectIndex) {
-        const object = this.objects[objectIndex];
-        if (!object.valueElement) {
-            return;
-        }
-
-        const linkedFieldsContainerElement = object.containerElement.closest('.ds44-champsLies');
-        if (!linkedFieldsContainerElement) {
-            return;
-        }
-
-        const secondLinkedFieldElement = MiscDom.getNextSibling(object.containerElement);
-        if (
-            !secondLinkedFieldElement ||
-            secondLinkedFieldElement === object.containerElement
-        ) {
-            return;
-        }
-
-        // Has a linked field
-        let data = object.valueElement.value;
-        if (!data) {
-            // Disable linked field
-            MiscEvent.dispatch('field:disable', null, secondLinkedFieldElement);
-        } else {
-            // Enabled linked field
-            try {
-                // Try if it is JSON
-                data = JSON.parse(data);
-            } catch (ex) {
-            }
-            MiscEvent.dispatch('field:enable', {'data': data}, secondLinkedFieldElement);
-        }
-    }
-
     enable(objectIndex, evt) {
         const object = this.objects[objectIndex];
         if (!object.shapeElement) {
@@ -268,8 +233,9 @@ class FormSelectAbstract extends FormFieldAbstract {
         }
 
         let urlParameters = null;
-        if (parameters) {
-            urlParameters = '?' + new URLSearchParams(parameters).toString()
+        if (parameters && parameters.data) {
+            const formData = MiscForm.jsonToFormData(parameters.data);
+            urlParameters = '?' + new URLSearchParams(formData).toString()
         }
 
         MiscRequest.send(
@@ -295,6 +261,9 @@ class FormSelectAbstract extends FormFieldAbstract {
         if (!object.selectListElement) {
             return;
         }
+        if (!object.selectContainerElement) {
+            return;
+        }
         const subSelectListElement = object.selectListElement.querySelector('.ds44-list');
         if (!subSelectListElement) {
             return;
@@ -314,15 +283,17 @@ class FormSelectAbstract extends FormFieldAbstract {
         } else {
             // Some result
             for (let key in results) {
-                let elementSelectListItem = this.getListElement(key, results[key]);
+                let elementSelectListItem = this.getListElement(object, key, results[key]);
                 subSelectListElement.appendChild(elementSelectListItem);
 
                 this.setListElementEvents(elementSelectListItem, objectIndex);
             }
         }
+
+        MiscAccessibility.hide(object.selectContainerElement);
     }
 
-    getListElement(key, value) {
+    getListElement(object, key, value) {
         let elementSelectListItem = document.createElement('li');
         elementSelectListItem.classList.add('ds44-select-list_elem');
         elementSelectListItem.setAttribute('role', 'option');

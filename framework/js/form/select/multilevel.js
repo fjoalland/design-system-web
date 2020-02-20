@@ -50,6 +50,9 @@ class FormSelectMultilevel extends FormSelectCheckbox {
                 MiscEvent.addListener('click', this.uncheckAll.bind(this, objectIndex), uncheckAllElement);
             }
         }
+
+        // Remove data-url attribute as multilevel select do not exist yet
+        object.textElement.removeAttribute('data-url');
     }
 
     select(objectIndex, evt) {

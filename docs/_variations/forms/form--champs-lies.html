@@ -5,7 +5,7 @@ layout: pattern
 <br>
 <form>
     <div class="ds44-fieldContainer ds44-champsLies">
-        {% include forms/input-std.html class="ds44-inpLarge" label="Nom du thème" required="true" %}
+        {% include forms/inc-input-city.html label="Champ commune" required="true" attributes='data-url="/autocomplete.json" data-mode="select-only"' class="ds44-inpLarge" %}
         {% include forms/inc-select-simple.html label="Nom du sous-thème" required="true" class="ds44-inpLarge ds44-inputDisabled" attributes='data-url="/select-options.json"' %}
     </div>
     <div><input type="submit" class="ds44-btnStd" value="Tester les champs" /></div>
@@ -16,7 +16,7 @@ layout: pattern
 <form>
     <div class="ds44-fieldContainer ds44-champsLies">
         {% include forms/input-std.html label="Nom du thème" required="true" %}
-        {% include forms/inc-select-multiple.html label="Nom du sous-thème" required="true" class="ds44-inpStd ds44-inputDisabled" %}
+        {% include forms/inc-select-multiple.html label="Nom du sous-thème" required="true" class="ds44-inpStd ds44-inputDisabled" attributes='data-url="/select-options.json"' %}
     </div>
     <div><input type="submit" class="ds44-btnStd" value="Tester les champs" /></div>
 </form>

@@ -94,7 +94,7 @@ class FormInputAutoComplete extends FormFieldAbstract {
         let data = {};
         data[object.name] = {
             'value': object.valueElement.value,
-            'metadata': object.metadataElement.value
+            'metadata': (object.metadataElement.value ? JSON.parse(object.metadataElement.value) : null)
         };
 
         return data;

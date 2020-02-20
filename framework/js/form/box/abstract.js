@@ -49,7 +49,14 @@ class FormBoxAbstract {
 
         // Has a linked field
         let data = this.getData(objectIndex);
-        if (!data) {
+        if (
+            !data ||
+            (
+                data[object.name] &&
+                data[object.name].metadata &&
+                data[object.name].metadata.hasLinkedField === false
+            )
+        ) {
             // Disable linked field
             MiscEvent.dispatch('field:disable', null, secondLinkedFieldElement);
         } else {
