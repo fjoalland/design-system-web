@@ -1,4 +1,4 @@
-class FormBox {
+class FormBoxAbstract {
     constructor(category) {
         this.objects = [];
         this.errorMessage = 'Veuillez cocher un élément';
@@ -48,13 +48,25 @@ class FormBox {
         }
 
         // Has a linked field
-        const data = this.getData(objectIndex);
-        if (!data) {
+        let data = this.getData(objectIndex);
+        if (
+            !data ||
+            (
+                data[object.name] &&
+                data[object.name].metadata &&
+                data[object.name].metadata.hasLinkedField === false
+            )
+        ) {
             // Disable linked field
             MiscEvent.dispatch('field:disable', null, secondLinkedFieldElement);
         } else {
             // Enabled linked field
-            MiscEvent.dispatch('field:enable', null, secondLinkedFieldElement);
+            try {
+                // Try if it is JSON
+                data = JSON.parse(data);
+            } catch (ex) {
+            }
+            MiscEvent.dispatch('field:enable', {'data': data}, secondLinkedFieldElement);
         }
     }
 

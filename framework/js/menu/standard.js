@@ -1,4 +1,4 @@
-class Menu {
+class MenuStandard {
     constructor() {
         this.triggerMainMenuElement = null;
         this.triggerSubMenuElement = null;
@@ -239,4 +239,4 @@ class Menu {
 }
 
 // Singleton
-new Menu();
+new MenuStandard();

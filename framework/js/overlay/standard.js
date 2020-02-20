@@ -1,4 +1,4 @@
-class Overlay {
+class OverlayStandard {
     constructor() {
         this.triggerElement = null;
         this.modal = null;
@@ -160,4 +160,4 @@ class Overlay {
 }
 
 // Singleton
-new Overlay();
+new OverlayStandard();

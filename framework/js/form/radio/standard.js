@@ -1,4 +1,4 @@
-class FormRadio extends FormBox {
+class FormRadio extends FormBoxAbstract {
     constructor() {
         super('radio');
     }

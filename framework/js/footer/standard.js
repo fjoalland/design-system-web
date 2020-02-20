@@ -1,4 +1,4 @@
-class Footer {
+class FooterStandard {
     constructor() {
         MiscEvent.addListener('overlay:show', this.show.bind(this));
         MiscEvent.addListener('overlay:hide', this.hide.bind(this));
@@ -18,4 +18,4 @@ class Footer {
 }
 
 // Singleton
-new Footer();
+new FooterStandard();

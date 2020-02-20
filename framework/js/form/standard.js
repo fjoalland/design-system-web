@@ -1,4 +1,4 @@
-class Form {
+class FormStandard {
     constructor() {
         this.hasBeenChecked = false;
         this.validationCategories = {
@@ -111,12 +111,6 @@ class Form {
                     dataValue = JSON.parse(dataValue);
                 } catch (ex) {
                 }
-                if (
-                    typeof dataValue === 'object' &&
-                    dataValue.metadata
-                ) {
-                    dataValue.metadata = JSON.parse(dataValue.metadata);
-                }
                 formattedData[dataKey] = dataValue
             }
 
@@ -152,4 +146,4 @@ class Form {
 }
 
 // Singleton
-new Form();
+new FormStandard();

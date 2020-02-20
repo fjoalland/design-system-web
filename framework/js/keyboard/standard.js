@@ -1,4 +1,4 @@
-class Keyboard {
+class KeyboardStandard {
     constructor() {
         MiscEvent.addListener('keyup', this.keyUp.bind(this));
         MiscEvent.addListener('keypress', this.keyPress.bind(this));
@@ -34,4 +34,4 @@ class Keyboard {
 }
 
 // Singleton
-new Keyboard();
+new KeyboardStandard();

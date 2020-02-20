@@ -1,4 +1,4 @@
-class FormSelectRadio extends FormSelect {
+class FormSelectRadio extends FormSelectAbstract {
     constructor() {
         const selects = [];
         document
@@ -23,18 +23,13 @@ class FormSelectRadio extends FormSelect {
         );
     }
 
-    create(element) {
-        super.create(element);
-
-        const objectIndex = (this.objects.length - 1);
-        const object = this.objects[objectIndex];
-        if (object.selectListElement) {
-            object.selectListElement
-                .querySelectorAll('.ds44-select-list_elem input')
-                .forEach((listInputElement) => {
-                    MiscEvent.addListener('change', this.select.bind(this, objectIndex), listInputElement);
-                });
+    setListElementEvents(listElement, objectIndex) {
+        const listInputElement = listElement.querySelector('input');
+        if(!listInputElement) {
+            return;
         }
+
+        MiscEvent.addListener('change', this.select.bind(this, objectIndex), listInputElement);
     }
 
     nextOption(objectIndex, evt) {
@@ -98,6 +93,34 @@ class FormSelectRadio extends FormSelect {
             'next': nextItem,
             'previous': previousItem
         };
+    }
+
+    getListElement(object, key, value) {
+        let elementSelectListItem = super.getListElement(object, key, value);
+        elementSelectListItem.removeAttribute('tabindex');
+        elementSelectListItem.innerHTML = null;
+
+        let containerElement = document.createElement('div');
+        containerElement.classList.add('ds44-form__container');
+        containerElement.classList.add('ds44-checkBox-radio_list');
+        elementSelectListItem.appendChild(containerElement);
+
+        const id = 'name-check-form-element-' + MiscUtils.generateId();
+        let inputElement = document.createElement('input');
+        inputElement.classList.add('ds44-radio');
+        inputElement.setAttribute('id', id);
+        inputElement.setAttribute('name', object.id);
+        inputElement.setAttribute('type', 'radio');
+        inputElement.setAttribute('value', key);
+        containerElement.appendChild(inputElement);
+
+        let labelElement = document.createElement('label');
+        labelElement.setAttribute('for', id);
+        labelElement.classList.add('ds44-radioLabel');
+        labelElement.innerHTML = value;
+        containerElement.appendChild(labelElement);
+
+        return elementSelectListItem;
     }
 
     select(objectIndex, evt) {

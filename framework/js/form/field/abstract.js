@@ -1,4 +1,4 @@
-class FormField {
+class FormFieldAbstract {
     constructor(selector, category) {
         this.category = category;
         this.objects = [];
@@ -102,9 +102,6 @@ class FormField {
 
     enableDisableLinkedField(objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
 
         const linkedFieldsContainerElement = object.containerElement.closest('.ds44-champsLies');
         if (!linkedFieldsContainerElement) {
@@ -120,12 +117,25 @@ class FormField {
         }
 
         // Has a linked field
-        if (!object.textElement.value) {
+        let data = this.getData(objectIndex);
+        if (
+            !data ||
+            (
+                data[object.name] &&
+                data[object.name].metadata &&
+                data[object.name].metadata.hasLinkedField === false
+            )
+        ) {
             // Disable linked field
             MiscEvent.dispatch('field:disable', null, secondLinkedFieldElement);
         } else {
             // Enabled linked field
-            MiscEvent.dispatch('field:enable', null, secondLinkedFieldElement);
+            try {
+                // Try if it is JSON
+                data = JSON.parse(data);
+            } catch (ex) {
+            }
+            MiscEvent.dispatch('field:enable', {'data': data}, secondLinkedFieldElement);
         }
     }
 

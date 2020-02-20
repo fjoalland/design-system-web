@@ -10,7 +10,8 @@
         "name": "LES GRANDES CHAPELLES - 10170",
         "metadata": {
             "latitude": 48.4916267047,
-            "longitude": 3.93350100384
+            "longitude": 3.93350100384,
+            "hasLinkedField": false
         }
     },
     "10232": {

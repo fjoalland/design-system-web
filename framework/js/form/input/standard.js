@@ -1,4 +1,4 @@
-class FormInputStandard extends FormField {
+class FormInputStandard extends FormFieldAbstract {
     constructor() {
         super(
             'input[type="text"]:not([aria-autocomplete="list"]), ' +

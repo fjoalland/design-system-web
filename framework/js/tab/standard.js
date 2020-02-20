@@ -1,4 +1,4 @@
-class Tab {
+class TabStandard {
     constructor() {
         MiscEvent.addListener('keyPress:spacebar', this.move.bind(this));
         MiscEvent.addListener('keyPress:enter', this.move.bind(this));
@@ -131,4 +131,4 @@ class Tab {
 }
 
 // Singleton
-new Tab();
+new TabStandard();

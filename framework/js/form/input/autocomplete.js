@@ -1,4 +1,4 @@
-class FormInputAutoComplete extends FormField {
+class FormInputAutoComplete extends FormFieldAbstract {
     constructor() {
         super(
             'input[aria-autocomplete="list"]',
@@ -94,7 +94,7 @@ class FormInputAutoComplete extends FormField {
         let data = {};
         data[object.name] = {
             'value': object.valueElement.value,
-            'metadata': object.metadataElement.value
+            'metadata': (object.metadataElement.value ? JSON.parse(object.metadataElement.value) : null)
         };
 
         return data;
@@ -202,9 +202,6 @@ class FormInputAutoComplete extends FormField {
     autoCompleteFill(objectIndex, results) {
         const object = this.objects[objectIndex];
         if (!object.textElement) {
-            return;
-        }
-        if (!object.autoCompleterElement) {
             return;
         }
         if (!object.autoCompleterListElement) {
