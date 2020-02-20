@@ -10,7 +10,8 @@ class FormStandard {
             'selectStandard': null,
             'selectRadio': null,
             'selectCheckbox': null,
-            'selectMultilevel': null
+            'selectMultilevel': null,
+            'datepicker': null
         };
 
         document

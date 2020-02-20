@@ -648,7 +648,7 @@ input[type=radio],
 /**
  * Date picker
  */
-.ds44-date_picker__shape {
+.ds44-datepicker__shape {
     cursor: pointer;
     background-color: $ds44-light-color;
 
@@ -659,7 +659,7 @@ input[type=radio],
         text-align: center;
         width: 3rem;
 
-        &:last-child {
+        &:last-of-type {
             width: 5rem;
         }
 
@@ -704,7 +704,7 @@ input[type=radio],
 
         input,
         .ds44-select__shape,
-        .ds44-date_picker__shape {
+        .ds44-datepicker__shape {
             border-radius: 3px 0 0 3px;
         }
     }
@@ -716,7 +716,7 @@ input[type=radio],
 
         input,
         .ds44-select__shape,
-        .ds44-date_picker__shape {
+        .ds44-datepicker__shape {
             border-radius: 0 3px 3px 0;
             margin-left: -1px;
         }
@@ -855,7 +855,7 @@ input[type=radio],
 
             input,
             .ds44-select__shape,
-            .ds44-date_picker__shape {
+            .ds44-datepicker__shape {
                 border-radius: 3px 3px 0 0;
             }
         }
@@ -866,7 +866,7 @@ input[type=radio],
 
             input,
             .ds44-select__shape,
-            .ds44-date_picker__shape {
+            .ds44-datepicker__shape {
                 border-radius: 0 0 3px 3px;
                 margin: -1px 0 0 0;
             }
