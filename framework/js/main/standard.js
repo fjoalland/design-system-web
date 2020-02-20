@@ -1,4 +1,4 @@
-class Main {
+class MainStandard {
     constructor() {
         MiscEvent.addListener('overlay:show', this.show.bind(this));
         MiscEvent.addListener('overlay:hide', this.hide.bind(this));
@@ -18,4 +18,4 @@ class Main {
 }
 
 // Singleton
-new Main();
+new MainStandard();

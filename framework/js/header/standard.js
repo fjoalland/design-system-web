@@ -1,4 +1,4 @@
-class Header {
+class HeaderStandard {
     constructor() {
         this.lastScroll = 0;
         this.isOverlayed = false;
@@ -112,4 +112,4 @@ class Header {
 }
 
 // Singleton
-new Header();
+new HeaderStandard();

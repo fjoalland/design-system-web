@@ -1,4 +1,4 @@
-class Loader {
+class LoaderStandard {
     constructor() {
         // Counter that prevents from hiding the loader if it has been requested several times
         this.counter = 0;
@@ -35,4 +35,4 @@ class Loader {
 }
 
 // Singleton
-new Loader();
+new LoaderStandard();

@@ -1,4 +1,4 @@
-class Collapser {
+class CollapserStandard {
     constructor() {
         MiscEvent.addListener('keyUp:escape', this.hide.bind(this));
         MiscEvent.addListener('keyUp:tab', this.manageFocus.bind(this));
@@ -99,4 +99,4 @@ class Collapser {
 }
 
 // Singleton
-new Collapser();
+new CollapserStandard();

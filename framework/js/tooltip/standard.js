@@ -1,4 +1,4 @@
-class Tooltip {
+class TooltipStandard {
     constructor() {
         this.TOOLTIP_SIMPLE = 'js-simple-tooltip';
         this.TOOLTIP_SIMPLE_CONTAINER = 'simpletooltip_container';
@@ -130,4 +130,4 @@ class Tooltip {
 }
 
 // Singleton
-new Tooltip();
+new TooltipStandard();

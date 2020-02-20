@@ -1,4 +1,4 @@
-class FormBox {
+class FormBoxAbstract {
     constructor(category) {
         this.objects = [];
         this.errorMessage = 'Veuillez cocher un élément';

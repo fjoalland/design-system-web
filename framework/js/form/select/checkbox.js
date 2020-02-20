@@ -1,4 +1,4 @@
-class FormSelectCheckbox extends FormSelect {
+class FormSelectCheckbox extends FormSelectAbstract {
     constructor(selector, category) {
         if(selector && category) {
             super(

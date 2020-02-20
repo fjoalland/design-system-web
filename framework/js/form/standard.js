@@ -1,4 +1,4 @@
-class Form {
+class FormStandard {
     constructor() {
         this.hasBeenChecked = false;
         this.validationCategories = {
@@ -152,4 +152,4 @@ class Form {
 }
 
 // Singleton
-new Form();
+new FormStandard();

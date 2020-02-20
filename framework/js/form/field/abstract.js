@@ -1,4 +1,4 @@
-class FormField {
+class FormFieldAbstract {
     constructor(selector, category) {
         this.category = category;
         this.objects = [];

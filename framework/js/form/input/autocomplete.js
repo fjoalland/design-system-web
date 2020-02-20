@@ -1,4 +1,4 @@
-class FormInputAutoComplete extends FormField {
+class FormInputAutoComplete extends FormFieldAbstract {
     constructor() {
         super(
             'input[aria-autocomplete="list"]',

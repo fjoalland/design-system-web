@@ -1,4 +1,4 @@
-class FormSelectRadio extends FormSelect {
+class FormSelectRadio extends FormSelectAbstract {
     constructor() {
         const selects = [];
         document

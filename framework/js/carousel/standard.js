@@ -1,4 +1,4 @@
-class Carousel {
+class CarouselStandard {
     constructor() {
         this.previousSlideMessage = 'Voir le contenu précédent';
         this.nextSlideMessage = 'Voir le contenu suivant';
@@ -171,4 +171,4 @@ class Carousel {
 }
 
 // Singleton
-new Carousel();
+new CarouselStandard();

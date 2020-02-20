@@ -1,4 +1,4 @@
-class FormSelectStandard extends FormSelect {
+class FormSelectStandard extends FormSelectAbstract {
     constructor() {
         const selects = [];
         document

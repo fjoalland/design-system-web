@@ -1,4 +1,4 @@
-class FormCheckbox extends FormBox {
+class FormCheckbox extends FormBoxAbstract {
     constructor() {
         super('checkbox');
     }
