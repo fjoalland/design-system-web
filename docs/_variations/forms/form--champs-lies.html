@@ -30,3 +30,13 @@ layout: pattern
     </div>
     <div><input type="submit" class="ds44-btnStd" value="Tester les champs" /></div>
 </form>
+<br>
+<hr/>
+<br>
+<form>
+    <div class="ds44-fieldContainer ds44-champsLies">
+        {% include forms/inc-input-autocomp.html label="Champ adresse" required="true" attributes='data-url="/autocomplete.json" data-mode="select-only"' class="ds44-inpLarge ds44-champsLies-child" %}
+        {% include forms/inc-select-simple.html label="Rayon" required="true" class="ds44-inpLarge ds44-inputDisabled ds44-champsLies-child" %}
+    </div>
+    <div><input type="submit" class="ds44-btnStd" value="Tester les champs" /></div>
+</form>
