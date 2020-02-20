@@ -139,13 +139,46 @@ class FormFieldAbstract {
         }
     }
 
-    enable(objectIndex) {
+    enable(objectIndex, evt) {
         const object = this.objects[objectIndex];
         if (!object.textElement) {
             return;
         }
+        if (!this.isEnableAllowed(objectIndex, evt)) {
+            this.disable(objectIndex);
+            return;
+        }
 
         object.textElement.removeAttribute('disabled');
+    }
+
+    isEnableAllowed(objectIndex, evt) {
+        const object = this.objects[objectIndex];
+        if (!object.textElement) {
+            return false;
+        }
+
+        let valuesAllowed = object.textElement.getAttribute('data-values');
+        if (!valuesAllowed) {
+            return true;
+        }
+
+        if (
+            !evt ||
+            !evt.detail ||
+            !evt.detail.data
+        ) {
+            return false;
+        }
+
+        valuesAllowed = JSON.parse(valuesAllowed);
+        let currentValues = evt.detail.data[Object.keys(evt.detail.data)[0]];
+        try {
+            currentValues = JSON.parse(currentValues);
+        } catch (ex) {
+        }
+
+        return MiscUtils.isValuesAllowed(currentValues, valuesAllowed);
     }
 
     disable(objectIndex) {

@@ -70,12 +70,43 @@ class FormBoxAbstract {
         }
     }
 
-    enable(objectIndex) {
+    enable(objectIndex, evt) {
         const object = this.objects[objectIndex];
+
+        if (!this.isEnableAllowed(objectIndex, evt)) {
+            this.disable(objectIndex);
+            return;
+        }
 
         object.inputElements.forEach((inputElement) => {
             inputElement.removeAttribute('disabled');
         });
+    }
+
+    isEnableAllowed(objectIndex, evt) {
+        const object = this.objects[objectIndex];
+
+        let valuesAllowed = object.containerElement.getAttribute('data-values');
+        if (!valuesAllowed) {
+            return true;
+        }
+
+        if (
+            !evt ||
+            !evt.detail ||
+            !evt.detail.data
+        ) {
+            return false;
+        }
+
+        valuesAllowed = JSON.parse(valuesAllowed);
+        let currentValues = evt.detail.data[Object.keys(evt.detail.data)[0]];
+        try {
+            currentValues = JSON.parse(currentValues);
+        } catch (ex) {
+        }
+
+        return MiscUtils.isValuesAllowed(currentValues, valuesAllowed);
     }
 
     disable(objectIndex) {
