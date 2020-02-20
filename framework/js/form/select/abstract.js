@@ -72,12 +72,24 @@ class FormSelectAbstract extends FormFieldAbstract {
         if (!object.buttonElement) {
             return;
         }
+        if (!this.isEnableAllowed(objectIndex, evt)) {
+            this.disable(objectIndex);
+            return;
+        }
 
         object.shapeElement.classList.remove('ds44-inputDisabled');
         object.buttonElement.removeAttribute('tabindex');
 
         if (object.textElement.getAttribute('data-url')) {
-            this.autoComplete(objectIndex, (evt || {}).detail);
+            let autoCompleteParameters = null;
+            if(
+                evt &&
+                evt.detail &&
+                evt.detail.data
+            ) {
+                autoCompleteParameters = evt.detail.data;
+            }
+            this.autoComplete(objectIndex, autoCompleteParameters);
         }
     }
 
@@ -233,8 +245,8 @@ class FormSelectAbstract extends FormFieldAbstract {
         }
 
         let urlParameters = null;
-        if (parameters && parameters.data) {
-            const formData = MiscForm.jsonToFormData(parameters.data);
+        if (parameters) {
+            const formData = MiscForm.jsonToFormData(parameters);
             urlParameters = '?' + new URLSearchParams(formData).toString()
         }
 
