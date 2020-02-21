@@ -7,7 +7,7 @@
 
   .ds44-partage-sliderHome {
 
-    padding: 1em 3em;
+    padding: 1.5em 2.5em;
 
     p[role="heading"] {
       font-size: 2.4rem;
@@ -18,10 +18,17 @@
     }
     .ds44-list {
       text-align: center;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
 
-      li a {
-        display: inline-block;
-        font-size: 1.5em;
+      li {
+        width: 50%;
+
+          a {
+            display: inline-block;
+            font-size: 1.5em;
+            padding: 1rem 1.5rem;
+          }
       }
     }
   }
