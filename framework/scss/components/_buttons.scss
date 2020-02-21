@@ -336,6 +336,14 @@ a.ds44-btnStd--retourPage {
         top: 1.5rem;
     }
 
+    .ds44-btnStd, a.ds44-btnStd, a > .ds44-btnStd, .ds44-btnStd > a {
+
+        &.ds44-btnFullMobile {
+          width: 100%;
+        }
+
+    }
+
 }
 
 @media (max-width: $ds44-small - .0625) {
