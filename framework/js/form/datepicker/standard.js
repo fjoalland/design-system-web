@@ -15,6 +15,7 @@ class FormDatepickerStandard extends FormInputAbstract {
 
         const objectIndex = (this.objects.length - 1);
         const object = this.objects[objectIndex];
+
         object.valueElement = valueElement;
         object.inputElements = element.querySelectorAll('input[type="number"]');
         object.isRequired = (element.getAttribute('data-required') === 'true');
@@ -28,15 +29,41 @@ class FormDatepickerStandard extends FormInputAbstract {
 
     write(objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object.textElement) {
+            return;
+        }
+        if (!object.textElement.contains(document.activeElement)) {
+            return;
+        }
 
-        object.inputElements.forEach((inputElement) => {
-            if(inputElement === document.activeElement) {
-                this.record(objectIndex);
-            }
-        });
-
+        this.record(objectIndex);
         this.showHideResetButton(objectIndex);
         this.enableDisableLinkedField(objectIndex);
+    }
+
+    showHideResetButton(objectIndex) {
+        const object = this.objects[objectIndex];
+        if (!object.resetButton) {
+            return;
+        }
+
+        if (this.getDateText(objectIndex) === '--') {
+            // Hide reset button
+            object.resetButton.style.display = 'none';
+        } else {
+            // Hide reset button
+            object.resetButton.style.display = 'block';
+        }
+    }
+
+    reset(objectIndex) {
+        const object = this.objects[objectIndex];
+
+        object.inputElements[0].value = null;
+        object.inputElements[1].value = null;
+        object.inputElements[2].value = null;
+
+        super.reset(objectIndex);
     }
 
     focusIn(objectIndex) {
@@ -60,18 +87,38 @@ class FormDatepickerStandard extends FormInputAbstract {
     }
 
     blur(objectIndex) {
-        super.blur(objectIndex);
+        const object = this.objects[objectIndex];
 
-        if (this.getData(objectIndex)) {
+        if (this.getDateText(objectIndex) !== '--') {
+            if (
+                object.inputElements[0].value &&
+                object.inputElements[1].value &&
+                object.inputElements[2].value
+            ) {
+                this.checkValidity(objectIndex);
+            }
+
             return;
         }
 
-        const object = this.objects[objectIndex];
+        if (!object.labelElement) {
+            return;
+        }
         if (!object.textElement) {
             return;
         }
 
+        object.labelElement.classList.remove(this.labelClassName);
         object.textElement.classList.remove('show');
+    }
+
+    getDateText(objectIndex) {
+        const object = this.objects[objectIndex];
+
+        const dateYear = parseInt(object.inputElements[2].value, 10) || '';
+        const dateMonth = parseInt(object.inputElements[1].value, 10) || '';
+        const dateDay = parseInt(object.inputElements[0].value, 10) || '';
+        return dateYear + '-' + dateMonth + '-' + dateDay;
     }
 
     record(objectIndex, evt) {
@@ -79,28 +126,65 @@ class FormDatepickerStandard extends FormInputAbstract {
             evt.preventDefault();
         }
 
-        // TODO
+        const object = this.objects[objectIndex];
+        if (!object.valueElement) {
+            return;
+        }
+        ;
+
+        const dateText = this.getDateText(objectIndex);
+        if (!dateText.match(/^(19|20)\d\d([- /.])(0?[1-9]|1[012])\2(0?[1-9]|[12][0-9]|3[01])$/)) {
+            // Not nicely formatted
+            this.setData(objectIndex);
+
+            return;
+        }
+
+        const dateYear = parseInt(object.inputElements[2].value, 10);
+        const dateMonth = (parseInt(object.inputElements[1].value, 10) - 1);
+        const dateDay = parseInt(object.inputElements[0].value, 10);
+        const date = new Date(dateYear, dateMonth, dateDay);
+        if (
+            date.getTime() !== date.getTime() ||
+            date.getFullYear() !== dateYear ||
+            date.getMonth() !== dateMonth ||
+            date.getDate() !== dateDay
+        ) {
+            // If the date object is invalid it
+            // will return 'NaN' on getTime()
+            // and NaN is never equal to itself.
+            this.setData(objectIndex);
+
+            return;
+        }
+
+        this.setData(
+            objectIndex,
+            {
+                'value': dateText
+            }
+        )
     }
 
     checkValidity(objectIndex) {
-        // TODO
-    }
+        this.removeInvalid(objectIndex);
 
-    invalid(objectIndex) {
-        // TODO
-    }
-
-    getTextValue(objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object.textElement) {
+            return;
+        }
 
-        let textValue = null;
-        object.inputElements.forEach((inputElement) => {
-            if(inputElement.value) {
-                textValue += inputElement.value;
-            }
-        });
+        if (
+            object.isRequired &&
+            !object.textElement.classList.contains('ds44-inputDisabled') &&
+            !this.getData(objectIndex)
+        ) {
+            this.invalid(objectIndex);
 
-        return textValue;
+            return false;
+        }
+
+        return true;
     }
 }
 

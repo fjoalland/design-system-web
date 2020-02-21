@@ -87,8 +87,6 @@ class FormSelectAbstract extends FormInputAbstract {
     }
 
     disable(objectIndex) {
-        super.disable(objectIndex);
-
         const object = this.objects[objectIndex];
         if (!object.shapeElement) {
             return;
@@ -110,6 +108,9 @@ class FormSelectAbstract extends FormInputAbstract {
         object.buttonElement.setAttribute('tabindex', '-1');
         object.buttonElement.setAttribute('readonly', 'true');
 
+        this.setData(objectIndex);
+        this.enableDisableLinkedField(objectIndex);
+        this.blur(objectIndex);
         this.hide(objectIndex);
     }
 
@@ -413,7 +414,7 @@ class FormSelectAbstract extends FormInputAbstract {
         }
     }
 
-    checkValidity(objectIndex) {
+    removeInvalid(objectIndex) {
         const object = this.objects[objectIndex];
         if (!object.valueElement) {
             return;
@@ -430,6 +431,15 @@ class FormSelectAbstract extends FormInputAbstract {
         object.valueElement.removeAttribute('aria-invalid');
         object.valueElement.removeAttribute('aria-describedby');
         object.shapeElement.classList.remove('ds44-error');
+    }
+
+    checkValidity(objectIndex) {
+        super.removeInvalid(objectIndex);
+
+        const object = this.objects[objectIndex];
+        if (!object.shapeElement) {
+            return;
+        }
 
         if (
             object.isRequired &&

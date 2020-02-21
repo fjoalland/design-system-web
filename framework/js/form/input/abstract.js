@@ -69,12 +69,6 @@ class FormInputAbstract extends FormFieldAbstract {
     disable(objectIndex) {
         super.disable(objectIndex);
 
-        const object = this.objects[objectIndex];
-
-        object.inputElements.forEach((inputElement) => {
-            inputElement.setAttribute('disabled', 'true');
-        });
-
         this.blur(objectIndex);
         this.showHideResetButton(objectIndex);
     }
@@ -90,11 +84,8 @@ class FormInputAbstract extends FormFieldAbstract {
 
     focusOnTextElement(objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
 
-        MiscAccessibility.setFocus(object.textElement);
+        MiscAccessibility.setFocus(object.inputElements[0]);
     }
 
     focus(objectIndex) {
@@ -118,7 +109,7 @@ class FormInputAbstract extends FormFieldAbstract {
         object.labelElement.classList.remove(this.labelClassName);
     }
 
-    checkValidity(objectIndex) {
+    removeInvalid(objectIndex) {
         const object = this.objects[objectIndex];
         if (!object.textElement) {
             return;
@@ -132,6 +123,15 @@ class FormInputAbstract extends FormFieldAbstract {
         object.textElement.removeAttribute('aria-invalid');
         object.textElement.removeAttribute('aria-describedby');
         object.textElement.classList.remove('ds44-error');
+    }
+
+    checkValidity(objectIndex) {
+        this.removeInvalid(objectIndex);
+
+        const object = this.objects[objectIndex];
+        if (!object.textElement) {
+            return;
+        }
 
         return object.textElement.checkValidity();
     }

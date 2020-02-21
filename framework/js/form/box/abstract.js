@@ -25,16 +25,6 @@ class FormBoxAbstract extends FormFieldAbstract {
         MiscEvent.addListener('field:disable', this.disable.bind(this, objectIndex), object.containerElement);
     }
 
-    disable(objectIndex) {
-        super.disable(objectIndex);
-
-        const object = this.objects[objectIndex];
-
-        object.inputElements.forEach((inputElement) => {
-            inputElement.setAttribute('disabled', 'true');
-        });
-    }
-
     toggleCheck(objectIndex) {
         const object = this.objects[objectIndex];
 
@@ -86,12 +76,29 @@ class FormBoxAbstract extends FormFieldAbstract {
         return data;
     }
 
-    checkValidity(objectIndex) {
+    removeInvalid(objectIndex) {
         const object = this.objects[objectIndex];
 
         let errorElement = object.containerElement.querySelector('.ds44-errorMsg-container');
         if (errorElement) {
             errorElement.remove();
+        }
+
+        object.inputElements.forEach((inputElement) => {
+            inputElement.removeAttribute('aria-invalid');
+            inputElement.removeAttribute('aria-label');
+            inputElement.removeAttribute('aria-describedby');
+            inputElement.classList.remove('ds44-boxError');
+        });
+    }
+
+    checkValidity(objectIndex) {
+        this.removeInvalid(objectIndex);
+
+        const object = this.objects[objectIndex];
+
+        if (!object.isRequired) {
+            return true;
         }
 
         let hasOneCheckedInput = false;
@@ -102,17 +109,8 @@ class FormBoxAbstract extends FormFieldAbstract {
             ) {
                 hasOneCheckedInput = true;
             }
-
-            inputElement.removeAttribute('aria-invalid');
-            inputElement.removeAttribute('aria-label');
-            inputElement.removeAttribute('aria-describedby');
-            inputElement.classList.remove('ds44-boxError');
         });
-
-        if (
-            object.isRequired &&
-            hasOneCheckedInput !== true
-        ) {
+        if (hasOneCheckedInput !== true) {
             this.invalid(objectIndex);
 
             return false;

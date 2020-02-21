@@ -98,12 +98,13 @@ class FormFieldAbstract {
     }
 
     enable(objectIndex, evt) {
-        const object = this.objects[objectIndex];
-
         if (!this.isEnableAllowed(objectIndex, evt)) {
             this.disable(objectIndex);
+
             return;
         }
+
+        const object = this.objects[objectIndex];
 
         object.inputElements.forEach((inputElement) => {
             inputElement.removeAttribute('disabled');
@@ -155,6 +156,12 @@ class FormFieldAbstract {
     }
 
     disable(objectIndex) {
+        const object = this.objects[objectIndex];
+
+        object.inputElements.forEach((inputElement) => {
+            inputElement.setAttribute('disabled', 'true');
+        });
+
         this.setData(objectIndex);
         this.enableDisableLinkedField(objectIndex);
     }
@@ -196,7 +203,15 @@ class FormFieldAbstract {
         );
     }
 
+    removeInvalid(objectIndex) {
+        // Abstract method
+    }
+
     checkValidity(objectIndex) {
+        // Abstract method
+    }
+
+    invalid(objectIndex) {
         // Abstract method
     }
 
