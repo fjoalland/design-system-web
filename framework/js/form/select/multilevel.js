@@ -39,16 +39,14 @@ class FormSelectMultilevel extends FormSelectCheckbox {
                 });
         }
 
-        if (object.containerElement) {
-            const flexContainerElement = object.containerElement.querySelector('.ds44-flex-container');
-            const checkAllElement = flexContainerElement.querySelector('button:first-child');
-            if (checkAllElement) {
-                MiscEvent.addListener('click', this.checkAll.bind(this, objectIndex), checkAllElement);
-            }
-            const uncheckAllElement = flexContainerElement.querySelector('button:last-child');
-            if (uncheckAllElement) {
-                MiscEvent.addListener('click', this.uncheckAll.bind(this, objectIndex), uncheckAllElement);
-            }
+        const flexContainerElement = object.containerElement.querySelector('.ds44-flex-container');
+        const checkAllElement = flexContainerElement.querySelector('button:first-child');
+        if (checkAllElement) {
+            MiscEvent.addListener('click', this.checkAll.bind(this, objectIndex), checkAllElement);
+        }
+        const uncheckAllElement = flexContainerElement.querySelector('button:last-child');
+        if (uncheckAllElement) {
+            MiscEvent.addListener('click', this.uncheckAll.bind(this, objectIndex), uncheckAllElement);
         }
 
         // Remove data-url attribute as multilevel select do not exist yet

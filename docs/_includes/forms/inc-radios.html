@@ -5,7 +5,7 @@
     {% assign requiredAttributes = '' %}
 {% endif %}
 
-<div class="ds44-form__radio_container" data-id="{{ id }}" {{ attributes }}>
+<div id="{{ id }}" class="ds44-form__radio_container" {{ attributes }}>
     {% assign choices = (include.choices | split:',') %}
     {% for choiceData in choices %}
         {% assign choice = (choiceData | split:':') %}

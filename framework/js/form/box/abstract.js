@@ -1,28 +1,22 @@
-class FormBoxAbstract {
+class FormBoxAbstract extends FormFieldAbstract {
     constructor(category) {
-        this.objects = [];
-        this.errorMessage = 'Veuillez cocher un élément';
-        this.category = category;
+        super(
+            '.ds44-form__' + category + '_container',
+            category
+        );
 
-        document
-            .querySelectorAll('.ds44-form__' + this.category + '_container')
-            .forEach((element) => {
-                this.create(element);
-            });
-
-        MiscEvent.addListener('form:validate', this.validate.bind(this));
+        this.errorMessages['valueMissing'] = 'Veuillez cocher un élément';
     }
 
     create(element) {
-        const object = {
-            'id': MiscUtils.generateId(),
-            'name': element.getAttribute('data-name'),
-            'inputElements': element.querySelectorAll('input[type="' + this.category + '"]'),
-            'containerElement': element,
-            'isRequired': (element.getAttribute('data-required') === 'true'),
-        };
-        this.objects.push(object);
+        super.create(element);
+
         const objectIndex = (this.objects.length - 1);
+        const object = this.objects[objectIndex];
+
+        object.inputElements = element.querySelectorAll('input[type="' + this.category + '"]');
+        object.containerElement = element;
+        object.isRequired = (element.getAttribute('data-required') === 'true');
 
         object.inputElements.forEach((inputElement) => {
             MiscEvent.addListener('click', this.toggleCheck.bind(this, objectIndex), inputElement);
@@ -31,94 +25,14 @@ class FormBoxAbstract {
         MiscEvent.addListener('field:disable', this.disable.bind(this, objectIndex), object.containerElement);
     }
 
-    enableDisableLinkedField(objectIndex) {
-        const object = this.objects[objectIndex];
-
-        const linkedFieldsContainerElement = object.containerElement.closest('.ds44-champsLies');
-        if (!linkedFieldsContainerElement) {
-            return;
-        }
-
-        const secondLinkedFieldElement = MiscDom.getNextSibling(object.containerElement);
-        if (
-            !secondLinkedFieldElement ||
-            secondLinkedFieldElement === object.containerElement
-        ) {
-            return;
-        }
-
-        // Has a linked field
-        let data = this.getData(objectIndex);
-        if (
-            !data ||
-            (
-                data[object.name] &&
-                data[object.name].metadata &&
-                data[object.name].metadata.hasLinkedField === false
-            )
-        ) {
-            // Disable linked field
-            MiscEvent.dispatch('field:disable', null, secondLinkedFieldElement);
-        } else {
-            // Enabled linked field
-            try {
-                // Try if it is JSON
-                data = JSON.parse(data);
-            } catch (ex) {
-            }
-            MiscEvent.dispatch('field:enable', {'data': data}, secondLinkedFieldElement);
-        }
-    }
-
-    enable(objectIndex, evt) {
-        const object = this.objects[objectIndex];
-
-        if (!this.isEnableAllowed(objectIndex, evt)) {
-            this.disable(objectIndex);
-            return;
-        }
-
-        object.inputElements.forEach((inputElement) => {
-            inputElement.removeAttribute('disabled');
-        });
-    }
-
-    isEnableAllowed(objectIndex, evt) {
-        const object = this.objects[objectIndex];
-
-        let valuesAllowed = object.containerElement.getAttribute('data-values');
-        if (!valuesAllowed) {
-            return true;
-        }
-
-        if (
-            !evt ||
-            !evt.detail ||
-            !evt.detail.data
-        ) {
-            return false;
-        }
-
-        valuesAllowed = JSON.parse(valuesAllowed);
-        let currentValues = evt.detail.data[Object.keys(evt.detail.data)[0]];
-        try {
-            currentValues = JSON.parse(currentValues);
-        } catch (ex) {
-        }
-
-        return MiscUtils.isValuesAllowed(currentValues, valuesAllowed);
-    }
-
     disable(objectIndex) {
+        super.disable(objectIndex);
+
         const object = this.objects[objectIndex];
 
         object.inputElements.forEach((inputElement) => {
             inputElement.setAttribute('disabled', 'true');
-            inputElement.checked = false;
-            inputElement.removeAttribute('aria-checked');
         });
-
-        this.enableDisableLinkedField(objectIndex);
     }
 
     toggleCheck(objectIndex) {
@@ -135,41 +49,22 @@ class FormBoxAbstract {
         this.enableDisableLinkedField(objectIndex);
     }
 
-    validate(evt) {
-        if (
-            !evt ||
-            !evt.detail ||
-            !evt.detail.formElement
-        ) {
-            return;
-        }
+    setData(objectIndex, data = null) {
+        const object = this.objects[objectIndex];
 
-        let isValid = true;
-        let data = {};
-        for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
-            if (!evt.detail.formElement.contains(this.objects[objectIndex].containerElement)) {
-                continue;
-            }
-
-            if (this.checkValidity(objectIndex) === false) {
-                isValid = false;
+        object.inputElements.forEach((inputElement) => {
+            if(
+                data &&
+                data.values &&
+                data.values.includes(inputElement.value)
+            ) {
+                inputElement.checked = true;
+                inputElement.setAttribute('aria-checked', 'true');
             } else {
-                const newData = this.getData(objectIndex);
-                if (newData) {
-                    data = Object.assign(data, newData);
-                }
+                inputElement.checked = false;
+                inputElement.removeAttribute('aria-checked');
             }
-        }
-
-        MiscEvent.dispatch(
-            'form:validation',
-            {
-                'category': this.category,
-                'isValid': isValid,
-                'data': data
-            },
-            evt.detail.formElement
-        );
+        });
     }
 
     getData(objectIndex) {
@@ -194,10 +89,6 @@ class FormBoxAbstract {
     checkValidity(objectIndex) {
         const object = this.objects[objectIndex];
 
-        if (!object.isRequired) {
-            return true;
-        }
-
         let errorElement = object.containerElement.querySelector('.ds44-errorMsg-container');
         if (errorElement) {
             errorElement.remove();
@@ -218,44 +109,29 @@ class FormBoxAbstract {
             inputElement.classList.remove('ds44-boxError');
         });
 
-        if (hasOneCheckedInput !== true) {
-            this.showError(objectIndex);
+        if (
+            object.isRequired &&
+            hasOneCheckedInput !== true
+        ) {
+            this.invalid(objectIndex);
+
             return false;
         }
 
         return true;
     }
 
-    showError(objectIndex) {
+    invalid(objectIndex) {
         const object = this.objects[objectIndex];
+
         const errorMessageElementId = MiscUtils.generateId();
+        this.showErrorMessage(objectIndex, errorMessageElementId);
 
-        let errorElement = document.createElement('div');
-        errorElement.classList.add('ds44-errorMsg-container');
-        object.containerElement.appendChild(errorElement);
-
-        let errorMessageElement = document.createElement('p');
-        errorMessageElement.setAttribute('id', errorMessageElementId);
-        errorMessageElement.classList.add('ds44-msgErrorText');
-        errorMessageElement.classList.add('ds44-msgErrorInvalid');
-        errorElement.appendChild(errorMessageElement);
-
-        let errorIconElement = document.createElement('i');
-        errorIconElement.classList.add('icon');
-        errorIconElement.classList.add('icon-attention');
-        errorIconElement.classList.add('icon--sizeM');
-        errorIconElement.setAttribute('aria-hidden', 'true');
-        errorMessageElement.appendChild(errorIconElement);
-
-        let errorTextElement = document.createElement('span');
-        errorTextElement.classList.add('ds44-iconInnerText');
-        errorTextElement.innerHTML = this.errorMessage;
-        errorMessageElement.appendChild(errorTextElement);
-
+        const errorMessage = this.getErrorMessage(objectIndex);
         object.inputElements.forEach((inputElement) => {
             inputElement.classList.add('ds44-boxError');
             inputElement.setAttribute('aria-invalid', 'true');
-            inputElement.setAttribute('aria-label', this.errorMessage);
+            inputElement.setAttribute('aria-label', errorMessage);
             inputElement.setAttribute('aria-describedby', errorMessageElementId)
         });
     }

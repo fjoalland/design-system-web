@@ -1,4 +1,4 @@
-class FormTextarea extends FormFieldAbstract {
+class FormTextarea extends FormInputAbstract {
     constructor() {
         super('textarea', 'textarea');
     }

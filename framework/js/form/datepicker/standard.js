@@ -1,4 +1,4 @@
-class FormDatepickerStandard extends FormFieldAbstract {
+class FormDatepickerStandard extends FormInputAbstract {
     constructor() {
         super('.ds44-datepicker__shape', 'datepicker');
     }
@@ -26,28 +26,17 @@ class FormDatepickerStandard extends FormFieldAbstract {
         });
     }
 
-    enable(objectIndex, evt) {
-        // TODO
-    }
-
-    disable(objectIndex) {
-        // TODO
-    }
-
-    getData(objectIndex) {
+    write(objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.valueElement) {
-            return null;
-        }
 
-        if (!object.valueElement.value) {
-            return null;
-        }
+        object.inputElements.forEach((inputElement) => {
+            if(inputElement === document.activeElement) {
+                this.record(objectIndex);
+            }
+        });
 
-        let data = {};
-        data[object.name] = object.valueElement.value;
-
-        return data;
+        this.showHideResetButton(objectIndex);
+        this.enableDisableLinkedField(objectIndex);
     }
 
     focusIn(objectIndex) {
@@ -71,19 +60,18 @@ class FormDatepickerStandard extends FormFieldAbstract {
     }
 
     blur(objectIndex) {
+        super.blur(objectIndex);
+
+        if (this.getData(objectIndex)) {
+            return;
+        }
+
         const object = this.objects[objectIndex];
         if (!object.textElement) {
             return;
         }
-        if (!object.labelElement) {
-            return;
-        }
 
-        const textValue = this.getTextValue(objectIndex);
-        if (!textValue) {
-            object.labelElement.classList.remove(this.mainClassName);
-            object.textElement.classList.remove('show');
-        }
+        object.textElement.classList.remove('show');
     }
 
     record(objectIndex, evt) {
