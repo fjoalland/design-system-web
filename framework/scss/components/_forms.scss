@@ -114,6 +114,10 @@ input {
 
 textarea {
     font-family: $ds44-font-family-base;
+
+    .ds44-inpStd {
+      min-height: 120px;
+    }
 }
 
 .ds44-inpStd {
