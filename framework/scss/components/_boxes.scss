@@ -136,6 +136,12 @@
   .grid-12-small-1 .colPush:last-of-type{
     margin-right: 0;
   }
+  .grid-12-small-1 .colFocusProjets{
+    margin-left: $ds44-medium-vmargin;
+  }
+  .grid-12-small-1 .colFocusProjets:first-of-type{
+    margin-left: 0;
+  }
 
 }
 
@@ -150,7 +156,8 @@
     margin-top: 0;
   }
 
-  .grid-12-small-1 .colPush{
+  .grid-12-small-1 .colPush,
+  .grid-12-small-1 .colFocusProjets{
     margin-bottom:  $ds44-medium-vmargin;
   }
 
