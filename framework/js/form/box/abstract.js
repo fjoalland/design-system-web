@@ -5,7 +5,7 @@ class FormBoxAbstract extends FormFieldAbstract {
             category
         );
 
-        this.errorMessages['valueMissing'] = 'Veuillez cocher un élément';
+        this.errorMessage = 'Veuillez cocher un élément';
     }
 
     create(element) {
@@ -15,10 +15,25 @@ class FormBoxAbstract extends FormFieldAbstract {
         const object = this.objects[objectIndex];
 
         object.inputElements = element.querySelectorAll('input[type="' + this.category + '"]');
-        object.isRequired = (element.getAttribute('data-required') === 'true');
 
         object.inputElements.forEach((inputElement) => {
             MiscEvent.addListener('click', this.toggleCheck.bind(this, objectIndex), inputElement);
+        });
+    }
+
+    enableElements(objectIndex, evt) {
+        const object = this.objects[objectIndex];
+
+        object.inputElements.forEach((inputElement) => {
+            inputElement.removeAttribute('disabled');
+        });
+    }
+
+    disableElements(objectIndex) {
+        const object = this.objects[objectIndex];
+
+        object.inputElements.forEach((inputElement) => {
+            inputElement.setAttribute('disabled', 'true');
         });
     }
 
@@ -40,7 +55,7 @@ class FormBoxAbstract extends FormFieldAbstract {
         const object = this.objects[objectIndex];
 
         object.inputElements.forEach((inputElement) => {
-            if(
+            if (
                 data &&
                 data.values &&
                 data.values.includes(inputElement.value)
@@ -87,33 +102,6 @@ class FormBoxAbstract extends FormFieldAbstract {
             inputElement.removeAttribute('aria-describedby');
             inputElement.classList.remove('ds44-boxError');
         });
-    }
-
-    checkValidity(objectIndex) {
-        this.removeInvalid(objectIndex);
-
-        const object = this.objects[objectIndex];
-
-        if (!object.isRequired) {
-            return true;
-        }
-
-        let hasOneCheckedInput = false;
-        object.inputElements.forEach((inputElement) => {
-            if (
-                inputElement.checked ||
-                inputElement.disabled
-            ) {
-                hasOneCheckedInput = true;
-            }
-        });
-        if (hasOneCheckedInput !== true) {
-            this.invalid(objectIndex);
-
-            return false;
-        }
-
-        return true;
     }
 
     invalid(objectIndex) {

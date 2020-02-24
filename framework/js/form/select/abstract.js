@@ -21,7 +21,6 @@ class FormSelectAbstract extends FormFieldAbstract {
         object.buttonIconElement = object.containerElement.querySelector('.ds44-btnOpen .icon');
         object.buttonTextElement = object.containerElement.querySelector('.ds44-btnOpen .visually-hidden');
         object.isExpanded = false;
-        object.isRequired = (element.getAttribute('data-required') === 'true');
 
         MiscEvent.addListener('keyUp:escape', this.hide.bind(this, objectIndex));
         MiscEvent.addListener('keyUp:arrowup', this.previousOption.bind(this, objectIndex));
@@ -60,12 +59,7 @@ class FormSelectAbstract extends FormFieldAbstract {
         MiscEvent.addListener('mousedown', this.select.bind(this, objectIndex), listElement);
     }
 
-    enable(objectIndex, evt) {
-        if (!this.isEnableAllowed(objectIndex, evt)) {
-            this.disable(objectIndex);
-            return;
-        }
-
+    enableElements(objectIndex, evt) {
         const object = this.objects[objectIndex];
         if (!object.shapeElement) {
             return;
@@ -91,7 +85,7 @@ class FormSelectAbstract extends FormFieldAbstract {
         }
     }
 
-    disable(objectIndex) {
+    disableElements(objectIndex) {
         const object = this.objects[objectIndex];
         if (!object.labelElement) {
             return;
@@ -117,8 +111,6 @@ class FormSelectAbstract extends FormFieldAbstract {
         object.buttonElement.setAttribute('readonly', 'true');
         object.labelElement.classList.remove(this.labelClassName);
 
-        this.setData(objectIndex);
-        this.enableDisableLinkedField(objectIndex);
         this.hide(objectIndex);
     }
 
@@ -178,7 +170,7 @@ class FormSelectAbstract extends FormFieldAbstract {
             return;
         }
 
-        if (object.shapeElement.classList.contains('ds44-inputDisabled')) {
+        if (!object.isEnabled) {
             // Don't show if disabled
             if (evt) {
                 evt.stopPropagation();
@@ -440,27 +432,6 @@ class FormSelectAbstract extends FormFieldAbstract {
         object.valueElement.removeAttribute('aria-invalid');
         object.valueElement.removeAttribute('aria-describedby');
         object.shapeElement.classList.remove('ds44-error');
-    }
-
-    checkValidity(objectIndex) {
-        this.removeInvalid(objectIndex);
-
-        const object = this.objects[objectIndex];
-        if (!object.shapeElement) {
-            return;
-        }
-
-        if (
-            object.isRequired &&
-            !object.shapeElement.classList.contains('ds44-inputDisabled') &&
-            !this.getData(objectIndex)
-        ) {
-            this.invalid(objectIndex);
-
-            return false;
-        }
-
-        return true;
     }
 
     invalid(objectIndex) {

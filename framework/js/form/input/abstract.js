@@ -47,6 +47,25 @@ class FormInputAbstract extends FormFieldAbstract {
         this.focusOnTextElement(objectIndex);
     }
 
+    enableElements(objectIndex, evt) {
+        const object = this.objects[objectIndex];
+
+        object.inputElements.forEach((inputElement) => {
+            inputElement.removeAttribute('disabled');
+        });
+    }
+
+    disableElements(objectIndex) {
+        const object = this.objects[objectIndex];
+
+        object.inputElements.forEach((inputElement) => {
+            inputElement.setAttribute('disabled', 'true');
+        });
+
+        this.blur(objectIndex);
+        this.showHideResetButton(objectIndex);
+    }
+
     showHideResetButton(objectIndex) {
         const object = this.objects[objectIndex];
         if (!object.resetButton) {
@@ -60,13 +79,6 @@ class FormInputAbstract extends FormFieldAbstract {
             // Hide reset button
             object.resetButton.style.display = 'block';
         }
-    }
-
-    disable(objectIndex) {
-        super.disable(objectIndex);
-
-        this.blur(objectIndex);
-        this.showHideResetButton(objectIndex);
     }
 
     setData(objectIndex, data = null) {
@@ -121,17 +133,6 @@ class FormInputAbstract extends FormFieldAbstract {
         object.textElement.classList.remove('ds44-error');
     }
 
-    checkValidity(objectIndex) {
-        this.removeInvalid(objectIndex);
-
-        const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-
-        return object.textElement.checkValidity();
-    }
-
     invalid(objectIndex) {
         const object = this.objects[objectIndex];
         if (!object.textElement) {
@@ -144,30 +145,5 @@ class FormInputAbstract extends FormFieldAbstract {
         object.textElement.classList.add('ds44-error');
         object.textElement.setAttribute('aria-invalid', 'true');
         object.textElement.setAttribute('aria-describedby', errorMessageElementId);
-    }
-
-    getErrorMessage(objectIndex) {
-        const object = this.objects[objectIndex];
-        if (!object.valueElement) {
-            return;
-        }
-
-        let errorMessage = null;
-        for (let key in object.valueElement.validity) {
-            if (key === 'valid') {
-                continue;
-            }
-
-            let isInError = object.valueElement.validity[key];
-            if (isInError && this.errorMessages[key]) {
-                errorMessage = this.errorMessages[key];
-                break;
-            }
-        }
-        if (errorMessage === null) {
-            errorMessage = this.errorMessages['default'];
-        }
-
-        return super.getErrorMessage(objectIndex, errorMessage);
     }
 }

@@ -1,0 +1,16 @@
+{% include form/_variables.html %}
+
+{% capture mainContent %}
+<input type="text" id="{{ id }}" class="{{ mainClass }}" role="combobox" aria-autocomplete="list" autocomplete="off" {{ title }} {{ attributes }} />{% include form/field/partial/reset.html %}
+<div class="ds44-autocomp-container hidden">
+    <div class="ds44-autocomp-list">
+        <ul class="ds44-list" role="listbox"></ul>
+    </div>
+</div>
+{% endcapture %}
+
+{% capture labelContent %}
+{% include form/field/partial/label.html content=mainContent disabled=include.disabled %}
+{% endcapture %}
+
+{% include form/field/partial/container.html content=labelContent %}

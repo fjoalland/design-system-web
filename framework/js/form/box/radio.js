@@ -1,8 +1,8 @@
-class FormRadio extends FormBoxAbstract {
+class FormBoxRadio extends FormBoxAbstract {
     constructor() {
         super('radio');
     }
 }
 
 // Singleton
-new FormRadio();
+new FormBoxRadio();

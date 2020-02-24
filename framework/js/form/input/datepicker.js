@@ -1,4 +1,4 @@
-class FormDatepickerStandard extends FormInputAbstract {
+class FormInputDatepicker extends FormInputAbstract {
     constructor() {
         super('.ds44-datepicker__shape', 'datepicker');
     }
@@ -18,9 +18,7 @@ class FormDatepickerStandard extends FormInputAbstract {
 
         object.valueElement = valueElement;
         object.inputElements = element.querySelectorAll('input[type="number"]');
-        object.isRequired = (element.getAttribute('data-required') === 'true');
 
-        MiscEvent.addListener('click', this.focusIn.bind(this, objectIndex), object.labelElement);
         object.inputElements.forEach((inputElement) => {
             MiscEvent.addListener('focus', this.focus.bind(this, objectIndex), inputElement);
             MiscEvent.addListener('blur', this.blur.bind(this, objectIndex), inputElement);
@@ -66,13 +64,14 @@ class FormDatepickerStandard extends FormInputAbstract {
         super.reset(objectIndex);
     }
 
-    focusIn(objectIndex) {
+    disableElements(objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.inputElements[0]) {
-            return;
-        }
 
-        MiscAccessibility.setFocus(object.inputElements[0]);
+        object.inputElements[0].value = null;
+        object.inputElements[1].value = null;
+        object.inputElements[2].value = null;
+
+        super.disableElements(objectIndex);
     }
 
     focus(objectIndex) {
@@ -165,28 +164,7 @@ class FormDatepickerStandard extends FormInputAbstract {
             }
         )
     }
-
-    checkValidity(objectIndex) {
-        this.removeInvalid(objectIndex);
-
-        const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-
-        if (
-            object.isRequired &&
-            !object.textElement.classList.contains('ds44-inputDisabled') &&
-            !this.getData(objectIndex)
-        ) {
-            this.invalid(objectIndex);
-
-            return false;
-        }
-
-        return true;
-    }
 }
 
 // Singleton
-new FormDatepickerStandard();
+new FormInputDatepicker();

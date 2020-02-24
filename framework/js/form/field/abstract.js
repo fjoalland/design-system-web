@@ -3,11 +3,7 @@ class FormFieldAbstract {
         this.category = category;
         this.objects = [];
         this.labelClassName = 'ds44-moveLabel';
-        this.errorMessages = {
-            'default': '"{fieldName}" n\'est pas valide',
-            'valueMissing': 'Veuillez renseigner : {fieldName}',
-            'patternMismatch': 'Veuillez renseigner "{fieldName}" avec le bon format',
-        };
+        this.errorMessage = 'Veuillez renseigner : {fieldName}';
 
         if (typeof selector === 'object') {
             // Elements passed as parameter, not text selector
@@ -30,8 +26,13 @@ class FormFieldAbstract {
         const object = {
             'id': MiscUtils.generateId(),
             'name': element.getAttribute('id'),
-            'containerElement': (element.closest('.ds44-form__container') || element)
+            'containerElement': (element.closest('.ds44-form__container') || element),
+            'isRequired': (element.getAttribute('required') !== null || element.getAttribute('data-required') === 'true'),
+            'isEnabled': !(element.getAttribute('disabled') !== null || element.getAttribute('data-disabled') === 'true')
         };
+        element.removeAttribute('data-required');
+        element.removeAttribute('data-disabled');
+
         const valuesAllowed = element.getAttribute('data-values');
         if (valuesAllowed) {
             object.valuesAllowed = JSON.parse(valuesAllowed);
@@ -111,9 +112,12 @@ class FormFieldAbstract {
 
         const object = this.objects[objectIndex];
 
-        object.inputElements.forEach((inputElement) => {
-            inputElement.removeAttribute('disabled');
-        });
+        object.isEnabled = true;
+        this.enableElements(objectIndex, evt);
+    }
+
+    enableElements(objectIndex, evt) {
+        // Abstract method
     }
 
     isEnableAllowed(objectIndex, evt) {
@@ -163,12 +167,16 @@ class FormFieldAbstract {
     disable(objectIndex) {
         const object = this.objects[objectIndex];
 
-        object.inputElements.forEach((inputElement) => {
-            inputElement.setAttribute('disabled', 'true');
-        });
+        object.isEnabled = false;
+        this.disableElements(objectIndex);
 
         this.setData(objectIndex);
+        this.removeInvalid(objectIndex);
         this.enableDisableLinkedField(objectIndex);
+    }
+
+    disableElements(objectIndex) {
+        // Abstract method
     }
 
     validate(evt) {
@@ -213,7 +221,20 @@ class FormFieldAbstract {
     }
 
     checkValidity(objectIndex) {
-        // Abstract method
+        this.removeInvalid(objectIndex);
+
+        const object = this.objects[objectIndex];
+        if (
+            object.isRequired &&
+            object.isEnabled &&
+            !this.getData(objectIndex)
+        ) {
+            this.invalid(objectIndex);
+
+            return false;
+        }
+
+        return true;
     }
 
     invalid(objectIndex) {
@@ -250,13 +271,13 @@ class FormFieldAbstract {
         errorMessageElement.appendChild(errorTextElement);
     }
 
-    getErrorMessage(objectIndex, errorMessage = this.errorMessages['valueMissing']) {
+    getErrorMessage(objectIndex) {
         const object = this.objects[objectIndex];
         if (!object.labelElement) {
-            return errorMessage;
+            return this.errorMessage;
         }
 
-        return errorMessage
+        return this.errorMessage
             .replace(
                 '{fieldName}',
                 object.labelElement.innerText.replace(/\*$/, '')
