@@ -52,7 +52,7 @@ class FormStandard {
 
         // All the component categories answered the call, we can carry on with the form validation
         if (isFinished) {
-            MiscEvent.dispatch('submit', null, evt.currentTarget);
+            this.submit(evt);
         }
     }
 
