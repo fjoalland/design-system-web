@@ -264,6 +264,12 @@ a > .ds44-btn--contextual,
     font-weight: bold;
 }
 
+.ds44-btnStd {
+  &.ds44-fullWBtn {
+      padding: 1rem $ds44-padding-box;
+  }
+}
+
 .ds44-btnSelect {
 
     @include ds44-font-sizes(largeButton);  // 16px
