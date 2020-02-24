@@ -22,14 +22,6 @@
     {% assign iconClass = 'icon--sizeL' %}
 {% endif %}
 
-{% if include.required == 'true' %}
-    {% assign requiredStar = '<sup aria-hidden="true">*</sup>' %}
-    {% assign requiredAttributes = 'required aria-required="true"' %}
-{% else %}
-    {% assign requiredStar = '' %}
-    {% assign requiredAttributes = '' %}
-{% endif %}
-
 {% if include.title %}
     {% assign title = 'title="' | append: include.title | append: '"' %}
 {% else %}
@@ -54,8 +46,27 @@
     {% assign attributes = '' %}
 {% endif %}
 
+{% if include.containerAttributes %}
+    {% assign containerAttributes = include.containerAttributes %}
+{% else %}
+    {% assign containerAttributes = '' %}
+{% endif %}
+
 {% if include.labelClass %}
     {% assign labelClass = include.labelClass %}
 {% else %}
     {% assign labelClass = 'ds44-formLabel' %}
+{% endif %}
+
+{% if include.required == 'true' %}
+    {% assign requiredStar = '<sup aria-hidden="true">*</sup>' %}
+    {% assign attributes = attributes | append : ' required aria-required="true"' %}
+    {% assign containerAttributes = containerAttributes | append : ' data-required="true"' %}
+{% else %}
+    {% assign requiredStar = '' %}
+{% endif %}
+
+{% if include.disabled == 'true' %}
+    {% assign attributes = attributes | append: ' disabled' %}
+    {% assign containerAttributes = containerAttributes | append : ' data-disabled="true"' %}
 {% endif %}

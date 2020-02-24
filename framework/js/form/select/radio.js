@@ -9,7 +9,7 @@ class FormSelectRadio extends FormSelectAbstract {
                     return;
                 }
 
-                if(!formContainer.querySelector('.ds44-select-container .ds44-select-list_elem input[type="radio"]')) {
+                if (!formContainer.querySelector('.ds44-select-container .ds44-select-list_elem input[type="radio"]')) {
                     return
                 }
 
@@ -25,7 +25,7 @@ class FormSelectRadio extends FormSelectAbstract {
 
     setListElementEvents(listElement, objectIndex) {
         const listInputElement = listElement.querySelector('input');
-        if(!listInputElement) {
+        if (!listInputElement) {
             return;
         }
 
@@ -33,7 +33,7 @@ class FormSelectRadio extends FormSelectAbstract {
     }
 
     nextOption(objectIndex, evt) {
-        if(evt) {
+        if (evt) {
             evt.preventDefault();
             evt.stopPropagation();
         }
@@ -42,18 +42,19 @@ class FormSelectRadio extends FormSelectAbstract {
         if (!object.selectListElement) {
             return;
         }
+        if (!object.isExpanded) {
+            return;
+        }
 
-        if (object.isExpanded) {
-            const listItems = this.getListItems(object.selectListElement);
-            if (!listItems.selected) {
-                // Select first
-                MiscAccessibility.setFocus(listItems.first);
-            }
+        const listItems = this.getListItems(object.selectListElement);
+        if (!listItems.selected) {
+            // Select first
+            MiscAccessibility.setFocus(listItems.first);
         }
     }
 
     previousOption(objectIndex, evt) {
-        if(evt) {
+        if (evt) {
             evt.preventDefault();
             evt.stopPropagation();
         }
@@ -62,13 +63,14 @@ class FormSelectRadio extends FormSelectAbstract {
         if (!object.selectListElement) {
             return;
         }
+        if (!object.isExpanded) {
+            return;
+        }
 
-        if (object.isExpanded) {
-            const listItems = this.getListItems(object.selectListElement);
-            if (!listItems.selected) {
-                // Select last
-                MiscAccessibility.setFocus(listItems.last);
-            }
+        const listItems = this.getListItems(object.selectListElement);
+        if (!listItems.selected) {
+            // Select last
+            MiscAccessibility.setFocus(listItems.last);
         }
     }
 
@@ -76,13 +78,13 @@ class FormSelectRadio extends FormSelectAbstract {
         let previousItem = null;
         let nextItem = null;
         const selectedListItem = parentElement.querySelector('.ds44-select-list_elem input:focus');
-        if(selectedListItem) {
+        if (selectedListItem) {
             previousItem = MiscDom.getPreviousSibling(selectedListItem.closest('.ds44-select-list_elem'));
-            if(previousItem) {
+            if (previousItem) {
                 previousItem = previousItem.querySelector('input');
             }
             nextItem = MiscDom.getNextSibling(selectedListItem.closest('.ds44-select-list_elem'));
-            if(nextItem) {
+            if (nextItem) {
                 nextItem = nextItem.querySelector('input');
             }
         }

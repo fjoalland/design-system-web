@@ -1,0 +1,12 @@
+{% include form/_variables.html %}
+
+<div id="{{ id }}" class="ds44-form__radio_container" {{ containerAttributes }}>
+    {% assign choices = (include.choices | split:',') %}
+    {% for choiceData in choices %}
+        {% assign choice = (choiceData | split:':') %}
+        {% assign value = choice[0] %}
+        {% assign label = choice[1] %}
+
+        {% include form/field/box/radio.html name=include.name value=value label=label list=include.list attributes=attributes %}
+    {% endfor %}
+</div>

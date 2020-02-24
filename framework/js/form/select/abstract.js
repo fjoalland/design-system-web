@@ -1,5 +1,7 @@
 class FormSelectAbstract extends FormFieldAbstract {
     create(element) {
+        this.labelClassName = 'ds44-moveSelectLabel';
+
         super.create(element);
 
         // Create corresponding hidden input to store the value
@@ -11,23 +13,14 @@ class FormSelectAbstract extends FormFieldAbstract {
 
         const objectIndex = (this.objects.length - 1);
         const object = this.objects[objectIndex];
+        object.textElement = element;
         object.valueElement = valueElement;
-        object.shapeElement = null;
-        object.labelElement = null;
-        object.buttonElement = null;
-        object.buttonIconElement = null;
-        object.buttonTextElement = null;
-        if (object.containerElement) {
-            object.shapeElement = object.containerElement.querySelector('.ds44-select__shape');
-            object.labelElement = object.containerElement.querySelector('.ds44-selectLabel');
-            object.buttonElement = object.containerElement.querySelector('.ds44-btnOpen');
-            object.buttonIconElement = object.containerElement.querySelector('.ds44-btnOpen .icon');
-            object.buttonTextElement = object.containerElement.querySelector('.ds44-btnOpen .visually-hidden');
-        }
+        object.shapeElement = object.containerElement.querySelector('.ds44-select__shape');
+        object.labelElement = object.containerElement.querySelector('.ds44-selectLabel');
+        object.buttonElement = object.containerElement.querySelector('.ds44-btnOpen');
+        object.buttonIconElement = object.containerElement.querySelector('.ds44-btnOpen .icon');
+        object.buttonTextElement = object.containerElement.querySelector('.ds44-btnOpen .visually-hidden');
         object.isExpanded = false;
-        object.isRequired = (element.getAttribute('data-required') === 'true');
-
-        this.hide(objectIndex);
 
         MiscEvent.addListener('keyUp:escape', this.hide.bind(this, objectIndex));
         MiscEvent.addListener('keyUp:arrowup', this.previousOption.bind(this, objectIndex));
@@ -38,10 +31,7 @@ class FormSelectAbstract extends FormFieldAbstract {
         MiscEvent.addListener('focusout', this.focusOut.bind(this, objectIndex), object.containerElement);
         MiscEvent.addListener('click', this.focusOut.bind(this, objectIndex), document.body);
 
-        object.selectContainerElement = null;
-        if (object.containerElement) {
-            object.selectContainerElement = object.containerElement.querySelector('.ds44-select-container');
-        }
+        object.selectContainerElement = object.containerElement.querySelector('.ds44-select-container');
         object.selectListElement = null;
         object.selectButtonElement = null;
         if (object.selectContainerElement) {
@@ -58,22 +48,23 @@ class FormSelectAbstract extends FormFieldAbstract {
         if (object.selectButtonElement) {
             MiscEvent.addListener('click', this.record.bind(this, objectIndex), object.selectButtonElement);
         }
+
+        if (object.labelElement) {
+            object.labelElement.classList.remove(this.labelClassName);
+        }
+        this.hide(objectIndex);
     }
 
     setListElementEvents(listElement, objectIndex) {
         MiscEvent.addListener('mousedown', this.select.bind(this, objectIndex), listElement);
     }
 
-    enable(objectIndex, evt) {
+    enableElements(objectIndex, evt) {
         const object = this.objects[objectIndex];
         if (!object.shapeElement) {
             return;
         }
         if (!object.buttonElement) {
-            return;
-        }
-        if (!this.isEnableAllowed(objectIndex, evt)) {
-            this.disable(objectIndex);
             return;
         }
 
@@ -94,21 +85,15 @@ class FormSelectAbstract extends FormFieldAbstract {
         }
     }
 
-    disable(objectIndex) {
+    disableElements(objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.shapeElement) {
-            return;
-        }
         if (!object.labelElement) {
             return;
         }
+        if (!object.shapeElement) {
+            return;
+        }
         if (!object.buttonElement) {
-            return;
-        }
-        if (!object.valueElement) {
-            return;
-        }
-        if (!object.textElement) {
             return;
         }
         if (!object.selectListElement) {
@@ -122,37 +107,30 @@ class FormSelectAbstract extends FormFieldAbstract {
             });
 
         object.shapeElement.classList.add('ds44-inputDisabled');
-        object.labelElement.classList.remove('ds44-moveSelectLabel');
         object.buttonElement.setAttribute('tabindex', '-1');
         object.buttonElement.setAttribute('readonly', 'true');
-        object.valueElement.value = null;
-        object.textElement.innerText = null;
+        object.labelElement.classList.remove(this.labelClassName);
 
-        this.showHideResetButton(objectIndex);
-        this.enableDisableLinkedField(objectIndex);
         this.hide(objectIndex);
     }
 
-    getData(objectIndex) {
+    setData(objectIndex, data = null) {
         const object = this.objects[objectIndex];
         if (!object.valueElement) {
-            return null;
+            return;
+        }
+        if (!object.textElement) {
+            return;
         }
 
-        if (!object.valueElement.value) {
-            return null;
-        }
-
-        let data = {};
-        data[object.name] = object.valueElement.value;
-
-        return data;
+        object.valueElement.value = ((data && data.value) ? data.value : null);
+        object.textElement.innerText = ((data && data.text) ? data.text : null);
     }
 
     showHide(objectIndex) {
         const object = this.objects[objectIndex];
 
-        if (object.isExpanded === false) {
+        if (!object.isExpanded) {
             this.show(objectIndex);
 
             return;
@@ -163,9 +141,6 @@ class FormSelectAbstract extends FormFieldAbstract {
 
     focusOut(objectIndex, evt) {
         const object = this.objects[objectIndex];
-        if (!object.containerElement) {
-            return;
-        }
 
         if (
             evt &&
@@ -195,7 +170,7 @@ class FormSelectAbstract extends FormFieldAbstract {
             return;
         }
 
-        if (object.shapeElement.classList.contains('ds44-inputDisabled')) {
+        if (!object.isEnabled) {
             // Don't show if disabled
             if (evt) {
                 evt.stopPropagation();
@@ -329,19 +304,20 @@ class FormSelectAbstract extends FormFieldAbstract {
         if (!object.selectListElement) {
             return;
         }
+        if (!object.isExpanded) {
+            return;
+        }
 
-        if (object.isExpanded) {
-            const listItems = this.getListItems(object.selectListElement);
-            if (
-                !listItems.selected ||
-                listItems.selected === listItems.last
-            ) {
-                // Select first
-                MiscAccessibility.setFocus(listItems.first)
-            } else {
-                // Select next
-                MiscAccessibility.setFocus(listItems.next);
-            }
+        const listItems = this.getListItems(object.selectListElement);
+        if (
+            !listItems.selected ||
+            listItems.selected === listItems.last
+        ) {
+            // Select first
+            MiscAccessibility.setFocus(listItems.first)
+        } else {
+            // Select next
+            MiscAccessibility.setFocus(listItems.next);
         }
     }
 
@@ -352,22 +328,20 @@ class FormSelectAbstract extends FormFieldAbstract {
         }
 
         const object = this.objects[objectIndex];
-        if (!object.containerElement) {
+        if (!object.isExpanded) {
             return;
         }
 
-        if (object.isExpanded) {
-            const listItems = this.getListItems(object.selectListElement);
-            if (
-                !listItems.selected ||
-                listItems.selected === listItems.first
-            ) {
-                // Select last
-                MiscAccessibility.setFocus(listItems.last)
-            } else {
-                // Select previous
-                MiscAccessibility.setFocus(listItems.previous);
-            }
+        const listItems = this.getListItems(object.selectListElement);
+        if (
+            !listItems.selected ||
+            listItems.selected === listItems.first
+        ) {
+            // Select last
+            MiscAccessibility.setFocus(listItems.last)
+        } else {
+            // Select previous
+            MiscAccessibility.setFocus(listItems.previous);
         }
     }
 
@@ -413,19 +387,22 @@ class FormSelectAbstract extends FormFieldAbstract {
             });
         if (values.length === 0) {
             // No value
-            object.valueElement.value = null;
-            object.textElement.innerText = null;
-            object.labelElement.classList.remove('ds44-moveSelectLabel');
+            this.setData(objectIndex);
+            object.labelElement.classList.remove(this.labelClassName);
         } else {
-            object.valueElement.value = JSON.stringify(values);
-            object.textElement.innerText = texts.join(', ');
-            object.labelElement.classList.add('ds44-moveSelectLabel');
+            this.setData(
+                objectIndex,
+                {
+                    'value': JSON.stringify(values),
+                    'text': texts.join(', '),
+                }
+            );
+            object.labelElement.classList.add(this.labelClassName);
         }
 
         MiscAccessibility.setFocus(object.buttonElement);
 
         this.hide(objectIndex);
-
         this.checkValidity(objectIndex);
         this.enableDisableLinkedField(objectIndex);
 
@@ -438,7 +415,7 @@ class FormSelectAbstract extends FormFieldAbstract {
         }
     }
 
-    checkValidity(objectIndex) {
+    removeInvalid(objectIndex) {
         const object = this.objects[objectIndex];
         if (!object.valueElement) {
             return;
@@ -447,33 +424,19 @@ class FormSelectAbstract extends FormFieldAbstract {
             return;
         }
 
+        let elementError = object.containerElement.querySelector('.ds44-errorMsg-container');
+        if (elementError) {
+            elementError.remove();
+        }
+
         object.valueElement.removeAttribute('aria-invalid');
         object.valueElement.removeAttribute('aria-describedby');
         object.shapeElement.classList.remove('ds44-error');
-
-        if (object.containerElement) {
-            let elementError = object.containerElement.querySelector('.ds44-errorMsg-container');
-            if (elementError) {
-                elementError.remove();
-            }
-        }
-
-        if (
-            object.isRequired &&
-            !object.shapeElement.classList.contains('ds44-inputDisabled') &&
-            !object.valueElement.value
-        ) {
-            this.invalid(objectIndex);
-
-            return false;
-        }
-
-        return true;
     }
 
     invalid(objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.labelElement) {
+        if (!object.valueElement) {
             return;
         }
         if (!object.shapeElement) {
@@ -481,28 +444,7 @@ class FormSelectAbstract extends FormFieldAbstract {
         }
 
         const errorMessageElementId = MiscUtils.generateId();
-
-        let errorElement = document.createElement('div');
-        errorElement.classList.add('ds44-errorMsg-container');
-        object.containerElement.appendChild(errorElement);
-
-        let errorMessageElement = document.createElement('p');
-        errorMessageElement.setAttribute('id', errorMessageElementId);
-        errorMessageElement.classList.add('ds44-msgErrorText');
-        errorMessageElement.classList.add('ds44-msgErrorInvalid');
-        errorElement.appendChild(errorMessageElement);
-
-        let errorIconElement = document.createElement('i');
-        errorIconElement.classList.add('icon');
-        errorIconElement.classList.add('icon-attention');
-        errorIconElement.classList.add('icon--sizeM');
-        errorIconElement.setAttribute('aria-hidden', 'true');
-        errorMessageElement.appendChild(errorIconElement);
-
-        let errorTextElement = document.createElement('span');
-        errorTextElement.classList.add('ds44-iconInnerText');
-        errorTextElement.innerHTML = this.formatErrorMessage(this.errorMessages['valueMissing'], object.labelElement);
-        errorMessageElement.appendChild(errorTextElement);
+        this.showErrorMessage(objectIndex, errorMessageElementId);
 
         object.shapeElement.classList.add('ds44-error');
         object.valueElement.setAttribute('aria-invalid', 'true');

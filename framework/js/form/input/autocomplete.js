@@ -1,4 +1,4 @@
-class FormInputAutoComplete extends FormFieldAbstract {
+class FormInputAutoComplete extends FormInputAbstract {
     constructor() {
         super(
             'input[aria-autocomplete="list"]',
@@ -32,9 +32,7 @@ class FormInputAutoComplete extends FormFieldAbstract {
         object.metadataElement = metadataElement;
         object.autoCompleterElement = null;
         object.isExpanded = false;
-        if (object.containerElement) {
-            object.autoCompleterElement = object.containerElement.querySelector('.ds44-autocomp-container');
-        }
+        object.autoCompleterElement = object.containerElement.querySelector('.ds44-autocomp-container');
         if (object.autoCompleterElement) {
             object.autoCompleterListElement = object.autoCompleterElement.querySelector('.ds44-list');
         }
@@ -56,44 +54,53 @@ class FormInputAutoComplete extends FormFieldAbstract {
         MiscEvent.addListener('keyPress:enter', this.selectOption.bind(this, objectIndex));
         MiscEvent.addListener('keyUp:arrowup', this.previousOption.bind(this, objectIndex));
         MiscEvent.addListener('keyUp:arrowdown', this.nextOption.bind(this, objectIndex));
+        MiscEvent.addListener('focusout', this.focusOut.bind(this, objectIndex), object.containerElement);
 
-        if (object.containerElement) {
-            MiscEvent.addListener('focusout', this.focusOut.bind(this, objectIndex), object.containerElement);
-
-            object.containerElement
-                .querySelectorAll('.ds44-autocomp-buttons button')
-                .forEach((buttonElement) => {
-                    MiscEvent.addListener('click', this.select.bind(this, objectIndex), buttonElement);
-                });
-        }
+        object.containerElement
+            .querySelectorAll('.ds44-autocomp-buttons button')
+            .forEach((buttonElement) => {
+                MiscEvent.addListener('click', this.select.bind(this, objectIndex), buttonElement);
+            });
     }
 
-    disable(objectIndex) {
-        this.setNewValue(
-            objectIndex,
-            null,
-            null,
-            null
-        );
-
-        super.disable(objectIndex);
+    disableElements(objectIndex) {
+        super.disableElements(objectIndex);
 
         this.hide(objectIndex);
     }
 
-    getData(objectIndex) {
+    setData(objectIndex, data = null) {
+        super.setData(objectIndex, data);
+
         const object = this.objects[objectIndex];
-        if (!object.valueElement) {
+        if (!object.textElement) {
+            return;
+        }
+        if (!object.metadataElement) {
+            return;
+        }
+
+        object.currentElementValue = ((data && data.text) ? data.text : null);
+        if (object.currentElementValue) {
+            object.textElement.setAttribute('value', object.currentElementValue);
+        } else {
+            object.textElement.removeAttribute('value');
+        }
+        if(object.textElement.value !== object.currentElementValue) {
+            object.textElement.value = object.currentElementValue;
+        }
+        object.metadataElement.value = ((data && data.metadata) ? data.metadata : null);
+    }
+
+    getData(objectIndex) {
+        let data = super.getData(objectIndex);
+        if (!data) {
             return null;
         }
 
-        if (!object.valueElement.value) {
-            return null;
-        }
-
-        let data = {};
+        const object = this.objects[objectIndex];
         data[object.name] = {
-            'value': object.valueElement.value,
+            'value': data[object.name],
             'metadata': (object.metadataElement.value ? JSON.parse(object.metadataElement.value) : null)
         };
 
@@ -131,23 +138,6 @@ class FormInputAutoComplete extends FormFieldAbstract {
         this.autoComplete(objectIndex);
     }
 
-    reset(objectIndex) {
-        const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-
-        this.setNewValue(
-            objectIndex,
-            null,
-            null,
-            null
-        );
-        this.showHideResetButton(objectIndex);
-        this.enableDisableLinkedField(objectIndex);
-        MiscAccessibility.setFocus(object.textElement);
-    }
-
     autoComplete(objectIndex) {
         const object = this.objects[objectIndex];
         if (!object.textElement) {
@@ -168,14 +158,22 @@ class FormInputAutoComplete extends FormFieldAbstract {
             object.mode === this.FREE_TEXT_MODE ||
             !object.textElement.value
         ) {
-            this.setNewValue(
+            this.setData(
                 objectIndex,
-                object.textElement.value,
-                object.textElement.value
+                {
+                    'text': object.textElement.value,
+                    'value': object.textElement.value
+                }
             );
         } else {
-            object.valueElement.value = null;
-            object.metadataElement.value = null;
+            this.setData(
+                objectIndex,
+                {
+                    'text': object.textElement.value,
+                    'value': null,
+                    'metadata': null
+                }
+            );
         }
 
         if (!object.textElement.value) {
@@ -270,9 +268,6 @@ class FormInputAutoComplete extends FormFieldAbstract {
         if (!object.valueElement) {
             return;
         }
-        if (!object.containerElement) {
-            return;
-        }
 
         if (
             evt &&
@@ -284,7 +279,7 @@ class FormInputAutoComplete extends FormFieldAbstract {
 
         if (
             object.mode === this.SELECT_ONLY_MODE &&
-            !object.valueElement.value
+            !this.getData(objectIndex)
         ) {
             object.textElement.value = null;
             object.currentElementValue = null;
@@ -296,9 +291,9 @@ class FormInputAutoComplete extends FormFieldAbstract {
     }
 
     invalid(objectIndex) {
-        this.hide(objectIndex);
-
         super.invalid(objectIndex);
+
+        this.hide(objectIndex);
     }
 
     show(objectIndex) {
@@ -373,20 +368,21 @@ class FormInputAutoComplete extends FormFieldAbstract {
         if (!object.autoCompleterListElement) {
             return;
         }
+        if (!object.isExpanded) {
+            return;
+        }
 
-        if (object.isExpanded) {
-            const selectedListItem = object.autoCompleterListElement.querySelector('.ds44-autocomp-list_elem:focus');
-            const lastListItem = object.autoCompleterListElement.querySelector('.ds44-autocomp-list_elem:last-child');
-            if (
-                !selectedListItem ||
-                selectedListItem === lastListItem
-            ) {
-                // Select first
-                MiscAccessibility.setFocus(object.autoCompleterListElement.querySelector('.ds44-autocomp-list_elem'));
-            } else {
-                // Select next
-                MiscAccessibility.setFocus(MiscDom.getNextSibling(selectedListItem));
-            }
+        const selectedListItem = object.autoCompleterListElement.querySelector('.ds44-autocomp-list_elem:focus');
+        const lastListItem = object.autoCompleterListElement.querySelector('.ds44-autocomp-list_elem:last-child');
+        if (
+            !selectedListItem ||
+            selectedListItem === lastListItem
+        ) {
+            // Select first
+            MiscAccessibility.setFocus(object.autoCompleterListElement.querySelector('.ds44-autocomp-list_elem'));
+        } else {
+            // Select next
+            MiscAccessibility.setFocus(MiscDom.getNextSibling(selectedListItem));
         }
     }
 
@@ -394,23 +390,21 @@ class FormInputAutoComplete extends FormFieldAbstract {
         evt.preventDefault();
 
         const object = this.objects[objectIndex];
-        if (!object.containerElement) {
+        if (!object.isExpanded) {
             return;
         }
 
-        if (object.isExpanded) {
-            const selectedListItem = object.autoCompleterListElement.querySelector('.ds44-autocomp-list_elem:focus');
-            const firstListItem = object.autoCompleterListElement.querySelector('.ds44-autocomp-list_elem:first-child');
-            if (
-                !selectedListItem ||
-                selectedListItem === firstListItem
-            ) {
-                // Select last
-                MiscAccessibility.setFocus(object.autoCompleterListElement.querySelector('.ds44-autocomp-list_elem:last-child'))
-            } else {
-                // Select previous
-                MiscAccessibility.setFocus(MiscDom.getPreviousSibling(selectedListItem));
-            }
+        const selectedListItem = object.autoCompleterListElement.querySelector('.ds44-autocomp-list_elem:focus');
+        const firstListItem = object.autoCompleterListElement.querySelector('.ds44-autocomp-list_elem:first-child');
+        if (
+            !selectedListItem ||
+            selectedListItem === firstListItem
+        ) {
+            // Select last
+            MiscAccessibility.setFocus(object.autoCompleterListElement.querySelector('.ds44-autocomp-list_elem:last-child'))
+        } else {
+            // Select previous
+            MiscAccessibility.setFocus(MiscDom.getPreviousSibling(selectedListItem));
         }
     }
 
@@ -472,14 +466,16 @@ class FormInputAutoComplete extends FormFieldAbstract {
             return;
         }
 
-        this.setNewValue(
+        this.setData(
             objectIndex,
-            currentItem.getAttribute('data-text'),
-            currentItem.getAttribute('data-value'),
-            currentItem.getAttribute('data-metadata')
+            {
+                'text': currentItem.getAttribute('data-text'),
+                'value': currentItem.getAttribute('data-value'),
+                'metadata': currentItem.getAttribute('data-metadata')
+            }
         );
 
-        MiscAccessibility.setFocus(object.textElement);
+        this.focusOnTextElement(objectIndex);
 
         this.hide(objectIndex);
 
@@ -505,29 +501,6 @@ class FormInputAutoComplete extends FormFieldAbstract {
             })
         );
         this.selectRecord(objectIndex, currentItem);
-    }
-
-    setNewValue(objectIndex, newText, newValue, newMetadata = null) {
-        const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.valueElement) {
-            return;
-        }
-        if (!object.metadataElement) {
-            return;
-        }
-
-        object.textElement.value = newText;
-        object.valueElement.value = newValue;
-        object.metadataElement.value = newMetadata;
-        object.currentElementValue = newText;
-        if (object.currentElementValue) {
-            object.textElement.setAttribute('value', object.currentElementValue);
-        } else {
-            object.textElement.removeAttribute('value');
-        }
     }
 }
 

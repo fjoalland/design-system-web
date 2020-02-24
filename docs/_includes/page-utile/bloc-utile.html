@@ -13,23 +13,23 @@
               <div role="combobox" aria-expanded="true" aria-owns="listbox{{ include.number }}" aria-activedescendant="selected_option" aria-labelledby="{{ include.label }}">
                   <ul class="ds44-list ds44-mt-std" role="listbox" id="listbox{{ include.number }}">
                       <li class="ds44-utile-list_elem" role="option" id="selected_option">
-                          {% include forms/inc-radio.html name="bloc-utile" label="L’information n’est pas assez complète" value="1" %}
+                          {% include form/field/box/radio.html name="bloc-utile" label="L’information n’est pas assez complète" value="1" %}
                       </li>
                       <li class="ds44-utile-list_elem" role="option">
-                          {% include forms/inc-radio.html name="bloc-utile" label="L’information est trop compliquée" value="2" %}
+                          {% include form/field/box/radio.html name="bloc-utile" label="L’information est trop compliquée" value="2" %}
                       </li>
                       <li class="ds44-utile-list_elem" role="option">
-                          {% include forms/inc-radio.html name="bloc-utile" label="Il y a trop à lire" value="3" %}
+                          {% include form/field/box/radio.html name="bloc-utile" label="Il y a trop à lire" value="3" %}
                       </li>
                       <li class="ds44-utile-list_elem" role="option">
-                          {% include forms/inc-radio.html name="bloc-utile" label="Autre" value="4" %}
+                          {% include form/field/box/radio.html name="bloc-utile" label="Autre" value="4" %}
                       </li>
                   </ul>
               </div>
             </div>
             <div class="col ds44--xl-padding-l">
               <p>Aidez-nous à améliorer cette page en nous laissant un commentaire :</p>
-              {% include forms/inc-textarea.html label="Commentaire" %}
+              {% include form/field/input/textarea.html label="Commentaire" %}
               <button class="ds44-btnStd" type="button"><span class="ds44-btnInnerText">Envoyer</span><i class="icon icon-long-arrow-right" aria-hidden="true"></i></button>
             </div>
       </div>

@@ -1,17 +1,17 @@
-{% include forms/_variables.html %}
+{% include form/_variables.html %}
 {% include images/loader.html %}
 
 <form data-is-ajax="true">
-    {% include forms/parts/recherche-facette-main.html %}
+    {% include form/layout/partial/recherche-facette-main.html %}
 
     <div class="ds44-facetteContainer ds44-theme ds44-flex-container ds44-medium-flex-col">
         <div class="ds44-flex-container ds44-medium-flex-col">
             <p class="ds44-heading ds44-fg1">Filter par</p>
             <div class="ds44-fieldContainer ds44-fg1 ds44-fieldContainer--select">
-                {% include forms/inc-select-multiple.html label="Choix multiple" attributes='data-auto-submit="true"' %}
+                {% include form/field/select/checkbox.html label="Choix multiple" containerAttributes='data-auto-submit="true"' %}
             </div>
             <div class="ds44-fieldContainer ds44-fg1 ds44-fieldContainer--select">
-                {% include forms/inc-select-std.html label="Choix unique" attributes='data-auto-submit="true"' %}
+                {% include form/field/select/radio.html label="Choix unique" containerAttributes='data-auto-submit="true"' %}
             </div>
         </div>
         <div class="ds44-push ds44-small-fg1">

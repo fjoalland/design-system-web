@@ -1,0 +1,23 @@
+{% include form/_variables.html %}
+
+{% if include.explanation %}
+    {% capture explanation %}
+        <span class="ds44-labelTypeInfoComp">{{ include.explanation }}</span>
+    {% endcapture %}
+{% endif %}
+
+{% if include.required == 'true' %}
+    {% assign title = 'title="' | append: label | append: ' - obligatoire"' %}
+{% else %}
+    {% assign title = 'title="' | append: label | append: '"' %}
+{% endif %}
+
+{% capture mainContent %}
+<div id="{{ id }}" class="ds44-datepicker__shape {{ mainClass }}" {{ title }} {{ containerAttributes }}>{{ explanation }}<input type="number" step="1" min="1" max="31" data-is-date="true" {{ attributes }}><span>/</span><input type="number" step="1" min="1" max="12" data-is-date="true" {{ attributes }}><span>/</span><input type="number" step="1" min="1900" max="3000" data-is-date="true" {{ attributes }}></div>{% include form/field/partial/reset.html %}
+{% endcapture %}
+
+{% capture labelContent %}
+{% include form/field/partial/label.html content=mainContent disabled=include.disabled %}
+{% endcapture %}
+
+{% include form/field/partial/container.html content=labelContent %}

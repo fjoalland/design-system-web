@@ -2,12 +2,8 @@ class FormFieldAbstract {
     constructor(selector, category) {
         this.category = category;
         this.objects = [];
-        this.mainClassName = 'ds44-moveLabel';
-        this.errorMessages = {
-            'default': '"{fieldName}" n\'est pas valide',
-            'valueMissing': 'Veuillez renseigner : {fieldName}',
-            'patternMismatch': 'Veuillez renseigner "{fieldName}" avec le bon format',
-        };
+        this.labelClassName = 'ds44-moveLabel';
+        this.errorMessage = 'Veuillez renseigner : {fieldName}';
 
         if (typeof selector === 'object') {
             // Elements passed as parameter, not text selector
@@ -30,74 +26,42 @@ class FormFieldAbstract {
         const object = {
             'id': MiscUtils.generateId(),
             'name': element.getAttribute('id'),
-            'textElement': element,
-            'labelElement': MiscDom.getPreviousSibling(element, 'span'),
-            'resetButton': MiscDom.getNextSibling(element, '.ds44-reset'),
-            'containerElement': element.closest('.ds44-form__container'),
+            'containerElement': (element.closest('.ds44-form__container') || element),
+            'isRequired': (element.getAttribute('required') !== null || element.getAttribute('data-required') === 'true'),
+            'isEnabled': !(element.getAttribute('disabled') !== null || element.getAttribute('data-disabled') === 'true')
         };
+        element.removeAttribute('data-required');
+        element.removeAttribute('data-disabled');
+
+        const valuesAllowed = element.getAttribute('data-values');
+        if (valuesAllowed) {
+            object.valuesAllowed = JSON.parse(valuesAllowed);
+        }
         this.objects.push(object);
         const objectIndex = (this.objects.length - 1);
 
-        if (object.labelElement) {
-            object.labelElement.classList.remove(this.mainClassName);
-        }
-
-        MiscEvent.addListener('focus', this.focus.bind(this, objectIndex), element);
-        MiscEvent.addListener('blur', this.blur.bind(this, objectIndex), element);
-        MiscEvent.addListener('invalid', this.invalid.bind(this, objectIndex), element);
-        MiscEvent.addListener('form:validate', this.validate.bind(this, objectIndex));
-        MiscEvent.addListener('keyUp:*', this.write.bind(this, objectIndex));
         MiscEvent.addListener('field:enable', this.enable.bind(this, objectIndex), object.containerElement);
         MiscEvent.addListener('field:disable', this.disable.bind(this, objectIndex), object.containerElement);
-        if (object.resetButton) {
-            MiscEvent.addListener('click', this.reset.bind(this, objectIndex), object.resetButton);
-        }
-        if (object.labelElement) {
-            MiscEvent.addListener('click', this.focusOnTextElement.bind(this, objectIndex), object.labelElement);
-        }
     }
 
-    write(objectIndex) {
-        const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (object.textElement !== document.activeElement) {
-            return;
-        }
-
-        this.showHideResetButton(objectIndex);
-        this.enableDisableLinkedField(objectIndex);
+    setData(objectIndex, data = null) {
+        // Abstract method
     }
 
-    reset(objectIndex) {
+    getData(objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
+        if (!object.valueElement) {
+            return null;
         }
 
-        object.textElement.value = null;
-        this.showHideResetButton(objectIndex);
-        this.enableDisableLinkedField(objectIndex);
-        MiscAccessibility.setFocus(object.textElement);
-    }
-
-    showHideResetButton(objectIndex) {
-        const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.resetButton) {
-            return;
+        if (!object.valueElement.value) {
+            return null;
         }
 
-        if (!object.textElement.value) {
-            // Hide reset button
-            object.resetButton.style.display = 'none';
-        } else {
-            // Hide reset button
-            object.resetButton.style.display = 'block';
-        }
+        let data = {};
+        data[object.name] = object.valueElement.value;
+
+        return data;
     }
 
     enableDisableLinkedField(objectIndex) {
@@ -140,26 +104,25 @@ class FormFieldAbstract {
     }
 
     enable(objectIndex, evt) {
-        const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
         if (!this.isEnableAllowed(objectIndex, evt)) {
             this.disable(objectIndex);
+
             return;
         }
 
-        object.textElement.removeAttribute('disabled');
+        const object = this.objects[objectIndex];
+
+        object.isEnabled = true;
+        this.enableElements(objectIndex, evt);
+    }
+
+    enableElements(objectIndex, evt) {
+        // Abstract method
     }
 
     isEnableAllowed(objectIndex, evt) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return false;
-        }
-
-        let valuesAllowed = object.textElement.getAttribute('data-values');
-        if (!valuesAllowed) {
+        if (!object.valuesAllowed) {
             return true;
         }
 
@@ -171,31 +134,49 @@ class FormFieldAbstract {
             return false;
         }
 
-        valuesAllowed = JSON.parse(valuesAllowed);
         let currentValues = evt.detail.data[Object.keys(evt.detail.data)[0]];
         try {
             currentValues = JSON.parse(currentValues);
         } catch (ex) {
         }
 
-        return MiscUtils.isValuesAllowed(currentValues, valuesAllowed);
+        if (typeof currentValues === 'object' && currentValues.value !== undefined) {
+            if (!object.valuesAllowed.includes(currentValues.value)) {
+                return false;
+            }
+
+            return true;
+        }
+
+        if (typeof currentValues === 'object') {
+            const valuesIntersection = (object.valuesAllowed.filter(value => currentValues.includes(value)));
+            if (valuesIntersection.length === 0) {
+                return false;
+            }
+
+            return true;
+        }
+
+        if (!object.valuesAllowed.includes(currentValues)) {
+            return false;
+        }
+
+        return true;
     }
 
     disable(objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.labelElement) {
-            return;
-        }
 
-        object.textElement.value = null;
-        object.textElement.setAttribute('disabled', 'true');
-        object.labelElement.classList.remove('ds44-moveLabel');
+        object.isEnabled = false;
+        this.disableElements(objectIndex);
 
-        this.showHideResetButton(objectIndex);
+        this.setData(objectIndex);
+        this.removeInvalid(objectIndex);
         this.enableDisableLinkedField(objectIndex);
+    }
+
+    disableElements(objectIndex) {
+        // Abstract method
     }
 
     validate(evt) {
@@ -235,112 +216,42 @@ class FormFieldAbstract {
         );
     }
 
-    getData(objectIndex) {
-        const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return null;
-        }
-
-        if (!object.textElement.value) {
-            return null;
-        }
-
-        let data = {};
-        data[object.name] = object.textElement.value;
-
-        return data;
-    }
-
-    focusOnTextElement(objectIndex) {
-        const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-
-        MiscAccessibility.setFocus(object.textElement);
-    }
-
-    focus(objectIndex) {
-        const object = this.objects[objectIndex];
-
-        if (object.labelElement) {
-            object.labelElement.classList.add(this.mainClassName);
-        }
-    }
-
-    blur(objectIndex) {
-        const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.labelElement) {
-            return;
-        }
-
-        if (!object.textElement.value) {
-            object.labelElement.classList.remove(this.mainClassName);
-        }
+    removeInvalid(objectIndex) {
+        // Abstract method
     }
 
     checkValidity(objectIndex) {
+        this.removeInvalid(objectIndex);
+
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
+        if (
+            object.isRequired &&
+            object.isEnabled &&
+            !this.getData(objectIndex)
+        ) {
+            this.invalid(objectIndex);
+
+            return false;
         }
 
-        object.textElement.removeAttribute('aria-invalid');
-        object.textElement.removeAttribute('aria-describedby');
-        object.textElement.classList.remove('ds44-error');
-
-        if (object.containerElement) {
-            let elementError = object.containerElement.querySelector('.ds44-errorMsg-container');
-            if (elementError) {
-                elementError.remove();
-            }
-        }
-
-        return object.textElement.checkValidity();
+        return true;
     }
 
     invalid(objectIndex) {
+        // Abstract method
+    }
+
+    showErrorMessage(objectIndex, errorMessageElementId) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.labelElement) {
-            return;
-        }
-        if (!object.containerElement) {
-            return;
-        }
 
         let errorElement = object.containerElement.querySelector('.ds44-errorMsg-container');
         if (errorElement) {
             errorElement.remove();
         }
-
-        let errorMessage = null;
-        for (let key in object.textElement.validity) {
-            if (key === 'valid') {
-                continue;
-            }
-
-            let isInError = object.textElement.validity[key];
-            if (isInError && this.errorMessages[key]) {
-                errorMessage = this.errorMessages[key];
-                break;
-            }
-        }
-        if (errorMessage === null) {
-            errorMessage = this.errorMessages['default'];
-        }
-        errorMessage = this.formatErrorMessage(errorMessage, object.labelElement);
-
         errorElement = document.createElement('div');
         errorElement.classList.add('ds44-errorMsg-container');
         object.containerElement.appendChild(errorElement);
 
-        const errorMessageElementId = MiscUtils.generateId();
         let errorMessageElement = document.createElement('p');
         errorMessageElement.setAttribute('id', errorMessageElementId);
         errorMessageElement.classList.add('ds44-msgErrorText');
@@ -356,16 +267,20 @@ class FormFieldAbstract {
 
         let errorTextElement = document.createElement('span');
         errorTextElement.classList.add('ds44-iconInnerText');
-        errorTextElement.innerHTML = errorMessage;
+        errorTextElement.innerHTML = this.getErrorMessage(objectIndex);
         errorMessageElement.appendChild(errorTextElement);
-
-        object.textElement.classList.add('ds44-error');
-        object.textElement.setAttribute('aria-invalid', 'true');
-        object.textElement.setAttribute('aria-describedby', errorMessageElementId);
     }
 
-    formatErrorMessage(errorMessage, labelElement) {
-        return errorMessage
-            .replace('{fieldName}', labelElement.innerText.replace(/\*$/, ''));
+    getErrorMessage(objectIndex) {
+        const object = this.objects[objectIndex];
+        if (!object.labelElement) {
+            return this.errorMessage;
+        }
+
+        return this.errorMessage
+            .replace(
+                '{fieldName}',
+                object.labelElement.innerText.replace(/\*$/, '')
+            );
     }
 }
