@@ -56,7 +56,7 @@ input {
     .ds44-labelTypePlaceholder,
     .ds44-labelTypePlaceholderLarge {
         position: absolute;
-        top: 1.2rem;
+        top: 1.1rem;
         left: $ds44-padding-box;
         transition: all $ds44-timing-standard ease-in-out;
         color: $ds44-gray;
@@ -350,11 +350,13 @@ input[type=radio],
 
             li {
                 display: inline-block;
-                margin: 0.5em $ds44-padding-medium;
+                margin: 0.6em $ds44-padding-medium;
 
                 a {
                     text-decoration: none;
                     width: auto;
+                    font-weight: bold;
+                    @include ds44-font-sizes(smallText); // 14px
                 }
             }
         }
