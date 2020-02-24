@@ -241,7 +241,7 @@ class FormFieldAbstract {
         // Abstract method
     }
 
-    showErrorMessage(objectIndex, errorMessageElementId) {
+    showErrorMessage(objectIndex, errorMessageElementId = null) {
         const object = this.objects[objectIndex];
 
         let errorElement = object.containerElement.querySelector('.ds44-errorMsg-container');
@@ -253,7 +253,9 @@ class FormFieldAbstract {
         object.containerElement.appendChild(errorElement);
 
         let errorMessageElement = document.createElement('p');
-        errorMessageElement.setAttribute('id', errorMessageElementId);
+        if (errorMessageElementId) {
+            errorMessageElement.setAttribute('id', errorMessageElementId);
+        }
         errorMessageElement.classList.add('ds44-msgErrorText');
         errorMessageElement.classList.add('ds44-msgErrorInvalid');
         errorElement.appendChild(errorMessageElement);

@@ -16,7 +16,6 @@ class FormInputAutoComplete extends FormInputAbstract {
         let valueElement = document.createElement('input');
         valueElement.classList.add('ds44-input-value');
         valueElement.setAttribute('type', 'hidden');
-        valueElement.setAttribute('aria-hidden', 'true');
         element.parentNode.insertBefore(valueElement, element);
 
         // Create corresponding hidden input to store the metadata

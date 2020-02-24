@@ -97,8 +97,6 @@ class FormBoxAbstract extends FormFieldAbstract {
         }
 
         object.inputElements.forEach((inputElement) => {
-            inputElement.removeAttribute('aria-invalid');
-            inputElement.removeAttribute('aria-describedby');
             inputElement.classList.remove('ds44-boxError');
         });
     }
@@ -106,13 +104,10 @@ class FormBoxAbstract extends FormFieldAbstract {
     invalid(objectIndex) {
         const object = this.objects[objectIndex];
 
-        const errorMessageElementId = MiscUtils.generateId();
-        this.showErrorMessage(objectIndex, errorMessageElementId);
+        this.showErrorMessage(objectIndex);
 
         object.inputElements.forEach((inputElement) => {
             inputElement.classList.add('ds44-boxError');
-            inputElement.setAttribute('aria-invalid', 'true');
-            inputElement.setAttribute('aria-describedby', errorMessageElementId)
         });
     }
 }

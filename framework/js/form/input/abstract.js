@@ -128,10 +128,6 @@ class FormInputAbstract extends FormFieldAbstract {
             elementError.remove();
         }
 
-        object.inputElements.forEach((inputElement) => {
-            inputElement.removeAttribute('aria-invalid');
-            inputElement.removeAttribute('aria-describedby');
-        });
         object.textElement.classList.remove('ds44-error');
     }
 
@@ -141,13 +137,8 @@ class FormInputAbstract extends FormFieldAbstract {
             return;
         }
 
-        const errorMessageElementId = MiscUtils.generateId();
-        this.showErrorMessage(objectIndex, errorMessageElementId);
+        this.showErrorMessage(objectIndex);
 
-        object.inputElements.forEach((inputElement) => {
-            inputElement.setAttribute('aria-invalid', 'true');
-            inputElement.setAttribute('aria-describedby', errorMessageElementId)
-        });
         object.textElement.classList.add('ds44-error');
     }
 }

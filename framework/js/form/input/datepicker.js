@@ -10,7 +10,6 @@ class FormInputDatepicker extends FormInputAbstract {
         let valueElement = document.createElement('input');
         valueElement.classList.add('ds44-input-value');
         valueElement.setAttribute('type', 'hidden');
-        valueElement.setAttribute('aria-hidden', 'true');
         element.parentNode.insertBefore(valueElement, element);
 
         const objectIndex = (this.objects.length - 1);

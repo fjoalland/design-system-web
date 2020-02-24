@@ -86,11 +86,9 @@ class FormSelectStandard extends FormSelectAbstract {
             selectedListItem.classList.remove('selected_option');
             selectedListItem.removeAttribute('id');
             selectedListItem.removeAttribute('aria-selected');
-            selectedListItem.removeAttribute('aria-checked');
         }
         currentItem.classList.add('selected_option');
         currentItem.setAttribute('aria-selected', 'true');
-        currentItem.setAttribute('aria-checked', 'true');
 
         // Record click straight away as there is no validate button
         this.record(objectIndex);

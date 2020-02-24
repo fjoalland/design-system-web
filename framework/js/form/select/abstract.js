@@ -8,7 +8,6 @@ class FormSelectAbstract extends FormFieldAbstract {
         let valueElement = document.createElement('input');
         valueElement.classList.add('ds44-input-value');
         valueElement.setAttribute('type', 'hidden');
-        valueElement.setAttribute('aria-hidden', 'true');
         element.parentNode.insertBefore(valueElement, element);
 
         const objectIndex = (this.objects.length - 1);
@@ -122,9 +121,18 @@ class FormSelectAbstract extends FormFieldAbstract {
         if (!object.textElement) {
             return;
         }
+        if (!object.buttonElement) {
+            return;
+        }
 
         object.valueElement.value = ((data && data.value) ? data.value : null);
-        object.textElement.innerText = ((data && data.text) ? data.text : null);
+        object.textElement.innerHTML = ((data && data.text) ? '<p>' + data.text + '</p>' : null);
+
+        if(object.valueElement.value) {
+            object.buttonElement.setAttribute('aria-describedby', object.textElement.getAttribute('id'));
+        } else {
+            object.buttonElement.removeAttribute('aria-describedby');
+        }
     }
 
     showHide(objectIndex) {
@@ -185,7 +193,6 @@ class FormSelectAbstract extends FormFieldAbstract {
         object.buttonElement.setAttribute('aria-expanded', 'true');
         object.buttonIconElement.classList.remove('icon-down');
         object.buttonIconElement.classList.add('icon-up');
-        object.buttonTextElement.innerText = object.buttonTextElement.innerText.replace('Ouvrir', 'Fermer');
         object.isExpanded = true;
 
         this.nextOption(objectIndex);
@@ -211,7 +218,6 @@ class FormSelectAbstract extends FormFieldAbstract {
         object.buttonElement.setAttribute('aria-expanded', 'false');
         object.buttonIconElement.classList.add('icon-down');
         object.buttonIconElement.classList.remove('icon-up');
-        object.buttonTextElement.innerText = object.buttonTextElement.innerText.replace('Fermer', 'Ouvrir');
         object.isExpanded = false;
     }
 
@@ -429,14 +435,16 @@ class FormSelectAbstract extends FormFieldAbstract {
             elementError.remove();
         }
 
-        object.valueElement.removeAttribute('aria-invalid');
-        object.valueElement.removeAttribute('aria-describedby');
+        object.buttonElement.removeAttribute('aria-invalid');
         object.shapeElement.classList.remove('ds44-error');
     }
 
     invalid(objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.valueElement) {
+        if (!object.textElement) {
+            return;
+        }
+        if (!object.buttonElement) {
             return;
         }
         if (!object.shapeElement) {
@@ -446,8 +454,13 @@ class FormSelectAbstract extends FormFieldAbstract {
         const errorMessageElementId = MiscUtils.generateId();
         this.showErrorMessage(objectIndex, errorMessageElementId);
 
+        object.buttonElement.setAttribute('aria-invalid', 'true');
         object.shapeElement.classList.add('ds44-error');
-        object.valueElement.setAttribute('aria-invalid', 'true');
-        object.valueElement.setAttribute('aria-describedby', errorMessageElementId);
+
+        if(!this.getData(objectIndex)) {
+            object.buttonElement.setAttribute('aria-describedby', errorMessageElementId);
+        } else {
+            object.buttonElement.setAttribute('aria-describedby', errorMessageElementId + ' ' + object.textElement.getAttribute('id'));
+        }
     }
 }
