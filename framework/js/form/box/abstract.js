@@ -15,14 +15,11 @@ class FormBoxAbstract extends FormFieldAbstract {
         const object = this.objects[objectIndex];
 
         object.inputElements = element.querySelectorAll('input[type="' + this.category + '"]');
-        object.containerElement = element;
         object.isRequired = (element.getAttribute('data-required') === 'true');
 
         object.inputElements.forEach((inputElement) => {
             MiscEvent.addListener('click', this.toggleCheck.bind(this, objectIndex), inputElement);
         });
-        MiscEvent.addListener('field:enable', this.enable.bind(this, objectIndex), object.containerElement);
-        MiscEvent.addListener('field:disable', this.disable.bind(this, objectIndex), object.containerElement);
     }
 
     toggleCheck(objectIndex) {

@@ -29,13 +29,18 @@ class FormFieldAbstract {
     create(element) {
         const object = {
             'id': MiscUtils.generateId(),
-            'name': element.getAttribute('id')
+            'name': element.getAttribute('id'),
+            'containerElement': (element.closest('.ds44-form__container') || element)
         };
         const valuesAllowed = element.getAttribute('data-values');
         if (valuesAllowed) {
             object.valuesAllowed = JSON.parse(valuesAllowed);
         }
         this.objects.push(object);
+        const objectIndex = (this.objects.length - 1);
+
+        MiscEvent.addListener('field:enable', this.enable.bind(this, objectIndex), object.containerElement);
+        MiscEvent.addListener('field:disable', this.disable.bind(this, objectIndex), object.containerElement);
     }
 
     setData(objectIndex, data = null) {

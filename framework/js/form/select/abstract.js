@@ -1,4 +1,4 @@
-class FormSelectAbstract extends FormInputAbstract {
+class FormSelectAbstract extends FormFieldAbstract {
     create(element) {
         this.labelClassName = 'ds44-moveSelectLabel';
 
@@ -13,6 +13,7 @@ class FormSelectAbstract extends FormInputAbstract {
 
         const objectIndex = (this.objects.length - 1);
         const object = this.objects[objectIndex];
+        object.textElement = element;
         object.valueElement = valueElement;
         object.shapeElement = object.containerElement.querySelector('.ds44-select__shape');
         object.labelElement = object.containerElement.querySelector('.ds44-selectLabel');
@@ -21,8 +22,6 @@ class FormSelectAbstract extends FormInputAbstract {
         object.buttonTextElement = object.containerElement.querySelector('.ds44-btnOpen .visually-hidden');
         object.isExpanded = false;
         object.isRequired = (element.getAttribute('data-required') === 'true');
-
-        this.hide(objectIndex);
 
         MiscEvent.addListener('keyUp:escape', this.hide.bind(this, objectIndex));
         MiscEvent.addListener('keyUp:arrowup', this.previousOption.bind(this, objectIndex));
@@ -50,6 +49,11 @@ class FormSelectAbstract extends FormInputAbstract {
         if (object.selectButtonElement) {
             MiscEvent.addListener('click', this.record.bind(this, objectIndex), object.selectButtonElement);
         }
+
+        if (object.labelElement) {
+            object.labelElement.classList.remove(this.labelClassName);
+        }
+        this.hide(objectIndex);
     }
 
     setListElementEvents(listElement, objectIndex) {
@@ -57,15 +61,16 @@ class FormSelectAbstract extends FormInputAbstract {
     }
 
     enable(objectIndex, evt) {
+        if (!this.isEnableAllowed(objectIndex, evt)) {
+            this.disable(objectIndex);
+            return;
+        }
+
         const object = this.objects[objectIndex];
         if (!object.shapeElement) {
             return;
         }
         if (!object.buttonElement) {
-            return;
-        }
-        if (!this.isEnableAllowed(objectIndex, evt)) {
-            this.disable(objectIndex);
             return;
         }
 
@@ -88,6 +93,9 @@ class FormSelectAbstract extends FormInputAbstract {
 
     disable(objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object.labelElement) {
+            return;
+        }
         if (!object.shapeElement) {
             return;
         }
@@ -107,21 +115,23 @@ class FormSelectAbstract extends FormInputAbstract {
         object.shapeElement.classList.add('ds44-inputDisabled');
         object.buttonElement.setAttribute('tabindex', '-1');
         object.buttonElement.setAttribute('readonly', 'true');
+        object.labelElement.classList.remove(this.labelClassName);
 
         this.setData(objectIndex);
         this.enableDisableLinkedField(objectIndex);
-        this.blur(objectIndex);
         this.hide(objectIndex);
     }
 
     setData(objectIndex, data = null) {
-        super.setData(objectIndex, data);
-
         const object = this.objects[objectIndex];
+        if (!object.valueElement) {
+            return;
+        }
         if (!object.textElement) {
             return;
         }
 
+        object.valueElement.value = ((data && data.value) ? data.value : null);
         object.textElement.innerText = ((data && data.text) ? data.text : null);
     }
 
@@ -401,7 +411,6 @@ class FormSelectAbstract extends FormInputAbstract {
         MiscAccessibility.setFocus(object.buttonElement);
 
         this.hide(objectIndex);
-
         this.checkValidity(objectIndex);
         this.enableDisableLinkedField(objectIndex);
 
@@ -434,7 +443,7 @@ class FormSelectAbstract extends FormInputAbstract {
     }
 
     checkValidity(objectIndex) {
-        super.removeInvalid(objectIndex);
+        this.removeInvalid(objectIndex);
 
         const object = this.objects[objectIndex];
         if (!object.shapeElement) {

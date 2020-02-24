@@ -10,7 +10,6 @@ class FormInputAbstract extends FormFieldAbstract {
         object.inputElements = [element];
         object.labelElement = MiscDom.getPreviousSibling(element, 'span');
         object.resetButton = MiscDom.getNextSibling(element, '.ds44-reset');
-        object.containerElement = element.closest('.ds44-form__container');
 
         if (object.labelElement) {
             object.labelElement.classList.remove(this.labelClassName);
@@ -19,10 +18,7 @@ class FormInputAbstract extends FormFieldAbstract {
         MiscEvent.addListener('focus', this.focus.bind(this, objectIndex), element);
         MiscEvent.addListener('blur', this.blur.bind(this, objectIndex), element);
         MiscEvent.addListener('invalid', this.invalid.bind(this, objectIndex), element);
-        MiscEvent.addListener('form:validate', this.validate.bind(this, objectIndex));
         MiscEvent.addListener('keyUp:*', this.write.bind(this, objectIndex));
-        MiscEvent.addListener('field:enable', this.enable.bind(this, objectIndex), object.containerElement);
-        MiscEvent.addListener('field:disable', this.disable.bind(this, objectIndex), object.containerElement);
         if (object.resetButton) {
             MiscEvent.addListener('click', this.reset.bind(this, objectIndex), object.resetButton);
         }
@@ -154,10 +150,6 @@ class FormInputAbstract extends FormFieldAbstract {
         const object = this.objects[objectIndex];
         if (!object.valueElement) {
             return;
-        }
-
-        if(object.valueElement.getAttribute('type') === 'hidden') {
-            return super.getErrorMessage(objectIndex);
         }
 
         let errorMessage = null;
