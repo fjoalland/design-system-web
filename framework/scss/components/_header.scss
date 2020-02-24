@@ -142,11 +142,6 @@
 
     .ds44-logoContainer {
         flex-wrap: wrap;
-
-        img {
-            height: 35px;
-            max-width: none;
-        }
     }
 
     .ds44-headerImg {
@@ -165,15 +160,6 @@
 
         .ds44-btnIcoText--maxi {
             margin-left: 0;
-            font-size: .9rem; // 9px
-
-            &.ds44--xl-padding {
-                padding: .5rem 1rem 1rem 1rem;
-            }
-
-            &.ds44-btn--menu {
-                padding: .5rem 1.5rem 1rem 1.5rem;
-            }
         }
     }
 
@@ -185,25 +171,48 @@
 
 @media (max-width: $ds44-small - .0625) {
 
+  .ds44-logoContainer {
+      flex-direction: column;
+      flex-wrap: nowrap;
+
+
+      img {
+          height: 35px;
+          max-width: none;
+      }
+
+      .ds44-titreLogo {
+          margin-left: 0;
+          margin-top: .5rem;
+          text-align: center;
+          font-size: .5625em;
+      }
+
+  }
+
+  .ds44-overlay--navApplis.ds44-wave-grey {
+      background: #fff;
+  }
+
+  .ds44-header .ds44-colRight {
+
+      .ds44-btnIcoText--maxi {
+          margin-left: 0;
+
+          &.ds44--xl-padding {
+              padding: .5rem 1rem 1rem 1rem;
+          }
+
+          &.ds44-btn--menu {
+              padding: .6rem 1.5rem 1rem 1.5rem;
+          }
+      }
+  }
+
 }
 
 @media (max-width: $ds44-tiny - .0625) {
 
-    .ds44-logoContainer {
-        flex-direction: column;
-        flex-wrap: nowrap;
 
-        .ds44-titreLogo {
-            margin-left: 0;
-            margin-top: .5rem;
-            text-align: center;
-            font-size: .5625em;
-        }
-
-    }
-
-    .ds44-overlay--navApplis.ds44-wave-grey {
-        background: #fff;
-    }
 
 }
