@@ -7,6 +7,7 @@
             <button class="ds44-btnStd" type="button" aria-pressed="false" aria-describedby="libelleBoutonNS"><span class="ds44-btnInnerText">Oui</span><i class="icon icon-like icon--sizeL" aria-hidden="true"></i></button>
             <button class="ds44-btnStd ds44-bgDark" type="button" aria-pressed="true" aria-describedby="libelleBoutonN"><span class="ds44-btnInnerText">Non</span><i class="icon icon-dislike icon--sizeL" aria-hidden="true"></i></button>
           </div>
+        <form>
           <div class="grid-2-small-1 ds44-box">
             <div class="col">
               <p class="h4-like" aria-level="3">Pourquoi cette page ne vous a pas été utile ?</p>
@@ -30,8 +31,14 @@
             <div class="col ds44--xl-padding-l">
               <p>Aidez-nous à améliorer cette page en nous laissant un commentaire :</p>
               {% include form/field/input/textarea.html label="Commentaire" %}
-              <button class="ds44-btnStd" type="button"><span class="ds44-btnInnerText">Envoyer</span><i class="icon icon-long-arrow-right" aria-hidden="true"></i></button>
             </div>
-      </div>
+          </div>
+          <div class="txtcenter ds44-mt-std">
+            <button class="ds44-btnStd" type="button" title="Valider l'envoi">
+              <span class="ds44-btnInnerText">Envoyer</span>
+              <i class="icon icon-long-arrow-right" aria-hidden="true"></i>
+            </button>
+          </div>
+        </form>
   </div>
 </section>
