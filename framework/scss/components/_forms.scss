@@ -650,6 +650,35 @@ input[type=radio],
 }
 
 /**
+* Valid messages
+*/
+
+
+.ds44-valid {
+    border-color: $ds44-valid;
+}
+
+.ds44-validMsg-container {
+    @include ds44-font-sizes(errMsg);
+    background-color: $ds44-valid-bg;
+    padding: $ds44-padding-small $ds44-padding-box;
+    display: none;
+
+    .ds44-msgValidText {
+        margin: $ds44-paragraph-margin-bottom 0;
+        color: $ds44-color-dark-text;
+    }
+
+    .icon {
+        color: $ds44-valid;
+    }
+
+    .ds44-iconInnerText {
+        vertical-align: middle;
+    }
+}
+
+/**
  * Date picker
  */
 .ds44-datepicker__shape {
