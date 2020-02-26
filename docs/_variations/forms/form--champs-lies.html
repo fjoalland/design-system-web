@@ -5,16 +5,6 @@ layout: pattern
 <br>
 <form>
     <div class="ds44-fieldContainer ds44-champsLies">
-        {% include form/field/input/standard.html class="ds44-inpLarge ds44-champsLies-child" label="Nom du thème" required="true" title="Sélectionner Nom du thème - mise à jour automatique des sous-thèmes Nom du sous-thème triés par ordre alphabétique - obligatoire" %}
-        {% include form/field/input/datepicker.html label="Le" placeholder="jj / mm / aaaa" title="le : jour / mois / année" explanation="Ex : 20/05/2020" required="true" disabled="true" class="ds44-inpLarge ds44-champsLies-child" %}
-    </div>
-    <div><input type="submit" class="ds44-btnStd" value="Tester les champs" /></div>
-</form>
-<br>
-<hr/>
-<br>
-<form>
-    <div class="ds44-fieldContainer ds44-champsLies">
         {% include form/field/select/standard.html label="Nom thème" required="true" class="ds44-inpStd ds44-champsLies-child" %}
         {% include form/field/select/checkbox.html label="Nom du sous-thème" required="true" disabled="true" class="ds44-inpStd ds44-champsLies-child" containerAttributes='data-url="/select-options.json"' %}
     </div>
