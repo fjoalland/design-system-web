@@ -110,9 +110,16 @@
     }
 
     // when reduced, header column right and buttons gain flex display
+    .ds44-header {
+        min-height: $header-height-medium;
+        padding: 0;
+        left: 0;
+    }
+
     .ds44-header .ds44-colRight {
         display: flex;
         justify-content: flex-end;
+        min-height: $header-height-medium;
 
         .ds44-btnIcoText--maxi {
             display: flex;
@@ -140,11 +147,7 @@
 
 @media (max-width: $ds44-medium - .0625) {
 
-    .ds44-header {
-        min-height: $header-height-small;
-        padding: 0;
-        left: 0;
-    }
+
 
     .ds44-logoContainer {
         flex-wrap: wrap;
@@ -162,14 +165,6 @@
         margin: 0 1rem;
     }
 
-    .ds44-header .ds44-colRight {
-
-      min-height: $header-height-medium;
-
-        .ds44-btnIcoText--maxi {
-            margin-left: 0;
-        }
-    }
 
 }
 
