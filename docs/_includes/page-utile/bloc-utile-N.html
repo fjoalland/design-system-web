@@ -19,7 +19,7 @@
               <p class="h4-like" aria-level="3">Pourquoi cette page ne vous a pas été utile ?</p>
               <div role="combobox" aria-expanded="true" aria-owns="listbox{{ include.number }}" aria-activedescendant="selected_option" aria-labelledby="{{ include.label }}">
                   <ul class="ds44-list ds44-mt-std" role="listbox" id="listbox{{ include.number }}">
-                      <li class="ds44-utile-list_elem" role="option" id="selected_option">
+                      <li class="ds44-utile-list_elem" role="option">
                           {% include form/field/box/radio.html name="bloc-utile" label="L’information n’est pas assez complète" value="1" %}
                       </li>
                       <li class="ds44-utile-list_elem" role="option">

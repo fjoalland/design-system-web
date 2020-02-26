@@ -132,12 +132,8 @@ class FormSelectCheckbox extends FormSelectAbstract {
                     )
                 ) {
                     listElement.classList.add('selected_option');
-                    listElement.setAttribute('aria-selected', 'true');
-                    listInputElement.setAttribute('aria-checked', 'true');
                 } else {
                     listElement.classList.remove('selected_option');
-                    listElement.removeAttribute('aria-selected');
-                    listInputElement.removeAttribute('aria-checked');
                 }
             });
     }

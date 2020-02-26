@@ -88,15 +88,12 @@ class FormSelectMultilevel extends FormSelectCheckbox {
         if (allChecked) {
             collapserElementInput.checked = true;
             collapserElementInput.classList.remove('ds44-chkInder');
-            collapserElementInput.setAttribute('aria-checked', 'true');
         } else if (allNotChecked) {
             collapserElementInput.checked = false;
             collapserElementInput.classList.remove('ds44-chkInder');
-            collapserElementInput.removeAttribute('aria-checked');
         } else {
             collapserElementInput.checked = false;
             collapserElementInput.classList.add('ds44-chkInder');
-            collapserElementInput.setAttribute('aria-checked', 'mixed');
         }
     }
 
@@ -109,11 +106,6 @@ class FormSelectMultilevel extends FormSelectCheckbox {
 
         // Check or uncheck category checkbox
         categoryInputElement.classList.remove('ds44-chkInder');
-        if (categoryInputElement.checked) {
-            categoryInputElement.setAttribute('aria-checked', 'true');
-        } else {
-            categoryInputElement.removeAttribute('aria-checked');
-        }
 
         // Check or uncheck children checkbox
         collapserElement
@@ -124,12 +116,8 @@ class FormSelectMultilevel extends FormSelectCheckbox {
                 listInputElement.checked = categoryInputElement.checked;
                 if (listInputElement.checked) {
                     listElement.classList.add('selected_option');
-                    listElement.setAttribute('aria-selected', 'true');
-                    listInputElement.setAttribute('aria-checked', 'true');
                 } else {
                     listElement.classList.remove('selected_option');
-                    listElement.removeAttribute('aria-selected');
-                    listInputElement.removeAttribute('aria-checked');
                 }
             });
     }

@@ -150,9 +150,20 @@ class FormSelectAbstract extends FormFieldAbstract {
     focusOut(objectIndex, evt) {
         const object = this.objects[objectIndex];
 
-        if (
-            evt &&
-            object.containerElement.contains(evt.target)
+        if(
+            !evt ||
+            (
+                evt.type === 'focusout' &&
+                (
+                    !object.containerElement.contains(evt.target) ||
+                    !evt.relatedTarget ||
+                    object.containerElement.contains(evt.relatedTarget)
+                )
+            ) ||
+            (
+                evt.type === 'click' &&
+                object.containerElement.contains(evt.target)
+            )
         ) {
             return;
         }
