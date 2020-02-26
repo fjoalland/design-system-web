@@ -4,8 +4,8 @@
     </header>
     <div class="ds44-inner-container ds44-grid12-offset-1">
           <div class="ds44-choiceYN txtcenter ds44--m-padding-t ds44--xl-padding-b">
-            <button class="ds44-btnStd" type="button" aria-pressed="false" aria-describedby="libelleBoutonNS"><span class="ds44-btnInnerText">Oui</span><i class="icon icon-like icon--sizeL" aria-hidden="true"></i></button>
-            <button class="ds44-btnStd" type="button" aria-pressed="false" aria-describedby="libelleBoutonN"><span class="ds44-btnInnerText">Non</span><i class="icon icon-dislike icon--sizeL" aria-hidden="true"></i></button>
+            <button class="ds44-btnStd" type="button" aria-pressed="false" aria-label="Oui, cette page m'a été utile" aria-disabled="true"><span class="ds44-btnInnerText">Oui</span><i class="icon icon-like icon--sizeL" aria-hidden="true"></i></button>
+            <button class="ds44-btnStd" type="button" aria-pressed="false" aria-label="Non, cette page ne m'a pas été utile" aria-disabled="true"><span class="ds44-btnInnerText">Non</span><i class="icon icon-dislike icon--sizeL" aria-hidden="true"></i></button>
           </div>
         <form>
           <div class="ds44-validMsg-container ds44-mb-std">
@@ -17,14 +17,14 @@
           <div class="grid-1-small-1 ds44-grid12-offset-1 s44-box">
             <div class="col ds44--xl-padding-l">
               <p>Aidez-nous à améliorer cette page en nous laissant un commentaire :</p>
-              {% include form/field/input/textarea.html label="Commentaire" %}
+              {% include form/field/input/textarea.html label="Commentaire" hiddenText="Votre commentaire" %}
             </div>
-          </div>
-          <div class="txtcenter ds44-mt-std">
-            <button class="ds44-btnStd" type="button" title="Valider l'envoi">
-              <span class="ds44-btnInnerText">Envoyer</span>
-              <i class="icon icon-long-arrow-right" aria-hidden="true"></i>
-            </button>
+            <div class="txtcenter ds44-mt-std">
+              <button class="ds44-btnStd" type="button" title="Envoyer votre commentaire">
+                <span class="ds44-btnInnerText">Envoyer</span>
+                <i class="icon icon-long-arrow-right" aria-hidden="true"></i>
+              </button>
+            </div>
           </div>
         </form>
   </div>

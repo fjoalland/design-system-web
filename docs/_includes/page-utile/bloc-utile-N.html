@@ -4,8 +4,8 @@
     </header>
     <div class="ds44-inner-container ds44-grid12-offset-1">
           <div class="ds44-choiceYN txtcenter ds44--m-padding-t ds44--xl-padding-b">
-            <button class="ds44-btnStd" type="button" aria-pressed="false" aria-describedby="libelleBoutonNS"><span class="ds44-btnInnerText">Oui</span><i class="icon icon-like icon--sizeL" aria-hidden="true"></i></button>
-            <button class="ds44-btnStd ds44-bgDark" type="button" aria-pressed="true" aria-describedby="libelleBoutonN"><span class="ds44-btnInnerText">Non</span><i class="icon icon-dislike icon--sizeL" aria-hidden="true"></i></button>
+            <button class="ds44-btnStd" type="button" aria-pressed="false" aria-label="Oui, cette page m'a été utile" aria-disabled="true"><span class="ds44-btnInnerText">Oui</span><i class="icon icon-like icon--sizeL" aria-hidden="true"></i></button>
+            <button class="ds44-btnStd ds44-bgDark" type="button" aria-pressed="true" aria-label="Non, cette page ne m'a pas été utile" aria-disabled="true"><span class="ds44-btnInnerText">Non</span><i class="icon icon-dislike icon--sizeL" aria-hidden="true"></i></button>
           </div>
         <form>
           <div class="ds44-validMsg-container ds44-mb-std">
@@ -16,7 +16,7 @@
           </div>
           <div class="grid-2-small-1 ds44-box">
             <div class="col">
-              <p class="h4-like" aria-level="3">Pourquoi cette page ne vous a pas été utile ?</p>
+              <p class="h4-like" aria-level="3" tabindex="-1">Pourquoi cette page ne vous a pas été utile ?</p>
               <div role="combobox" aria-expanded="true" aria-owns="listbox{{ include.number }}" aria-activedescendant="selected_option" aria-labelledby="{{ include.label }}">
                   <ul class="ds44-list ds44-mt-std" role="listbox" id="listbox{{ include.number }}">
                       <li class="ds44-utile-list_elem" role="option" id="selected_option">
@@ -36,11 +36,11 @@
             </div>
             <div class="col ds44--xl-padding-l">
               <p>Aidez-nous à améliorer cette page en nous laissant un commentaire :</p>
-              {% include form/field/input/textarea.html label="Commentaire" %}
+              {% include form/field/input/textarea.html label="Commentaire" hiddenText="Votre commentaire" %}
             </div>
           </div>
           <div class="txtcenter ds44-mt-std">
-            <button class="ds44-btnStd" type="button" title="Valider l'envoi">
+            <button class="ds44-btnStd" type="button" title="Envoyer votre commentaire pour rendre cette page plus utile">
               <span class="ds44-btnInnerText">Envoyer</span>
               <i class="icon icon-long-arrow-right" aria-hidden="true"></i>
             </button>
