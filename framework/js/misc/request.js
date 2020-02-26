@@ -37,6 +37,12 @@ class MiscRequest {
 
     static response(xhr, callback) {
         if (xhr && callback) {
+            if (!xhr.getResponseHeader('content-type')) {
+                callback(xhr.response);
+
+                return;
+            }
+
             const responseHeaders = xhr.getResponseHeader('content-type').toLowerCase().split(';');
             if (responseHeaders.indexOf('application/json') !== -1) {
                 callback(JSON.parse(xhr.response));
