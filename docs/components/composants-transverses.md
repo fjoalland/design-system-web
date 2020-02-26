@@ -13,7 +13,7 @@ variations:
   pattern: FAQ/FAQ-basPage.html
 - title: Page utile
   description: Composant "Cette page vous a-t-elle été utile ?" que l'on retrouve en bas de page.
-  pattern: page-utile/bloc-utile-N.html
+  pattern: page-utile/bloc-utile.html
 - title: Grands projets
   description: Composant "Les grands projets" que l'on retrouve sur la page d'accueil. Une mise en avant, un focus sur des grandes thématiques
   pattern: composants-transverses/focus-projets.html

@@ -1,34 +1,36 @@
 {% include form/_variables.html %}
 {% include images/loader.html %}
 
-<form data-is-ajax="true">
-    {% include form/layout/partial/recherche-facette-main.html %}
+<div class="ds44-facette">
+    <form data-is-ajax="true">
+        {% include form/layout/partial/recherche-facette-main.html %}
 
-    <div class="ds44-facetteContainer ds44-theme ds44-flex-container ds44-medium-flex-col">
-        <div class="ds44-flex-container ds44-medium-flex-col">
-            <p class="ds44-heading ds44-fg1">Filter par</p>
-            <div class="ds44-fieldContainer ds44-fg1 ds44-fieldContainer--select">
-                {% include form/field/select/checkbox.html label="Choix multiple" containerAttributes='data-auto-submit="true"' %}
+        <div class="ds44-facetteContainer ds44-theme ds44-flex-container ds44-medium-flex-col">
+            <div class="ds44-flex-container ds44-medium-flex-col">
+                <p class="ds44-heading ds44-fg1">Filter par</p>
+                <div class="ds44-fieldContainer ds44-fg1 ds44-fieldContainer--select">
+                    {% include form/field/select/checkbox.html label="Choix multiple" containerAttributes='data-auto-submit="true"' %}
+                </div>
+                <div class="ds44-fieldContainer ds44-fg1 ds44-fieldContainer--select">
+                    {% include form/field/select/radio.html label="Choix unique" containerAttributes='data-auto-submit="true"' %}
+                </div>
             </div>
-            <div class="ds44-fieldContainer ds44-fg1 ds44-fieldContainer--select">
-                {% include form/field/select/radio.html label="Choix unique" containerAttributes='data-auto-submit="true"' %}
+            <div class="ds44-push ds44-small-fg1">
+                <ul class="ds44-list">
+                    <li class="ds44-docListElem">
+                        <i class="icon icon-star-empty ds44-docListIco" aria-hidden="true"></i>
+                        <a href="#" aria-label="Ma sélection">Ma sélection (2)</a>
+                    </li>
+                    <li class="ds44-docListElem">
+                        <i class="icon icon-pdf ds44-docListIco" aria-hidden="true"></i>
+                        <a href="#" aria-label="PDF">PDF</a>
+                    </li>
+                    <li class="ds44-docListElem">
+                        <i class="icon icon-csv ds44-docListIco" aria-hidden="true"></i>
+                        <a href="#" aria-label="CSV">CSV</a>
+                    </li>
+                </ul>
             </div>
         </div>
-        <div class="ds44-push ds44-small-fg1">
-            <ul class="ds44-list">
-                <li class="ds44-docListElem">
-                    <i class="icon icon-star-empty ds44-docListIco" aria-hidden="true"></i>
-                    <a href="#" aria-label="Ma sélection">Ma sélection (2)</a>
-                </li>
-                <li class="ds44-docListElem">
-                    <i class="icon icon-pdf ds44-docListIco" aria-hidden="true"></i>
-                    <a href="#" aria-label="PDF">PDF</a>
-                </li>
-                <li class="ds44-docListElem">
-                    <i class="icon icon-csv ds44-docListIco" aria-hidden="true"></i>
-                    <a href="#" aria-label="CSV">CSV</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</form>
+    </form>
+</div>

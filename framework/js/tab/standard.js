@@ -30,7 +30,7 @@ class TabStandard {
             if (selectedTabHandleFromDom) {
                 selectedTabHandle = selectedTabHandleFromDom;
             } else {
-                selectedTabHandle = document.querySelector('.js-tablist__link');
+                selectedTabHandle = document.querySelector('.js-tablist__link:not(button)');
             }
         }
         if (selectedTabHandle) {
@@ -40,7 +40,7 @@ class TabStandard {
 
     // Effectue une transition des display:none sur les contenus des onglets
     change(evt) {
-        if(evt.preventDefault) {
+        if (evt.preventDefault) {
             evt.preventDefault();
         }
 
@@ -66,6 +66,7 @@ class TabStandard {
                 }
 
                 tabHandle.classList.remove('ds44-tabs__linkSelected');
+                tabHandle.classList.remove('ds44-bgDark');
                 tabPanel.style.opacity = 0;
                 MiscUtils.timerClass(tabPanel, 'display', 'none', 150);
                 MiscAccessibility.hide(tabPanel, true);
@@ -73,13 +74,16 @@ class TabStandard {
 
         // Show selected tab
         tabHandle.classList.add('ds44-tabs__linkSelected');
+        if (tabHandle.tagName.toLowerCase() === 'button') {
+            tabHandle.classList.add('ds44-bgDark');
+        }
         MiscUtils.timerClass(tabPanel, 'opacity', '1', 300);
         MiscUtils.timerClass(tabPanel, 'display', 'block', 150);
         MiscAccessibility.show(tabPanel, true);
     }
 
     back(evt) {
-        if(evt.preventDefault) {
+        if (evt.preventDefault) {
             evt.preventDefault();
         }
 
@@ -92,12 +96,12 @@ class TabStandard {
         let header = document.querySelector('header .ds44-header');
         if (header) {
             let wasHidden = false;
-            if(header.classList.contains('hidden')) {
+            if (header.classList.contains('hidden')) {
                 wasHidden = true;
                 header.classList.remove('hidden')
             }
             headerHeight = header.offsetHeight;
-            if(wasHidden) {
+            if (wasHidden) {
                 header.classList.add('hidden');
             }
         }
@@ -110,10 +114,10 @@ class TabStandard {
         evt.preventDefault();
 
         const newEvt = {'currentTarget': document.activeElement};
-        if(newEvt.currentTarget.classList.contains('js-tablist__link')) {
+        if (newEvt.currentTarget.classList.contains('js-tablist__link')) {
             // Change
             this.change(newEvt);
-        } else if(newEvt.currentTarget.parentElement.classList.contains('ds44-keyboard-show')) {
+        } else if (newEvt.currentTarget.parentElement.classList.contains('ds44-keyboard-show')) {
             // Back
             this.back(newEvt);
         }

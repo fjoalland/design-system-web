@@ -1,4 +1,4 @@
-class FormStandard {
+class FormGlobal {
     constructor() {
         this.hasBeenChecked = false;
         this.validationCategories = {
@@ -21,6 +21,7 @@ class FormStandard {
 
                 MiscEvent.addListener('submit', this.submit.bind(this), element);
                 MiscEvent.addListener('form:validation', this.validation.bind(this), element);
+                MiscEvent.addListener('form:notification', this.notification.bind(this), element);
             });
     }
 
@@ -118,11 +119,12 @@ class FormStandard {
             if (element.getAttribute('data-is-ajax') === 'true') {
                 // Ajax submission
                 MiscEvent.dispatch(
-                    'search:refresh',
+                    'form:submit',
                     {
-                        'parameters': formattedData,
-                        'reset': true
-                    });
+                        'parameters': formattedData
+                    },
+                    element
+                );
 
                 return;
             }
@@ -144,7 +146,53 @@ class FormStandard {
             return false;
         }
     }
+
+    notification(evt) {
+        if (
+            !evt ||
+            !evt.target ||
+            !evt.detail ||
+            !evt.detail.message
+        ) {
+            return;
+        }
+
+        const formElement = evt.target;
+        const notificationType = evt.detail.type || 'error';
+
+        let containerElement = formElement.querySelector('.ds44-message-container');
+        if (containerElement) {
+            containerElement.remove();
+        }
+
+        // Show message
+        containerElement = document.createElement('div');
+        containerElement.classList.add('ds44-message-container');
+        containerElement.classList.add('ds44-mb-std');
+        formElement.insertBefore(containerElement, formElement.firstChild);
+
+        const textElement = document.createElement('div');
+        textElement.classList.add('ds44-message-text');
+        textElement.classList.add(notificationType);
+        containerElement.appendChild(textElement);
+
+        const iconElement = document.createElement('i');
+        iconElement.classList.add('icon');
+        if (notificationType === 'success') {
+            iconElement.classList.add('icon-check');
+        } else {
+            iconElement.classList.add('icon-attention');
+        }
+        iconElement.classList.add('icon--sizeM');
+        iconElement.setAttribute('aria-hidden', 'true');
+        textElement.appendChild(iconElement);
+
+        const spanElement = document.createElement('span');
+        spanElement.classList.add('ds44-iconInnerText');
+        spanElement.innerText = evt.detail.message;
+        textElement.appendChild(spanElement);
+    }
 }
 
 // Singleton
-new FormStandard();
+new FormGlobal();

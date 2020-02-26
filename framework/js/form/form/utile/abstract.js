@@ -1,0 +1,81 @@
+class FormUtileAbstract {
+    constructor(selector) {
+        this.url = '/plugins/ChartePlugin/types/PortletQueryForeach/displayResult.jsp';
+        this.formElement = null;
+        this.submitSuccessText = null;
+
+        const formElement = document.querySelector(selector);
+        if (formElement) {
+            this.formElement = formElement;
+
+            MiscEvent.addListener('form:submit', this.submit.bind(this), formElement);
+        }
+    }
+
+    submit(evt) {
+        if (
+            !evt ||
+            !evt.detail ||
+            !evt.detail.parameters
+        ) {
+            return;
+        }
+
+        // Show loader
+        MiscEvent.dispatch('loader:requestShow');
+
+        // Get the results from the back office
+        MiscRequest.send(
+            this.url,
+            this.submitSuccess.bind(this),
+            this.submitError.bind(this),
+            evt.detail.parameters,
+            'POST'
+        );
+    }
+
+    submitSuccess() {
+        const parentElement = this.formElement.closest('.ds44-inner-container');
+        if (!parentElement) {
+            MiscEvent.dispatch('loader:requestHide');
+
+            return;
+        }
+
+        // Empty parent
+        parentElement.innerHTML = '';
+
+        // Show message
+        const gridElement = document.createElement('div');
+        gridElement.classList.add('grid-1-small-1');
+        gridElement.classList.add('ds44-grid12-offset-1');
+        gridElement.classList.add('s44-box');
+        parentElement.appendChild(gridElement);
+
+        const centerElement = document.createElement('div');
+        centerElement.classList.add('col');
+        centerElement.classList.add('txtcenter');
+        gridElement.appendChild(centerElement);
+
+        const textElement = document.createElement('div');
+        textElement.classList.add('h4-like');
+        textElement.setAttribute('aria-live', 'polite');
+        textElement.innerHTML = this.submitSuccessText;
+        centerElement.appendChild(textElement);
+
+        MiscEvent.dispatch('loader:requestHide');
+    }
+
+    submitError() {
+        MiscEvent.dispatch(
+            'form:notification',
+            {
+                'type': 'error',
+                'message': 'Une erreur est survenue suite à l\'envoi de votre formulaire.'
+            },
+            this.formElement
+        );
+
+        MiscEvent.dispatch('loader:requestHide');
+    }
+}

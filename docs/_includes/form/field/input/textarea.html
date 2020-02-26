@@ -1,13 +1,6 @@
 {% include form/_variables.html %}
 
-{% if include.hiddenText %}
-    {% capture hiddenText %}
-        <span class="visually-hidden">{{ include.hiddenText }}</span>
-    {% endcapture %}
-{% endif %}
-
 {% capture mainContent %}
-{{ hiddenText }}
 <textarea rows="5" cols="1" id="{{ id }}" class="{{ mainClass }}" {{ title }} {{ attributes }}></textarea>
 {% endcapture %}
 

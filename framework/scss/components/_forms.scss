@@ -658,19 +658,22 @@ input[type=radio],
     border-color: $ds44-valid;
 }
 
-.ds44-validMsg-container {
+.ds44-message-container {
     @include ds44-font-sizes(errMsg);
     background-color: $ds44-valid-bg;
     padding: $ds44-padding-small $ds44-padding-box;
-    display: none;
 
-    .ds44-msgValidText {
+    .ds44-message-text {
         margin: $ds44-paragraph-margin-bottom 0;
         color: $ds44-color-dark-text;
-    }
 
-    .icon {
-        color: $ds44-valid;
+        &.success .icon {
+            color: $ds44-valid;
+        }
+
+        &.error .icon {
+            color: $ds44-error;
+        }
     }
 
     .ds44-iconInnerText {
