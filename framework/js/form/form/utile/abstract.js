@@ -68,10 +68,12 @@ class FormUtileAbstract {
         textElement.innerHTML = this.submitSuccessText;
         centerElement.appendChild(textElement);
 
+        // Hide loader
         MiscEvent.dispatch('loader:requestHide');
     }
 
     submitError() {
+        // Show error notification in form
         MiscEvent.dispatch(
             'form:notification',
             {
@@ -81,6 +83,7 @@ class FormUtileAbstract {
             this.formElement
         );
 
+        // Hide loader
         MiscEvent.dispatch('loader:requestHide');
     }
 }
