@@ -11,7 +11,7 @@
             <form data-is-ajax="true">
                 <div class="grid-1-small-1 ds44-grid12-offset-1 s44-box">
                     <div id="form-bloc-utils-YN" class="col ds44--xl-padding-l">
-                        <p>Aidez-nous à améliorer cette page en nous laissant un commentaire :</p>
+                        <p>Merci ! Si vous le souhaitez, vous pouvez nous laisser un commentaire :</p>
                         {% include form/field/input/textarea.html attributes='aria-describedby="form-bloc-utils-YN" aria-label="Votre commentaire"' label="Commentaire" %}
                     </div>
                     <div class="txtcenter ds44-mt-std">
@@ -29,7 +29,7 @@
                 <div class="grid-2-small-1 ds44-box">
                     <div class="col">
                         <p class="h4-like" aria-level="3" tabindex="-1">Pourquoi cette page ne vous a pas été utile ?</p>
-                        {% include form/layout/radios.html name="bloc-utile" choices="1:L’information n’est pas assez complète,2:L’information est trop compliquée,3:Il y a trop à lire, 4:Autre" required="true" %}
+                        {% include form/layout/checkboxes.html choices="1:L’information n’est pas assez complète,2:L’information est trop compliquée,3:Il y a trop à lire" required="true" %}
                     </div>
                     <div id="form-bloc-utils-N" class="col ds44--xl-padding-l">
                         <p>Aidez-nous à améliorer cette page en nous laissant un commentaire :</p>

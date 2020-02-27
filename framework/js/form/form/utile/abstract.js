@@ -24,6 +24,11 @@ class FormUtileAbstract {
         // Show loader
         MiscEvent.dispatch('loader:requestShow');
 
+        // Add other details to parameters
+        evt.detail.parameters.url = document.location.href;
+        evt.detail.parameters.title = document.title;
+        evt.detail.parameters.date = (new Date()).toLocaleString('fr-FR', {'timeZone': 'UTC', 'timeZoneName': 'short'});
+
         // Get the results from the back office
         MiscRequest.send(
             this.url,
