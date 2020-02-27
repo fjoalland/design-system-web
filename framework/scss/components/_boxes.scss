@@ -129,6 +129,22 @@
   === */
 
 
+@media (min-width: $ds44-large) {
+
+  .grid-12-small-1 .colPush{
+    margin-right: $ds44-medium-vmargin;
+  }
+  .grid-12-small-1 .colPush:last-of-type{
+    margin-right: 0;
+  }
+  .grid-12-small-1 .colFocusProjets{
+    margin-left: $ds44-medium-vmargin;
+  }
+  .grid-12-small-1 .colFocusProjets:first-of-type{
+    margin-left: 0;
+  }
+
+}
 
 @media (max-width: $ds44-large - .0625) {
 
@@ -152,22 +168,7 @@
 
 }
 
-@media (min-width: $ds44-large) {
 
-  .grid-12-small-1 .colPush{
-    margin-right: $ds44-medium-vmargin;
-  }
-  .grid-12-small-1 .colPush:last-of-type{
-    margin-right: 0;
-  }
-  .grid-12-small-1 .colFocusProjets{
-    margin-left: $ds44-medium-vmargin;
-  }
-  .grid-12-small-1 .colFocusProjets:first-of-type{
-    margin-left: 0;
-  }
-
-}
 
 @media (max-width: $ds44-medium - .0625) {
 
