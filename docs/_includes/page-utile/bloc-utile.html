@@ -3,14 +3,14 @@
         <h2 class="h2-like">Cette page vous a-t-elle été utile ?</h2>
     </header>
     <div class="ds44-inner-container ds44-grid12-offset-1">
-        <div class="ds44-choiceYN txtcenter ds44--m-padding-t ds44--xl-padding-b">
-            <button class="ds44-btnStd js-tablist__link" type="button" aria-pressed="false" aria-label="Oui, cette page m'a été utile" aria-disabled="true" href="#ds44-choiceY"><span class="ds44-btnInnerText">Oui</span><i class="icon icon-like icon--sizeL" aria-hidden="true"></i></button>
-            <button class="ds44-btnStd js-tablist__link" type="button" aria-pressed="false" aria-label="Non, cette page ne m'a pas été utile" aria-disabled="true" href="#ds44-choiceN"><span class="ds44-btnInnerText">Non</span><i class="icon icon-dislike icon--sizeL" aria-hidden="true"></i></button>
+        <div class="ds44-choiceYN txtcenter ds44--m-padding-t ds44--xl-padding-b js-tabs">
+            <button class="ds44-btnStd js-tablist__link" type="button" aria-pressed="false" aria-label="Oui, cette page m'a été utile" href="#ds44-choiceY"><span class="ds44-btnInnerText">Oui</span><i class="icon icon-like icon--sizeL" aria-hidden="true"></i></button>
+            <button class="ds44-btnStd js-tablist__link" type="button" aria-pressed="false" aria-label="Non, cette page ne m'a pas été utile" href="#ds44-choiceN"><span class="ds44-btnInnerText">Non</span><i class="icon icon-dislike icon--sizeL" aria-hidden="true"></i></button>
         </div>
         <div id="ds44-choiceY" class="hidden">
             <form data-is-ajax="true">
                 <div class="grid-1-small-1 ds44-box">
-                    <div id="form-bloc-utils-YN">
+                    <div id="form-bloc-utils-YN" tabindex="-1">
                         <p>Merci ! Si vous le souhaitez, vous pouvez nous laisser un commentaire :</p>
                         {% include form/field/input/textarea.html attributes='aria-describedby="form-bloc-utils-YN" aria-label="Votre commentaire"' label="Commentaire" %}
                     </div>
@@ -31,8 +31,8 @@
                         <p class="h4-like" aria-level="3" tabindex="-1">Pourquoi cette page ne vous a pas été utile ?</p>
                         {% include form/layout/checkboxes.html choices="1:L’information n’est pas assez complète,2:L’information est trop compliquée,3:Il y a trop à lire" required="true" %}
                     </div>
-                    <div id="form-bloc-utils-N" class="col ds44--xl-padding-l">
-                        <p>Aidez-nous à améliorer cette page en nous laissant un commentaire :</p>
+                    <div class="col ds44--xl-padding-l">
+                        <p id="form-bloc-utils-N">Aidez-nous à améliorer cette page en nous laissant un commentaire :</p>
                         {% include form/field/input/textarea.html attributes='aria-describedby="form-bloc-utils-N" aria-label="Votre commentaire"' label="Commentaire" %}
                     </div>
                 </div>

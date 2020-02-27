@@ -171,9 +171,10 @@ class FormGlobal {
         containerElement.classList.add('ds44-mb-std');
         formElement.insertBefore(containerElement, formElement.firstChild);
 
-        const textElement = document.createElement('div');
+        const textElement = document.createElement('p');
         textElement.classList.add('ds44-message-text');
         textElement.classList.add(notificationType);
+        textElement.setAttribute('tabindex', '-1');
         containerElement.appendChild(textElement);
 
         const iconElement = document.createElement('i');
@@ -191,6 +192,8 @@ class FormGlobal {
         spanElement.classList.add('ds44-iconInnerText');
         spanElement.innerText = evt.detail.message;
         textElement.appendChild(spanElement);
+
+        MiscAccessibility.setFocus(textElement);
     }
 }
 

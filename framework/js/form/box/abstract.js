@@ -5,7 +5,7 @@ class FormBoxAbstract extends FormFieldAbstract {
             category
         );
 
-        this.errorMessage = 'Veuillez cocher un élément';
+        this.errorMessage = 'Veuillez cocher au moins un élément';
     }
 
     create(element) {
