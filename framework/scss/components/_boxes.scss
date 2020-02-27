@@ -128,24 +128,13 @@
   MEDIA QUERIES
   === */
 
-@media (min-width: $ds44-large - .625) {
 
-  .grid-12-small-1 .colPush{
-    margin-right: $ds44-medium-vmargin;
-  }
-  .grid-12-small-1 .colPush:last-of-type{
-    margin-right: 0;
-  }
-  .grid-12-small-1 .colFocusProjets{
-    margin-left: $ds44-medium-vmargin;
-  }
-  .grid-12-small-1 .colFocusProjets:first-of-type{
-    margin-left: 0;
-  }
-
-}
 
 @media (max-width: $ds44-large - .0625) {
+
+  .grid-2-small-1 {
+    grid-template-columns : repeat(1, 1fr);
+  }
 
   .ds44-box .col{
     margin-top: 2em;
@@ -159,6 +148,23 @@
   .grid-12-small-1 .colPush,
   .grid-12-small-1 .colFocusProjets{
     margin-bottom:  $ds44-medium-vmargin;
+  }
+
+}
+
+@media (min-width: $ds44-large) {
+
+  .grid-12-small-1 .colPush{
+    margin-right: $ds44-medium-vmargin;
+  }
+  .grid-12-small-1 .colPush:last-of-type{
+    margin-right: 0;
+  }
+  .grid-12-small-1 .colFocusProjets{
+    margin-left: $ds44-medium-vmargin;
+  }
+  .grid-12-small-1 .colFocusProjets:first-of-type{
+    margin-left: 0;
   }
 
 }
