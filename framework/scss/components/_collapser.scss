@@ -17,7 +17,7 @@
   .ds44-collapser_element {
     border-bottom: 1px solid $ds44-contextual-color;
     list-style: none; // if collapser is a list
-    
+
     .ds44-collapser_content li {
       list-style: none;
       margin-top: 0;
@@ -42,7 +42,7 @@
     }
 
   }
-  
+
   .ds44-collapser_content--level2 {
     padding-left    : $ds44-padding-xlarge;
     padding-right   : $ds44-padding-xlarge;
@@ -51,13 +51,13 @@
   .ds44-collapser_content--level3 {
     padding-left    : $ds44-padding-xlarge*2;
   }
-  
+
 
   /* Specific collapser for select multilevel */
   &.ds44-listSelect {
     border: none;
   }
-  
+
 }
 
 /* row-like button */
@@ -69,7 +69,7 @@
   text-align: left;
   background-color: transparent;
   position: relative;
-  line-height: 1.4;  
+  line-height: 1.4;
 
   .icon {
     position: absolute;
@@ -117,6 +117,17 @@
 
 }
 
+.ds44-collapser_content--txt {
+  @include ds44-font-sizes(collapserLinks);
+  padding: $ds44-padding-medium $ds44-padding-xlarge $ds44-padding-medium $ds44-padding-box;
+  display: block !important;
+  position: relative;
+
+  &:after {
+    content: none !important;
+  }
+}
+
 
 /* --
   -------------
@@ -126,25 +137,25 @@
 
 
 @media (max-width: $medium - .0625) {
-  
+
   .ds44-collapser, ul.ds44-collapser {
-    
+
     .ds44-collapser_content--level2 {
       padding-left    : 0;
       padding-right   : 0;
     }
-    
+
     .ds44-collapser_content--level3 {
       padding-left    : $ds44-padding-medium*2;
     }
 
   }
-  
+
 }
 
 
 @media (max-width: $small - .0625) {
-  
+
   .ds44-collapser_content--link {
     padding: $ds44-padding-medium $ds44-padding-large;
   }
