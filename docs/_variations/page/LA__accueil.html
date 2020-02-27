@@ -34,8 +34,8 @@ layout: pattern
 			{% include card/card--miseEnAvant.html title="1 M d’Euros pour la SNSM et SOS Méditerranée" has-info="false" positionBloc="bl" %}
 		</div>
 		{% include carrousel/carrousel-x4.html %}
-    <div class="txtcenter ds44-mb-std">
-      <button class="ds44-btnStd">
+    <div class="txtcenter ds44-mb-std ds44-container-large">
+      <button class="ds44-btnStd ds44-btnFullMobile" type="button" title="Recevoir toutes les actualités par mail">
         <span class="ds44-btnInnerText">Recevoir toutes les actualités par mail</span>
         <i class="icon icon-long-arrow-right" aria-hidden="true"></i>
       </button>
@@ -53,8 +53,8 @@ layout: pattern
       {% include card/card--miseEnAvant.html title="Exposition Précieux poisons d’Amazonie" has-info="true" date="Du 29/06/19 au 01/09/19" tag="marker" localisation="Domaine Garenne Lemot" positionBloc="tl" %}
     </div>
     {% include carrousel/carrousel-x3--bgGrey.html %}
-    <div class="txtcenter ds44-mb-std">
-      <button class="ds44-btnStd">
+    <div class="txtcenter ds44-mb-std ds44-container-large">
+      <button class="ds44-btnStd ds44-btnFullMobile" type="button" title="Plus d’idées de sorties sur l’agenda">
         <span class="ds44-btnInnerText">+ d’idées de sorties sur l’agenda</span>
         <i class="icon icon-long-arrow-right" aria-hidden="true"></i>
       </button>
@@ -63,6 +63,10 @@ layout: pattern
 
   <section class="ds44-container-fluid ds44--xxl-padding-tb">
     {% include composants-transverses/focus-projets.html %}
+  </section>
+
+  <section class="ds44-container-fluid ">
+    {% include composants-transverses/sites-applis.html %}
   </section>
 
 
