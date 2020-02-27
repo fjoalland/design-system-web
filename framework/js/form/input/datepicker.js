@@ -38,21 +38,6 @@ class FormInputDatepicker extends FormInputAbstract {
         this.enableDisableLinkedField(objectIndex);
     }
 
-    showHideResetButton(objectIndex) {
-        const object = this.objects[objectIndex];
-        if (!object.resetButton) {
-            return;
-        }
-
-        if (this.getDateText(objectIndex) === '--') {
-            // Hide reset button
-            object.resetButton.style.display = 'none';
-        } else {
-            // Hide reset button
-            object.resetButton.style.display = 'block';
-        }
-    }
-
     reset(objectIndex) {
         const object = this.objects[objectIndex];
 
@@ -85,38 +70,32 @@ class FormInputDatepicker extends FormInputAbstract {
     }
 
     blur(objectIndex) {
+        super.blur(objectIndex);
+
+        if (!this.isEmpty(objectIndex)) {
+            return;
+        }
+
         const object = this.objects[objectIndex];
-
-        if (this.getDateText(objectIndex) !== '--') {
-            if (
-                object.inputElements[0].value &&
-                object.inputElements[1].value &&
-                object.inputElements[2].value
-            ) {
-                this.checkValidity(objectIndex);
-            }
-
-            return;
-        }
-
-        if (!object.labelElement) {
-            return;
-        }
         if (!object.textElement) {
             return;
         }
 
-        object.labelElement.classList.remove(this.labelClassName);
         object.textElement.classList.remove('show');
     }
 
-    getDateText(objectIndex) {
+    getText(objectIndex) {
         const object = this.objects[objectIndex];
 
         const dateYear = parseInt(object.inputElements[2].value, 10) || '';
         const dateMonth = parseInt(object.inputElements[1].value, 10) || '';
         const dateDay = parseInt(object.inputElements[0].value, 10) || '';
-        return dateYear + '-' + dateMonth + '-' + dateDay;
+        const text = dateYear + '-' + dateMonth + '-' + dateDay;
+        if (text === '--') {
+            return null;
+        }
+
+        return text;
     }
 
     record(objectIndex, evt) {
@@ -125,13 +104,11 @@ class FormInputDatepicker extends FormInputAbstract {
         }
 
         const object = this.objects[objectIndex];
-        if (!object.valueElement) {
-            return;
-        }
-        ;
-
-        const dateText = this.getDateText(objectIndex);
-        if (!dateText.match(/^(19|20)\d\d([- /.])(0?[1-9]|1[012])\2(0?[1-9]|[12][0-9]|3[01])$/)) {
+        const dateText = this.getText(objectIndex);
+        if (
+            !dateText ||
+            !dateText.match(/^(19|20)\d\d([- /.])(0?[1-9]|1[012])\2(0?[1-9]|[12][0-9]|3[01])$/)
+        ) {
             // Not nicely formatted
             this.setData(objectIndex);
 

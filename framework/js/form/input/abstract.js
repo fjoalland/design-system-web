@@ -72,7 +72,7 @@ class FormInputAbstract extends FormFieldAbstract {
             return;
         }
 
-        if (!this.getData(objectIndex)) {
+        if (!this.getText(objectIndex)) {
             // Hide reset button
             object.resetButton.style.display = 'none';
         } else {
@@ -90,6 +90,33 @@ class FormInputAbstract extends FormFieldAbstract {
         object.valueElement.value = ((data && data.value) ? data.value : null);
     }
 
+    getText(objectIndex) {
+        return this.getData(objectIndex);
+    }
+
+    isValid(inputElement) {
+        let isValid = true;
+        const validityStates = inputElement.validity;
+        for (let key in validityStates) {
+            if (validityStates[key] && key !== 'valueMissing') {
+                isValid = false;
+                break;
+            }
+        }
+
+        return isValid;
+    }
+
+    isEmpty(objectIndex) {
+        const object = this.objects[objectIndex];
+
+        let isEmpty = !this.getText(objectIndex);
+        object.inputElements.forEach((inputElement) => {
+            isEmpty = (isEmpty && this.isValid(inputElement));
+        });
+        return isEmpty;
+    }
+
     focusOnTextElement(objectIndex) {
         const object = this.objects[objectIndex];
 
@@ -105,7 +132,7 @@ class FormInputAbstract extends FormFieldAbstract {
     }
 
     blur(objectIndex) {
-        if (this.getData(objectIndex)) {
+        if (!this.isEmpty(objectIndex)) {
             return;
         }
 
