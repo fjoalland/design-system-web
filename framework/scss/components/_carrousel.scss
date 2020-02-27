@@ -92,35 +92,7 @@ div .swiper-slide {
     height: auto;
 }
 
-/*style quand il n'y a pas de js*/
-
-.ds44-carousel-swiper {
-    flex-wrap: wrap;
-}
-
-.ds44-carousel-swiper li {
-    width: calc(25% - 10px);
-    flex-shrink: 1;
-    margin-right: 10px;
-}
-
-.ds44-carousel-swiper li:last-child {
-    margin-right: 0px;
-}
-
-.ds44-carousel-swiper.grid-3-small-1 li:nth-child(3n) {
-    margin-right: 0px;
-}
-
-.ds44-carousel-swiper.grid-4-small-1 li:nth-child(4n) {
-    margin-right: 0px;
-}
-
 @media screen and (max-width: $ds44-medium - .0625) {
-
-  .ds44-carousel-swiper li {
-      width: auto;
-  }
 
   .ds44-container-large.swipper-carousel-wrap {
     margin: 0;
