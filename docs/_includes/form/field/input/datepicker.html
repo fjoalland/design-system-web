@@ -1,19 +1,17 @@
 {% include form/_variables.html %}
 
-{% if include.explanation %}
-    {% capture explanation %}
-        <span class="ds44-labelTypeInfoComp">{{ include.explanation }}</span>
-    {% endcapture %}
-{% endif %}
-
 {% if include.required == 'true' %}
-    {% assign title = 'title="' | append: label | append: ' - obligatoire"' %}
+    {% assign dayTitle = 'title="Jour - obligatoire"' %}
+    {% assign monthTitle = 'title="Mois - obligatoire"' %}
+    {% assign yearTitle = 'title="Année - obligatoire"' %}
 {% else %}
-    {% assign title = 'title="' | append: label | append: '"' %}
+    {% assign dayTitle = 'title="Jour"' %}
+    {% assign monthTitle = 'title="Mois"' %}
+    {% assign yearTitle = 'title="Année"' %}
 {% endif %}
 
 {% capture mainContent %}
-<div id="{{ id }}" class="ds44-datepicker__shape {{ mainClass }}" {{ title }} {{ containerAttributes }}>{{ explanation }}<input type="number" inputmode="numeric" step="1" min="1" max="31" data-is-date="true" {{ attributes }}><span>/</span><input type="number" inputmode="numeric" step="1" min="1" max="12" data-is-date="true" {{ attributes }}><span>/</span><input type="number" inputmode="numeric" step="1" min="1900" max="3000" data-is-date="true" {{ attributes }}></div>{% include form/field/partial/reset.html %}
+<div id="{{ id }}" class="ds44-datepicker__shape {{ mainClass }}" {{ title }} {{ containerAttributes }}>{{ explanation }}<input type="number" inputmode="numeric" {{ dayTitle }} step="1" min="1" max="31" data-is-date="true" {{ attributes }}><span>/</span><input type="number" inputmode="numeric" {{ monthTitle }} step="1" min="1" max="12" data-is-date="true" {{ attributes }}><span>/</span><input type="number" inputmode="numeric" {{ yearTitle }} step="1" min="1900" max="3000" data-is-date="true" {{ attributes }}></div>{% include form/field/partial/reset.html %}
 {% endcapture %}
 
 {% capture labelContent %}

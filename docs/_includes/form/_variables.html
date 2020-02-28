@@ -23,9 +23,19 @@
 {% endif %}
 
 {% if include.title %}
-    {% assign title = 'title="' | append: include.title | append: '"' %}
+    {% if include.required == 'true' %}
+        {% assign title = 'title="' | append: include.title | append: ' - obligatoire"' %}
+    {% else %}
+        {% assign title = 'title="' | append: include.title | append: '"' %}
+    {% endif %}
 {% else %}
-    {% assign title = '' %}
+    {% if include.label %}
+        {% if include.required == 'true' %}
+            {% assign title = 'title="' | append: include.label | append: ' - obligatoire"' %}
+        {% else %}
+            {% assign title = 'title="' | append: include.label | append: '"' %}
+        {% endif %}
+    {% endif %}
 {% endif %}
 
 {% if include.placeholder %}
@@ -69,4 +79,10 @@
 {% if include.disabled == 'true' %}
     {% assign attributes = attributes | append: ' disabled' %}
     {% assign containerAttributes = containerAttributes | append : ' data-disabled="true"' %}
+{% endif %}
+
+{% if include.explanation %}
+    {% capture explanation %}
+        <span class="ds44-labelTypeInfoComp">{{ include.explanation }}</span>
+    {% endcapture %}
 {% endif %}

@@ -181,8 +181,9 @@ class FormInputAutoComplete extends FormInputAbstract {
             return;
         }
 
+        const url = object.textElement.getAttribute('data-url');
         MiscRequest.send(
-            object.textElement.getAttribute('data-url') + '?search=' + encodeURIComponent(object.textElement.value),
+            url + (url.includes('?') ? '&' : '?') + encodeURIComponent(object.id) + '=' + encodeURIComponent(object.textElement.value),
             this.autoCompleteSuccess.bind(this, objectIndex),
             this.autoCompleteError.bind(this, objectIndex)
         );

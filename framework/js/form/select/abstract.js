@@ -238,14 +238,15 @@ class FormSelectAbstract extends FormFieldAbstract {
             return;
         }
 
+        const url = object.textElement.getAttribute('data-url');
         let urlParameters = null;
         if (parameters) {
             const formData = MiscForm.jsonToFormData(parameters);
-            urlParameters = '?' + new URLSearchParams(formData).toString()
+            urlParameters = (url.includes('?') ? '&' : '?') + new URLSearchParams(formData).toString()
         }
 
         MiscRequest.send(
-            object.textElement.getAttribute('data-url') + urlParameters,
+            url + urlParameters,
             this.autoCompleteSuccess.bind(this, objectIndex),
             this.autoCompleteError.bind(this, objectIndex)
         );

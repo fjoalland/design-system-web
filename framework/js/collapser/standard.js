@@ -43,6 +43,7 @@ class CollapserStandard {
             buttonLabel.innerText = 'Replier';
         }
         element.classList.add('show');
+        element.setAttribute('aria-expanded', 'true');
         panel.style.maxHeight = (panel.style.maxHeight ? null : panel.scrollHeight + 60 + 'px');
         MiscAccessibility.show(panel, true);
         panel.style.visibility = 'visible';
@@ -77,6 +78,7 @@ class CollapserStandard {
             buttonLabel.innerText = 'Déplier';
         }
         element.classList.remove('show');
+        element.setAttribute('aria-expanded', 'false');
         panel.style.maxHeight = null;
         MiscAccessibility.hide(panel, true);
         panel.style.visibility = 'hidden';

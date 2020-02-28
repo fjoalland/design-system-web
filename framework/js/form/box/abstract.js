@@ -97,6 +97,7 @@ class FormBoxAbstract extends FormFieldAbstract {
         }
 
         object.inputElements.forEach((inputElement) => {
+            inputElement.removeAttribute('aria-invalid');
             inputElement.classList.remove('ds44-boxError');
         });
     }
@@ -107,6 +108,7 @@ class FormBoxAbstract extends FormFieldAbstract {
         this.showErrorMessage(objectIndex);
 
         object.inputElements.forEach((inputElement) => {
+            inputElement.setAttribute('aria-invalid', 'true');
             inputElement.classList.add('ds44-boxError');
         });
     }
