@@ -1,4 +1,4 @@
-class FormInputStandard extends FormInputAbstract {
+class FormFieldInputStandard extends FormFieldInputAbstract {
     constructor() {
         super(
             'input[type="text"]:not([aria-autocomplete="list"]):not([data-is-date]), ' +
@@ -10,4 +10,4 @@ class FormInputStandard extends FormInputAbstract {
 }
 
 // Singleton
-new FormInputStandard();
+new FormFieldInputStandard();

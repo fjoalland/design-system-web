@@ -1,4 +1,4 @@
-class FormSelectStandard extends FormSelectAbstract {
+class FormFieldSelectStandard extends FormFieldSelectAbstract {
     constructor() {
         const selects = [];
         document
@@ -103,4 +103,4 @@ class FormSelectStandard extends FormSelectAbstract {
 }
 
 // Singleton
-new FormSelectStandard();
+new FormFieldSelectStandard();

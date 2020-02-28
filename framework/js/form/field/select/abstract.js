@@ -1,4 +1,4 @@
-class FormSelectAbstract extends FormFieldAbstract {
+class FormFieldSelectAbstract extends FormFieldAbstract {
     create(element) {
         this.labelClassName = 'ds44-moveSelectLabel';
 

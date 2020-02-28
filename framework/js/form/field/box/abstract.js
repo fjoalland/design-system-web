@@ -1,4 +1,4 @@
-class FormBoxAbstract extends FormFieldAbstract {
+class FormFieldBoxAbstract extends FormFieldAbstract {
     constructor(category) {
         super(
             '.ds44-form__' + category + '_container',

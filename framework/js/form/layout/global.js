@@ -1,4 +1,4 @@
-class FormGlobal {
+class FormLayoutGlobal {
     constructor() {
         this.hasBeenChecked = false;
         this.validationCategories = {
@@ -198,4 +198,4 @@ class FormGlobal {
 }
 
 // Singleton
-new FormGlobal();
+new FormLayoutGlobal();

@@ -1,5 +1,14 @@
-class FormSelectRadio extends FormSelectAbstract {
-    constructor() {
+class FormFieldSelectCheckbox extends FormFieldSelectAbstract {
+    constructor(selector, category) {
+        if(selector && category) {
+            super(
+                selector,
+                category
+            );
+
+            return;
+        }
+
         const selects = [];
         document
             .querySelectorAll('.ds44-selectDisplay')
@@ -9,82 +18,43 @@ class FormSelectRadio extends FormSelectAbstract {
                     return;
                 }
 
-                if (!formContainer.querySelector('.ds44-select-container .ds44-select-list_elem input[type="radio"]')) {
+                if(
+                    !formContainer.querySelector('.ds44-select-container .ds44-select-list_elem input[type="checkbox"]') ||
+                    formContainer.querySelector('.ds44-select-container .ds44-collapser')
+                ) {
                     return
                 }
 
-                // Has radio buttons, this is a radio select
+                // Has checkbox buttons and no collapser, this is a checkbox select
                 selects.push(element);
             });
 
         super(
             selects,
-            'selectRadio'
+            'selectCheckbox'
         );
     }
 
     setListElementEvents(listElement, objectIndex) {
         const listInputElement = listElement.querySelector('input');
-        if (!listInputElement) {
+        if(!listInputElement) {
             return;
         }
 
         MiscEvent.addListener('change', this.select.bind(this, objectIndex), listInputElement);
     }
 
-    nextOption(objectIndex, evt) {
-        if (evt) {
-            evt.preventDefault();
-            evt.stopPropagation();
-        }
-
-        const object = this.objects[objectIndex];
-        if (!object.selectListElement) {
-            return;
-        }
-        if (!object.isExpanded) {
-            return;
-        }
-
-        const listItems = this.getListItems(object.selectListElement);
-        if (!listItems.selected) {
-            // Select first
-            MiscAccessibility.setFocus(listItems.first);
-        }
-    }
-
-    previousOption(objectIndex, evt) {
-        if (evt) {
-            evt.preventDefault();
-            evt.stopPropagation();
-        }
-
-        const object = this.objects[objectIndex];
-        if (!object.selectListElement) {
-            return;
-        }
-        if (!object.isExpanded) {
-            return;
-        }
-
-        const listItems = this.getListItems(object.selectListElement);
-        if (!listItems.selected) {
-            // Select last
-            MiscAccessibility.setFocus(listItems.last);
-        }
-    }
-
     getListItems(parentElement) {
         let previousItem = null;
         let nextItem = null;
         const selectedListItem = parentElement.querySelector('.ds44-select-list_elem input:focus');
-        if (selectedListItem) {
+        if(selectedListItem) {
             previousItem = MiscDom.getPreviousSibling(selectedListItem.closest('.ds44-select-list_elem'));
-            if (previousItem) {
+            if(previousItem) {
                 previousItem = previousItem.querySelector('input');
             }
             nextItem = MiscDom.getNextSibling(selectedListItem.closest('.ds44-select-list_elem'));
-            if (nextItem) {
+            if(nextItem) {
                 nextItem = nextItem.querySelector('input');
             }
         }
@@ -109,16 +79,15 @@ class FormSelectRadio extends FormSelectAbstract {
 
         const id = 'name-check-form-element-' + MiscUtils.generateId();
         let inputElement = document.createElement('input');
-        inputElement.classList.add('ds44-radio');
+        inputElement.classList.add('ds44-checkbox');
         inputElement.setAttribute('id', id);
-        inputElement.setAttribute('name', object.id);
-        inputElement.setAttribute('type', 'radio');
+        inputElement.setAttribute('type', 'checkbox');
         inputElement.setAttribute('value', key);
         containerElement.appendChild(inputElement);
 
         let labelElement = document.createElement('label');
         labelElement.setAttribute('for', id);
-        labelElement.classList.add('ds44-radioLabel');
+        labelElement.classList.add('ds44-boxLabel');
         labelElement.innerHTML = value;
         containerElement.appendChild(labelElement);
 
@@ -172,10 +141,10 @@ class FormSelectRadio extends FormSelectAbstract {
     getDomData(listElement) {
         return {
             'value': listElement.querySelector('input').getAttribute('value'),
-            'text': listElement.querySelector('label').innerText
+            'text': listElement.querySelector('label').textContent
         };
     }
 }
 
 // Singleton
-new FormSelectRadio();
+new FormFieldSelectCheckbox();

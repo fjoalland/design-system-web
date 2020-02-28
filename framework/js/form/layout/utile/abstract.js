@@ -1,4 +1,4 @@
-class FormUtileAbstract {
+class FormLayoutUtileAbstract {
     constructor(selector) {
         this.url = '/plugins/ChartePlugin/types/PortletQueryForeach/displayResult.jsp';
         this.formElement = null;

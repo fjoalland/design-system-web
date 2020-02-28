@@ -1,4 +1,4 @@
-class FormSearch {
+class FormLayoutSearch {
     constructor() {
         this.url = '/plugins/ChartePlugin/types/PortletQueryForeach/displayResult.jsp';
         this.objects = [];
@@ -149,4 +149,4 @@ class FormSearch {
     }
 }
 
-new FormSearch();
+new FormLayoutSearch();

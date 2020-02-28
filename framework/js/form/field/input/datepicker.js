@@ -1,4 +1,4 @@
-class FormInputDatepicker extends FormInputAbstract {
+class FormFieldInputDatepicker extends FormFieldInputAbstract {
     constructor() {
         super('.ds44-datepicker__shape', 'datepicker');
     }
@@ -143,4 +143,4 @@ class FormInputDatepicker extends FormInputAbstract {
 }
 
 // Singleton
-new FormInputDatepicker();
+new FormFieldInputDatepicker();

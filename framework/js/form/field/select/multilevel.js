@@ -1,4 +1,4 @@
-class FormSelectMultilevel extends FormSelectCheckbox {
+class FormFieldSelectMultilevel extends FormFieldSelectCheckbox {
     constructor() {
         const selects = [];
         document
@@ -154,4 +154,4 @@ class FormSelectMultilevel extends FormSelectCheckbox {
 }
 
 // Singleton
-new FormSelectMultilevel();
+new FormFieldSelectMultilevel();

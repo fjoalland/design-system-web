@@ -1,4 +1,4 @@
-class FormInputAbstract extends FormFieldAbstract {
+class FormFieldInputAbstract extends FormFieldAbstract {
     create(element) {
         super.create(element);
 

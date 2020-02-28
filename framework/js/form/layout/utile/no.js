@@ -1,4 +1,4 @@
-class FormUtileNo extends FormUtileAbstract {
+class FormLayoutUtileNo extends FormLayoutUtileAbstract {
     constructor() {
         super('#ds44-choiceN form');
 
@@ -7,4 +7,4 @@ class FormUtileNo extends FormUtileAbstract {
 }
 
 // Singleton
-new FormUtileNo();
+new FormLayoutUtileNo();

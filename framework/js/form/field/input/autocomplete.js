@@ -1,4 +1,4 @@
-class FormInputAutoComplete extends FormInputAbstract {
+class FormFieldInputAutoComplete extends FormFieldInputAbstract {
     constructor() {
         super(
             'input[aria-autocomplete="list"]',
@@ -505,4 +505,4 @@ class FormInputAutoComplete extends FormInputAbstract {
 }
 
 // Singleton
-new FormInputAutoComplete();
+new FormFieldInputAutoComplete();

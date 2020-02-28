@@ -1,4 +1,4 @@
-class FormUtileYes extends FormUtileAbstract {
+class FormLayoutUtileYes extends FormLayoutUtileAbstract {
     constructor() {
         super('#ds44-choiceY form');
 
@@ -7,4 +7,4 @@ class FormUtileYes extends FormUtileAbstract {
 }
 
 // Singleton
-new FormUtileYes();
+new FormLayoutUtileYes();
