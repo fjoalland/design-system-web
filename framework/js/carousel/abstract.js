@@ -91,7 +91,8 @@ class CarouselAbstract {
             }
 
             // Detect a slide move
-            object.swiper.on('slideChangeTransitionEnd', this.slide.bind(this, objectIndex));
+            object.swiper.on('slidePrevTransitionEnd', this.slide.bind(this, objectIndex, 'backward'));
+            object.swiper.on('slideNextTransitionEnd', this.slide.bind(this, objectIndex, 'forward'));
         }
 
         object.swiper.init();
@@ -160,33 +161,40 @@ class CarouselAbstract {
     }
 
     // Met a jour la visibilite des tuiles en fonction du placement et du nombre de tuile visible
-    updateCardAccessibility(objectIndex) {
+    updateCardAccessibility(objectIndex, direction) {
         const object = this.objects[objectIndex];
 
-        let isFirstVisibleSlideElement = true;
         object.swiperElement
             .querySelectorAll('.swiper-slide')
             .forEach((slideElement) => {
                 if (slideElement.classList.contains('swiper-slide-visible')) {
                     // Show slide
                     MiscAccessibility.show(slideElement, true);
-                    if (isFirstVisibleSlideElement) {
-                        isFirstVisibleSlideElement = false;
-                        MiscAccessibility.setFocus(slideElement.querySelector(this.queryTitreTuile));
-                    }
                 } else {
                     // Hide slide
                     MiscAccessibility.hide(slideElement, true);
                 }
             });
+
+
+        let slideElement = null;
+        const visibleSlideElements = object.swiperElement.querySelectorAll('.swiper-slide.swiper-slide-visible');
+        if (direction === 'backward') {
+            slideElement = visibleSlideElements[0];
+        } else {
+            slideElement = visibleSlideElements[visibleSlideElements.length - 1];
+        }
+        if (slideElement) {
+            MiscAccessibility.setFocus(slideElement.querySelector(this.queryTitreTuile));
+        }
     }
 
-    slide(objectIndex) {
+    slide(objectIndex, direction) {
         const object = this.objects[objectIndex];
 
         if (object.previousElement && object.nextElement) {
             this.updatePreviousAndNextSlideMessage(objectIndex);
         }
-        this.updateCardAccessibility(objectIndex);
+        this.updateCardAccessibility(objectIndex, direction);
     }
 }
