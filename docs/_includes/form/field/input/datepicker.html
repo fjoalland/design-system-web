@@ -1,17 +1,17 @@
 {% include form/_variables.html %}
 
 {% if include.required == 'true' %}
-    {% assign dayTitle = 'title="Jour - obligatoire"' %}
-    {% assign monthTitle = 'title="Mois - obligatoire"' %}
-    {% assign yearTitle = 'title="Année - obligatoire"' %}
+    {% capture dayLabel %}aria-label="{{ label }} : Jour - obligatoire"{% endcapture %}
+    {% capture monthLabel %}aria-label="{{ label }} : Mois - obligatoire"{% endcapture %}
+    {% capture yearLabel %}aria-label="{{ label }} : Année - obligatoire"{% endcapture %}
 {% else %}
-    {% assign dayTitle = 'title="Jour"' %}
-    {% assign monthTitle = 'title="Mois"' %}
-    {% assign yearTitle = 'title="Année"' %}
+    {% capture dayLabel %}aria-label="{{ label }} : Jour"{% endcapture %}
+    {% capture monthLabel %}aria-label="{{ label }} : Mois"{% endcapture %}
+    {% capture yearLabel %}aria-label="{{ label }} : Année"{% endcapture %}
 {% endif %}
 
 {% capture mainContent %}
-<div id="{{ id }}" class="ds44-datepicker__shape {{ mainClass }}" {{ title }} {{ containerAttributes }}>{{ explanation }}<input type="number" inputmode="numeric" {{ dayTitle }} step="1" min="1" max="31" data-is-date="true" {{ attributes }}><span>/</span><input type="number" inputmode="numeric" {{ monthTitle }} step="1" min="1" max="12" data-is-date="true" {{ attributes }}><span>/</span><input type="number" inputmode="numeric" {{ yearTitle }} step="1" min="1900" max="3000" data-is-date="true" {{ attributes }}></div>{% include form/field/partial/reset.html %}
+<div id="{{ id }}" class="ds44-datepicker__shape {{ mainClass }}" {{ containerAttributes }}>{{ explanation }}<input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" {{ dayLabel }} step="1" min="1" max="31" data-is-date="true" {{ attributes }}><span>/</span><input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" {{ monthLabel }} step="1" min="1" max="12" data-is-date="true" {{ attributes }}><span>/</span><input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" {{ yearLabel }} step="1" min="1900" max="3000" data-is-date="true" {{ attributes }}></div>{% include form/field/partial/reset.html %}
 {% endcapture %}
 
 {% capture labelContent %}

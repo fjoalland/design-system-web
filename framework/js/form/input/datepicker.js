@@ -16,7 +16,7 @@ class FormInputDatepicker extends FormInputAbstract {
         const object = this.objects[objectIndex];
 
         object.valueElement = valueElement;
-        object.inputElements = element.querySelectorAll('input[type="number"]');
+        object.inputElements = element.querySelectorAll('input[type="text"]');
 
         object.inputElements.forEach((inputElement) => {
             MiscEvent.addListener('focus', this.focus.bind(this, objectIndex), inputElement);
