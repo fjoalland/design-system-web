@@ -80,20 +80,20 @@ class FormSelectMultilevel extends FormSelectCheckbox {
             return;
         }
 
-        const collapserElementInput = collapserElement.querySelector('.ds44-select__categ input');
-        if (!collapserElementInput) {
+        const collapserInputElement = collapserElement.querySelector('.ds44-select__categ input');
+        if (!collapserInputElement) {
             return;
         }
 
         if (allChecked) {
-            collapserElementInput.checked = true;
-            collapserElementInput.classList.remove('ds44-chkInder');
+            collapserInputElement.checked = true;
+            collapserInputElement.classList.remove('ds44-chkInder');
         } else if (allNotChecked) {
-            collapserElementInput.checked = false;
-            collapserElementInput.classList.remove('ds44-chkInder');
+            collapserInputElement.checked = false;
+            collapserInputElement.classList.remove('ds44-chkInder');
         } else {
-            collapserElementInput.checked = false;
-            collapserElementInput.classList.add('ds44-chkInder');
+            collapserInputElement.checked = false;
+            collapserInputElement.classList.add('ds44-chkInder');
         }
     }
 
