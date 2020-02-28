@@ -168,18 +168,32 @@ textarea {
     color: $ds44-color-soft-text;
 }
 
+/* Datepicker */
+
+.ds44-datepicker {
+    position: relative;
+}
+
 /* Bouton de reset de champ */
 
-.ds44-reset {
+.ds44-reset,
+.ds44-calendar {
     position: absolute;
     right: 0;
     top: calc(50% - 13px);
-    display: none;
     padding-right: 1.5rem;
     color: $ds44-color-dark-text;
 
     .ds44-formLabel--external & {
         top: calc(50% + -1px);
+    }
+}
+
+.ds44-reset {
+    display: none;
+
+    .ds44-datepicker & {
+        right: 34px;
     }
 }
 
@@ -673,7 +687,7 @@ input[type=radio],
         padding: $ds44-padding-box;
 
         &.success {
-          background-color: $ds44-valid-bg;
+            background-color: $ds44-valid-bg;
 
             .icon {
                 color: $ds44-valid;
@@ -681,7 +695,7 @@ input[type=radio],
         }
 
         &.error {
-          background-color: $ds44-error-bg;
+            background-color: $ds44-error-bg;
 
             .icon {
                 color: $ds44-error;
