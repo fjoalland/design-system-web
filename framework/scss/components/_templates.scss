@@ -23,16 +23,31 @@
 }
 
 .ds44-homepage-container {
+
   .ds44-imgInsta {
+
     .ds44-legendeContainer {
       padding: 0;
-      height: 100%;
-        img{
+      height: auto;
+
+        img {
           height: 100%;
           object-fit: cover;
         }
     }
   }
+
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    height: 2em;
+    width: 4rem;
+    background: url(../../../assets/icons/long-arrow-down.svg) no-repeat ;
+  }
+
 }
 
 main {
@@ -236,6 +251,14 @@ main {
 
 }
 
+@media (min-width: $ds44-large) {
+
+  .ds44-homepage-container > div{
+    height: 620px;
+  }
+
+}
+
 @media (max-width: $ds44-large - .0625) {
 
   aside {
@@ -244,6 +267,16 @@ main {
 
   .ds44-container-large {
       margin: 0 $ds44-components-vmargin;
+  }
+
+  .ds44-homepage-container > div{
+    grid-template-columns: repeat(1, 1fr);
+
+    .ds44-titleContainer {
+        &--home {
+          min-height: 450px;
+        }
+    }
   }
 
 }
@@ -266,11 +299,12 @@ main {
 
 @media (max-width: $ds44-small - .0625) {
 
+
   .ds44-titleContainer {
     min-height: 250px;
 
     &--home {
-      min-height: 370px;
+      min-height: 370px !important;
     }
   }
 
