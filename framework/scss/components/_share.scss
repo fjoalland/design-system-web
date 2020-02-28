@@ -33,8 +33,20 @@
     }
   }
 
+  @media (max-width: $ds44-large - .0625) {
 
-  @media (max-width: $ds44-small) {
+    .ds44-partage-sliderHome {
+        width: 100%;
+
+        > .ds44-list {
+            flex-wrap: inherit;
+        }
+    }
+
+  }
+
+
+  @media (max-width: $ds44-small - .0625) {
 
     .ds44-partage {
         flex-direction: column;
