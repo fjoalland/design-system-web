@@ -172,6 +172,9 @@
 /* === Flex utils === */
 
 /* container properties */
+.ds44-flex {
+    display: flex;
+}
 .ds44-flex-container {
     display: flex;
     flex-direction: row;
@@ -208,6 +211,12 @@
 }
 .ds44-fg3 {
   flex-grow: 3;
+}
+.ds44-fg4 {
+  flex-grow: 4;
+}
+.ds44-fg5 {
+  flex-grow: 5;
 }
 .ds44-fas {
   align-self: flex-end;
@@ -391,7 +400,7 @@
   &--mentions {
     @include ds44-font-sizes(errMsg);
   }
-  
+
 }
 
 /* === BORDERS === */
