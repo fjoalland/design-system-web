@@ -31,7 +31,7 @@ class CarouselSlideshow extends CarouselAbstract {
         const iconElement = evt.currentTarget.querySelector('i')
         if (object.swiper.autoplay.running) {
             object.swiper.autoplay.stop();
-            if(iconElement) {
+            if (iconElement) {
                 iconElement.classList.add('icon-play');
                 iconElement.classList.remove('icon-pause');
             }
@@ -40,9 +40,18 @@ class CarouselSlideshow extends CarouselAbstract {
         }
 
         object.swiper.autoplay.start();
-        if(iconElement) {
+        if (iconElement) {
             iconElement.classList.add('icon-pause');
             iconElement.classList.remove('icon-play');
+        }
+    }
+
+    slide(objectIndex, direction) {
+        super.slide(objectIndex, direction);
+
+        const object = this.objects[objectIndex];
+        if (!object.swiper.autoplay.running) {
+            object.swiper.autoplay.start();
         }
     }
 }
