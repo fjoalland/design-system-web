@@ -36,10 +36,10 @@ class CarouselAbstract {
         }
 
         // Component initialization in full JS mode
-        const notification = wrapperElement.querySelector('.swiper-notification');
-        if (notification) {
-            notification.remove();
-        }
+        wrapperElement.classList.remove.apply(
+            wrapperElement.classList,
+            Array.from(wrapperElement.classList).filter(className => className.startsWith('grid-'))
+        );
 
         // Create object
         const object = {
@@ -68,32 +68,24 @@ class CarouselAbstract {
         this.objects.push(object);
         const objectIndex = (this.objects.length - 1);
 
-        if (object.hasLoop) {
-            // Component initialization in full JS mode
-            wrapperElement.classList.remove.apply(
-                wrapperElement.classList,
-                Array.from(wrapperElement.classList).filter(className => className.startsWith('grid-'))
-            );
+        // Enable previous and next buttons
+        if (object.previousElement && object.nextElement) {
+            [object.previousElement, object.nextElement]
+                .forEach(button => {
+                    button.classList.remove('swiper-button-disabled');
+                    button.removeAttribute('aria-label');
+                    button.removeAttribute('role');
 
-            // Enable previous and next buttons
-            if (object.previousElement && object.nextElement) {
-                [object.previousElement, object.nextElement]
-                    .forEach(button => {
-                        button.classList.remove('swiper-button-disabled');
-                        button.removeAttribute('aria-label');
-                        button.removeAttribute('role');
-
-                        const ua = navigator.userAgent;
-                        if (!ua.includes('Edge/42')) {
-                            button.classList.add('ds44-not-edge-42');
-                        }
-                    });
-            }
-
-            // Detect a slide move
-            object.swiper.on('slidePrevTransitionEnd', this.slide.bind(this, objectIndex, 'backward'));
-            object.swiper.on('slideNextTransitionEnd', this.slide.bind(this, objectIndex, 'forward'));
+                    const ua = navigator.userAgent;
+                    if (!ua.includes('Edge/42')) {
+                        button.classList.add('ds44-not-edge-42');
+                    }
+                });
         }
+
+        // Detect a slide move
+        object.swiper.on('slidePrevTransitionEnd', this.slide.bind(this, objectIndex, 'backward'));
+        object.swiper.on('slideNextTransitionEnd', this.slide.bind(this, objectIndex, 'forward'));
 
         object.swiper.init();
     }

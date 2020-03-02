@@ -48,7 +48,7 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
         this.hide(objectIndex);
 
         MiscEvent.addListener('keyDown:*', this.record.bind(this, objectIndex));
-        MiscEvent.addListener('keyUp:escape', this.hide.bind(this, objectIndex));
+        MiscEvent.addListener('keyUp:escape', this.escape.bind(this, objectIndex));
         MiscEvent.addListener('keyPress:spacebar', this.selectOption.bind(this, objectIndex));
         MiscEvent.addListener('keyPress:enter', this.selectOption.bind(this, objectIndex));
         MiscEvent.addListener('keyUp:arrowup', this.previousOption.bind(this, objectIndex));
@@ -334,6 +334,25 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
 
         this.showHideResetButton(objectIndex);
         this.enableDisableLinkedField(objectIndex);
+    }
+
+    escape(objectIndex) {
+        const object = this.objects[objectIndex];
+
+        if (
+            !document.activeElement ||
+            !object.containerElement.contains(document.activeElement)
+        ) {
+            return;
+        }
+
+        if (!object.textElement) {
+            return;
+        }
+
+        MiscAccessibility.setFocus(object.textElement);
+
+        this.hide(objectIndex);
     }
 
     highlightSearch(result, search) {

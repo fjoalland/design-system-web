@@ -1,87 +1,99 @@
 class CollapserStandard {
     constructor() {
-        MiscEvent.addListener('keyUp:escape', this.hide.bind(this));
+        this.objects = [];
 
-        //Bind event on click
         document
             .querySelectorAll('.ds44-collapser_button')
-            .forEach((element) => {
-                this.hide(null, element);
-
-                MiscEvent.addListener('click', this.showHide.bind(this), element);
+            .forEach((buttonElement) => {
+                this.create(buttonElement);
             });
     }
 
-    showHide(evt) {
-        const element = evt.currentTarget;
-        if (element.classList.contains('show')) {
-            // Hide
-            this.hide(null, element)
-        } else {
-            // Show
-            this.show(null, element)
-        }
+    create(buttonElement) {
+        const object = {
+            'id': MiscUtils.generateId(),
+            'containerElement': buttonElement.closest('.ds44-collapser_element'),
+            'buttonElement': buttonElement,
+        };
+        this.objects.push(object);
+        const objectIndex = (this.objects.length - 1);
+
+        this.hide(objectIndex);
+
+        MiscEvent.addListener('keyUp:escape', this.escape.bind(this, objectIndex));
+        MiscEvent.addListener('click', this.showHide.bind(this, objectIndex), buttonElement);
     }
 
-    show(evt, element) {
-        if (
-            !element &&
-            evt &&
-            evt.detail &&
-            evt.detail.element
-        ) {
-            element = evt.detail.element
-        }
-
-        if (!element) {
+    showHide(objectIndex) {
+        const object = this.objects[objectIndex];
+        if (!object.buttonElement) {
             return;
         }
 
-        const panel = element.nextElementSibling;
-        const buttonLabel = element.querySelector('span.visually-hidden');
+        if (object.buttonElement.classList.contains('show')) {
+            // Hide
+            this.hide(objectIndex);
+
+            return;
+        }
+
+        // Show
+        this.show(objectIndex);
+    }
+
+    show(objectIndex) {
+        const object = this.objects[objectIndex];
+        if (!object.buttonElement) {
+            return;
+        }
+
+        const panel = object.buttonElement.nextElementSibling;
+        const buttonLabel = object.buttonElement.querySelector('span.visually-hidden');
         if (buttonLabel) {
             buttonLabel.innerText = 'Replier';
         }
-        element.classList.add('show');
-        element.setAttribute('aria-expanded', 'true');
+        object.buttonElement.classList.add('show');
+        object.buttonElement.setAttribute('aria-expanded', 'true');
         panel.style.maxHeight = (panel.style.maxHeight ? null : panel.scrollHeight + 60 + 'px');
         MiscAccessibility.show(panel, true);
         panel.style.visibility = 'visible';
     }
 
-    hide(evt, element) {
-        if (!element) {
-            if (
-                evt &&
-                evt.detail &&
-                evt.detail.element
-            ) {
-                element = evt.detail.element
-            } else if (
-                evt.type === 'keyUp:escape' &&
-                document.activeElement
-            ) {
-                const collapserElement = document.activeElement.closest('.ds44-collapser_element');
-                if (collapserElement) {
-                    element = collapserElement.querySelector('.ds44-collapser_button')
-                }
-            }
-        }
-
-        if (!element) {
+    hide(objectIndex) {
+        const object = this.objects[objectIndex];
+        if (!object.buttonElement) {
             return;
         }
 
-        const panel = element.nextElementSibling;
-        const buttonLabel = element.querySelector('span.visually-hidden');
+        const panel = object.buttonElement.nextElementSibling;
+        const buttonLabel = object.buttonElement.querySelector('span.visually-hidden');
         if (buttonLabel) {
             buttonLabel.innerText = 'Déplier';
         }
-        element.classList.remove('show');
-        element.setAttribute('aria-expanded', 'false');
+        object.buttonElement.classList.remove('show');
+        object.buttonElement.setAttribute('aria-expanded', 'false');
         panel.style.maxHeight = null;
         MiscAccessibility.hide(panel, true);
         panel.style.visibility = 'hidden';
+    }
+
+    escape(objectIndex) {
+        const object = this.objects[objectIndex];
+
+        if (
+            !document.activeElement ||
+            !object.containerElement.contains(document.activeElement)
+        ) {
+            return;
+        }
+
+        if (!object.buttonElement) {
+            return;
+        }
+
+        MiscAccessibility.setFocus(object.buttonElement);
+
+        this.hide(objectIndex);
     }
 }
 

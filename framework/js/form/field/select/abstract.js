@@ -21,7 +21,7 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         object.buttonTextElement = object.containerElement.querySelector('.ds44-btnOpen .visually-hidden');
         object.isExpanded = false;
 
-        MiscEvent.addListener('keyUp:escape', this.hide.bind(this, objectIndex));
+        MiscEvent.addListener('keyUp:escape', this.escape.bind(this, objectIndex));
         MiscEvent.addListener('keyUp:arrowup', this.previousOption.bind(this, objectIndex));
         MiscEvent.addListener('keyUp:arrowdown', this.nextOption.bind(this, objectIndex));
         if (object.shapeElement) {
@@ -128,7 +128,7 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         object.valueElement.value = ((data && data.value) ? data.value : null);
         object.textElement.innerHTML = ((data && data.text) ? '<p>' + data.text + '</p>' : null);
 
-        if(object.valueElement.value) {
+        if (object.valueElement.value) {
             object.buttonElement.setAttribute('aria-describedby', object.textElement.getAttribute('id'));
         } else {
             object.buttonElement.removeAttribute('aria-describedby');
@@ -150,7 +150,7 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
     focusOut(objectIndex, evt) {
         const object = this.objects[objectIndex];
 
-        if(
+        if (
             !evt ||
             (
                 evt.type === 'focusout' &&
@@ -230,6 +230,25 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         object.buttonIconElement.classList.add('icon-down');
         object.buttonIconElement.classList.remove('icon-up');
         object.isExpanded = false;
+    }
+
+    escape(objectIndex) {
+        const object = this.objects[objectIndex];
+
+        if (
+            !document.activeElement ||
+            !object.containerElement.contains(document.activeElement)
+        ) {
+            return;
+        }
+
+        if (!object.buttonElement) {
+            return;
+        }
+
+        MiscAccessibility.setFocus(object.buttonElement);
+
+        this.hide(objectIndex);
     }
 
     autoComplete(objectIndex, parameters) {
@@ -469,7 +488,7 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         object.buttonElement.setAttribute('aria-invalid', 'true');
         object.shapeElement.classList.add('ds44-error');
 
-        if(!this.getData(objectIndex)) {
+        if (!this.getData(objectIndex)) {
             object.buttonElement.setAttribute('aria-describedby', errorMessageElementId);
         } else {
             object.buttonElement.setAttribute('aria-describedby', errorMessageElementId + ' ' + object.textElement.getAttribute('id'));

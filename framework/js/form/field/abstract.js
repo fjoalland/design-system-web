@@ -250,6 +250,7 @@ class FormFieldAbstract {
         }
         errorElement = document.createElement('div');
         errorElement.classList.add('ds44-errorMsg-container');
+        errorElement.setAttribute('aria-live', 'polite');
         object.containerElement.appendChild(errorElement);
 
         let errorMessageElement = document.createElement('p');
