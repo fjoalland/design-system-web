@@ -4,6 +4,7 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
 
         this.lastInputValue = null;
         this.calendar = null;
+        this.invalidFormatMessage = 'Date invalide. Merci de respecter le format d’exemple.';
     }
 
     create(element) {
@@ -103,7 +104,7 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
     }
 
     focusOut(objectIndex, evt) {
-        if(
+        if (
             !this.calendar ||
             this.calendar.index !== objectIndex
         ) {
@@ -238,6 +239,14 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
         this.record(objectIndex);
         this.showHideResetButton(objectIndex);
         this.enableDisableLinkedField(objectIndex);
+    }
+
+    getErrorMessage(objectIndex) {
+        if (this.getText(objectIndex)) {
+            return this.invalidFormatMessage;
+        }
+
+        return this.errorMessage;
     }
 }
 

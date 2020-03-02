@@ -180,7 +180,7 @@ textarea {
 .ds44-calendar {
     position: absolute;
     right: 0;
-    top: calc(50% - 13px);
+    top: calc(50% - 15px);
     padding-right: 1.5rem;
     color: $ds44-color-dark-text;
 
@@ -191,6 +191,7 @@ textarea {
 
 .ds44-reset {
     display: none;
+    top: calc(50% - 13px);
 
     .ds44-datepicker & {
         right: 34px;
@@ -719,11 +720,11 @@ input[type=radio],
         border: none;
         outline: none;
         text-align: center;
-        width: 3rem;
+        width: 2.6rem;
         background-color: transparent;
 
         &:last-of-type {
-            width: 5rem;
+            width: 4.2rem;
         }
     }
 

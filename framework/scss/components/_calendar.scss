@@ -4,7 +4,6 @@
     --vanilla-calendar-border-color: #e7e9ed;
     --vanilla-calendar-today-bg-color: #E7E9ED;
     --vanilla-calendar-today-color: #333;
-    --vanilla-calendar-selected-bg-color: #538fcd;
     --vanilla-calendar-selected-color: #fff;
     --vanilla-calendar-selected-radius: 5px;
 }
@@ -72,12 +71,12 @@
     }
 
     .vanilla-calendar-week {
-        background-color: var(--vanilla-calendar-selected-bg-color);
+        background-color: $ds44-contextual-color;
         display: flex;
         flex-wrap: wrap;
 
         span {
-            color: var(--vanilla-calendar-selected-color);
+            color: $ds44-color-base;
             flex-direction: column;
             flex: 0 0 14.28%;
             font-size: 1em;
@@ -90,7 +89,7 @@
     }
 
     .vanilla-calendar-body {
-        background-color: rgba(var(--vanilla-calendar-selected-bg-color), 0.3);
+        background-color: rgba($ds44-contextual-color, 0.3);
         display: flex;
         flex-wrap: wrap;
         padding-bottom: 10px
@@ -116,8 +115,8 @@
         }
 
         &--selected {
-            background-color: var(--vanilla-calendar-selected-bg-color);
-            color: var(--vanilla-calendar-selected-color);
+            background-color: $ds44-contextual-color;
+            color: $ds44-color-base;
         }
 
         &--disabled {

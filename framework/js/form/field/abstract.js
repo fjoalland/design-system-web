@@ -269,20 +269,26 @@ class FormFieldAbstract {
 
         let errorTextElement = document.createElement('span');
         errorTextElement.classList.add('ds44-iconInnerText');
-        errorTextElement.innerHTML = this.getErrorMessage(objectIndex);
+        errorTextElement.innerHTML = this.formatErrorMessage(objectIndex);
         errorMessageElement.appendChild(errorTextElement);
     }
 
-    getErrorMessage(objectIndex) {
+    formatErrorMessage(objectIndex) {
+        const errorMessage = this.getErrorMessage(objectIndex);
+
         const object = this.objects[objectIndex];
         if (!object.labelElement) {
-            return this.errorMessage;
+            return errorMessage;
         }
 
-        return this.errorMessage
+        return errorMessage
             .replace(
                 '{fieldName}',
                 object.labelElement.innerText.replace(/\*$/, '')
             );
+    }
+
+    getErrorMessage(objectIndex) {
+        return this.errorMessage;
     }
 }
