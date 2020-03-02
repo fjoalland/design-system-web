@@ -175,4 +175,8 @@ class MiscAccessibility {
             element.removeAttribute('data-bkp-focusable');
         }
     }
+
+    static flattenText(text) {
+        return text.replace(/\n/gi, ' ').replace(/[ ]+/gi, ' ').trim();
+    }
 }

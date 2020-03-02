@@ -142,14 +142,14 @@ class CarouselAbstract {
             indexNextElement -= object.nbSlides;
         }
 
-        const titlePreviousElement = this.previousSlideMessage + ' ' + titleCarousel + ' - ' + indexPreviousElement + '/' + object.nbSlides;
+        const titlePreviousElement = MiscAccessibility.flattenText(this.previousSlideMessage + ' : ' + titleCarousel + ' - ' + indexPreviousElement + '/' + object.nbSlides);
         object.previousElement.setAttribute('title', titlePreviousElement);
         const innerTextPreviousElement = object.previousElement.querySelector('.visually-hidden');
         if (innerTextPreviousElement) {
             innerTextPreviousElement.innerText = titlePreviousElement;
         }
 
-        const titleNextElement = this.nextSlideMessage + ' ' + titleCarousel + ' - ' + indexNextElement + '/' + object.nbSlides;
+        const titleNextElement = MiscAccessibility.flattenText(this.nextSlideMessage + ' : ' + titleCarousel + ' - ' + indexNextElement + '/' + object.nbSlides);
         object.nextElement.setAttribute('title', titleNextElement);
         const innerTextNextElement = object.nextElement.querySelector('.visually-hidden');
         if (innerTextNextElement) {
