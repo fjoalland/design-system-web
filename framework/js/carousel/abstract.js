@@ -32,7 +32,7 @@ class CarouselAbstract {
         const nbSlides = slideElements.length;
         let nbVisibleSlides = 1;
         if (screenWidth >= 768) {
-            nbVisibleSlides = wrapElement.getAttribute('data-nb-visible-slides');
+            nbVisibleSlides = parseInt(wrapElement.getAttribute('data-nb-visible-slides'), 10);
         }
 
         // Component initialization in full JS mode
@@ -107,6 +107,9 @@ class CarouselAbstract {
             'watchSlidesVisibility': true,
             'slidesPerView': object.nbVisibleSlides,
             'loop': object.hasLoop,
+            'a11y': {
+                'enabled': false
+            }
         };
 
         if (object.previousElement && object.nextElement) {

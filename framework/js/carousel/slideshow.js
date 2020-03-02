@@ -25,24 +25,57 @@ class CarouselSlideshow extends CarouselAbstract {
         return swiperParameters;
     }
 
-    startStop(objectIndex, evt) {
+    startStop(objectIndex) {
         const object = this.objects[objectIndex];
 
-        const iconElement = evt.currentTarget.querySelector('i')
         if (object.swiper.autoplay.running) {
-            object.swiper.autoplay.stop();
-            if (iconElement) {
-                iconElement.classList.add('icon-play');
-                iconElement.classList.remove('icon-pause');
-            }
+            this.stop(objectIndex);
 
             return;
         }
 
+        this.start(objectIndex);
+    }
+
+    start(objectIndex) {
+        const object = this.objects[objectIndex];
+        const autoplayButtonElement = object.wrapElement.querySelector('button:last-child');
+        if (!autoplayButtonElement) {
+            return;
+        }
+
         object.swiper.autoplay.start();
+
+        const iconElement = autoplayButtonElement.querySelector('i');
         if (iconElement) {
             iconElement.classList.add('icon-pause');
             iconElement.classList.remove('icon-play');
+        }
+
+        const spanElement = autoplayButtonElement.querySelector('span');
+        if (spanElement) {
+            spanElement.innerText = spanElement.innerText.replace('Lancer ', 'Arrêter ');
+        }
+    }
+
+    stop(objectIndex) {
+        const object = this.objects[objectIndex];
+        const autoplayButtonElement = object.wrapElement.querySelector('button:last-child');
+        if (!autoplayButtonElement) {
+            return;
+        }
+
+        object.swiper.autoplay.stop();
+
+        const iconElement = autoplayButtonElement.querySelector('i');
+        if (iconElement) {
+            iconElement.classList.add('icon-play');
+            iconElement.classList.remove('icon-pause');
+        }
+
+        const spanElement = autoplayButtonElement.querySelector('span');
+        if (spanElement) {
+            spanElement.innerText = spanElement.innerText.replace('Arrêter ', 'Lancer ');
         }
     }
 
@@ -51,7 +84,7 @@ class CarouselSlideshow extends CarouselAbstract {
 
         const object = this.objects[objectIndex];
         if (!object.swiper.autoplay.running) {
-            object.swiper.autoplay.start();
+            this.start(objectIndex);
         }
     }
 }
