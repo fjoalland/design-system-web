@@ -83,7 +83,10 @@ class MiscAccessibility {
             return;
         }
 
-        if (MiscAccessibility.getProtectedElementsSelector().indexOf(element.tagName.toLowerCase()) === -1) {
+        if (
+            MiscAccessibility.getProtectedElementsSelector().indexOf(element.tagName.toLowerCase()) === -1 &&
+            element.getAttribute('data-a11y-exclude') !== 'true'
+        ) {
             if (force !== true) {
                 MiscAccessibility.record(element);
             } else {
@@ -110,7 +113,10 @@ class MiscAccessibility {
             return;
         }
 
-        if (MiscAccessibility.getProtectedElementsSelector().indexOf(element.tagName.toLowerCase()) === -1) {
+        if (
+            MiscAccessibility.getProtectedElementsSelector().indexOf(element.tagName.toLowerCase()) === -1 &&
+            element.getAttribute('data-a11y-exclude') !== 'true'
+        ) {
             if (force !== true) {
                 MiscAccessibility.record(element);
             } else {

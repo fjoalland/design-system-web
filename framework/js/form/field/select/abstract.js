@@ -68,8 +68,8 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         }
 
         object.shapeElement.classList.remove('ds44-inputDisabled');
-        object.buttonElement.removeAttribute('tabindex');
         object.buttonElement.removeAttribute('readonly');
+        object.buttonElement.removeAttribute('aria-readonly');
 
         if (object.textElement.getAttribute('data-url')) {
             let autoCompleteParameters = null;
@@ -106,8 +106,8 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
             });
 
         object.shapeElement.classList.add('ds44-inputDisabled');
-        object.buttonElement.setAttribute('tabindex', '-1');
         object.buttonElement.setAttribute('readonly', 'true');
+        object.buttonElement.setAttribute('aria-readonly', 'true');
         object.labelElement.classList.remove(this.labelClassName);
 
         this.hide(objectIndex);

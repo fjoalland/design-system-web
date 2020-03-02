@@ -22,7 +22,6 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
         let metadataElement = document.createElement('input');
         metadataElement.classList.add('ds44-input-metadata');
         metadataElement.setAttribute('type', 'hidden');
-        metadataElement.setAttribute('aria-hidden', 'true');
         element.parentNode.insertBefore(metadataElement, element);
 
         const objectIndex = (this.objects.length - 1);
@@ -85,7 +84,7 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
         } else {
             object.textElement.removeAttribute('value');
         }
-        if(object.textElement.value !== object.currentElementValue) {
+        if (object.textElement.value !== object.currentElementValue) {
             object.textElement.value = object.currentElementValue;
         }
         object.metadataElement.value = ((data && data.metadata) ? data.metadata : null);
@@ -244,7 +243,7 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
 
     focus(objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
+        if (!object.isEnabled || !object.textElement) {
             return;
         }
 

@@ -47,7 +47,8 @@ class CarouselAbstract {
             'swiperElement': swiperElement,
             'nbSlides': nbSlides,
             'nbVisibleSlides': nbVisibleSlides,
-            'hasLoop': (nbSlides > nbVisibleSlides)
+            'hasLoop': (nbSlides > nbVisibleSlides),
+            'isInitialized': false
         };
         const previousElement = wrapElement.querySelector('.swiper-button-prev');
         if (previousElement) {
@@ -88,6 +89,7 @@ class CarouselAbstract {
         object.swiper.on('slideNextTransitionEnd', this.slide.bind(this, objectIndex, 'forward'));
 
         object.swiper.init();
+        object.isInitialized = true;
     }
 
     getSwiperParameters(object) {
@@ -171,16 +173,17 @@ class CarouselAbstract {
                 }
             });
 
-
-        let slideElement = null;
-        const visibleSlideElements = object.swiperElement.querySelectorAll('.swiper-slide.swiper-slide-visible');
-        if (direction === 'backward') {
-            slideElement = visibleSlideElements[0];
-        } else {
-            slideElement = visibleSlideElements[visibleSlideElements.length - 1];
-        }
-        if (slideElement) {
-            MiscAccessibility.setFocus(slideElement.querySelector(this.queryTitreTuile));
+        if (object.isInitialized) {
+            let slideElement = null;
+            const visibleSlideElements = object.swiperElement.querySelectorAll('.swiper-slide.swiper-slide-visible');
+            if (direction === 'backward') {
+                slideElement = visibleSlideElements[0];
+            } else {
+                slideElement = visibleSlideElements[visibleSlideElements.length - 1];
+            }
+            if (slideElement) {
+                MiscAccessibility.setFocus(slideElement.querySelector(this.queryTitreTuile));
+            }
         }
     }
 

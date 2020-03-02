@@ -51,7 +51,8 @@ class FormFieldInputAbstract extends FormFieldAbstract {
         const object = this.objects[objectIndex];
 
         object.inputElements.forEach((inputElement) => {
-            inputElement.removeAttribute('disabled');
+            inputElement.removeAttribute('readonly');
+            inputElement.removeAttribute('aria-readonly');
         });
     }
 
@@ -59,7 +60,8 @@ class FormFieldInputAbstract extends FormFieldAbstract {
         const object = this.objects[objectIndex];
 
         object.inputElements.forEach((inputElement) => {
-            inputElement.setAttribute('disabled', 'true');
+            inputElement.setAttribute('readonly', 'true');
+            inputElement.setAttribute('aria-readonly', 'true');
         });
 
         this.blur(objectIndex);
@@ -126,6 +128,10 @@ class FormFieldInputAbstract extends FormFieldAbstract {
     focus(objectIndex) {
         const object = this.objects[objectIndex];
 
+        if (!object.isEnabled) {
+            return;
+        }
+
         if (object.labelElement) {
             object.labelElement.classList.add(this.labelClassName);
         }
@@ -159,6 +165,7 @@ class FormFieldInputAbstract extends FormFieldAbstract {
             inputElement.removeAttribute('aria-invalid');
         });
         object.textElement.classList.remove('ds44-error');
+        object.textElement.removeAttribute('aria-describedby');
     }
 
     invalid(objectIndex) {
@@ -167,11 +174,13 @@ class FormFieldInputAbstract extends FormFieldAbstract {
             return;
         }
 
-        this.showErrorMessage(objectIndex);
+        const errorMessageElementId = MiscUtils.generateId();
+        this.showErrorMessage(objectIndex, errorMessageElementId);
 
         object.inputElements.forEach((inputElement) => {
             inputElement.setAttribute('aria-invalid', 'true');
         });
         object.textElement.classList.add('ds44-error');
+        object.textElement.setAttribute('aria-describedby', errorMessageElementId);
     }
 }

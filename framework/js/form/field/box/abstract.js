@@ -25,7 +25,8 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
         const object = this.objects[objectIndex];
 
         object.inputElements.forEach((inputElement) => {
-            inputElement.removeAttribute('disabled');
+            inputElement.removeAttribute('readonly');
+            inputElement.removeAttribute('aria-readonly');
         });
     }
 
@@ -33,7 +34,8 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
         const object = this.objects[objectIndex];
 
         object.inputElements.forEach((inputElement) => {
-            inputElement.setAttribute('disabled', 'true');
+            inputElement.setAttribute('readonly', 'true');
+            inputElement.setAttribute('aria-readonly', 'true');
         });
     }
 
@@ -97,6 +99,7 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
         }
 
         object.inputElements.forEach((inputElement) => {
+            inputElement.removeAttribute('aria-describedby');
             inputElement.removeAttribute('aria-invalid');
             inputElement.classList.remove('ds44-boxError');
         });
@@ -105,9 +108,11 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
     invalid(objectIndex) {
         const object = this.objects[objectIndex];
 
-        this.showErrorMessage(objectIndex);
+        const errorMessageElementId = MiscUtils.generateId();
+        this.showErrorMessage(objectIndex, errorMessageElementId);
 
         object.inputElements.forEach((inputElement) => {
+            inputElement.setAttribute('aria-describedby', errorMessageElementId);
             inputElement.setAttribute('aria-invalid', 'true');
             inputElement.classList.add('ds44-boxError');
         });
