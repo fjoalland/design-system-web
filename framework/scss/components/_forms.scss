@@ -84,6 +84,7 @@ input {
     }
 
     .ds44-labelTypeInfoComp {
+        font-size: 1.3rem;
         position: absolute;
         top: -$ds44-large-vmargin;
         right: $ds44-padding-box;
@@ -139,6 +140,9 @@ textarea {
     .ds44-selectLabel {
         font-size: 0.875em;
     }
+}    
+input.ds44-inpStd {
+    line-height: 3;
 }
 
 .ds44-inpLarge {
@@ -158,6 +162,9 @@ textarea {
     &:disabled {
         background-color: $ds44-light-bg;
     }
+}
+input.ds44-inpLarge {
+    line-height: 5;
 }
 
 .ds44-bgDark .ds44-moveLabel {
