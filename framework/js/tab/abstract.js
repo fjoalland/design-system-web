@@ -74,7 +74,7 @@ class TabAbstract {
     changeTab(tabHandleElement, tabPanel) {
         // Hide others
         tabHandleElement
-            .parentElement
+            .closest('.js-tabs')
             .querySelectorAll('.js-tablist__link')
             .forEach((tabHandleElement) => {
                 const tabHref = this.getTabFromHref(tabHandleElement.getAttribute('href'));
