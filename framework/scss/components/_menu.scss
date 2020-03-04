@@ -166,6 +166,7 @@
     .ds44-container-menuBackLink {
         margin: 1rem 1rem 1rem 2rem;
         width: calc(100% - 90px);
+        width: -webkit-calc(100% - 90px);
     }
 
     .ds44-navListApplis {
@@ -193,6 +194,7 @@
     .ds44-container-menuBackLink {
         margin: 1rem 1rem 1rem 2rem;
         width: calc(100% - 90px);
+        width: -webkit-calc(100% - 90px);
     }
 
     .ds44-menuApplisTitle {
@@ -204,7 +206,7 @@
     .ds44-menuBackLink {
         margin-top: .8rem;
         width: calc(100% - 65px);
-        width: -webkit-calc(100% - 60px);
+        width: -webkit-calc(100% - 65px);
         line-height: 1.1;
     }
 
