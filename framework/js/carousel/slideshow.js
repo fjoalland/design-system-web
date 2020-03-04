@@ -22,6 +22,7 @@ class CarouselSlideshow extends CarouselAbstract {
     getSwiperParameters(object) {
         const swiperParameters = super.getSwiperParameters(object);
         swiperParameters.effect = 'fade';
+        swiperParameters.allowTouchMove = false;
         swiperParameters.autoplay = {
             'delay': 5000
         }

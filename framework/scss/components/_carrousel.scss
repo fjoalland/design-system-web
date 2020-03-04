@@ -94,6 +94,16 @@ div .swiper-slide {
     height: auto;
 }
 
+.swipper-carousel-slideshow-slave {
+  height: 100%;
+  width: 100%;
+
+    .swiper-container {
+      height: 100%;
+      width: 100%;
+    }
+}
+
 @media screen and (max-width: $ds44-medium - .0625) {
 
   .ds44-container-large.swipper-carousel-wrap {
