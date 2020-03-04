@@ -117,6 +117,7 @@ textarea {
     font-family: $ds44-font-family-base;
     min-height: 120px !important;
     height: auto !important;
+    margin: 0;
 }
 
 .ds44-inpStd {
@@ -132,6 +133,7 @@ textarea {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    margin: 0;
 
     &:disabled {
         background-color: $ds44-light-bg;
@@ -140,9 +142,6 @@ textarea {
     .ds44-selectLabel {
         font-size: 0.875em;
     }
-}    
-input.ds44-inpStd {
-    line-height: 3;
 }
 
 .ds44-inpLarge {
@@ -158,13 +157,11 @@ input.ds44-inpStd {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    margin: 0;
 
     &:disabled {
         background-color: $ds44-light-bg;
     }
-}
-input.ds44-inpLarge {
-    line-height: 5;
 }
 
 .ds44-bgDark .ds44-moveLabel {

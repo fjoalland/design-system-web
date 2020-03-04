@@ -203,8 +203,8 @@
 
     .ds44-menuBackLink {
         margin-top: .8rem;
-        width: -webkit-calc(100% - 65px);
         width: calc(100% - 65px);
+        width: -webkit-calc(100% - 65px);
         line-height: 1.1;
     }
 
@@ -227,6 +227,8 @@
 
     .ds44-btn-backOverlay {
         vertical-align: top;
+        margin: 0;
+        padding: 0 $ds44-padding-medium;
     }
 
     .ds44-navListApplis {
