@@ -166,13 +166,13 @@ class FormFieldAbstract {
 
     disable(objectIndex) {
         const object = this.objects[objectIndex];
-
         object.isEnabled = false;
-        this.disableElements(objectIndex);
 
         this.setData(objectIndex);
         this.removeInvalid(objectIndex);
         this.enableDisableLinkedField(objectIndex);
+
+        this.disableElements(objectIndex);
     }
 
     disableElements(objectIndex) {

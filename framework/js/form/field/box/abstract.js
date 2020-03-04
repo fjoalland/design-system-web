@@ -25,8 +25,8 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
         const object = this.objects[objectIndex];
 
         object.inputElements.forEach((inputElement) => {
-            inputElement.removeAttribute('readonly');
-            inputElement.removeAttribute('aria-readonly');
+            inputElement.removeAttribute('disabled');
+            inputElement.removeAttribute('aria-disabled');
         });
     }
 
@@ -34,8 +34,8 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
         const object = this.objects[objectIndex];
 
         object.inputElements.forEach((inputElement) => {
-            inputElement.setAttribute('readonly', 'true');
-            inputElement.setAttribute('aria-readonly', 'true');
+            inputElement.setAttribute('disabled', 'true');
+            inputElement.setAttribute('aria-disabled', 'true');
         });
     }
 

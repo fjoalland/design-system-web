@@ -54,6 +54,9 @@ class FormFieldInputAbstract extends FormFieldAbstract {
             inputElement.removeAttribute('readonly');
             inputElement.removeAttribute('aria-readonly');
         });
+        if (object.labelElement && object.labelElement.closest('label')) {
+            object.labelElement.closest('label').classList.remove('ds44-inputDisabled');
+        }
     }
 
     disableElements(objectIndex) {
@@ -63,6 +66,9 @@ class FormFieldInputAbstract extends FormFieldAbstract {
             inputElement.setAttribute('readonly', 'true');
             inputElement.setAttribute('aria-readonly', 'true');
         });
+        if (object.labelElement && object.labelElement.closest('label')) {
+            object.labelElement.closest('label').classList.add('ds44-inputDisabled');
+        }
 
         this.blur(objectIndex);
         this.showHideResetButton(objectIndex);
@@ -100,7 +106,11 @@ class FormFieldInputAbstract extends FormFieldAbstract {
         let isValid = true;
         const validityStates = inputElement.validity;
         for (let key in validityStates) {
-            if (validityStates[key] && key !== 'valueMissing') {
+            if (
+                key !== 'valid' &&
+                key !== 'valueMissing' &&
+                validityStates[key]
+            ) {
                 isValid = false;
                 break;
             }
