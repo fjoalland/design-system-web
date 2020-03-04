@@ -173,9 +173,10 @@ class FormFieldInputAbstract extends FormFieldAbstract {
 
         object.inputElements.forEach((inputElement) => {
             inputElement.removeAttribute('aria-invalid');
+            inputElement.removeAttribute('aria-describedby');
         });
         object.textElement.classList.remove('ds44-error');
-        object.textElement.removeAttribute('aria-describedby');
+
     }
 
     invalid(objectIndex) {
@@ -189,8 +190,8 @@ class FormFieldInputAbstract extends FormFieldAbstract {
 
         object.inputElements.forEach((inputElement) => {
             inputElement.setAttribute('aria-invalid', 'true');
+            inputElement.setAttribute('aria-describedby', errorMessageElementId);
         });
         object.textElement.classList.add('ds44-error');
-        object.textElement.setAttribute('aria-describedby', errorMessageElementId);
     }
 }

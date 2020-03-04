@@ -83,6 +83,7 @@
 
 {% if include.explanation %}
     {% capture explanation %}
-        <span class="ds44-labelTypeInfoComp">{{ include.explanation }}</span>
+        <span id="explanation-{{ id }}" class="ds44-labelTypeInfoComp">{{ include.explanation }}</span>
     {% endcapture %}
+    {% assign attributes = attributes | append: ' aria-labelledby="explanation-' | append: id | append: '"' %}
 {% endif %}

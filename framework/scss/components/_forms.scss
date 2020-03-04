@@ -783,7 +783,8 @@ input[type=radio],
     }
 
     .ds44-inputDisabled,
-    .ds44-inputDisabled input {
+    .ds44-inputDisabled input,
+    .ds44-inputDisabled textarea {
         background: $ds44-lightgray;
         cursor: default;
 
