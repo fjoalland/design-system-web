@@ -57,53 +57,88 @@ class CarouselSlideshow extends CarouselAbstract {
         const object = this.objects[objectIndex];
 
         if (object.isPlaying) {
-            object.isPlaying = false;
+            const objects = this.getSectionObjects(objectIndex);
+            for (let i = 0; i < objects.length; i++) {
+                const object = objects[i];
+
+                object.isPlaying = false;
+            }
             this.stop(objectIndex);
 
             return;
         }
 
-        object.isPlaying = true;
+        const objects = this.getSectionObjects(objectIndex);
+        for (let i = 0; i < objects.length; i++) {
+            const object = objects[i];
+
+            object.isPlaying = true;
+        }
         this.start(objectIndex);
     }
 
+    getSectionObjects(objectIndex) {
+        // Get all slideshows in the same section
+        const objects = [];
+        const sectionElement = this.objects[objectIndex].wrapElement.closest('section');
+        sectionElement
+            .querySelectorAll('.swipper-carousel-slideshow')
+            .forEach((wrapElement) => {
+                for (let objectIndex in this.objects) {
+                    const object = this.objects[objectIndex];
+
+                    if (object.wrapElement === wrapElement) {
+                        objects.push(object);
+                    }
+                }
+            });
+
+        return objects;
+    }
+
     start(objectIndex) {
-        const object = this.objects[objectIndex];
-        if (!object.autoplayButtonElement) {
-            return;
-        }
+        // Get all slideshows in the same section
+        const objects = this.getSectionObjects(objectIndex);
+        for (let i = 0; i < objects.length; i++) {
+            const object = objects[i];
 
-        object.swiper.autoplay.start();
+            object.swiper.autoplay.start();
 
-        const iconElement = object.autoplayButtonElement.querySelector('i');
-        if (iconElement) {
-            iconElement.classList.add('icon-pause');
-            iconElement.classList.remove('icon-play');
-        }
+            if (object.autoplayButtonElement) {
+                const iconElement = object.autoplayButtonElement.querySelector('i');
+                if (iconElement) {
+                    iconElement.classList.add('icon-pause');
+                    iconElement.classList.remove('icon-play');
+                }
 
-        const spanElement = object.autoplayButtonElement.querySelector('span');
-        if (spanElement) {
-            spanElement.innerText = spanElement.innerText.replace('Lancer ', 'Arrêter ');
+                const spanElement = object.autoplayButtonElement.querySelector('span');
+                if (spanElement) {
+                    spanElement.innerText = spanElement.innerText.replace('Lancer ', 'Arrêter ');
+                }
+            }
         }
     }
 
     stop(objectIndex) {
-        const object = this.objects[objectIndex];
-        if (!object.autoplayButtonElement) {
-            return;
-        }
+        // Get all slideshows in the same section
+        const objects = this.getSectionObjects(objectIndex);
+        for (let i = 0; i < objects.length; i++) {
+            const object = objects[i];
 
-        object.swiper.autoplay.stop();
+            object.swiper.autoplay.stop();
 
-        const iconElement = object.autoplayButtonElement.querySelector('i');
-        if (iconElement) {
-            iconElement.classList.add('icon-play');
-            iconElement.classList.remove('icon-pause');
-        }
+            if (object.autoplayButtonElement) {
+                const iconElement = object.autoplayButtonElement.querySelector('i');
+                if (iconElement) {
+                    iconElement.classList.add('icon-play');
+                    iconElement.classList.remove('icon-pause');
+                }
 
-        const spanElement = object.autoplayButtonElement.querySelector('span');
-        if (spanElement) {
-            spanElement.innerText = spanElement.innerText.replace('Arrêter ', 'Lancer ');
+                const spanElement = object.autoplayButtonElement.querySelector('span');
+                if (spanElement) {
+                    spanElement.innerText = spanElement.innerText.replace('Arrêter ', 'Lancer ');
+                }
+            }
         }
     }
 }
