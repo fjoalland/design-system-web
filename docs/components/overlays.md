@@ -10,9 +10,18 @@ variations:
 - title: Modale simple
   description: 
   pattern: overlays/modale-simple.html
-- title: Modale colonnée
-  description: 
-  pattern: overlays/modale-colonnee.html
+- title: Faire une demande
+  description: Modale colonnée type "faire ma demande"
+  pattern: overlays/modale-faire-demande.html
+- title: Suivre une demande
+  description: Modale colonnée type "suivre ma demande"
+  pattern: overlays/modale-suivre-demande.html
+- title: FAQ
+  description: Modale colonnée type "poser une question"
+  pattern: overlays/modale-faq.html
+- title: Qui contacter
+  description: Modales colonnées type "Qui contacter" et "Qui contacter avec champ de recherche"
+  pattern: overlays/modale-qui-contacter.html
 ---
 
 
