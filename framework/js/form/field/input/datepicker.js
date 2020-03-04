@@ -215,7 +215,7 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
             !dateText.match(/^(19|20)\d\d([- /.])(0?[1-9]|1[012])\2(0?[1-9]|[12][0-9]|3[01])$/)
         ) {
             // Not nicely formatted
-            this.setData(objectIndex);
+            this.empty(objectIndex);
 
             return;
         }
@@ -233,7 +233,7 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
             // If the date object is invalid it
             // will return 'NaN' on getTime()
             // and NaN is never equal to itself.
-            this.setData(objectIndex);
+            this.empty(objectIndex);
 
             return;
         }

@@ -40,10 +40,15 @@ class FormFieldInputAbstract extends FormFieldAbstract {
         this.enableDisableLinkedField(objectIndex);
     }
 
-    reset(objectIndex) {
-        this.setData(objectIndex);
+    empty(objectIndex) {
+        super.empty(objectIndex);
+
         this.showHideResetButton(objectIndex);
-        this.enableDisableLinkedField(objectIndex);
+    }
+
+    reset(objectIndex) {
+        this.empty(objectIndex);
+
         this.focusOnTextElement(objectIndex);
     }
 
