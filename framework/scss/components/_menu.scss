@@ -203,7 +203,8 @@
 
     .ds44-menuBackLink {
         margin-top: .8rem;
-        width: calc(100% - 60px);
+        width: calc(100% - 65px);
+        width: -webkit-calc(100% - 65px);
         line-height: 1.1;
     }
 
