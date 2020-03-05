@@ -56,6 +56,18 @@
     {% assign attributes = '' %}
 {% endif %}
 
+{% if include.boxAttributes %}
+    {% assign boxAttributes = include.boxAttributes %}
+{% else %}
+    {% assign boxAttributes = '' %}
+{% endif %}
+
+{% if include.inputAttributes %}
+    {% assign inputAttributes = include.inputAttributes %}
+{% else %}
+    {% assign inputAttributes = '' %}
+{% endif %}
+
 {% if include.containerAttributes %}
     {% assign containerAttributes = include.containerAttributes %}
 {% else %}
@@ -84,9 +96,10 @@
 {% endif %}
 
 {% if include.disabled == 'true' %}
-    {% assign attributes = attributes | append: ' readonly aria-readonly="true"' %}
+    {% assign boxAttributes = boxAttributes | append: ' disabled' %}
+    {% assign inputAttributes = inputAttributes | append: ' readonly aria-readonly="true"' %}
     {% assign containerAttributes = containerAttributes | append : ' data-disabled="true"' %}
-    {% assign buttonAttributes = buttonAttributes | append : ' aria-readonly="true" readonly="true"' %}
+    {% assign buttonAttributes = buttonAttributes | append : ' aria-disabled="true"' %}
 {% endif %}
 
 {% if include.explanation %}

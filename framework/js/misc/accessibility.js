@@ -4,11 +4,7 @@ class MiscAccessibility {
     }
 
     static getProtectedElementsSelector() {
-        return ['i', 'sup'];
-    }
-
-    static getFocusableElementsSelector() {
-        return ['svg'];
+        return ['i', 'sup', 'svg'];
     }
 
     // Fonction qui va forcer le focus à faire une boucle sur un élément
@@ -96,8 +92,6 @@ class MiscAccessibility {
             element.removeAttribute('aria-hidden');
             if (element.closest(MiscAccessibility.getEnabledElementsSelector()) === element) {
                 element.removeAttribute('tabindex');
-            } else if (element.closest(MiscAccessibility.getFocusableElementsSelector()) === element) {
-                element.removeAttribute('focusable');
             }
         }
 
@@ -126,8 +120,6 @@ class MiscAccessibility {
             element.setAttribute('aria-hidden', true);
             if (element.closest(MiscAccessibility.getEnabledElementsSelector()) === element) {
                 element.setAttribute('tabindex', '-1');
-            } else if (element.closest(MiscAccessibility.getFocusableElementsSelector()) === element) {
-                element.setAttribute('focusable', 'false');
             }
         }
 
@@ -152,12 +144,6 @@ class MiscAccessibility {
         ) {
             element.setAttribute('data-bkp-tabindex', (element.getAttribute('tabindex') || ''));
         }
-        if (
-            element.closest(MiscAccessibility.getFocusableElementsSelector()) === element &&
-            !element.hasAttribute('data-bkp-focusable')
-        ) {
-            element.setAttribute('data-bkp-focusable', (element.getAttribute('focusable') || ''));
-        }
     }
 
     static reinstate(element) {
@@ -170,9 +156,6 @@ class MiscAccessibility {
         }
         if (element.hasAttribute('data-bkp-tabindex')) {
             element.removeAttribute('data-bkp-tabindex');
-        }
-        if (element.hasAttribute('data-bkp-focusable')) {
-            element.removeAttribute('data-bkp-focusable');
         }
     }
 

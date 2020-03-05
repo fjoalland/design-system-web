@@ -26,7 +26,6 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
 
         object.inputElements.forEach((inputElement) => {
             inputElement.removeAttribute('disabled');
-            inputElement.removeAttribute('aria-disabled');
         });
     }
 
@@ -35,21 +34,10 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
 
         object.inputElements.forEach((inputElement) => {
             inputElement.setAttribute('disabled', 'true');
-            inputElement.setAttribute('aria-disabled', 'true');
         });
     }
 
     toggleCheck(objectIndex) {
-        const object = this.objects[objectIndex];
-
-        object.inputElements.forEach((inputElement) => {
-            if (inputElement.checked) {
-                inputElement.setAttribute('aria-checked', 'true');
-            } else {
-                inputElement.removeAttribute('aria-checked');
-            }
-        });
-
         this.enableDisableLinkedField(objectIndex);
     }
 
@@ -63,10 +51,8 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
                 data.values.includes(inputElement.value)
             ) {
                 inputElement.checked = true;
-                inputElement.setAttribute('aria-checked', 'true');
             } else {
                 inputElement.checked = false;
-                inputElement.removeAttribute('aria-checked');
             }
         });
     }

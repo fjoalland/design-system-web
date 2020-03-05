@@ -28,7 +28,7 @@ class FormFieldAbstract {
             'name': element.getAttribute('id'),
             'containerElement': (element.closest('.ds44-form__container') || element),
             'isRequired': (element.getAttribute('required') !== null || element.getAttribute('data-required') === 'true'),
-            'isEnabled': !(element.getAttribute('readonly') !== null || element.getAttribute('data-disabled') === 'true')
+            'isEnabled': !(element.getAttribute('readonly') !== null || element.getAttribute('disabled') !== null || element.getAttribute('data-disabled') === 'true')
         };
         element.removeAttribute('data-required');
         element.removeAttribute('data-disabled');
