@@ -698,6 +698,19 @@
   white-space: nowrap;
 }
 
+.ds44-inlineLink {
+  display: inline!important;
+}
+
+.ds44-titleLink {
+  text-decoration: none;
+
+  &:hover, &:focus, &:active {
+    text-decoration: underline;
+  }
+
+}
+
 .ds44-arrowLink {
   @include ds44-font-sizes(menuLinks);
   display: block;
