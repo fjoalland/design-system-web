@@ -11,15 +11,17 @@ layout: pattern
 
     <section class="ds44-container-large ds44-homepage-container ds44--xxl-padding-b">
         <div class="grid-12-small-1">
-            <div class="col-8">
+            <div class="col-8-small-1">
                 {% include carrousel/carrousel-homepage.html %}
             </div>
-            <div class="col-4 ds44-hide-mobile ds44-flex-container ds44-flex-container--column">
-                <div class="ds44-flex ds44-fl3 ds44-imgInsta ds44-hide-tinyToLarge">
-                    {% include carrousel/carrousel-partage.html %}
-                </div>
-                <div class="ds44-flex ds44-fl1 ">
-                    {% include partage/partage-sliderHome.html %}
+            <div class="col-4-small-1 ds44-hide-mobile">
+                <div class="ds44-flex-container ds44-flex-container--column ds44-h100">
+                    <div class="ds44-fg1 ds44-imgInsta ds44-hide-tinyToLarge">
+                        {% include carrousel/carrousel-partage.html %}
+                    </div>
+                    <div>
+                        {% include partage/partage-sliderHome.html %}
+                    </div>
                 </div>
             </div>
         </div>
