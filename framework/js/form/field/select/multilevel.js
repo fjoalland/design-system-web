@@ -39,16 +39,6 @@ class FormFieldSelectMultilevel extends FormFieldSelectCheckbox {
                 });
         }
 
-        const flexContainerElement = object.containerElement.querySelector('.ds44-flex-container');
-        const checkAllElement = flexContainerElement.querySelector('button:first-child');
-        if (checkAllElement) {
-            MiscEvent.addListener('click', this.checkAll.bind(this, objectIndex), checkAllElement);
-        }
-        const uncheckAllElement = flexContainerElement.querySelector('button:last-child');
-        if (uncheckAllElement) {
-            MiscEvent.addListener('click', this.uncheckAll.bind(this, objectIndex), uncheckAllElement);
-        }
-
         // Remove data-url attribute as multilevel select do not exist yet
         object.textElement.removeAttribute('data-url');
     }
@@ -122,34 +112,13 @@ class FormFieldSelectMultilevel extends FormFieldSelectCheckbox {
             });
     }
 
-    checkAll(objectIndex) {
+    getCheckboxElements(objectIndex) {
         const object = this.objects[objectIndex];
-
         if (!object.selectListElement) {
-            return;
+            return null;
         }
 
-        object.selectListElement
-            .querySelectorAll('.ds44-select__categ input')
-            .forEach((categoryInputElement) => {
-                categoryInputElement.checked = true;
-                MiscEvent.dispatch('change', null, categoryInputElement);
-            });
-    }
-
-    uncheckAll(objectIndex) {
-        const object = this.objects[objectIndex];
-
-        if (!object.selectListElement) {
-            return;
-        }
-
-        object.selectListElement
-            .querySelectorAll('.ds44-select__categ input')
-            .forEach((categoryInputElement) => {
-                categoryInputElement.checked = false;
-                MiscEvent.dispatch('change', null, categoryInputElement);
-            });
+        return object.selectListElement.querySelectorAll('.ds44-select__categ input');
     }
 }
 

@@ -1,6 +1,6 @@
 class FormFieldSelectCheckbox extends FormFieldSelectAbstract {
     constructor(selector, category) {
-        if(selector && category) {
+        if (selector && category) {
             super(
                 selector,
                 category
@@ -18,7 +18,7 @@ class FormFieldSelectCheckbox extends FormFieldSelectAbstract {
                     return;
                 }
 
-                if(
+                if (
                     !formContainer.querySelector('.ds44-select-container .ds44-select-list_elem input[type="checkbox"]') ||
                     formContainer.querySelector('.ds44-select-container .ds44-collapser')
                 ) {
@@ -35,9 +35,26 @@ class FormFieldSelectCheckbox extends FormFieldSelectAbstract {
         );
     }
 
+    create(element) {
+        super.create(element);
+
+        const objectIndex = (this.objects.length - 1);
+        const object = this.objects[objectIndex];
+
+        const flexContainerElement = object.containerElement.querySelector('.ds44-flex-container');
+        const checkAllElement = flexContainerElement.querySelector('button:first-child');
+        if (checkAllElement) {
+            MiscEvent.addListener('click', this.checkAll.bind(this, objectIndex), checkAllElement);
+        }
+        const uncheckAllElement = flexContainerElement.querySelector('button:last-child');
+        if (uncheckAllElement) {
+            MiscEvent.addListener('click', this.uncheckAll.bind(this, objectIndex), uncheckAllElement);
+        }
+    }
+
     setListElementEvents(listElement, objectIndex) {
         const listInputElement = listElement.querySelector('input');
-        if(!listInputElement) {
+        if (!listInputElement) {
             return;
         }
 
@@ -48,13 +65,13 @@ class FormFieldSelectCheckbox extends FormFieldSelectAbstract {
         let previousItem = null;
         let nextItem = null;
         const selectedListItem = parentElement.querySelector('.ds44-select-list_elem input:focus');
-        if(selectedListItem) {
+        if (selectedListItem) {
             previousItem = MiscDom.getPreviousSibling(selectedListItem.closest('.ds44-select-list_elem'));
-            if(previousItem) {
+            if (previousItem) {
                 previousItem = previousItem.querySelector('input');
             }
             nextItem = MiscDom.getNextSibling(selectedListItem.closest('.ds44-select-list_elem'));
-            if(nextItem) {
+            if (nextItem) {
                 nextItem = nextItem.querySelector('input');
             }
         }
@@ -143,6 +160,39 @@ class FormFieldSelectCheckbox extends FormFieldSelectAbstract {
             'value': listElement.querySelector('input').getAttribute('value'),
             'text': listElement.querySelector('label').textContent
         };
+    }
+
+    checkAll(objectIndex) {
+        const checkboxElements = this.getCheckboxElements(objectIndex);
+        if (!checkboxElements) {
+            return;
+        }
+
+        checkboxElements.forEach((checkboxElement) => {
+            checkboxElement.checked = true;
+            MiscEvent.dispatch('change', null, checkboxElement);
+        });
+    }
+
+    uncheckAll(objectIndex) {
+        const checkboxElements = this.getCheckboxElements(objectIndex);
+        if (!checkboxElements) {
+            return;
+        }
+
+        checkboxElements.forEach((checkboxElement) => {
+            checkboxElement.checked = false;
+            MiscEvent.dispatch('change', null, checkboxElement);
+        });
+    }
+
+    getCheckboxElements(objectIndex) {
+        const object = this.objects[objectIndex];
+        if (!object.selectListElement) {
+            return null;
+        }
+
+        return object.selectListElement.querySelectorAll('input');
     }
 }
 
