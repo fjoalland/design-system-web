@@ -6,6 +6,7 @@
 {% include form/field/partial/select.html %}
 
 {% assign savedId = id %}
+{% assign savedLabel = label %}
 
 <div class="ds44-select-container hidden">
     <div class="ds44-listSelect">
@@ -18,7 +19,7 @@
             </li>
         </ul>
     </div>
-    <button type="button" class="ds44-fullWBtn ds44-btnSelect ds44-theme" aria-describedby="button-message-{{ savedId }}"><span class="ds44-btnInnerText">Valider</span><i class="icon icon-long-arrow-right ds44-noLineH" aria-hidden="true"></i></button>
+    <button type="button" class="ds44-fullWBtn ds44-btnSelect ds44-theme" aria-describedby="button-message-{{ savedId }}" title="Valider la sélection de : {{ savedLabel }}"><span class="ds44-btnInnerText">Valider</span><i class="icon icon-long-arrow-right ds44-noLineH" aria-hidden="true"></i></button>
 </div>
 {% endcapture %}
 
