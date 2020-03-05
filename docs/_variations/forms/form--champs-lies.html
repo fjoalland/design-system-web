@@ -5,8 +5,8 @@ layout: pattern
 <br>
 <form>
     <div class="ds44-fieldContainer ds44-champsLies">
-        {% include form/field/select/standard.html label="Nom thème" required="true" class="ds44-inpStd ds44-champsLies-child" %}
-        {% include form/field/select/checkbox.html label="Nom du sous-thème" required="true" disabled="true" class="ds44-inpStd ds44-champsLies-child" containerAttributes='data-url="/json/select-options.json"' %}
+        {% include form/field/select/checkbox.html label="Votre avis" required="true" %}
+        {% include form/layout/checkboxes.html choices="1:L’information n’est pas assez complète,2:L’information est trop compliquée" required="true" disabled="true" %}
     </div>
     <div><input type="submit" class="ds44-btnStd" value="Tester les champs" /></div>
 </form>
@@ -15,8 +15,8 @@ layout: pattern
 <br>
 <form>
     <div class="ds44-fieldContainer ds44-champsLies">
-        {% include form/field/input/autocomplete.html label="Champ adresse" required="true" attributes='data-url="/json/autocomplete-address.json" data-mode="select-only"' class="ds44-inpLarge ds44-champsLies-child" title="Sélectionner Champ adresse - mise à jour automatique des sous-thèmes Rayon triés par ordre alphabétique" %}
-        {% include form/field/select/standard.html label="Rayon" required="true" disabled="true" class="ds44-inpLarge ds44-champsLies-child" %}
+        {% include form/field/select/standard.html label="Nom thème" required="true" %}
+        {% include form/field/select/checkbox.html label="Nom du sous-thème" required="true" disabled="true" containerAttributes='data-url="/json/select-options.json"' %}
     </div>
     <div><input type="submit" class="ds44-btnStd" value="Tester les champs" /></div>
 </form>
@@ -25,8 +25,18 @@ layout: pattern
 <br>
 <form>
     <div class="ds44-fieldContainer ds44-champsLies">
-        {% include form/field/input/autocomplete.html label="Champ commune" required="true" attributes='data-url="/json/autocomplete-city.json" data-mode="select-only"' class="ds44-inpLarge ds44-champsLies-child" title="Sélectionner Champ commune - mise à jour automatique des sous-thèmes Rayon triés par ordre alphabétique" %}
-        {% include form/field/input/autocomplete.html label="Champ adresse" required="true" disabled="true" attributes='data-url="/json/autocomplete-address.json" data-mode="select-only"' class="ds44-inpLarge ds44-champsLies-child" title="Sélectionner Champ commune - mise à jour automatique des sous-thèmes Rayon triés par ordre alphabétique" %}
+        {% include form/field/input/autocomplete.html label="Champ adresse" required="true" attributes='data-url="/json/autocomplete-address.json" data-mode="select-only"' class="ds44-inpLarge" title="Sélectionner Champ adresse - mise à jour automatique des sous-thèmes Rayon triés par ordre alphabétique" %}
+        {% include form/field/select/standard.html label="Rayon" required="true" disabled="true" class="ds44-inpLarge" %}
+    </div>
+    <div><input type="submit" class="ds44-btnStd" value="Tester les champs" /></div>
+</form>
+<br>
+<hr/>
+<br>
+<form>
+    <div class="ds44-fieldContainer ds44-champsLies">
+        {% include form/field/input/autocomplete.html label="Champ commune" required="true" attributes='data-url="/json/autocomplete-city.json" data-mode="select-only"' class="ds44-inpLarge" title="Sélectionner Champ commune - mise à jour automatique des sous-thèmes Rayon triés par ordre alphabétique" %}
+        {% include form/field/input/autocomplete.html label="Champ adresse" required="true" disabled="true" attributes='data-url="/json/autocomplete-address.json" data-mode="select-only"' class="ds44-inpLarge" title="Sélectionner Champ commune - mise à jour automatique des sous-thèmes Rayon triés par ordre alphabétique" %}
     </div>
     <div><input type="submit" class="ds44-btnStd" value="Tester les champs" /></div>
 </form>
