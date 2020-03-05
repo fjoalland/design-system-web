@@ -18,6 +18,8 @@ sass:
 collections:
   variations:
     output: true
+  json:
+    output: true
   posts:
     output: true
     permalink: /post/:year/:month/:day/:title/
