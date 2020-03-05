@@ -148,7 +148,6 @@
 @media (max-width: $ds44-medium - .0625) {
 
 
-
     .ds44-logoContainer {
         flex-wrap: wrap;
     }
@@ -173,6 +172,12 @@
 /* ------------ */
 
 @media (max-width: $ds44-small - .0625) {
+
+  .ds44-header {
+    > .ds44-container-large {
+      margin: 0;
+    }
+  }
 
   .ds44-logoContainer {
       flex-direction: column;
