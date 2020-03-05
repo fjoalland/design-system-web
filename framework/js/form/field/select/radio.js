@@ -175,6 +175,24 @@ class FormFieldSelectRadio extends FormFieldSelectAbstract {
             'text': listElement.querySelector('label').innerText
         };
     }
+
+    setData(objectIndex, data = null) {
+        super.setData(objectIndex, data);
+
+        if (!this.getData(objectIndex)) {
+            const object = this.objects[objectIndex];
+            if (!object.selectListElement) {
+                return;
+            }
+
+            object.selectListElement
+                .querySelectorAll('.ds44-select-list_elem input')
+                .forEach((listInputElement) => {
+                    listInputElement.checked = false;
+                    MiscEvent.dispatch('change', null, listInputElement);
+                });
+        }
+    }
 }
 
 // Singleton

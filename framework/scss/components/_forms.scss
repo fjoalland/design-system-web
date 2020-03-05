@@ -197,11 +197,22 @@ textarea {
 
 .ds44-reset {
     display: none;
-    top: calc(50% - 13px);
-    top: -webkit-calc(50% - 13px);
+    top: calc(50% - 1.3rem);
+    top: -webkit-calc(50% - 1.3rem);
+    z-index: 2;
 
     .ds44-datepicker & {
-        right: 34px;
+        right: 3.4rem;
+    }
+
+    .ds44-select__shape & {
+        top: 1rem;
+        right: 3rem;
+    }
+
+    .ds44-select__shape.ds44-inpLarge & {
+        top: 1.8rem;
+        right: 4rem;
     }
 }
 
@@ -650,13 +661,22 @@ input[type=radio],
 
 // ellipsis
 .ds44-selectDisplay {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: calc(100% - 30px);
-    width: -webkit-calc(100% - 30px);
+    width: calc(100% - 2.4rem);
+    width: -webkit-calc(100% - 2.4rem);
     display: block;
-    white-space: nowrap;
     color: $ds44-color-dark-text;
+
+    .ds44-inpLarge & {
+        width: calc(100% - 4.4rem);
+        width: -webkit-calc(100% - 4.4rem);
+    }
+
+    p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+        white-space: nowrap;
+    }
 }
 
 

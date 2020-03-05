@@ -100,6 +100,24 @@ class FormFieldSelectStandard extends FormFieldSelectAbstract {
             'text': listElement.innerText
         };
     }
+
+    setData(objectIndex, data = null) {
+        super.setData(objectIndex, data);
+
+        if (!this.getData(objectIndex)) {
+            const object = this.objects[objectIndex];
+            if (!object.selectListElement) {
+                return;
+            }
+
+            const selectedListItem = object.selectListElement.querySelector('.selected_option');
+            if (selectedListItem) {
+                selectedListItem.classList.remove('selected_option');
+                selectedListItem.removeAttribute('id');
+                selectedListItem.removeAttribute('aria-selected');
+            }
+        }
+    }
 }
 
 // Singleton

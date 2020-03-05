@@ -194,6 +194,14 @@ class FormFieldSelectCheckbox extends FormFieldSelectAbstract {
 
         return object.selectListElement.querySelectorAll('input');
     }
+
+    setData(objectIndex, data = null) {
+        super.setData(objectIndex, data);
+
+        if (!this.getData(objectIndex)) {
+            this.uncheckAll(objectIndex);
+        }
+    }
 }
 
 // Singleton

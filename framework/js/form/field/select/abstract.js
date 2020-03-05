@@ -19,6 +19,7 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         object.buttonElement = object.containerElement.querySelector('.ds44-btnOpen');
         object.buttonIconElement = object.containerElement.querySelector('.ds44-btnOpen .icon');
         object.buttonTextElement = object.containerElement.querySelector('.ds44-btnOpen .visually-hidden');
+        object.resetButton = MiscDom.getNextSibling(element, '.ds44-reset');
         object.isExpanded = false;
 
         MiscEvent.addListener('keyUp:escape', this.escape.bind(this, objectIndex));
@@ -29,6 +30,9 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         }
         MiscEvent.addListener('focusout', this.focusOut.bind(this, objectIndex), object.containerElement);
         MiscEvent.addListener('click', this.focusOut.bind(this, objectIndex), document.body);
+        if (object.resetButton) {
+            MiscEvent.addListener('click', this.reset.bind(this, objectIndex), object.resetButton);
+        }
 
         object.selectContainerElement = object.containerElement.querySelector('.ds44-select-container');
         object.selectListElement = null;
@@ -61,6 +65,27 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         if (object.labelElement) {
             object.labelElement.classList.remove(this.labelClassName);
         }
+
+        this.showHideResetButton(objectIndex);
+    }
+
+    reset(objectIndex, evt) {
+        if (evt) {
+            evt.stopPropagation();
+            evt.preventDefault();
+        }
+
+        this.empty(objectIndex);
+        this.focusOnButtonElement(objectIndex);
+    }
+
+    focusOnButtonElement(objectIndex) {
+        const object = this.objects[objectIndex];
+        if (!object.buttonElement) {
+            return;
+        }
+
+        MiscAccessibility.setFocus(object.buttonElement);
     }
 
     setListElementEvents(listElement, objectIndex) {
@@ -118,6 +143,22 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         object.labelElement.classList.remove(this.labelClassName);
 
         this.hide(objectIndex);
+        this.showHideResetButton(objectIndex);
+    }
+
+    showHideResetButton(objectIndex) {
+        const object = this.objects[objectIndex];
+        if (!object.resetButton) {
+            return;
+        }
+
+        if (!this.getData(objectIndex)) {
+            // Hide reset button
+            object.resetButton.style.display = 'none';
+        } else {
+            // Hide reset button
+            object.resetButton.style.display = 'block';
+        }
     }
 
     setData(objectIndex, data = null) {
@@ -249,12 +290,7 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
             return;
         }
 
-        if (!object.buttonElement) {
-            return;
-        }
-
-        MiscAccessibility.setFocus(object.buttonElement);
-
+        this.focusOnButtonElement(objectIndex);
         this.hide(objectIndex);
     }
 
@@ -410,9 +446,6 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         if (!object.textElement) {
             return;
         }
-        if (!object.buttonElement) {
-            return;
-        }
         if (!object.valueElement) {
             return;
         }
@@ -443,11 +476,11 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
             object.labelElement.classList.add(this.labelClassName);
         }
 
-        MiscAccessibility.setFocus(object.buttonElement);
-
+        this.focusOnButtonElement(objectIndex);
         this.hide(objectIndex);
         this.checkValidity(objectIndex);
         this.enableDisableLinkedField(objectIndex);
+        this.showHideResetButton(objectIndex);
 
         if (object.textElement.getAttribute('data-auto-submit')) {
             // Auto submit
