@@ -10,9 +10,9 @@
         <div id="ds44-choiceY" class="hidden">
             <form data-is-ajax="true">
                 <div class="grid-1-small-1 ds44-box">
-                    <div id="form-bloc-utils-YN" tabindex="-1">
-                        <p>Merci ! Si vous le souhaitez, vous pouvez nous laisser un commentaire :</p>
-                        {% include form/field/input/textarea.html attributes='aria-describedby="form-bloc-utils-YN" aria-label="Votre commentaire"' label="Commentaire" %}
+                    <div>
+                        <p id="form-bloc-utils-Y" tabindex="-1">Merci ! Si vous le souhaitez, vous pouvez nous laisser un commentaire :</p>
+                        {% include form/field/input/textarea.html label="Commentaire" %}
                     </div>
                     <div class="txtcenter ds44-mt-std">
                         <button class="ds44-btnStd" title="Envoyer votre commentaire">
@@ -33,7 +33,7 @@
                     </div>
                     <div class="col ds44--xl-padding-l">
                         <p id="form-bloc-utils-N">Aidez-nous à améliorer cette page en nous laissant un commentaire :</p>
-                        {% include form/field/input/textarea.html attributes='aria-describedby="form-bloc-utils-N" aria-label="Votre commentaire"' label="Commentaire" %}
+                        {% include form/field/input/textarea.html attributes='aria-describedby="form-bloc-utils-N"' label="Commentaire" %}
                     </div>
                 </div>
                 <div class="txtcenter ds44-mt-std">

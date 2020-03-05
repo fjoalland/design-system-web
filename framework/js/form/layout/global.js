@@ -159,6 +159,8 @@ class FormLayoutGlobal {
 
         const formElement = evt.target;
         const notificationType = evt.detail.type || 'error';
+        const errorMessageId = evt.detail.id;
+
 
         let containerElement = formElement.querySelector('.ds44-message-container');
         if (containerElement) {
@@ -172,6 +174,9 @@ class FormLayoutGlobal {
         formElement.insertBefore(containerElement, formElement.firstChild);
 
         const textElement = document.createElement('p');
+        if (errorMessageId) {
+            textElement.setAttribute('id', errorMessageId);
+        }
         textElement.classList.add('ds44-message-text');
         textElement.classList.add(notificationType);
         textElement.setAttribute('tabindex', '-1');

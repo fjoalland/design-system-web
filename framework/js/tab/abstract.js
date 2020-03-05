@@ -85,17 +85,34 @@ class TabAbstract {
 
                 tabHandleElement.classList.remove('ds44-tabs__linkSelected');
                 tabHandleElement.removeAttribute('aria-disabled');
-                tabPanel.style.opacity = 0;
-                MiscUtils.timerClass(tabPanel, 'display', 'none', 150);
+                this.hideTab(tabHandleElement, tabPanel);
                 MiscAccessibility.hide(tabPanel, true);
             });
 
         // Show selected tab
         tabHandleElement.classList.add('ds44-tabs__linkSelected');
         tabHandleElement.setAttribute('aria-disabled', 'true');
-        MiscUtils.timerClass(tabPanel, 'opacity', '1', 300);
-        MiscUtils.timerClass(tabPanel, 'display', 'block', 150);
+        this.showTab(tabHandleElement, tabPanel);
         MiscAccessibility.show(tabPanel, true);
+    }
+
+    showTab(tabHandleElement, tabPanel) {
+        window.setTimeout(this.showTabCallback.bind(this, tabHandleElement, tabPanel), 300);
+    }
+
+    showTabCallback(tabHandleElement, tabPanel) {
+        tabPanel.style.opacity = 1;
+        tabPanel.style.display = 'block';
+    }
+
+    hideTab(tabHandleElement, tabPanel) {
+        tabPanel.style.opacity = 0;
+
+        window.setTimeout(this.hideTabCallback.bind(this, tabHandleElement, tabPanel), 150);
+    }
+
+    hideTabCallback(tabHandleElement, tabPanel) {
+        tabPanel.style.display = 'none';
     }
 
     back(evt) {

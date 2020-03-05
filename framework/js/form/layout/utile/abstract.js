@@ -74,14 +74,22 @@ class FormLayoutUtileAbstract {
 
     submitError() {
         // Show error notification in form
+        const errorMessageId = MiscUtils.generateId();
         MiscEvent.dispatch(
             'form:notification',
             {
+                'id': errorMessageId,
                 'type': 'error',
                 'message': 'Une erreur est survenue suite à l\'envoi de votre formulaire.'
             },
             this.formElement
         );
+
+        // Add aria described by to textarea
+        const textareaElement = this.formElement.querySelector('textarea');
+        if(textareaElement) {
+            textareaElement.setAttribute('aria-describedby', errorMessageId);
+        }
 
         // Hide loader
         MiscEvent.dispatch('loader:requestHide');

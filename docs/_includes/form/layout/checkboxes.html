@@ -5,6 +5,10 @@
 {% endif %}
 
 <div id="{{ id }}" class="ds44-form__checkbox_container {{ containerClass }}" {{ containerAttributes }}>
+    {% if include.required == 'true' %}
+        <p class="ds44-mandatory_message">Au moins une de ces cases doit être cochée :</p>
+    {% endif %}
+
     {% assign choices = (include.choices | split:',') %}
     {% for choiceData in choices %}
         {% assign choice = (choiceData | split:':') %}

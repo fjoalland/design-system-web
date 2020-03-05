@@ -263,6 +263,7 @@ class FormFieldAbstract {
         }
         errorMessageElement.classList.add('ds44-msgErrorText');
         errorMessageElement.classList.add('ds44-msgErrorInvalid');
+        errorMessageElement.setAttribute('tabindex', '-1');
         errorElement.appendChild(errorMessageElement);
 
         let errorIconElement = document.createElement('i');
