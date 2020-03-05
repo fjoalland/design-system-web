@@ -22,6 +22,7 @@ class CarouselSlideshow extends CarouselAbstract {
     getSwiperParameters(object) {
         const swiperParameters = super.getSwiperParameters(object);
         swiperParameters.effect = 'fade';
+        swiperParameters.speed = 3000;
         swiperParameters.allowTouchMove = false;
         swiperParameters.autoplay = {
             'delay': 5000
@@ -81,8 +82,8 @@ class CarouselSlideshow extends CarouselAbstract {
     getSectionObjects(objectIndex) {
         // Get all slideshows in the same section
         const objects = [];
-        const sectionElement = this.objects[objectIndex].wrapElement.closest('section');
-        sectionElement
+        const parentElement = (this.objects[objectIndex].wrapElement.closest('section') || this.objects[objectIndex].wrapElement.parentElement);
+        parentElement
             .querySelectorAll('.swipper-carousel-slideshow')
             .forEach((wrapElement) => {
                 for (let objectIndex in this.objects) {
