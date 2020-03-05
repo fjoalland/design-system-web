@@ -1,7 +1,8 @@
 {% include form/_variables.html %}
 
 {% capture mainContent %}
-<input type="text" id="{{ id }}" class="{{ mainClass }}" {{ title }} {{ attributes }} {{ inputAttributes }} {{ placeholder }} />{{ explanation }}{% include form/field/partial/reset.html %}
+{{ explanation }}
+<input type="text" id="{{ id }}" class="{{ mainClass }}" {{ title }} {{ attributes }} {{ inputAttributes }} {{ placeholder }} />{% include form/field/partial/reset.html %}
 {% endcapture %}
 
 {% capture labelContent %}

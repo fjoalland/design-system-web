@@ -8,7 +8,7 @@ class FormFieldInputAbstract extends FormFieldAbstract {
         object.textElement = element;
         object.valueElement = element;
         object.inputElements = [element];
-        object.labelElement = MiscDom.getPreviousSibling(element, 'span');
+        object.labelElement = MiscDom.getPreviousSibling(element, 'span.ds44-labelTypePlaceholder');
         object.resetButton = MiscDom.getNextSibling(element, '.ds44-reset');
 
         if (object.labelElement) {
