@@ -1,12 +1,16 @@
 {% include form/_variables.html %}
 
-<div id="{{ id }}" class="ds44-form__checkbox_container" {{ containerAttributes }}>
+{% if include.disabled == 'true' %}
+    {% assign containerClass = containerClass | append: ' ds44-inputDisabled' %}
+{% endif %}
+
+<div id="{{ id }}" class="ds44-form__checkbox_container {{ containerClass }}" {{ containerAttributes }}>
     {% assign choices = (include.choices | split:',') %}
     {% for choiceData in choices %}
         {% assign choice = (choiceData | split:':') %}
         {% assign value = choice[0] %}
         {% assign label = choice[1] %}
 
-        {% include form/field/box/checkbox.html value=value label=label list=include.list attributes=attributes %}
+        {% include form/field/box/checkbox.html value=value label=label list=include.list attributes=attributes boxAttributes=boxAttributes %}
     {% endfor %}
 </div>

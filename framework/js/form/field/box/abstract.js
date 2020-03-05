@@ -25,19 +25,29 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
         const object = this.objects[objectIndex];
 
         object.inputElements.forEach((inputElement) => {
-            inputElement.removeAttribute('disabled');
+            inputElement.removeAttribute('aria-disabled');
         });
+        object.containerElement.classList.remove('ds44-inputDisabled');
     }
 
     disableElements(objectIndex) {
         const object = this.objects[objectIndex];
 
         object.inputElements.forEach((inputElement) => {
-            inputElement.setAttribute('disabled', 'true');
+            inputElement.setAttribute('aria-disabled', 'true');
         });
+        object.containerElement.classList.add('ds44-inputDisabled');
     }
 
-    toggleCheck(objectIndex) {
+    toggleCheck(objectIndex, evt) {
+        const object = this.objects[objectIndex];
+        if (!object.isEnabled) {
+            evt.stopPropagation();
+            evt.preventDefault();
+
+            return;
+        }
+        
         this.enableDisableLinkedField(objectIndex);
     }
 

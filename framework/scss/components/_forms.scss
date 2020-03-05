@@ -313,6 +313,16 @@ input[type=radio],
     }
 }
 
+.ds44-form__checkbox_container.ds44-inputDisabled label,
+.ds44-form__radio_container.ds44-inputDisabled label {
+    color: $ds44-gray;
+
+    &:before {
+        border-color: $ds44-gray;
+        background-color: $ds44-lightgray;
+    }
+}
+
 
 /**
  * Moteurs de recherche à facettes
@@ -787,7 +797,8 @@ input[type=radio],
 
     .ds44-inputDisabled,
     .ds44-inputDisabled input,
-    .ds44-inputDisabled textarea {
+    .ds44-inputDisabled textarea,
+    .ds44-inputDisabled label {
         background: $ds44-lightgray;
         cursor: default;
 
