@@ -4,7 +4,7 @@
     {% assign containerClass = containerClass | append: ' ds44-inputDisabled' %}
 {% endif %}
 
-<div id="{{ id }}" class="ds44-form__radio_container {{ containerClass }}" {{ containerAttributes }}>
+<div id="{{ id }}" name="{{ name }}" class="ds44-form__radio_container {{ containerClass }}" {{ containerAttributes }}>
     {% if include.required == 'true' %}
         <p class="ds44-mandatory_message">Au moins une de ces cases doit être cochée :</p>
     {% endif %}
@@ -15,6 +15,6 @@
         {% assign value = choice[0] %}
         {% assign label = choice[1] %}
 
-        {% include form/field/box/radio.html name=include.name value=value label=label list=include.list attributes=attributes boxAttributes=boxAttributes %}
+        {% include form/field/box/radio.html id=id name=name value=value label=label list=include.list attributes=attributes boxAttributes=boxAttributes %}
     {% endfor %}
 </div>

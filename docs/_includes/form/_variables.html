@@ -8,6 +8,12 @@
     {% assign id = 'form-element-' | append : randomNumber %}
 {% endif %}
 
+{% if include.name %}
+    {% assign name = include.name %}
+{% else %}
+    {% assign name = id %}
+{% endif %}
+
 {% if include.class %}
     {% assign mainClass = include.class %}
 {% else %}

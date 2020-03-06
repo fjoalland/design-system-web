@@ -1,12 +1,32 @@
 {
-    "10227": "MAROLLES SOUS LIGNIERES - 10130",
-    "10166": "LES GRANDES CHAPELLES - 10170",
-    "10232": "MERREY SUR ARCE - 10110",
-    "10182": "JUVANCOURT - 10310",
-    "10190": "LAUBRESSEL - 10270",
-    "10173": "ISLE AUMONT - 10800",
-    "10196": "LIGNIERES - 10130",
-    "10230": "MERGEY - 10600",
-    "10212": "MACHY - 10320",
-    "11111": "CRUSCADES - 11200"
+    "10227": {
+        "value": "MAROLLES SOUS LIGNIERES - 10130"
+    },
+    "10166": {
+        "value": "LES GRANDES CHAPELLES - 10170"
+    },
+    "10232": {
+        "value": "MERREY SUR ARCE - 10110"
+    },
+    "10182": {
+        "value": "JUVANCOURT - 10310"
+    },
+    "10190": {
+        "value": "LAUBRESSEL - 10270"
+    },
+    "10173": {
+        "value": "ISLE AUMONT - 10800"
+    },
+    "10196": {
+        "value": "LIGNIERES - 10130"
+    },
+    "10230": {
+        "value": "MERGEY - 10600"
+    },
+    "10212": {
+        "value": "MACHY - 10320"
+    },
+    "11111": {
+        "value": "CRUSCADES - 11200"
+    }
 }

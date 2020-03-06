@@ -232,15 +232,15 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
                 let elementAutoCompleterListItem = document.createElement('li');
                 elementAutoCompleterListItem.classList.add('ds44-autocomp-list_elem');
                 elementAutoCompleterListItem.setAttribute('role', 'option');
-                elementAutoCompleterListItem.setAttribute('data-text', results[key].name);
+                elementAutoCompleterListItem.setAttribute('data-text', results[key].value);
                 if (object.mode === this.FREE_TEXT_MODE) {
-                    elementAutoCompleterListItem.setAttribute('data-value', results[key].name);
+                    elementAutoCompleterListItem.setAttribute('data-value', results[key].value);
                 } else {
-                    elementAutoCompleterListItem.setAttribute('data-value', key);
+                    elementAutoCompleterListItem.setAttribute('data-value', (results[key].id || key));
                 }
                 elementAutoCompleterListItem.setAttribute('data-metadata', (results[key].metadata ? JSON.stringify(results[key].metadata) : null));
                 elementAutoCompleterListItem.setAttribute('tabindex', '0');
-                elementAutoCompleterListItem.innerHTML = this.highlightSearch(results[key].name, object.textElement.value);
+                elementAutoCompleterListItem.innerHTML = this.highlightSearch(results[key].value, object.textElement.value);
                 object.autoCompleterListElement.appendChild(elementAutoCompleterListItem);
 
                 MiscEvent.addListener('focus', this.fakeSelect.bind(this, objectIndex), elementAutoCompleterListItem);

@@ -360,7 +360,7 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         } else {
             // Some result
             for (let key in results) {
-                let elementSelectListItem = this.getListElement(object, key, results[key]);
+                let elementSelectListItem = this.getListElement(object, (results[key].id || key), results[key].value);
                 subSelectListElement.appendChild(elementSelectListItem);
 
                 this.setListElementEvents(elementSelectListItem, objectIndex);

@@ -16,12 +16,12 @@ class FormLayoutGlobal {
 
         document
             .querySelectorAll('form')
-            .forEach((element) => {
-                element.setAttribute('novalidate', 'true');
+            .forEach((formElement) => {
+                formElement.setAttribute('novalidate', 'true');
 
-                MiscEvent.addListener('submit', this.submit.bind(this), element);
-                MiscEvent.addListener('form:validation', this.validation.bind(this), element);
-                MiscEvent.addListener('form:notification', this.notification.bind(this), element);
+                MiscEvent.addListener('submit', this.submit.bind(this), formElement);
+                MiscEvent.addListener('form:validation', this.validation.bind(this), formElement);
+                MiscEvent.addListener('form:notification', this.notification.bind(this), formElement);
             });
     }
 
@@ -62,14 +62,14 @@ class FormLayoutGlobal {
         //  - First we ask the form components if they are valid through event dispatching
         //  - Then, once everyone came back, we make a decision on the form validity
         try {
-            const element = evt.currentTarget;
+            const formElement = evt.currentTarget;
 
             if (!this.hasBeenChecked) {
                 // Check the form components
                 evt.stopPropagation();
                 evt.preventDefault();
 
-                MiscEvent.dispatch('form:validate', {'formElement': element});
+                MiscEvent.dispatch('form:validate', {'formElement': formElement});
 
                 return false;
             }
@@ -95,7 +95,7 @@ class FormLayoutGlobal {
                 evt.preventDefault();
 
                 // Focus on first error field
-                const firstErrorField = element.querySelector('[aria-invalid="true"]');
+                const firstErrorField = formElement.querySelector('[aria-invalid="true"]');
                 if (firstErrorField) {
                     MiscAccessibility.setFocus(firstErrorField);
                 }
@@ -116,18 +116,25 @@ class FormLayoutGlobal {
                 formattedData[dataKey] = dataValue
             }
 
-            if (element.getAttribute('data-is-ajax') === 'true') {
+            if (formElement.getAttribute('data-is-ajax') === 'true') {
                 // Ajax submission
                 MiscEvent.dispatch(
                     'form:submit',
                     {
                         'parameters': formattedData
                     },
-                    element
+                    formElement
                 );
 
                 return;
             }
+
+            // Remove name from all elements not to interfere with the next step
+            formElement
+                .querySelectorAll('[name]')
+                .forEach((element) => {
+                    element.removeAttribute('name');
+                });
 
             // Regular submission
             const formData = MiscForm.jsonToFormData(formattedData);
@@ -136,9 +143,9 @@ class FormLayoutGlobal {
                 hiddenInputElement.setAttribute('type', 'hidden');
                 hiddenInputElement.setAttribute('name', key);
                 hiddenInputElement.value = value;
-                element.appendChild(hiddenInputElement);
+                formElement.appendChild(hiddenInputElement);
             }
-            element.submit();
+            formElement.submit();
         } catch (ex) {
             evt.stopPropagation();
             evt.preventDefault();
