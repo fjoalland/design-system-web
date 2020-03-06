@@ -106,7 +106,8 @@ div .swiper-slide {
 
 @media screen and (max-width: $ds44-medium - .0625) {
 
-  .ds44-container-large.swipper-carousel-wrap {
+  .ds44-container-large.swipper-carousel-wrap,
+  .ds44-homepage-container .swipper-carousel-wrap {
     margin: 0;
   }
 
