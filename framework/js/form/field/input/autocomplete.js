@@ -26,39 +26,49 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
 
         const objectIndex = (this.objects.length - 1);
         const object = this.objects[objectIndex];
+
         object.valueElement = valueElement;
         object.metadataElement = metadataElement;
-        object.autoCompleterElement = null;
-        object.isExpanded = false;
         object.autoCompleterElement = object.containerElement.querySelector('.ds44-autocomp-container');
+        object.autoCompleterListElement = null;
         if (object.autoCompleterElement) {
             object.autoCompleterListElement = object.autoCompleterElement.querySelector('.ds44-list');
-        }
-        if (object.autoCompleterListElement) {
-            object.autoCompleterListElement.setAttribute('id', 'owned_listbox_' + object.id);
         }
         if (object.textElement.getAttribute('data-mode') === this.SELECT_ONLY_MODE) {
             object.mode = this.SELECT_ONLY_MODE;
         } else {
             object.mode = this.FREE_TEXT_MODE;
         }
-        object.textElement.setAttribute('aria-owns', 'owned_listbox_' + object.id);
+        object.isExpanded = false;
+    }
 
-        this.hide(objectIndex);
+    initialize() {
+        super.initialize();
 
-        MiscEvent.addListener('keyDown:*', this.record.bind(this, objectIndex));
-        MiscEvent.addListener('keyUp:escape', this.escape.bind(this, objectIndex));
-        MiscEvent.addListener('keyPress:spacebar', this.selectOption.bind(this, objectIndex));
-        MiscEvent.addListener('keyPress:enter', this.selectOption.bind(this, objectIndex));
-        MiscEvent.addListener('keyUp:arrowup', this.previousOption.bind(this, objectIndex));
-        MiscEvent.addListener('keyUp:arrowdown', this.nextOption.bind(this, objectIndex));
-        MiscEvent.addListener('focusout', this.focusOut.bind(this, objectIndex), object.containerElement);
+        for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
+            const object = this.objects[objectIndex];
 
-        object.containerElement
-            .querySelectorAll('.ds44-autocomp-buttons button')
-            .forEach((buttonElement) => {
-                MiscEvent.addListener('click', this.select.bind(this, objectIndex), buttonElement);
-            });
+            object.textElement.setAttribute('aria-owns', 'owned_listbox_' + object.id);
+            if (object.autoCompleterListElement) {
+                object.autoCompleterListElement.setAttribute('id', 'owned_listbox_' + object.id);
+            }
+
+            this.hide(objectIndex);
+
+            MiscEvent.addListener('keyDown:*', this.record.bind(this, objectIndex));
+            MiscEvent.addListener('keyUp:escape', this.escape.bind(this, objectIndex));
+            MiscEvent.addListener('keyPress:spacebar', this.selectOption.bind(this, objectIndex));
+            MiscEvent.addListener('keyPress:enter', this.selectOption.bind(this, objectIndex));
+            MiscEvent.addListener('keyUp:arrowup', this.previousOption.bind(this, objectIndex));
+            MiscEvent.addListener('keyUp:arrowdown', this.nextOption.bind(this, objectIndex));
+            MiscEvent.addListener('focusout', this.focusOut.bind(this, objectIndex), object.containerElement);
+
+            object.containerElement
+                .querySelectorAll('.ds44-autocomp-buttons button')
+                .forEach((buttonElement) => {
+                    MiscEvent.addListener('click', this.select.bind(this, objectIndex), buttonElement);
+                });
+        }
     }
 
     disableElements(objectIndex) {

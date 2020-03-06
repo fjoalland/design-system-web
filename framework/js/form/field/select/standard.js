@@ -26,13 +26,13 @@ class FormFieldSelectStandard extends FormFieldSelectAbstract {
         );
     }
 
-    create(element) {
-        super.create(element);
+    initialize() {
+        super.initialize();
 
-        const objectIndex = (this.objects.length - 1);
-
-        MiscEvent.addListener('keyPress:spacebar', this.selectOption.bind(this, objectIndex));
-        MiscEvent.addListener('keyPress:enter', this.selectOption.bind(this, objectIndex));
+        for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
+            MiscEvent.addListener('keyPress:spacebar', this.selectOption.bind(this, objectIndex));
+            MiscEvent.addListener('keyPress:enter', this.selectOption.bind(this, objectIndex));
+        }
     }
 
     selectOption(objectIndex, evt) {

@@ -26,21 +26,23 @@ class FormFieldSelectMultilevel extends FormFieldSelectCheckbox {
         );
     }
 
-    create(element) {
-        super.create(element);
+    initialize() {
+        super.initialize();
 
-        const objectIndex = (this.objects.length - 1);
-        const object = this.objects[objectIndex];
-        if (object.selectListElement) {
-            object.selectListElement
-                .querySelectorAll('.ds44-select__categ input')
-                .forEach((listInputElement) => {
-                    MiscEvent.addListener('change', this.selectCategory.bind(this), listInputElement);
-                });
+        for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
+            const object = this.objects[objectIndex];
+
+            if (object.selectListElement) {
+                object.selectListElement
+                    .querySelectorAll('.ds44-select__categ input')
+                    .forEach((listInputElement) => {
+                        MiscEvent.addListener('change', this.selectCategory.bind(this), listInputElement);
+                    });
+            }
+
+            // Remove data-url attribute as multilevel select do not exist yet
+            object.textElement.removeAttribute('data-url');
         }
-
-        // Remove data-url attribute as multilevel select do not exist yet
-        object.textElement.removeAttribute('data-url');
     }
 
     select(objectIndex, evt) {

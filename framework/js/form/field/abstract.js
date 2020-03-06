@@ -18,8 +18,7 @@ class FormFieldAbstract {
                     this.create(element);
                 });
         }
-
-        MiscEvent.addListener('form:validate', this.validate.bind(this));
+        this.initialize();
     }
 
     create(element) {
@@ -37,11 +36,36 @@ class FormFieldAbstract {
         if (valuesAllowed) {
             object.valuesAllowed = JSON.parse(valuesAllowed);
         }
-        this.objects.push(object);
-        const objectIndex = (this.objects.length - 1);
 
-        MiscEvent.addListener('field:enable', this.enable.bind(this, objectIndex), object.containerElement);
-        MiscEvent.addListener('field:disable', this.disable.bind(this, objectIndex), object.containerElement);
+        this.objects.push(object);
+    }
+
+    initialize() {
+        for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
+            const object = this.objects[objectIndex];
+
+            MiscEvent.addListener('field:enable', this.enable.bind(this, objectIndex), object.containerElement);
+            MiscEvent.addListener('field:disable', this.disable.bind(this, objectIndex), object.containerElement);
+
+            this.addBackupAttributes(objectIndex);
+        }
+
+        MiscEvent.addListener('form:validate', this.validate.bind(this));
+    }
+
+    addBackupAttributes(objectIndex) {
+        const object = this.objects[objectIndex];
+
+        if (object.inputElements) {
+            object.inputElements.forEach((inputElement) => {
+                if (inputElement.getAttribute('aria-describedby')) {
+                    inputElement.setAttribute(
+                        'data-bkp-aria-describedby',
+                        inputElement.getAttribute('aria-describedby')
+                    );
+                }
+            });
+        }
     }
 
     empty(objectIndex) {

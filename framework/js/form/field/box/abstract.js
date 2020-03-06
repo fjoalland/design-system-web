@@ -15,10 +15,18 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
         const object = this.objects[objectIndex];
 
         object.inputElements = element.querySelectorAll('input[type="' + this.category + '"]');
+    }
 
-        object.inputElements.forEach((inputElement) => {
-            MiscEvent.addListener('click', this.toggleCheck.bind(this, objectIndex), inputElement);
-        });
+    initialize() {
+        super.initialize();
+
+        for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
+            const object = this.objects[objectIndex];
+
+            object.inputElements.forEach((inputElement) => {
+                MiscEvent.addListener('click', this.toggleCheck.bind(this, objectIndex), inputElement);
+            });
+        }
     }
 
     enableElements(objectIndex, evt) {
@@ -47,7 +55,7 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
 
             return;
         }
-        
+
         this.enableDisableLinkedField(objectIndex);
     }
 
@@ -95,7 +103,12 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
         }
 
         object.inputElements.forEach((inputElement) => {
-            inputElement.removeAttribute('aria-describedby');
+            const defaultAriaDescribedBy = inputElement.getAttribute('data-bkp-aria-describedby');
+            if (!defaultAriaDescribedBy) {
+                inputElement.removeAttribute('aria-describedby');
+            } else {
+                inputElement.setAttribute('aria-describedby', defaultAriaDescribedBy);
+            }
             inputElement.removeAttribute('aria-invalid');
             inputElement.classList.remove('ds44-boxError');
         });
@@ -108,7 +121,12 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
         this.showErrorMessage(objectIndex, errorMessageElementId);
 
         object.inputElements.forEach((inputElement) => {
-            inputElement.setAttribute('aria-describedby', errorMessageElementId);
+            const defaultAriaDescribedBy = inputElement.getAttribute('data-bkp-aria-describedby');
+            if (!defaultAriaDescribedBy) {
+                inputElement.setAttribute('aria-describedby', errorMessageElementId);
+            } else {
+                inputElement.setAttribute('aria-describedby', errorMessageElementId + ' ' + defaultAriaDescribedBy);
+            }
             inputElement.setAttribute('aria-invalid', 'true');
             inputElement.classList.add('ds44-boxError');
         });

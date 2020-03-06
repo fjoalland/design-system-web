@@ -35,20 +35,21 @@ class FormFieldSelectCheckbox extends FormFieldSelectAbstract {
         );
     }
 
-    create(element) {
-        super.create(element);
+    initialize() {
+        super.initialize();
 
-        const objectIndex = (this.objects.length - 1);
-        const object = this.objects[objectIndex];
+        for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
+            const object = this.objects[objectIndex];
 
-        const flexContainerElement = object.containerElement.querySelector('.ds44-flex-container');
-        const checkAllElement = flexContainerElement.querySelector('button:first-child');
-        if (checkAllElement) {
-            MiscEvent.addListener('click', this.checkAll.bind(this, objectIndex), checkAllElement);
-        }
-        const uncheckAllElement = flexContainerElement.querySelector('button:last-child');
-        if (uncheckAllElement) {
-            MiscEvent.addListener('click', this.uncheckAll.bind(this, objectIndex), uncheckAllElement);
+            const flexContainerElement = object.containerElement.querySelector('.ds44-flex-container');
+            const checkAllElement = flexContainerElement.querySelector('button:first-child');
+            if (checkAllElement) {
+                MiscEvent.addListener('click', this.checkAll.bind(this, objectIndex), checkAllElement);
+            }
+            const uncheckAllElement = flexContainerElement.querySelector('button:last-child');
+            if (uncheckAllElement) {
+                MiscEvent.addListener('click', this.uncheckAll.bind(this, objectIndex), uncheckAllElement);
+            }
         }
     }
 

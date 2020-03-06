@@ -23,26 +23,34 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
 
         object.valueElement = valueElement;
         object.inputElements = element.querySelectorAll('input[type="text"]');
+        object.calendarButtonElement = MiscDom.getNextSibling(element, '.ds44-calendar');
+    }
 
-        object.inputElements.forEach((inputElement) => {
-            MiscEvent.addListener('focus', this.focus.bind(this, objectIndex), inputElement);
-            MiscEvent.addListener('blur', this.blur.bind(this, objectIndex), inputElement);
-        });
+    initialize() {
+        super.initialize();
 
-        MiscEvent.addListener('keydown', this.keyDown.bind(this, objectIndex), object.inputElements[0]);
-        MiscEvent.addListener('keydown', this.keyDown.bind(this, objectIndex), object.inputElements[1]);
-        MiscEvent.addListener('keyup', this.keyUp.bind(this, objectIndex), object.inputElements[0]);
-        MiscEvent.addListener('keyup', this.keyUp.bind(this, objectIndex), object.inputElements[1]);
+        for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
+            const object = this.objects[objectIndex];
 
-        MiscEvent.addListener('keypress', this.keyPress.bind(this, objectIndex), object.inputElements[0]);
-        MiscEvent.addListener('keypress', this.keyPress.bind(this, objectIndex), object.inputElements[1]);
-        MiscEvent.addListener('keypress', this.keyPress.bind(this, objectIndex), object.inputElements[2]);
+            object.inputElements.forEach((inputElement) => {
+                MiscEvent.addListener('focus', this.focus.bind(this, objectIndex), inputElement);
+                MiscEvent.addListener('blur', this.blur.bind(this, objectIndex), inputElement);
+            });
 
-        MiscEvent.addListener('click', this.focusOut.bind(this, objectIndex), document.body);
+            MiscEvent.addListener('keydown', this.keyDown.bind(this, objectIndex), object.inputElements[0]);
+            MiscEvent.addListener('keydown', this.keyDown.bind(this, objectIndex), object.inputElements[1]);
+            MiscEvent.addListener('keyup', this.keyUp.bind(this, objectIndex), object.inputElements[0]);
+            MiscEvent.addListener('keyup', this.keyUp.bind(this, objectIndex), object.inputElements[1]);
 
-        object.calendarButton = MiscDom.getNextSibling(element, '.ds44-calendar');
-        if (object.calendarButton) {
-            MiscEvent.addListener('click', this.showHideCalendar.bind(this, objectIndex), object.calendarButton);
+            MiscEvent.addListener('keypress', this.keyPress.bind(this, objectIndex), object.inputElements[0]);
+            MiscEvent.addListener('keypress', this.keyPress.bind(this, objectIndex), object.inputElements[1]);
+            MiscEvent.addListener('keypress', this.keyPress.bind(this, objectIndex), object.inputElements[2]);
+
+            MiscEvent.addListener('click', this.focusOut.bind(this, objectIndex), document.body);
+
+            if (object.calendarButtonElement) {
+                MiscEvent.addListener('click', this.showHideCalendar.bind(this, objectIndex), object.calendarButtonElement);
+            }
         }
     }
 
@@ -78,8 +86,8 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
         const object = this.objects[this.calendar.index];
         this.hideCalendar();
 
-        if (object && object.calendarButton) {
-            MiscAccessibility.setFocus(object.calendarButton);
+        if (object && object.calendarButtonElement) {
+            MiscAccessibility.setFocus(object.calendarButtonElement);
         }
     }
 
@@ -272,8 +280,8 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
                 'onSelect': this.selectDate.bind(this, objectIndex)
             })
         };
-        if (object.calendarButton) {
-            object.calendarButton.setAttribute('aria-expanded', 'true');
+        if (object.calendarButtonElement) {
+            object.calendarButtonElement.setAttribute('aria-expanded', 'true');
         }
     }
 
@@ -284,8 +292,8 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
             this.calendar.object.destroy();
             this.calendar = null;
 
-            if (object && object.calendarButton) {
-                object.calendarButton.setAttribute('aria-expanded', 'false');
+            if (object && object.calendarButtonElement) {
+                object.calendarButtonElement.setAttribute('aria-expanded', 'false');
             }
         }
     }

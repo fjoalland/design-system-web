@@ -19,21 +19,7 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         object.buttonElement = object.containerElement.querySelector('.ds44-btnOpen');
         object.buttonIconElement = object.containerElement.querySelector('.ds44-btnOpen .icon');
         object.buttonTextElement = object.containerElement.querySelector('.ds44-btnOpen .visually-hidden');
-        object.resetButton = MiscDom.getNextSibling(element, '.ds44-reset');
-        object.isExpanded = false;
-
-        MiscEvent.addListener('keyUp:escape', this.escape.bind(this, objectIndex));
-        MiscEvent.addListener('keyUp:arrowup', this.previousOption.bind(this, objectIndex));
-        MiscEvent.addListener('keyUp:arrowdown', this.nextOption.bind(this, objectIndex));
-        if (object.shapeElement) {
-            MiscEvent.addListener('click', this.showHide.bind(this, objectIndex), object.shapeElement);
-        }
-        MiscEvent.addListener('focusout', this.focusOut.bind(this, objectIndex), object.containerElement);
-        MiscEvent.addListener('click', this.focusOut.bind(this, objectIndex), document.body);
-        if (object.resetButton) {
-            MiscEvent.addListener('click', this.reset.bind(this, objectIndex), object.resetButton);
-        }
-
+        object.resetButtonElement = MiscDom.getNextSibling(element, '.ds44-reset');
         object.selectContainerElement = object.containerElement.querySelector('.ds44-select-container');
         object.selectListElement = null;
         object.selectButtonElement = null;
@@ -41,21 +27,43 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
             object.selectListElement = object.selectContainerElement.querySelector('.ds44-listSelect');
             object.selectButtonElement = object.selectContainerElement.querySelector('.ds44-btnSelect');
         }
-        if (object.selectListElement) {
-            object.selectListElement
-                .querySelectorAll('.ds44-select-list_elem')
-                .forEach((listElement) => {
-                    this.setListElementEvents(listElement, objectIndex);
-                });
-        }
-        if (object.selectButtonElement) {
-            MiscEvent.addListener('click', this.record.bind(this, objectIndex), object.selectButtonElement);
-        }
+        object.isExpanded = false;
+    }
 
-        if (object.labelElement) {
-            object.labelElement.classList.remove(this.labelClassName);
+    initialize() {
+        super.initialize();
+
+        for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
+            const object = this.objects[objectIndex];
+
+            MiscEvent.addListener('keyUp:escape', this.escape.bind(this, objectIndex));
+            MiscEvent.addListener('keyUp:arrowup', this.previousOption.bind(this, objectIndex));
+            MiscEvent.addListener('keyUp:arrowdown', this.nextOption.bind(this, objectIndex));
+            if (object.shapeElement) {
+                MiscEvent.addListener('click', this.showHide.bind(this, objectIndex), object.shapeElement);
+            }
+            MiscEvent.addListener('focusout', this.focusOut.bind(this, objectIndex), object.containerElement);
+            MiscEvent.addListener('click', this.focusOut.bind(this, objectIndex), document.body);
+            if (object.resetButtonElement) {
+                MiscEvent.addListener('click', this.reset.bind(this, objectIndex), object.resetButtonElement);
+            }
+
+            if (object.selectListElement) {
+                object.selectListElement
+                    .querySelectorAll('.ds44-select-list_elem')
+                    .forEach((listElement) => {
+                        this.setListElementEvents(listElement, objectIndex);
+                    });
+            }
+            if (object.selectButtonElement) {
+                MiscEvent.addListener('click', this.record.bind(this, objectIndex), object.selectButtonElement);
+            }
+
+            if (object.labelElement) {
+                object.labelElement.classList.remove(this.labelClassName);
+            }
+            this.hide(objectIndex);
         }
-        this.hide(objectIndex);
     }
 
     empty(objectIndex) {
@@ -148,16 +156,16 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
     showHideResetButton(objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.resetButton) {
+        if (!object.resetButtonElement) {
             return;
         }
 
         if (!this.getData(objectIndex)) {
             // Hide reset button
-            object.resetButton.style.display = 'none';
+            object.resetButtonElement.style.display = 'none';
         } else {
             // Hide reset button
-            object.resetButton.style.display = 'block';
+            object.resetButtonElement.style.display = 'block';
         }
     }
 

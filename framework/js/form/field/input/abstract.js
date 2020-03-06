@@ -9,21 +9,26 @@ class FormFieldInputAbstract extends FormFieldAbstract {
         object.valueElement = element;
         object.inputElements = [element];
         object.labelElement = MiscDom.getPreviousSibling(element, 'span.ds44-labelTypePlaceholder');
-        object.resetButton = MiscDom.getNextSibling(element, '.ds44-reset');
+        object.resetButtonElement = MiscDom.getNextSibling(element, '.ds44-reset');
+    }
 
-        if (object.labelElement) {
-            object.labelElement.classList.remove(this.labelClassName);
-        }
+    initialize() {
+        super.initialize();
 
-        MiscEvent.addListener('focus', this.focus.bind(this, objectIndex), element);
-        MiscEvent.addListener('blur', this.blur.bind(this, objectIndex), element);
-        MiscEvent.addListener('invalid', this.invalid.bind(this, objectIndex), element);
-        MiscEvent.addListener('keyUp:*', this.write.bind(this, objectIndex));
-        if (object.resetButton) {
-            MiscEvent.addListener('click', this.reset.bind(this, objectIndex), object.resetButton);
-        }
-        if (object.labelElement) {
-            MiscEvent.addListener('click', this.focusOnTextElement.bind(this, objectIndex), object.labelElement);
+        for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
+            const object = this.objects[objectIndex];
+
+            MiscEvent.addListener('focus', this.focus.bind(this, objectIndex), object.textElement);
+            MiscEvent.addListener('blur', this.blur.bind(this, objectIndex), object.textElement);
+            MiscEvent.addListener('invalid', this.invalid.bind(this, objectIndex), object.textElement);
+            MiscEvent.addListener('keyUp:*', this.write.bind(this, objectIndex));
+            if (object.resetButtonElement) {
+                MiscEvent.addListener('click', this.reset.bind(this, objectIndex), object.resetButtonElement);
+            }
+            if (object.labelElement) {
+                object.labelElement.classList.remove(this.labelClassName);
+                MiscEvent.addListener('click', this.focusOnTextElement.bind(this, objectIndex), object.labelElement);
+            }
         }
     }
 
@@ -81,16 +86,16 @@ class FormFieldInputAbstract extends FormFieldAbstract {
 
     showHideResetButton(objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.resetButton) {
+        if (!object.resetButtonElement) {
             return;
         }
 
         if (!this.getText(objectIndex)) {
             // Hide reset button
-            object.resetButton.style.display = 'none';
+            object.resetButtonElement.style.display = 'none';
         } else {
             // Hide reset button
-            object.resetButton.style.display = 'block';
+            object.resetButtonElement.style.display = 'block';
         }
     }
 
@@ -177,8 +182,13 @@ class FormFieldInputAbstract extends FormFieldAbstract {
         }
 
         object.inputElements.forEach((inputElement) => {
+            const defaultAriaDescribedBy = inputElement.getAttribute('data-bkp-aria-describedby');
+            if (!defaultAriaDescribedBy) {
+                inputElement.removeAttribute('aria-describedby');
+            } else {
+                inputElement.setAttribute('aria-describedby', defaultAriaDescribedBy);
+            }
             inputElement.removeAttribute('aria-invalid');
-            inputElement.removeAttribute('aria-describedby');
         });
         object.textElement.classList.remove('ds44-error');
 
@@ -194,8 +204,13 @@ class FormFieldInputAbstract extends FormFieldAbstract {
         this.showErrorMessage(objectIndex, errorMessageElementId);
 
         object.inputElements.forEach((inputElement) => {
+            const defaultAriaDescribedBy = inputElement.getAttribute('data-bkp-aria-describedby');
+            if (!defaultAriaDescribedBy) {
+                inputElement.setAttribute('aria-describedby', errorMessageElementId);
+            } else {
+                inputElement.setAttribute('aria-describedby', errorMessageElementId + ' ' + defaultAriaDescribedBy);
+            }
             inputElement.setAttribute('aria-invalid', 'true');
-            inputElement.setAttribute('aria-describedby', errorMessageElementId);
         });
         object.textElement.classList.add('ds44-error');
     }
