@@ -28,8 +28,8 @@
             <form data-is-ajax="true">
                 <div class="grid-2-small-1 ds44-box">
                     <div class="col">
-                        <p class="h4-like" aria-level="3" tabindex="-1">Pourquoi cette page ne vous a pas été utile ?</p>
-                        {% include form/layout/checkboxes.html choices="1:L’information n’est pas assez complète,2:L’information est trop compliquée,3:Il y a trop à lire" required="true" %}
+                        <p id="bloc-utile-informations" class="h4-like" aria-level="3" tabindex="-1">Pourquoi cette page ne vous a pas été utile ?</p>
+                        {% include form/layout/checkboxes.html choices="1:L’information n’est pas assez complète,2:L’information est trop compliquée,3:Il y a trop à lire" required="true" attributes='aria-describedby="bloc-utile-informations"' %}
                     </div>
                     <div class="col ds44--xl-padding-l">
                         <p id="form-bloc-utils-N">Aidez-nous à améliorer cette page en nous laissant un commentaire :</p>
