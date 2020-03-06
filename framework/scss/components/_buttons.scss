@@ -42,8 +42,13 @@ button, a.ds44-btnStd, a > .ds44-btnStd, .ds44-btnStd > a  {
 
     &.ds44-btnStd--plat {
         border: none;
-        padding: $ds44-padding-large;
-        min-height: 6rem;
+        padding: $ds44-padding-large/2;
+
+        &:hover,
+        &:active,
+        &:focus {
+          box-shadow: none;
+        }
     }
 
 }
