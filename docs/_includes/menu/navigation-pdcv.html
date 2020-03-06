@@ -13,9 +13,9 @@
         <div class="grid-12-small-1 ds44-grid-valign-center">
 
             <div class="col-5-small-1 txtcenter">
-                <p class="h4-like" aria-describedby="commune-name">Consultez l’actualité ou trouvez des contacts près de chez vous :</p>
+                <p class="h4-like" id="pdcv-commune-name">Consultez l’actualité ou trouvez des contacts près de chez vous :</p>
                 <form>
-                    {% include form/field/input/standard.html id="commune-name" label="Champ standard" required="true" class="ds44-inpLarge" %}
+                    {% include form/field/input/standard.html attributes='aria-describedby="pdcv-commune-name"' label="Champ standard" required="true" class="ds44-inpLarge"  %}
                     <button type="submit" class="ds44-btnStd ds44-btn--invert" aria-label="Valider votre recherche près de chez vous"><span class="ds44-btnInnerText">Valider</span><i class="icon icon-long-arrow-right" aria-hidden="true"></i></button>
                 </form>
             </div>
