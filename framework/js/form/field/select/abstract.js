@@ -59,9 +59,7 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
                 MiscEvent.addListener('click', this.record.bind(this, objectIndex), object.selectButtonElement);
             }
 
-            if (object.labelElement) {
-                object.labelElement.classList.remove(this.labelClassName);
-            }
+            this.quit(objectIndex);
             this.hide(objectIndex);
         }
     }
@@ -69,11 +67,7 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
     empty(objectIndex) {
         super.empty(objectIndex);
 
-        const object = this.objects[objectIndex];
-        if (object.labelElement) {
-            object.labelElement.classList.remove(this.labelClassName);
-        }
-
+        this.quit(objectIndex);
         this.showHideResetButton(objectIndex);
     }
 
@@ -148,8 +142,8 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
         object.shapeElement.classList.add('ds44-inputDisabled');
         object.buttonElement.setAttribute('aria-disabled', 'true');
-        object.labelElement.classList.remove(this.labelClassName);
 
+        this.quit(objectIndex);
         this.hide(objectIndex);
         this.showHideResetButton(objectIndex);
     }
@@ -488,7 +482,7 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
                     'text': texts.join(', '),
                 }
             );
-            object.labelElement.classList.add(this.labelClassName);
+            this.enter(objectIndex);
         }
 
         this.focusOnButtonElement(objectIndex);

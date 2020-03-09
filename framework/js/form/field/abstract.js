@@ -207,6 +207,24 @@ class FormFieldAbstract {
         // Abstract method
     }
 
+    enter(objectIndex) {
+        const object = this.objects[objectIndex];
+        if (!object.labelElement) {
+            return;
+        }
+
+        object.labelElement.classList.add(this.labelClassName);
+    }
+
+    quit(objectIndex) {
+        const object = this.objects[objectIndex];
+        if (!object.labelElement) {
+            return;
+        }
+
+        object.labelElement.classList.remove(this.labelClassName);
+    }
+
     validate(evt) {
         if (
             !evt ||

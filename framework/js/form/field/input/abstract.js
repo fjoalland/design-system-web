@@ -10,6 +10,7 @@ class FormFieldInputAbstract extends FormFieldAbstract {
         object.inputElements = [element];
         object.labelElement = MiscDom.getPreviousSibling(element, 'span.ds44-labelTypePlaceholder');
         object.resetButtonElement = MiscDom.getNextSibling(element, '.ds44-reset');
+        object.hasInstantValidtyCheck = (element.closest('.ds44-select-list_elem_child') !== null);
     }
 
     initialize() {
@@ -26,9 +27,9 @@ class FormFieldInputAbstract extends FormFieldAbstract {
                 MiscEvent.addListener('click', this.reset.bind(this, objectIndex), object.resetButtonElement);
             }
             if (object.labelElement) {
-                object.labelElement.classList.remove(this.labelClassName);
                 MiscEvent.addListener('click', this.focusOnTextElement.bind(this, objectIndex), object.labelElement);
             }
+            this.quit(objectIndex);
         }
     }
 
@@ -109,7 +110,15 @@ class FormFieldInputAbstract extends FormFieldAbstract {
     }
 
     getText(objectIndex) {
-        return this.getData(objectIndex);
+        const object = this.objects[objectIndex];
+        if (
+            !object.textElement ||
+            !object.textElement.value
+        ) {
+            return null;
+        }
+
+        return object.textElement.value;
     }
 
     isValid(inputElement) {
@@ -152,22 +161,21 @@ class FormFieldInputAbstract extends FormFieldAbstract {
             return;
         }
 
-        if (object.labelElement) {
-            object.labelElement.classList.add(this.labelClassName);
-        }
+        this.enter(objectIndex);
     }
 
     blur(objectIndex) {
+        const object = this.objects[objectIndex];
+
+        if (object.hasInstantValidtyCheck) {
+            this.checkValidity(objectIndex);
+        }
+
         if (!this.isEmpty(objectIndex)) {
             return;
         }
 
-        const object = this.objects[objectIndex];
-        if (!object.labelElement) {
-            return;
-        }
-
-        object.labelElement.classList.remove(this.labelClassName);
+        this.quit(objectIndex);
     }
 
     removeInvalid(objectIndex) {

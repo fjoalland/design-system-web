@@ -143,6 +143,7 @@ class FormFieldSelectRadio extends FormFieldSelectAbstract {
             .querySelectorAll('.ds44-select-list_elem')
             .forEach((listElement) => {
                 let listInputElement = listElement.querySelector('input');
+                let listChildElement = listElement.querySelector('.ds44-select-list_elem_child');
                 if (
                     (
                         evt.type === 'mousedown' &&
@@ -162,9 +163,17 @@ class FormFieldSelectRadio extends FormFieldSelectAbstract {
                         listInputElement.checked
                     )
                 ) {
+                    // Is checked
                     listElement.classList.add('selected_option');
+                    if(listChildElement) {
+                        listChildElement.classList.remove('hidden');
+                    }
                 } else {
+                    // Is not checked
                     listElement.classList.remove('selected_option');
+                    if(listChildElement) {
+                        listChildElement.classList.add('hidden');
+                    }
                 }
             });
     }
