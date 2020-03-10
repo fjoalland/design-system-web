@@ -1,0 +1,40 @@
+{% if include['button'] != '' %}
+  <button class="ds44-btnStd ds44-mtb2"><i class="icon icon-long-arrow-left" aria-hidden="true"></i><span class="ds44-btnInnerText">{{ include.button }}</span></button>
+{% endif %}
+<section class="ds44-card ds44-card--contact ds44-box ds44-bgGray {% if include['is-partner'] == 'true' %} ds44-cardIsPartner {% endif %} {% if include['is-focus'] == 'true' %} ds44-cardIsFocus {% endif %}">
+  <div class="ds44-card__section">
+      {% if include['is-partner'] == 'true' %}
+      <p class="ds44-cardPartner pal">Partenaire</p>
+      <p class="ds44-cardSelect pa0 ma0">
+          <button class="pas" type="button"><i class="icon icon-star-empty" aria-hidden="true"></i><span class="visually-hidden">Sélection</span></button>
+      </p>
+      {% endif %}
+      <div class="ds44-innerBoxContainer ds44-mb3">
+          <h3 class="h2-like">{{ include.title }}</h3>
+          <p class="ds44-docListElem"><i class="icon icon-tag ds44-docListIco" aria-hidden="true"></i>Entretien du logement</p>
+          <p class="ds44-docListElem ds44-mt-std"><i class="icon icon-marker ds44-docListIco" aria-hidden="true"></i>14 rue Jean Palach<br /> 44800 SAINT HERBLAIN</p>
+          <p class="ds44-docListElem ds44-mt-std"><i class="icon icon-phone ds44-docListIco" aria-hidden="true"></i>02 51 77 15 75</p>
+          <p class="ds44-docListElem ds44-mt-std"><i class="icon icon-mail ds44-docListIco" aria-hidden="true"></i><a href="mailto:contact@loire-atlantique.fr" aria-label="Contacter Service habitat par mail : contact@loire-atlantique.fr ">Contacter par mail</a></p>
+          <p class="ds44-docListElem ds44-mt-std"><i class="icon icon-link ds44-docListIco" aria-hidden="true"></i><a href="https://www.loire-atlantique.fr" aria-label="Visiter le site internet : [Titre de la tuile] - nouvelle fenêtre" target="_blank">Site internet</a></p>
+          <h4 class="h3-like ds44-mt3">Prestations :</h4>
+          <ul class="ds44-uList">
+            <li>Assistance dans les actes quotidiens de la vie</li>
+            <li>Accompagnement des personnes dans leurs déplacements en dehors de leur domicile</li>
+            <li>Aide aux aidants</li>
+            <li>Entretien du logement</li>
+            <li>Garde de nuit</li>
+            <li>Préparation des repas</li>
+          </ul>
+          <h4 class="h3-like ds44-mt3">En détail :</h4>
+          <ul class="ds44-uList">
+            <li><strong>Statut :</strong> Privé</li>
+            <li><strong>Plage d’intervention :</strong> 7 jours /7</li>
+            <li><strong>Type d’aide :</strong> APA, PCH</li>
+            <li><strong>Modalités de paiement :</strong> CESU accepté, virement, chèque, prélèvement</li>
+            <li><strong>Modes d’intervention :</strong> Mandataire, Prestataire</li>
+            <li><strong>Mode de tarification :</strong> tarif libre</li>
+          </ul>
+      </div>
+
+  </div>
+</section>

@@ -28,6 +28,10 @@ variations:
 - title: Variantes
   description: Liste des différentes variantes de tuile de type photo + contenu ou contenu seul
   pattern: cards/card--AA--variantes.html
+  
+- title: Fiches
+  description: 
+  pattern: cards/card--fiches.html
 ---
 
 ## Usage
