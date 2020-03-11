@@ -1,33 +1,37 @@
 class FormLayoutGlobal {
     constructor() {
-        this.hasBeenChecked = false;
-        this.validationCategories = {
-            'inputStandard': null,
-            'inputAutocomplete': null,
-            'textarea': null,
-            'checkbox': null,
-            'radio': null,
-            'selectStandard': null,
-            'selectRadio': null,
-            'selectCheckbox': null,
-            'selectMultilevel': null,
-            'datepicker': null
-        };
+        this.objects = [];
 
         document
             .querySelectorAll('form')
             .forEach((formElement) => {
-                formElement.setAttribute('novalidate', 'true');
-
-                MiscEvent.addListener('submit', this.submit.bind(this), formElement);
-                MiscEvent.addListener('form:validation', this.validation.bind(this), formElement);
-                MiscEvent.addListener('form:notification', this.notification.bind(this), formElement);
+                this.create(formElement);
             });
     }
 
-    validation(evt) {
+    create(formElement) {
+        const object = {
+            'id': MiscUtils.generateId(),
+            'formElement': formElement,
+            'hasBeenChecked': false,
+            'validationCategories': MiscForm.getValidationCategories()
+        };
+        this.objects.push(object);
+        const objectIndex = (this.objects.length - 1);
+
+        // Bind events
+        MiscEvent.addListener('submit', this.submit.bind(this, objectIndex), formElement);
+        MiscEvent.addListener('form:validation', this.validation.bind(this, objectIndex), formElement);
+        MiscEvent.addListener('form:notification', this.notification.bind(this, objectIndex), formElement);
+
+        // Init
+        formElement.setAttribute('novalidate', 'true');
+    }
+
+    validation(objectIndex, evt) {
         // This function will be fired by each component category so they can tell if they are valid or not
-        this.hasBeenChecked = true;
+        const object = this.objects[objectIndex];
+        object.hasBeenChecked = true;
 
         if (
             !evt ||
@@ -40,12 +44,12 @@ class FormLayoutGlobal {
 
         // Mark the component category as answered
         let isFinished = true;
-        this.validationCategories[evt.detail.category] = {
+        object.validationCategories[evt.detail.category] = {
             'isValid': evt.detail.isValid,
             'data': evt.detail.data
         };
-        for (let category in this.validationCategories) {
-            if (this.validationCategories[category] === null) {
+        for (let category in object.validationCategories) {
+            if (object.validationCategories[category] === null) {
                 isFinished = false;
                 break;
             }
@@ -53,49 +57,39 @@ class FormLayoutGlobal {
 
         // All the component categories answered the call, we can carry on with the form validation
         if (isFinished) {
-            this.submit(evt);
+            this.submit(objectIndex, evt);
         }
     }
 
-    submit(evt) {
+    submit(objectIndex, evt) {
+        const object = this.objects[objectIndex];
+
         // Submission is in two steps :
         //  - First we ask the form components if they are valid through event dispatching
         //  - Then, once everyone came back, we make a decision on the form validity
         try {
-            const formElement = evt.currentTarget;
+            if (!object.hasBeenChecked) {
+                object.validationCategories = MiscForm.getValidationCategories();
 
-            if (!this.hasBeenChecked) {
                 // Check the form components
                 evt.stopPropagation();
                 evt.preventDefault();
 
-                MiscEvent.dispatch('form:validate', {'formElement': formElement});
+                MiscEvent.dispatch('form:validate', {'formElement': object.formElement});
 
                 return false;
             }
-            this.hasBeenChecked = false;
+            object.hasBeenChecked = false;
 
             // Check if the components are all valid
-            let isValid = true;
-            let data = {};
-            for (let category in this.validationCategories) {
-                if (
-                    !this.validationCategories[category] ||
-                    this.validationCategories[category].isValid !== true
-                ) {
-                    isValid = false;
-                } else if (this.validationCategories[category].data) {
-                    data = Object.assign(data, this.validationCategories[category].data);
-                }
-                this.validationCategories[category] = null;
-            }
-            if (!isValid) {
+            const formValidity = MiscForm.checkValidity(object.validationCategories);
+            if (!formValidity.isValid) {
                 // At least one was not valid
                 evt.stopPropagation();
                 evt.preventDefault();
 
                 // Focus on first error field
-                const firstErrorField = formElement.querySelector('[aria-invalid="true"]');
+                const firstErrorField = object.formElement.querySelector('[aria-invalid="true"]');
                 if (firstErrorField) {
                     MiscAccessibility.setFocus(firstErrorField);
                 }
@@ -105,8 +99,8 @@ class FormLayoutGlobal {
 
             // Organize data
             const formattedData = {};
-            for (let dataKey in data) {
-                let dataValue = data[dataKey];
+            for (let dataKey in formValidity.data) {
+                let dataValue = formValidity.data[dataKey];
 
                 try {
                     // Try if it is JSON
@@ -116,21 +110,21 @@ class FormLayoutGlobal {
                 formattedData[dataKey] = dataValue
             }
 
-            if (formElement.getAttribute('data-is-ajax') === 'true') {
+            if (object.formElement.getAttribute('data-is-ajax') === 'true') {
                 // Ajax submission
                 MiscEvent.dispatch(
                     'form:submit',
                     {
                         'parameters': formattedData
                     },
-                    formElement
+                    object.formElement
                 );
 
                 return;
             }
 
             // Remove name from all elements not to interfere with the next step
-            formElement
+            object.formElement
                 .querySelectorAll('[name]')
                 .forEach((element) => {
                     element.removeAttribute('name');
@@ -143,9 +137,9 @@ class FormLayoutGlobal {
                 hiddenInputElement.setAttribute('type', 'hidden');
                 hiddenInputElement.setAttribute('name', key);
                 hiddenInputElement.value = value;
-                formElement.appendChild(hiddenInputElement);
+                object.formElement.appendChild(hiddenInputElement);
             }
-            formElement.submit();
+            object.formElement.submit();
         } catch (ex) {
             evt.stopPropagation();
             evt.preventDefault();
@@ -154,7 +148,7 @@ class FormLayoutGlobal {
         }
     }
 
-    notification(evt) {
+    notification(objectIndex, evt) {
         if (
             !evt ||
             !evt.target ||
@@ -164,12 +158,11 @@ class FormLayoutGlobal {
             return;
         }
 
-        const formElement = evt.target;
+        const object = this.objects[objectIndex];
         const notificationType = evt.detail.type || 'error';
         const errorMessageId = evt.detail.id;
 
-
-        let containerElement = formElement.querySelector('.ds44-message-container');
+        let containerElement = object.formElement.querySelector('.ds44-message-container');
         if (containerElement) {
             containerElement.remove();
         }
@@ -178,7 +171,7 @@ class FormLayoutGlobal {
         containerElement = document.createElement('div');
         containerElement.classList.add('ds44-message-container');
         containerElement.classList.add('ds44-mb-std');
-        formElement.insertBefore(containerElement, formElement.firstChild);
+        object.formElement.insertBefore(containerElement, object.formElement.firstChild);
 
         const textElement = document.createElement('p');
         if (errorMessageId) {

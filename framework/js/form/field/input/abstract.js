@@ -10,7 +10,6 @@ class FormFieldInputAbstract extends FormFieldAbstract {
         object.inputElements = [element];
         object.labelElement = MiscDom.getPreviousSibling(element, 'span.ds44-labelTypePlaceholder');
         object.resetButtonElement = MiscDom.getNextSibling(element, '.ds44-reset');
-        object.hasInstantValidtyCheck = (element.closest('.ds44-select-list_elem_child') !== null);
     }
 
     initialize() {
@@ -165,12 +164,6 @@ class FormFieldInputAbstract extends FormFieldAbstract {
     }
 
     blur(objectIndex) {
-        const object = this.objects[objectIndex];
-
-        if (object.hasInstantValidtyCheck) {
-            this.checkValidity(objectIndex);
-        }
-
         if (!this.isEmpty(objectIndex)) {
             return;
         }

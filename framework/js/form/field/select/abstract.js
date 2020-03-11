@@ -28,6 +28,7 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
             object.selectButtonElement = object.selectContainerElement.querySelector('.ds44-btnSelect');
         }
         object.isExpanded = false;
+        object.validationCategories = MiscForm.getValidationCategories();
     }
 
     initialize() {
@@ -49,6 +50,7 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
             }
 
             if (object.selectListElement) {
+                MiscEvent.addListener('form:validation', this.validation.bind(this, objectIndex), object.selectListElement);
                 object.selectListElement
                     .querySelectorAll('.ds44-select-list_elem')
                     .forEach((listElement) => {
@@ -61,6 +63,39 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
             this.quit(objectIndex);
             this.hide(objectIndex);
+        }
+    }
+
+    validation(objectIndex, evt) {
+        if (
+            !evt ||
+            !evt.detail ||
+            evt.detail.category === undefined ||
+            evt.detail.isValid === undefined
+        ) {
+            return;
+        }
+
+        // Mark the component category as answered
+        const object = this.objects[objectIndex];
+        let isFinished = true;
+        object.validationCategories[evt.detail.category] = {
+            'isValid': evt.detail.isValid,
+            'data': evt.detail.data
+        };
+        for (let category in object.validationCategories) {
+            if (object.validationCategories[category] === null) {
+                isFinished = false;
+                break;
+            }
+        }
+
+        // All the component categories answered the call, we can carry on with the form validation
+        if (isFinished) {
+            const formValidity = MiscForm.checkValidity(object.validationCategories);
+            if (formValidity.isValid) {
+                this.save(objectIndex, formValidity.data);
+            }
         }
     }
 
@@ -305,9 +340,9 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         const url = object.textElement.getAttribute('data-url');
         let urlParameters = null;
         if (parameters) {
-            if(parameters.value) {
+            if (parameters.value) {
                 urlParameters = object.valueElement.value;
-            } else if(typeof parameters === 'object') {
+            } else if (typeof parameters === 'object') {
                 urlParameters = parameters[0];
             } else {
                 urlParameters = parameters;
@@ -452,6 +487,23 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         }
 
         const object = this.objects[objectIndex];
+        if (!object.selectListElement) {
+            return;
+        }
+
+        // Check sub child elements validity
+        object.validationCategories = MiscForm.getValidationCategories();
+        if (object.selectListElement.querySelector('.ds44-select-list_elem_child:not(.hidden)')) {
+            MiscEvent.dispatch('form:validate', {'formElement': object.selectListElement});
+
+            return;
+        }
+
+        this.save(objectIndex);
+    }
+
+    save(objectIndex, additionalData) {
+        const object = this.objects[objectIndex];
         if (!object.textElement) {
             return;
         }
@@ -468,17 +520,57 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
             .querySelectorAll('.selected_option')
             .forEach((listElement) => {
                 const domData = this.getDomData(listElement);
-                values.push(domData.value);
+
+                let isFound = false;
+                if (additionalData) {
+                    for (let additionalDataKey in additionalData) {
+                        if (listElement.contains(object.selectListElement.querySelector('[name="' + additionalDataKey + '"]'))) {
+                            let value = {};
+                            value[additionalDataKey] = additionalData[additionalDataKey];
+                            values.push(value);
+
+                            isFound = true;
+                        }
+                    }
+                }
+                if (!isFound) {
+                    values.push(domData.value);
+                }
+
                 texts.push(domData.text);
             });
         if (values.length === 0) {
             // No value
             this.empty(objectIndex);
         } else {
+            let formattedValue = null;
+            if (values.length === 1) {
+                if (typeof values[0] === 'object') {
+                    formattedValue = JSON.stringify(values[0]);
+                } else {
+                    formattedValue = values[0];
+                }
+            } else {
+                let isJson = true;
+                let formattedJson = {};
+                for (let valueKey in values) {
+                    if (typeof values[valueKey] !== 'object') {
+                        isJson = false;
+                        break;
+                    }
+
+                    formattedJson = Object.assign(formattedJson, values[valueKey]);
+                }
+                if (isJson) {
+                    formattedValue = JSON.stringify(formattedJson);
+                } else {
+                    formattedValue = JSON.stringify(values);
+                }
+            }
             this.setData(
                 objectIndex,
                 {
-                    'value': JSON.stringify(values),
+                    'value': formattedValue,
                     'text': texts.join(', '),
                 }
             );

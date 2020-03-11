@@ -1,4 +1,19 @@
 class MiscForm {
+    static getValidationCategories() {
+        return {
+            'inputStandard': null,
+            'inputAutocomplete': null,
+            'textarea': null,
+            'checkbox': null,
+            'radio': null,
+            'selectStandard': null,
+            'selectRadio': null,
+            'selectCheckbox': null,
+            'selectMultilevel': null,
+            'datepicker': null
+        };
+    }
+
     static buildFormData(formData, data, parentKey) {
         if (
             data &&
@@ -21,5 +36,26 @@ class MiscForm {
         const formData = new FormData();
         MiscForm.buildFormData(formData, data);
         return formData;
+    }
+
+    static checkValidity(validationCategories) {
+        // Check if the components are all valid
+        let isValid = true;
+        let data = {};
+        for (let category in validationCategories) {
+            if (
+                !validationCategories[category] ||
+                validationCategories[category].isValid !== true
+            ) {
+                isValid = false;
+            } else if (validationCategories[category].data) {
+                data = Object.assign(data, validationCategories[category].data);
+            }
+        }
+
+        return {
+            'isValid': isValid,
+            'data': data
+        };
     }
 }

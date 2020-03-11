@@ -5,6 +5,7 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
         this.lastInputValue = null;
         this.calendar = null;
         this.invalidFormatMessage = 'Date invalide. Merci de respecter le format d’exemple.';
+        this.invalidChronologyMessage = 'La date ne doit pas être inférieure à celle du champ précédent.';
 
         MiscEvent.addListener('keyUp:escape', this.escape.bind(this));
     }
@@ -201,12 +202,11 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
         const dateYear = parseInt(object.inputElements[2].value, 10) || '';
         const dateMonth = parseInt(object.inputElements[1].value, 10) || '';
         const dateDay = parseInt(object.inputElements[0].value, 10) || '';
-        const text = dateYear + '-' + dateMonth + '-' + dateDay;
-        if (text === '--') {
+        if ((dateYear + '-' + dateMonth + '-' + dateDay) === '--') {
             return null;
         }
 
-        return text;
+        return dateYear + '-' + (dateMonth + '').padStart(2, '0') + '-' + (dateDay + '').padStart(2, '0');
     }
 
     record(objectIndex, evt) {
@@ -250,6 +250,55 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
                 'value': dateText
             }
         )
+    }
+
+    checkValidity(objectIndex) {
+        if (!super.checkValidity(objectIndex)) {
+            return false;
+        }
+
+        const data = this.getData(objectIndex);
+        if (
+            !data &&
+            !this.isEmpty(objectIndex)
+        ) {
+            this.invalid(objectIndex);
+
+            return false;
+        }
+
+        if (!this.checkChronology(objectIndex)) {
+            this.invalid(objectIndex);
+
+            return false;
+        }
+
+        return true;
+    }
+
+    checkChronology(objectIndex) {
+        const object = this.objects[objectIndex];
+        const data = this.getData(objectIndex);
+
+        if (
+            !data ||
+            !object.textElement.getAttribute('data-previous-date-id')
+        ) {
+            return true;
+        }
+
+        const previousDateValueElement = MiscDom.getPreviousSibling(
+            document.querySelector('#' + object.textElement.getAttribute('data-previous-date-id')),
+            'input[type="hidden"]'
+        );
+        if (
+            previousDateValueElement &&
+            (new Date(data[object.name]) < new Date(previousDateValueElement.value))
+        ) {
+            return false;
+        }
+
+        return true;
     }
 
     showHideCalendar(objectIndex) {
@@ -303,14 +352,20 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
         object.inputElements[1].value = ((selectedData.getMonth() + 1) + '').padStart(2, '0');
         object.inputElements[2].value = (selectedData.getFullYear() + '').padStart(2, '0');
 
-        this.hideCalendar();
         this.focusOnTextElement(objectIndex);
         this.record(objectIndex);
         this.showHideResetButton(objectIndex);
         this.enableDisableLinkedField(objectIndex);
+
+        // Let's roll some time so we can show with day is chosen
+        window.setTimeout(this.hideCalendar.bind(this), 200);
     }
 
     getErrorMessage(objectIndex) {
+        if (!this.checkChronology(objectIndex)) {
+            return this.invalidChronologyMessage;
+        }
+
         if (this.getText(objectIndex)) {
             return this.invalidFormatMessage;
         }

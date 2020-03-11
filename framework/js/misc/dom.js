@@ -38,6 +38,10 @@ class MiscDom {
     }
 
     static getPreviousSibling(element, selector) {
+        if(!element) {
+            return null;
+        }
+
         let sibling = element.previousElementSibling;
         if (!selector) {
             return sibling;
@@ -52,6 +56,10 @@ class MiscDom {
     };
 
     static getNextSibling(element, selector) {
+        if(!element) {
+            return null;
+        }
+
         let sibling = element.nextElementSibling;
         if (!selector) {
             return sibling;
