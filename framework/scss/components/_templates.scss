@@ -263,6 +263,15 @@ main {
   .ds44-mapResults {
     display: none;
     transition: all $ds44-timing-x2 $ds44-transition-std;
+      position: relative;
+
+      .ds44-js-map {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          width: 100%;
+          height: 100%;
+      }
   }
 }
 
