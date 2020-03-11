@@ -21,6 +21,20 @@
         }
     }
 
+    &.ds44-card--fiche {
+        background: transparent;
+
+        .ds44-card__section {
+            padding: 0;
+        }
+
+        &:focus,
+        &:hover,
+        &:active {
+            box-shadow: none;
+        }
+    }
+
     &.ds44-cardIsPartner {
         .ds44-cardPartner {
             display: block;
@@ -64,10 +78,6 @@
     &:active {
         box-shadow: $ds44-boxShadow;
 
-        a, .ds44-cardTitle > a {
-            text-decoration: underline;
-        }
-
         .ds44-cardArrow {
             opacity: 1;
         }
@@ -78,9 +88,9 @@
 
         a {
           text-decoration: none;
-        }
-        a:hover {
-          text-decoration: underline;
+            &:hover, &:focus, &:active {
+                text-decoration: underline;
+            }
         }
     }
 
