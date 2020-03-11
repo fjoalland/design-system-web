@@ -64,6 +64,7 @@ class OverlayStandard {
 
         // Show modal
         document.body.style.overflow = 'hidden';
+        MiscEvent.dispatch('resize', null, window);
         this.modal.classList.add('show');
 
         // Set focus in modal
@@ -111,6 +112,7 @@ class OverlayStandard {
         MiscAccessibility.removeFocusLoop();
 
         document.body.style.overflow = null;
+        MiscEvent.dispatch('resize', null, window);
         this.modal.classList.remove('show');
 
         if (this.triggerElement) {

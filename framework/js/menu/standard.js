@@ -67,6 +67,7 @@ class MenuStandard {
 
         // Show menu
         document.body.style.overflow = 'hidden';
+        MiscEvent.dispatch('resize', null, window);
         mainMenu.classList.add('show');
         MiscAccessibility.show(this.menu);
         this.menu
@@ -119,6 +120,7 @@ class MenuStandard {
         MiscAccessibility.removeFocusLoop();
 
         document.body.style.overflow = null;
+        MiscEvent.dispatch('resize', null, window);
         mainMenu.classList.remove('show');
         document
             .querySelectorAll('header .ds44-blocMenu .ds44-overlay')
