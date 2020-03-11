@@ -83,33 +83,6 @@
 }
 
 
-/* legend block positionnement */
-.ds44-legendeContainer .ds44-blockAbsolute {
-    position: absolute;
-    z-index: 1;
-    width: 30vw;
-}
-
-.ds44-legendeContainer .ds44-blockAbsolute--br {
-    bottom: 0;
-    right: 0;
-}
-
-.ds44-legendeContainer .ds44-blockAbsolute--bl {
-    bottom: 0;
-    left: 0;
-}
-
-.ds44-legendeContainer .ds44-blockAbsolute--tl {
-    top: 0;
-    left: 0;
-}
-
-.ds44-legendeContainer .ds44-blockAbsolute--tr {
-    top: 0;
-    right: 0;
-}
-
 
 /* légende d'image */
 figure {
