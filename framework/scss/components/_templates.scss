@@ -236,12 +236,14 @@ main {
 
 
 /* Liste resultats recherche facettes */
+/* -------Resultats sans carte - liste de tuiles */
 .ds44-results {
   overflow: hidden;
+  display: block;
 
   .ds44-innerBoxContainer--list {
     width: 100% ;
-    transition: all $ds44-timing-x4 $ds44-transition-std;
+    transition: all $ds44-timing-x2 $ds44-transition-std;
   }
 
   .ds44-list {
@@ -249,25 +251,33 @@ main {
       flex-direction: row;
       flex-wrap: wrap;
       padding-bottom:  $ds44-padding-xlarge*2;
+
+      li {
+        display: grid;
+        align-items: stretch;
+        margin: $ds44-medium-vmargin;
+        margin-bottom: 0 ;
+      }
     }
   }
   .ds44-mapResults {
-    opacity: 0;
-    margin-right:-100%;
-    transition: all $ds44-timing-x4 $ds44-transition-std;
+    display: none;
+    transition: all $ds44-timing-x2 $ds44-transition-std;
   }
 }
 
+/* -------Resultats avec carte - tuiles en colonne gauche avec carte à droite */
 .ds44-results {
 
   &--mapVisible {
 
     height: 80vh;
+    display: flex;
     overflow: hidden;
 
     .ds44-innerBoxContainer--list {
       width: 33.333333% ;
-      transition: all $ds44-timing-x4 $ds44-transition-std;
+      transition: all $ds44-timing-x2 $ds44-transition-std;
       overflow-y: scroll;
     }
 
@@ -277,10 +287,9 @@ main {
       }
     }
     .ds44-mapResults {
-      opacity: 1;
-      margin-right:0;
+      display: block;
       width: 66.666666% ;
-      transition: all $ds44-timing-x4 $ds44-transition-std;
+      transition: all $ds44-timing-x2 $ds44-transition-std;
     }
   }
 
@@ -363,6 +372,11 @@ main {
 
   /* Liste resultats recherche facettes */
   .ds44-results {
+
+    .ds44-list--results li {
+      margin: 0 ;
+    }
+
     &--mapVisible {
       display: block;
 
