@@ -235,6 +235,47 @@ main {
 }
 
 
+/* Liste resultats recherche facettes */
+.ds44-results {
+
+  .ds44-innerBoxContainer--list {
+    width: 100% ;
+  }
+
+  .ds44-list {
+    &--results {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+  }
+  .ds44-mapResults {
+    display: none;
+  }
+}
+
+.ds44-results {
+
+  &--mapVisible {
+
+    .ds44-innerBoxContainer--list {
+      width: 33.333333% ;
+    }
+
+    .ds44-list {
+      &--results {
+        flex-direction: column;
+      }
+    }
+    .ds44-mapResults {
+      display: block;
+      width: 66.666666% ;
+    }
+  }
+
+}
+
+
+
 /* =======
   GENERIC MEDIA QUERIES
   === */
@@ -279,6 +320,19 @@ main {
     }
   }
 
+  /* Liste resultats recherche facettes */
+  .ds44-results {
+    &--mapVisible {
+
+      .ds44-innerBoxContainer--list {
+        width: 50% ;
+      }
+      .ds44-mapResults {
+        width: 50% ;
+      }
+    }
+  }
+
 }
 
 @media (max-width: $ds44-medium - .0625) {
@@ -294,6 +348,21 @@ main {
         width: 100%;
       }
   }
+
+  /* Liste resultats recherche facettes */
+  .ds44-results {
+    &--mapVisible {
+      display: block;
+
+      .ds44-innerBoxContainer--list {
+        width: 100% ;
+      }
+      .ds44-mapResults {
+        width: 100% ;
+      }
+    }
+  }
+
 
 }
 
