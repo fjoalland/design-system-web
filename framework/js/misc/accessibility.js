@@ -74,7 +74,7 @@ class MiscAccessibility {
         }
     }
 
-    static show(element, force = false) {
+    static show(element, force = false, bubble = true, isChild = false) {
         if (!element) {
             return;
         }
@@ -84,19 +84,27 @@ class MiscAccessibility {
             element.getAttribute('data-a11y-exclude') !== 'true'
         ) {
             if (force !== true) {
-                MiscAccessibility.record(element);
+                MiscAccessibility.record(element, isChild);
             } else {
-                MiscAccessibility.reinstate(element);
+                MiscAccessibility.reinstate(element, isChild);
             }
 
-            element.removeAttribute('aria-hidden');
+            if (!isChild) {
+                element.removeAttribute('aria-hidden');
+            }
             if (element.closest(MiscAccessibility.getEnabledElementsSelector()) === element) {
                 element.removeAttribute('tabindex');
             }
         }
+
+        if (bubble) {
+            Array.from(element.children).map((childElement) => {
+                MiscAccessibility.show(childElement, force, bubble, true);
+            });
+        }
     }
 
-    static hide(element, force = false) {
+    static hide(element, force = false, bubble = true, isChild = false) {
         if (!element) {
             return;
         }
@@ -106,24 +114,32 @@ class MiscAccessibility {
             element.getAttribute('data-a11y-exclude') !== 'true'
         ) {
             if (force !== true) {
-                MiscAccessibility.record(element);
+                MiscAccessibility.record(element, isChild);
             } else {
-                MiscAccessibility.reinstate(element);
+                MiscAccessibility.reinstate(element, isChild);
             }
 
-            element.setAttribute('aria-hidden', true);
+            if (!isChild) {
+                element.setAttribute('aria-hidden', true);
+            }
             if (element.closest(MiscAccessibility.getEnabledElementsSelector()) === element) {
                 element.setAttribute('tabindex', '-1');
             }
         }
+
+        if (bubble) {
+            Array.from(element.children).map((childElement) => {
+                MiscAccessibility.hide(childElement, force, bubble, true);
+            });
+        }
     }
 
-    static record(element) {
+    static record(element, isChild) {
         if (!element) {
             return;
         }
 
-        if (!element.hasAttribute('data-bkp-aria-hidden')) {
+        if (!isChild && !element.hasAttribute('data-bkp-aria-hidden')) {
             element.setAttribute('data-bkp-aria-hidden', (element.getAttribute('aria-hidden') || ''));
         }
         if (
@@ -134,12 +150,12 @@ class MiscAccessibility {
         }
     }
 
-    static reinstate(element) {
+    static reinstate(element, isChild) {
         if (!element) {
             return;
         }
 
-        if (element.hasAttribute('data-bkp-aria-hidden')) {
+        if (!isChild && element.hasAttribute('data-bkp-aria-hidden')) {
             element.removeAttribute('data-bkp-aria-hidden');
         }
         if (element.hasAttribute('data-bkp-tabindex')) {
