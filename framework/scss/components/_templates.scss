@@ -241,7 +241,7 @@ main {
 
   .ds44-innerBoxContainer--list {
     width: 100% ;
-    transition: all 1s ease-in-out;
+    transition: all $ds44-timing-x4 $ds44-transition-std;
   }
 
   .ds44-list {
@@ -254,7 +254,7 @@ main {
   .ds44-mapResults {
     opacity: 0;
     margin-right:-100%;
-    transition: all 1s ease-in-out;
+    transition: all $ds44-timing-x4 $ds44-transition-std;
   }
 }
 
@@ -267,7 +267,7 @@ main {
 
     .ds44-innerBoxContainer--list {
       width: 33.333333% ;
-      transition: all 1s ease-in-out;
+      transition: all $ds44-timing-x4 $ds44-transition-std;
       overflow-y: scroll;
     }
 
@@ -280,7 +280,7 @@ main {
       opacity: 1;
       margin-right:0;
       width: 66.666666% ;
-      transition: all 1s ease-in-out;
+      transition: all $ds44-timing-x4 $ds44-transition-std;
     }
   }
 
