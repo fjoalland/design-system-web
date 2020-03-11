@@ -30,7 +30,7 @@ variations:
   pattern: cards/card--AA--variantes.html
   
 - title: Fiches
-  description: 
+  description: Tuile déployée - extension de tuile
   pattern: cards/card--fiches.html
 ---
 
