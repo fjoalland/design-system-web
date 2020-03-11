@@ -237,19 +237,24 @@ main {
 
 /* Liste resultats recherche facettes */
 .ds44-results {
+  overflow: hidden;
 
   .ds44-innerBoxContainer--list {
     width: 100% ;
+    transition: all 1s ease-in-out;
   }
 
   .ds44-list {
     &--results {
       flex-direction: row;
       flex-wrap: wrap;
+      padding-bottom:  $ds44-padding-xlarge*2;
     }
   }
   .ds44-mapResults {
-    display: none;
+    opacity: 0;
+    margin-right:-100%;
+    transition: all 1s ease-in-out;
   }
 }
 
@@ -257,8 +262,13 @@ main {
 
   &--mapVisible {
 
+    height: 80vh;
+    overflow: hidden;
+
     .ds44-innerBoxContainer--list {
       width: 33.333333% ;
+      transition: all 1s ease-in-out;
+      overflow-y: scroll;
     }
 
     .ds44-list {
@@ -267,8 +277,10 @@ main {
       }
     }
     .ds44-mapResults {
-      display: block;
+      opacity: 1;
+      margin-right:0;
       width: 66.666666% ;
+      transition: all 1s ease-in-out;
     }
   }
 
