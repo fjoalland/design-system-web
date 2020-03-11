@@ -145,6 +145,11 @@
   .grid-12-small-1 .colFocusProjets:first-of-type{
     margin-left: 0;
   }
+  .ds44-innerBoxContainer {
+      &--list {
+        padding: $ds44-padding-xlarge $ds44-padding-xlarge;
+      }
+  }
 
 }
 
@@ -166,6 +171,11 @@
   .grid-12-small-1 .colPush,
   .grid-12-small-1 .colFocusProjets{
     margin-bottom:  $ds44-medium-vmargin;
+  }
+  .ds44-innerBoxContainer {
+      &--list {
+        padding: $ds44-padding-xlarge;
+      }
   }
 
 }
@@ -244,7 +254,12 @@
             width: calc(20% - 15px);
             width: -webkit-calc(20% - 15px);
         }
+    }
 
+    .ds44-innerBoxContainer {
+        &--list {
+          padding: $ds44-padding-xlarge $ds44-padding-xlarge*2;
+        }
     }
 
 }
