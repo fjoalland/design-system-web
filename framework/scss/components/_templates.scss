@@ -284,6 +284,10 @@ main {
     .ds44-list {
       &--results {
         flex-direction: column;
+
+        li {
+          display: inherit;
+        }
       }
     }
     .ds44-mapResults {
@@ -375,6 +379,7 @@ main {
 
     .ds44-list--results li {
       margin: 0 ;
+      display: grid;
     }
 
     &--mapVisible {
