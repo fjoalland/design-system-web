@@ -129,6 +129,8 @@
             margin: 0 0 0 1rem;
             min-width: 0;
             align-items: center;
+            line-height: 1.2;
+            padding: $ds44-padding-xlarge  $ds44-padding-large;
 
             .icon + .ds44-btnInnerText,
             .ds44-btnInnerText + .icon {
