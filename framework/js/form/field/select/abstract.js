@@ -344,12 +344,13 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         const url = object.textElement.getAttribute('data-url');
         let urlParameters = null;
         if (parameters) {
-            if (parameters.value) {
+            const parameter = parameters[Object.keys(parameters)[0]];
+            if (parameter.value) {
                 urlParameters = object.valueElement.value;
-            } else if (typeof parameters === 'object') {
-                urlParameters = parameters[0];
+            } else if (typeof parameter === 'object') {
+                urlParameters = parameter[0];
             } else {
-                urlParameters = parameters;
+                urlParameters = parameter;
             }
 
             urlParameters = (url.includes('?') ? '&' : '?') + 'q=' + encodeURIComponent(urlParameters);

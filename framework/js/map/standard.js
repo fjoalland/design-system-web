@@ -36,9 +36,7 @@ class MapStandard {
             container: object.id,
             style: 'mapbox://styles/mapbox/streets-v11',
             center: [-1.8157647, 47.2780468],
-            zoom: 8,
-            minZoom: 0,
-            maxZoom: 18
+            zoom: 8
         });
         this.objects.push(object);
     }
