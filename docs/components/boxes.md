@@ -34,9 +34,6 @@ variations:
   pattern: boxes/box-deuxCol.html
 ---
 
-## Usage
-
-
 ## Documentation
 
 ### Créer un encadré :
