@@ -17,6 +17,10 @@ class MapSearch extends MapAbstract {
     afterLoad(objectIndex) {
         const object = this.objects[objectIndex];
 
+        object.map.addControl(new window.mapboxgl.NavigationControl(), 'bottom-right');
+        object.map.addControl(new window.mapboxgl.FullscreenControl(), 'bottom-left');
+        object.map.addControl(new MapControlToggleView(), 'top-right');
+
         object.map.on('moveend', this.move.bind(this, objectIndex));
         if(object.results) {
             this.show(objectIndex);
@@ -75,11 +79,11 @@ class MapSearch extends MapAbstract {
             const markerElement = document.createElement('div');
             markerElement.className = 'ds44-map-marker';
             object.markers.push(
-                new mapboxgl
+                new window.mapboxgl
                     .Marker(markerElement)
                     .setLngLat(lngLat)
                     .setPopup(
-                        new mapboxgl
+                        new window.mapboxgl
                             .Popup({offset: 25})
                             .setHTML(result.metadata.html_marker)
                     )
