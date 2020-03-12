@@ -1,4 +1,4 @@
-class Card {
+class CardStandard {
     constructor() {
         document.addEventListener('click', this.open.bind(this));
     }
@@ -20,4 +20,4 @@ class Card {
 }
 
 // Singleton
-new Card();
+new CardStandard();
