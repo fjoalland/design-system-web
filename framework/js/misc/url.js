@@ -38,9 +38,13 @@ class MiscUrl {
         });
 
         for (let key in sortedParameters) {
+            if (!sortedParameters.hasOwnProperty(key)) {
+                continue;
+            }
+
             let value = sortedParameters[key];
 
-            if(typeof value === 'object') {
+            if (typeof value === 'object') {
                 value = JSON.stringify(value);
             }
             newUrl += key.toLowerCase() + (value ? '=' + window.decodeURIComponent(value) : '') + '&';

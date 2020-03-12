@@ -1,6 +1,5 @@
 class MapStandard {
     constructor() {
-        this.accessToken = 'pk.eyJ1IjoiemF6aWZmaWMiLCJhIjoiY2s3bmtxYXh2MDNqZzNkdDc3NzJ0aGdqayJ9.TuhsI1ZKXwKSGw2F3bVy5g';
         this.objects = [];
 
         let linkElement = document.createElement('link');
@@ -15,6 +14,8 @@ class MapStandard {
         MiscEvent.addListener(
             'load',
             (() => {
+                window.mapboxgl.accessToken = 'pk.eyJ1IjoiemF6aWZmaWMiLCJhIjoiY2s3bmtxYXh2MDNqZzNkdDc3NzJ0aGdqayJ9.TuhsI1ZKXwKSGw2F3bVy5g';
+
                 document
                     .querySelectorAll('.ds44-js-map')
                     .forEach((element) => {
@@ -31,17 +32,15 @@ class MapStandard {
             'mapElement': element
         };
         object.mapElement.setAttribute('id', object.id);
-        this.objects.push(object);
-        const objectIndex = (this.objects.length - 1);
-
-        // Initialization
-        window.mapboxgl.accessToken = this.accessToken;
-        let map = new window.mapboxgl.Map({
+        object.map = new window.mapboxgl.Map({
             container: object.id,
             style: 'mapbox://styles/mapbox/streets-v11',
-            center: [-74.5, 40],
-            zoom: 9
+            center: [-1.8157647, 47.2780468],
+            zoom: 8,
+            minZoom: 0,
+            maxZoom: 18
         });
+        this.objects.push(object);
     }
 }
 

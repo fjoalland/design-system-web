@@ -9,6 +9,10 @@ class MiscDom {
         }
 
         for (let index in classNames) {
+            if (!classNames.hasOwnProperty(index)) {
+                continue;
+            }
+
             element.classList.add(classNames[index]);
         }
     }
@@ -19,6 +23,10 @@ class MiscDom {
         }
 
         for (let index in classNames) {
+            if (!classNames.hasOwnProperty(index)) {
+                continue;
+            }
+
             element.classList.remove(classNames[index]);
         }
     }
@@ -38,7 +46,7 @@ class MiscDom {
     }
 
     static getPreviousSibling(element, selector) {
-        if(!element) {
+        if (!element) {
             return null;
         }
 
@@ -56,7 +64,7 @@ class MiscDom {
     };
 
     static getNextSibling(element, selector) {
-        if(!element) {
+        if (!element) {
             return null;
         }
 

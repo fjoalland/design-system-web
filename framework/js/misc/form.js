@@ -43,6 +43,10 @@ class MiscForm {
         let isValid = true;
         let data = {};
         for (let category in validationCategories) {
+            if (!validationCategories.hasOwnProperty(category)) {
+                continue;
+            }
+
             if (
                 !validationCategories[category] ||
                 validationCategories[category].isValid !== true

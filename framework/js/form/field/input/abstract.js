@@ -124,6 +124,10 @@ class FormFieldInputAbstract extends FormFieldAbstract {
         let isValid = true;
         const validityStates = inputElement.validity;
         for (let key in validityStates) {
+            if (!validityStates.hasOwnProperty(key)) {
+                continue;
+            }
+
             if (
                 key !== 'valid' &&
                 key !== 'valueMissing' &&

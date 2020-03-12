@@ -230,6 +230,10 @@ class CarouselAbstract {
 
     resize() {
         for (let objectIndex in this.objects) {
+            if (!this.objects.hasOwnProperty(objectIndex)) {
+                continue;
+            }
+
             const object = this.objects[objectIndex];
             if (object.swiper && object.previousElement && object.nextElement) {
                 this.updatePreviousAndNextSlideMessage(objectIndex);
@@ -239,6 +243,10 @@ class CarouselAbstract {
 
     breakpointChecker() {
         for (let objectIndex in this.objects) {
+            if (!this.objects.hasOwnProperty(objectIndex)) {
+                continue;
+            }
+
             const object = this.objects[objectIndex];
             if (!object.mobileOnly) {
                 this.createSwipper(objectIndex);

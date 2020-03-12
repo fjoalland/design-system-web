@@ -229,6 +229,10 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
         } else {
             // Some result
             for (let key in results) {
+                if (!results.hasOwnProperty(key)) {
+                    continue;
+                }
+
                 let elementAutoCompleterListItem = document.createElement('li');
                 elementAutoCompleterListItem.classList.add('ds44-autocomp-list_elem');
                 elementAutoCompleterListItem.setAttribute('role', 'option');

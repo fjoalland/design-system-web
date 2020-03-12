@@ -49,6 +49,10 @@ class FormLayoutGlobal {
             'data': evt.detail.data
         };
         for (let category in object.validationCategories) {
+            if (!object.validationCategories.hasOwnProperty(category)) {
+                continue;
+            }
+
             if (object.validationCategories[category] === null) {
                 isFinished = false;
                 break;
@@ -100,6 +104,10 @@ class FormLayoutGlobal {
             // Organize data
             const formattedData = {};
             for (let dataKey in formValidity.data) {
+                if (!formValidity.data.hasOwnProperty(dataKey)) {
+                    continue;
+                }
+
                 let dataValue = formValidity.data[dataKey];
 
                 try {

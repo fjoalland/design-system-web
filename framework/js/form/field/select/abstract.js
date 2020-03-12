@@ -84,6 +84,10 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
             'data': evt.detail.data
         };
         for (let category in object.validationCategories) {
+            if (!object.validationCategories.hasOwnProperty(category)) {
+                continue;
+            }
+
             if (object.validationCategories[category] === null) {
                 isFinished = false;
                 break;
@@ -396,6 +400,10 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         } else {
             // Some result
             for (let key in results) {
+                if (!results.hasOwnProperty(key)) {
+                    continue;
+                }
+
                 let elementSelectListItem = this.getListElement(object, (results[key].id || key), results[key].value);
                 subSelectListElement.appendChild(elementSelectListItem);
 
@@ -524,6 +532,10 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
                 let isFound = false;
                 if (additionalData) {
                     for (let additionalDataKey in additionalData) {
+                        if (!additionalData.hasOwnProperty(additionalDataKey)) {
+                            continue;
+                        }
+
                         if (listElement.contains(object.selectListElement.querySelector('[name="' + additionalDataKey + '"]'))) {
                             let value = {};
                             value[additionalDataKey] = additionalData[additionalDataKey];
@@ -554,6 +566,10 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
                 let isJson = true;
                 let formattedJson = {};
                 for (let valueKey in values) {
+                    if (!values.hasOwnProperty(valueKey)) {
+                        continue;
+                    }
+
                     if (typeof values[valueKey] !== 'object') {
                         isJson = false;
                         break;

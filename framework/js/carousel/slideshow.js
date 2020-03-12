@@ -87,8 +87,11 @@ class CarouselSlideshow extends CarouselAbstract {
             .querySelectorAll('.swipper-carousel-slideshow')
             .forEach((wrapElement) => {
                 for (let objectIndex in this.objects) {
-                    const object = this.objects[objectIndex];
+                    if (!this.objects.hasOwnProperty(objectIndex)) {
+                        continue;
+                    }
 
+                    const object = this.objects[objectIndex];
                     if (object.wrapElement === wrapElement) {
                         objects.push(object);
                     }
