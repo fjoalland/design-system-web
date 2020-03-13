@@ -694,7 +694,7 @@
 }
 
 
-@media (max-width: $ds44-large - .0625) {
+@media (max-width: $ds44-medium - .0625) {
 
   .ds44-separator {
     height: auto;
@@ -827,7 +827,7 @@
     column-count: 1;
   }
 
-  .ds44-arrowLink {    
+  .ds44-arrowLink {
     padding: .5rem 3rem .5rem 0;
     line-height: 1.2;
 
@@ -835,7 +835,7 @@
       top: .5rem;
     }
 
-  }  
+  }
 
   li:first-child > .ds44-arrowLink {
     margin-top: 1.5rem;
