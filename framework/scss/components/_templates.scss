@@ -238,13 +238,14 @@ main {
 /* Liste resultats recherche facettes */
 /* -------Resultats sans carte - liste de tuiles */
 .ds44-results {
-    overflow: hidden;
-    display: block;
 
-    .ds44-innerBoxContainer--list {
-        width: 100%;
-        transition: all $ds44-timing-x2 $ds44-transition-std;
-    }
+  overflow: hidden;
+  display: block;
+
+  .ds44-innerBoxContainer--list {
+    width: 100% ;
+    transition: all $ds44-timing-x2 $ds44-transition-std;
+  }
 
     .ds44-list {
         &--results {
@@ -254,7 +255,6 @@ main {
 
             li {
                 display: grid;
-                align-items: stretch;
                 margin: $ds44-medium-vmargin;
                 margin-bottom: 0;
             }
@@ -363,9 +363,11 @@ main {
             overflow-y: scroll;
         }
 
+
         .ds44-list {
             &--results {
                 flex-direction: column;
+
 
                 li {
                     display: inherit;
@@ -380,8 +382,82 @@ main {
         }
     }
 
+
+/* Liste à puces avec ancres (page dossier actualités) */
+.ds44-list {
+
+  &--puces {
+
+    > li {
+    list-style :none;
+    margin-top: $ds44-padding-box;
+    position: relative;
+    padding-left: $ds44-padding-large;
+
+    > a {
+      text-decoration: none;
+      transition: all $ds44-timing-standard $ds44-transition-std;
+        &:hover {text-decoration: underline;}
+        &:before {
+          content: '';
+          width: 7px;
+          height: 7px;
+          border: 1px solid $ds44-color-base ;
+          border-radius: 50%;
+          display: block;
+          position: absolute;
+          left: 0;
+          top:7px;
+        }
+      }
+
+    > a.active {
+        &:hover {text-decoration: none;}
+        &:before {
+          content: '';
+          width: 10px;
+          height: 10px;
+          background: $ds44-color-base;
+          top:7px;
+        }
+      }
+    }
+  }
 }
 
+
+
+/* Liste pour chapitrage vidéo */
+.ds44-list {
+
+  &--video {
+    margin-left: $ds44-padding-medium;
+    margin-bottom: $ds44-padding-large;
+
+    > li {
+    list-style :none;
+    position: relative;
+    padding-left: $ds44-padding-xlarge;
+
+    + li {
+      margin-top: $ds44-padding-large;
+    }
+
+      > a {
+          &:before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background-image: url(../../../assets/images/cd44-play-black.svg);
+            display: block;
+            position: absolute;
+            left: 0;
+            top:2px;
+          }
+        }
+    }
+  }
+}
 
 /* =======
   GENERIC MEDIA QUERIES
