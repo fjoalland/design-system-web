@@ -92,14 +92,14 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
         }
     }
 
-    disableElements (objectIndex) {
+    disableElements (objectIndex, evt) {
         const object = this.objects[objectIndex];
 
         object.inputElements[0].value = null;
         object.inputElements[1].value = null;
         object.inputElements[2].value = null;
 
-        super.disableElements(objectIndex);
+        super.disableElements(objectIndex, evt);
     }
 
     focus (objectIndex) {

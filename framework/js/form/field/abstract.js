@@ -96,7 +96,7 @@ class FormFieldAbstract {
     enableDisableLinkedField (objectIndex) {
         const object = this.objects[objectIndex];
 
-        const linkedFieldsContainerElement = object.containerElement.closest('.ds44-champsLies');
+        const linkedFieldsContainerElement = object.containerElement.closest('.ds44-js-linked-fields');
         if (!linkedFieldsContainerElement) {
             return;
         }
@@ -110,6 +110,7 @@ class FormFieldAbstract {
         }
 
         // Has a linked field
+        const areMaskedLinkedFields = !!object.containerElement.closest('.ds44-js-masked-fields');
         let data = this.getData(objectIndex);
         if (
             !data ||
@@ -120,7 +121,7 @@ class FormFieldAbstract {
             )
         ) {
             // Disable linked field
-            MiscEvent.dispatch('field:disable', null, secondLinkedFieldElement);
+            MiscEvent.dispatch('field:disable', {'areMaskedLinkedFields': areMaskedLinkedFields}, secondLinkedFieldElement);
         } else {
             // Enabled linked field
             try {
@@ -128,13 +129,13 @@ class FormFieldAbstract {
                 data = JSON.parse(data);
             } catch (ex) {
             }
-            MiscEvent.dispatch('field:enable', {'data': data}, secondLinkedFieldElement);
+            MiscEvent.dispatch('field:enable', {'data': data, 'areMaskedLinkedFields': areMaskedLinkedFields}, secondLinkedFieldElement);
         }
     }
 
     enable (objectIndex, evt) {
         if (!this.isEnableAllowed(objectIndex, evt)) {
-            this.disable(objectIndex);
+            this.disable(objectIndex, evt);
 
             return;
         }
@@ -147,7 +148,34 @@ class FormFieldAbstract {
     }
 
     enableElements (objectIndex, evt) {
-        // Abstract method
+        if(
+            evt &&
+            evt.detail &&
+            evt.detail.areMaskedLinkedFields
+        ) {
+            const object = this.objects[objectIndex];
+            object.containerElement.classList.remove('hidden');
+        }
+    }
+
+    disable (objectIndex, evt) {
+        const object = this.objects[objectIndex];
+        object.isEnabled = false;
+
+        this.empty(objectIndex);
+        this.removeInvalid(objectIndex);
+        this.disableElements(objectIndex, evt);
+    }
+
+    disableElements (objectIndex, evt) {
+        if(
+            evt &&
+            evt.detail &&
+            evt.detail.areMaskedLinkedFields
+        ) {
+            const object = this.objects[objectIndex];
+            object.containerElement.classList.add('hidden');
+        }
     }
 
     isEnableAllowed (objectIndex, evt) {
@@ -192,19 +220,6 @@ class FormFieldAbstract {
         }
 
         return true;
-    }
-
-    disable (objectIndex) {
-        const object = this.objects[objectIndex];
-        object.isEnabled = false;
-
-        this.empty(objectIndex);
-        this.removeInvalid(objectIndex);
-        this.disableElements(objectIndex);
-    }
-
-    disableElements (objectIndex) {
-        // Abstract method
     }
 
     enter (objectIndex) {

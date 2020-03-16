@@ -71,8 +71,8 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
         }
     }
 
-    disableElements (objectIndex) {
-        super.disableElements(objectIndex);
+    disableElements (objectIndex, evt) {
+        super.disableElements(objectIndex, evt);
 
         this.hide(objectIndex);
     }

@@ -135,6 +135,8 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
     }
 
     enableElements (objectIndex, evt) {
+        super.enableElements(objectIndex, evt);
+
         const object = this.objects[objectIndex];
         if (!object.shapeElement) {
             return;
@@ -159,7 +161,9 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         }
     }
 
-    disableElements (objectIndex) {
+    disableElements (objectIndex, evt) {
+        super.disableElements(objectIndex, evt);
+
         const object = this.objects[objectIndex];
         if (!object.labelElement) {
             return;

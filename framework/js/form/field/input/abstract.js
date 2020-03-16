@@ -58,6 +58,8 @@ class FormFieldInputAbstract extends FormFieldAbstract {
     }
 
     enableElements (objectIndex, evt) {
+        super.enableElements(objectIndex, evt);
+
         const object = this.objects[objectIndex];
 
         object.inputElements.forEach((inputElement) => {
@@ -69,7 +71,9 @@ class FormFieldInputAbstract extends FormFieldAbstract {
         }
     }
 
-    disableElements (objectIndex) {
+    disableElements (objectIndex, evt) {
+        super.disableElements(objectIndex, evt);
+
         const object = this.objects[objectIndex];
 
         object.inputElements.forEach((inputElement) => {
