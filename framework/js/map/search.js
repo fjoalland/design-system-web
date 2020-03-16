@@ -33,14 +33,6 @@ class MapSearch extends MapAbstract {
     }
 
     search (objectIndex, evt) {
-        if (
-            !evt ||
-            !evt.detail ||
-            !evt.detail.results
-        ) {
-            return;
-        }
-
         const object = this.objects[objectIndex];
         object.results = evt.detail.results;
         object.zoom = evt.detail.zoom;
@@ -82,7 +74,10 @@ class MapSearch extends MapAbstract {
                 result.metadata.lat
             ];
             const markerElement = document.createElement('div');
+            markerElement.setAttribute('id', 'search-marker-' + result.id);
             markerElement.className = 'ds44-map-marker';
+            MiscEvent.addListener('mouseenter', this.focus.bind(this), markerElement);
+            MiscEvent.addListener('mouseleave', this.blur.bind(this), markerElement);
             object.markers.push(
                 new window.mapboxgl
                     .Marker(markerElement)
@@ -144,6 +139,22 @@ class MapSearch extends MapAbstract {
             } else {
                 resultsElement.classList.add('ds44-results--mapVisible')
             }
+        }
+    }
+
+    focus (evt) {
+        const resultId = evt.currentTarget.getAttribute('id').replace('search-marker-', 'search-result-');
+        const resultElement = document.querySelector('#' + resultId);
+        if(resultElement) {
+            resultElement.classList.add('active');
+        }
+    }
+
+    blur (evt) {
+        const resultId = evt.currentTarget.getAttribute('id').replace('search-marker-', 'search-result-');
+        const resultElement = document.querySelector('#' + resultId);
+        if(resultElement) {
+            resultElement.classList.remove('active');
         }
     }
 }

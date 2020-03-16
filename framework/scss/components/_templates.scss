@@ -342,7 +342,7 @@ main {
         &:hover,
         &:active,
         &:focus,
-        &--active {
+        &.active {
             background-image: url('../../../assets/images/cd44-marker-hover-big-black.svg');
         }
     }
