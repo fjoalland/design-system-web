@@ -40,3 +40,13 @@ layout: pattern
     </div>
     <div><input type="submit" class="ds44-btnStd" value="Tester les champs" /></div>
 </form>
+<br>
+<hr/>
+<br>
+<form>
+    <div class="ds44-fieldContainer ds44-champsLies">
+        {% include form/field/input/autocomplete.html label="Commune" required="true" attributes='data-url="/json/autocomplete-city.json" data-mode="select-only"' class="ds44-inpLarge" title="Sélectionner Commune - mise à jour automatique des communes limitrophes triées par ordre alphabétique" %}
+        {% include form/field/select/checkbox.html label="Étendre aux communes limitrophes" required="true" disabled="true" containerAttributes='data-url="/json/select-options.json"' class="ds44-inpLarge" %}
+    </div>
+    <div><input type="submit" class="ds44-btnStd" value="Tester les champs" /></div>
+</form>
