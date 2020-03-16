@@ -67,8 +67,8 @@
 
 
 
-/* medium screens */
-/* -------------- */
+/* medium and large screens */
+/* ------------------------ */
 
 @media (min-width: $ds44-large) and (max-width: ($ds44-extra-large - .0625)) {
 
@@ -332,6 +332,10 @@
 
   .ds44-show-mobile {
     display: none !important;
+  }
+
+  .ds44-medToXlarge-pl3 {
+    padding-left: 3rem;
   }
 
 }
