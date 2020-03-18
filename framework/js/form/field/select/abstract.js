@@ -99,6 +99,11 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
             const formValidity = MiscForm.checkValidity(object.validationCategories);
             if (formValidity.isValid) {
                 this.save(objectIndex, formValidity.data);
+            } else if (object.selectListElement) {
+                const firstErrorField = object.selectListElement.querySelector('[aria-invalid="true"]');
+                if (firstErrorField) {
+                    MiscAccessibility.setFocus(firstErrorField);
+                }
             }
         }
     }
@@ -508,7 +513,7 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         // Check sub child elements validity
         object.validationCategories = MiscForm.getValidationCategories();
         if (object.selectListElement.querySelector('.ds44-select-list_elem_child:not(.hidden)')) {
-            MiscEvent.dispatch('form:validate', {'formElement': object.selectListElement});
+            MiscEvent.dispatch('form:validate', { 'formElement': object.selectListElement });
 
             return;
         }
@@ -627,9 +632,10 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
             return;
         }
 
-        let elementError = object.containerElement.querySelector('.ds44-errorMsg-container');
-        if (elementError) {
-            elementError.remove();
+        let errorElement = object.containerElement.querySelector('.ds44-errorMsg-container');
+        if (errorElement) {
+            errorElement.innerHTML = '';
+            errorElement.classList.add('hidden');
         }
 
         object.buttonElement.removeAttribute('aria-invalid');

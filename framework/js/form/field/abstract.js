@@ -306,13 +306,15 @@ class FormFieldAbstract {
         const object = this.objects[objectIndex];
 
         let errorElement = object.containerElement.querySelector('.ds44-errorMsg-container');
-        if (errorElement) {
-            errorElement.remove();
+        if (!errorElement) {
+            errorElement = document.createElement('div');
+            errorElement.classList.add('ds44-errorMsg-container');
+            errorElement.setAttribute('aria-live', 'polite');
+            object.containerElement.appendChild(errorElement);
+        } else {
+            errorElement.innerHTML = '';
+            errorElement.classList.remove('hidden');
         }
-        errorElement = document.createElement('div');
-        errorElement.classList.add('ds44-errorMsg-container');
-        errorElement.setAttribute('aria-live', 'polite');
-        object.containerElement.appendChild(errorElement);
 
         let errorMessageElement = document.createElement('p');
         if (errorMessageElementId) {

@@ -101,6 +101,7 @@
     {% assign attributes = attributes | append : ' required aria-required="true"' %}
     {% assign containerAttributes = containerAttributes | append : ' data-required="true"' %}
     {% assign buttonAttributes = buttonAttributes | append : ' aria-required="true"' %}
+    {% assign boxAttributes = boxAttributes | append: ' aria-required="true"' %}
 {% else %}
     {% assign requiredStar = '' %}
 {% endif %}

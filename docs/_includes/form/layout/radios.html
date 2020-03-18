@@ -6,7 +6,13 @@
 
 <div id="{{ id }}" name="{{ name }}" class="ds44-form__radio_container {{ containerClass }}" {{ containerAttributes }}>
     {% if include.required == 'true' %}
-        <p class="ds44-mandatory_message">Au moins une de ces cases doit être cochée :</p>
+        <p id="mandatory-message-{{ id }}" class="ds44-mandatory_message">Au moins une de ces cases doit être cochée :</p>
+        {% if attributes contains "aria-describedby=" %}
+            {% assign newAriaDescribedby = 'aria-describedby="mandatory-message-' | append: id | append: ' ' %}
+            {% assign attributes = attributes | replace: 'aria-describedby="', newAriaDescribedby %}
+        {% else %}
+            {% assign attributes = attributes | append: ' aria-describedby="mandatory-message-' | append: id | append: '"' %}
+        {% endif %}
     {% endif %}
 
     {% assign choices = (include.choices | split:',') %}

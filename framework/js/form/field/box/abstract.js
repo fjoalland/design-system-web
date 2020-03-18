@@ -103,7 +103,8 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
 
         let errorElement = object.containerElement.querySelector('.ds44-errorMsg-container');
         if (errorElement) {
-            errorElement.remove();
+            errorElement.innerHTML = '';
+            errorElement.classList.add('hidden');
         }
 
         object.inputElements.forEach((inputElement) => {

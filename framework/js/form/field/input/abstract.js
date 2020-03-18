@@ -185,9 +185,10 @@ class FormFieldInputAbstract extends FormFieldAbstract {
             return;
         }
 
-        let elementError = object.containerElement.querySelector('.ds44-errorMsg-container');
-        if (elementError) {
-            elementError.remove();
+        let errorElement = object.containerElement.querySelector('.ds44-errorMsg-container');
+        if (errorElement) {
+            errorElement.innerHTML = '';
+            errorElement.classList.add('hidden');
         }
 
         object.inputElements.forEach((inputElement) => {

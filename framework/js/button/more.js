@@ -26,7 +26,6 @@ class ButtonMore {
                 collapserItemElement.classList.remove('hidden');
             });
 
-
         if (!collapserElement.querySelector('.ds44-collapser_element.hidden')) {
             buttonElement.classList.add('hidden');
         }
