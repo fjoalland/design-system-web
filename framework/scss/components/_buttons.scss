@@ -3,7 +3,7 @@
 */
 
 
-button, a.ds44-btnStd, a > .ds44-btnStd, .ds44-btnStd > a  {
+button, a.ds44-btnStd, a > .ds44-btnStd, .ds44-btnStd > a, .ds44-btnIcoText--maxi  {
     display: inline-block;
     cursor: pointer;
     user-select: none;
@@ -76,6 +76,7 @@ a > .ds44-btnStd,
 .ds44-btnStd > a,
 .ds44-btnStd--large > a,
 a > .ds44-btnStd--large { // gestion de l'alignement des icones dans les boutons wysiwyg
+
 
     .icon {
         line-height: 1.1;
@@ -159,6 +160,8 @@ a > .ds44-btn--contextual,
     font-size: .97em;
     font-weight: bold;
     text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
 }
 
 // text container for icon-text buttons

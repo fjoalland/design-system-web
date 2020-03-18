@@ -22,5 +22,29 @@ layout: pattern
 <hr />
 <p class="h3-like">Tuile communiqué de presse</p>
 <br>
-{% include card/card--communique.html titreCom="Mort de Steve Maia Caniço : pour Philippe Grosvalet, tous les parlementaires de Loire-Atlantique doivent demander une commission d’enquête." %}
+{% include card/card--communique.html 
+    titreCom="Mort de Steve Maia Caniço : pour Philippe Grosvalet, tous les parlementaires de Loire-Atlantique doivent demander une commission d’enquête."
+    idTuile="5"
+    marker="date" 
+    text="31 juillet 2019"
+    %}
+<hr />
+<p class="h3-like">Tuile équipement</p>
 <br>
+{% include card/card--communique.html 
+    titreCom="Création d’une salle d’activités de proximité dédiée à la jeunesse à Saint-Lyphard" 
+    idTuile="6"
+    marker="tag" 
+    text="Urbanisme, cadre de vie"
+    content='<p class="ds44-mt1"><strong>Financement départemental :</strong> 37 228 €</p>'
+%}
+<hr />
+<p class="h3-like">Tuile commune</p>
+<br>
+{% include card/card--communique.html 
+    titreCom="Aigrefeuille-sur-Maine" 
+    idTuile="7"
+    marker="user" 
+    text="<strong>Maire :</strong> Jean-Guy CORNU"
+    content='<p class="ds44-docListElem ds44-mt-std"><i class="icon icon-marker ds44-docListIco" aria-hidden="true"></i>Hôtel de Ville<br />29 avenue de la Vendée<br />44140 Aigrefeuille-sur-Maine</p>'
+%}
