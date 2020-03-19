@@ -44,6 +44,7 @@ class FormFieldAbstract {
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
 
+            MiscEvent.addListener('field:set', this.set.bind(this, objectIndex), object.containerElement);
             MiscEvent.addListener('field:enable', this.enable.bind(this, objectIndex), object.containerElement);
             MiscEvent.addListener('field:disable', this.disable.bind(this, objectIndex), object.containerElement);
 
@@ -71,6 +72,18 @@ class FormFieldAbstract {
     empty (objectIndex) {
         this.setData(objectIndex);
         this.enableDisableLinkedField(objectIndex);
+    }
+
+    set (objectIndex, evt) {
+        if(
+            !evt ||
+            !evt.detail
+        ) {
+            return;
+        }
+
+        this.setData(objectIndex, evt.detail);
+        this.enter(objectIndex);
     }
 
     setData (objectIndex, data = null) {
@@ -225,6 +238,10 @@ class FormFieldAbstract {
     enter (objectIndex) {
         const object = this.objects[objectIndex];
         if (!object.labelElement) {
+            return;
+        }
+
+        if (!object.isEnabled) {
             return;
         }
 

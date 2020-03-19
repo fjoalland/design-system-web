@@ -97,7 +97,16 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
         if (object.textElement.value !== object.currentElementValue) {
             object.textElement.value = object.currentElementValue;
         }
-        object.metadataElement.value = ((data && data.metadata) ? data.metadata : null);
+        if (data && data.metadata) {
+            if (typeof data.metadata === 'object') {
+                object.metadataElement.value = JSON.stringify(data.metadata);
+            } else {
+                object.metadataElement.value = data.metadata;
+            }
+        } else {
+            object.metadataElement.value = null;
+        }
+
     }
 
     getData (objectIndex) {
@@ -109,6 +118,7 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
         const object = this.objects[objectIndex];
         data[object.name] = {
             'value': data[object.name],
+            'text': object.textElement.value,
             'metadata': (object.metadataElement.value ? JSON.parse(object.metadataElement.value) : null)
         };
 

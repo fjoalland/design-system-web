@@ -1,0 +1,34 @@
+class StoreLocation {
+    constructor () {
+        window.addEventListener('load', (evt) => {
+            let cityValue = window.localStorage.getItem('city');
+            if (cityValue) {
+                try {
+                    cityValue = JSON.parse(cityValue);
+                    document
+                        .querySelectorAll('input[type="text"][name="commune"]')
+                        .forEach((cityElement) => {
+                            MiscEvent.dispatch('field:set', cityValue, cityElement.closest('.ds44-form__checkbox_container, ds44-form__radio_container, .ds44-form__container'));
+                        });
+                } catch (ex) {
+                }
+            }
+
+            let addressValue = window.localStorage.getItem('address');
+            if (addressValue) {
+                try {
+                    addressValue = JSON.parse(addressValue);
+                    document
+                        .querySelectorAll('input[type="text"][name="adresse"]')
+                        .forEach((addressElement) => {
+                            MiscEvent.dispatch('field:set', addressValue, addressElement.closest('.ds44-form__checkbox_container, ds44-form__radio_container, .ds44-form__container'));
+                        });
+                } catch (ex) {
+                }
+            }
+        });
+    }
+}
+
+// Singleton
+new StoreLocation();

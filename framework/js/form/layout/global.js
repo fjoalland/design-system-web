@@ -118,6 +118,14 @@ class FormLayoutGlobal {
                 formattedData[dataKey] = dataValue
             }
 
+            // Save city and adresse in local storage
+            if(formattedData['commune']) {
+                window.localStorage.setItem('city', JSON.stringify(formattedData['commune']));
+            }
+            if(formattedData['adresse']) {
+                window.localStorage.setItem('address', JSON.stringify(formattedData['adresse']));
+            }
+
             if (object.formElement.getAttribute('data-is-ajax') === 'true') {
                 // Ajax submission
                 MiscEvent.dispatch(
