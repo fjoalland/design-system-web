@@ -125,8 +125,12 @@ a > .ds44-btn--contextual,
 
     .ds44-btnStd, .ds44-btnStd--large {
         background-color: $ds44-background-base;
+
+        &.ds44-bgDark {
+          background: $ds44-background-dark;
+        }
     }
-    
+
 }
 
 /* == Icon-text buttons == */
@@ -305,6 +309,14 @@ a > .ds44-btn--contextual,
         vertical-align: middle;
     }
 
+}
+
+button.ds44-theme {
+  &:focus,
+  &:hover,
+  &:active {
+      background: $ds44-contextual-hover;
+  }
 }
 
 .ds44-choiceYN button {
