@@ -10,6 +10,7 @@ class MapSearch extends MapAbstract {
         const object = this.objects[objectIndex];
         object.results = null;
         object.zoom = false;
+        object.isVisible = true;
 
         MiscEvent.addListener('search:update', this.search.bind(this, objectIndex));
     }
@@ -114,6 +115,9 @@ class MapSearch extends MapAbstract {
         }
 
         const object = this.objects[objectIndex];
+        if (!object.isVisible) {
+            return;
+        }
 
         const mapBounds = object.map.getBounds();
         MiscEvent.dispatch(
@@ -137,8 +141,13 @@ class MapSearch extends MapAbstract {
         if (resultsElement) {
             if (resultsElement.classList.contains('ds44-results--mapVisible')) {
                 resultsElement.classList.remove('ds44-results--mapVisible')
+                object.isVisible = false;
             } else {
                 resultsElement.classList.add('ds44-results--mapVisible')
+                object.isVisible = true;
+                window.setTimeout(this.resizeMap.bind(this, objectIndex), 200);
+                window.setTimeout(this.resizeMap.bind(this, objectIndex), 600);
+                window.setTimeout(this.resizeMap.bind(this, objectIndex), 1000);
             }
         }
     }
@@ -157,6 +166,12 @@ class MapSearch extends MapAbstract {
         if (resultElement) {
             resultElement.classList.remove('active');
         }
+    }
+
+    resizeMap (objectIndex) {
+        const object = this.objects[objectIndex];
+
+        object.map.resize();
     }
 }
 
