@@ -20,6 +20,10 @@ class ResultStandard {
         }
 
         // Manage title
+        let newSearchElement = containerElement.querySelector('#ds44-results-new-search');
+        if (newSearchElement) {
+            newSearchElement.remove();
+        }
         let titleElement = containerElement.querySelector('.h3-like');
         if (!titleElement) {
             titleElement = document.createElement('p');
@@ -67,7 +71,7 @@ class ResultStandard {
     focus (evt) {
         const markerId = evt.currentTarget.getAttribute('id').replace('search-result-', 'search-marker-');
         const markerElement = document.querySelector('#' + markerId);
-        if(markerElement) {
+        if (markerElement) {
             markerElement.classList.add('active');
         }
     }
@@ -75,7 +79,7 @@ class ResultStandard {
     blur (evt) {
         const markerId = evt.currentTarget.getAttribute('id').replace('search-result-', 'search-marker-');
         const markerElement = document.querySelector('#' + markerId);
-        if(markerElement) {
+        if (markerElement) {
             markerElement.classList.remove('active');
         }
     }

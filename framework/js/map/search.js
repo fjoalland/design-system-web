@@ -21,10 +21,11 @@ class MapSearch extends MapAbstract {
         object.map.addControl(new window.mapboxgl.FullscreenControl(), 'bottom-left');
         object.map.addControl(new MapControlToggleView(), 'top-right');
 
-        const mapToggleViewElement = document.querySelector('.mapboxgl-ctrl-toggle-view');
-        if (mapToggleViewElement) {
-            MiscEvent.addListener('click', this.toggleView.bind(this, objectIndex), mapToggleViewElement);
-        }
+        document
+            .querySelectorAll('.ds44-js-toggle-map-view')
+            .forEach((mapToggleViewElement) => {
+                MiscEvent.addListener('click', this.toggleView.bind(this, objectIndex), mapToggleViewElement);
+            });
 
         object.map.on('moveend', this.move.bind(this, objectIndex));
         if (object.results) {
@@ -84,7 +85,7 @@ class MapSearch extends MapAbstract {
                     .setLngLat(lngLat)
                     .setPopup(
                         new window.mapboxgl
-                            .Popup({offset: 25})
+                            .Popup({ offset: 25 })
                             .setHTML(result.metadata.html_marker)
                     )
                     .addTo(object.map)
@@ -145,7 +146,7 @@ class MapSearch extends MapAbstract {
     focus (evt) {
         const resultId = evt.currentTarget.getAttribute('id').replace('search-marker-', 'search-result-');
         const resultElement = document.querySelector('#' + resultId);
-        if(resultElement) {
+        if (resultElement) {
             resultElement.classList.add('active');
         }
     }
@@ -153,7 +154,7 @@ class MapSearch extends MapAbstract {
     blur (evt) {
         const resultId = evt.currentTarget.getAttribute('id').replace('search-marker-', 'search-result-');
         const resultElement = document.querySelector('#' + resultId);
-        if(resultElement) {
+        if (resultElement) {
             resultElement.classList.remove('active');
         }
     }
