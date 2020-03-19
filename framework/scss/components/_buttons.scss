@@ -125,6 +125,10 @@ a > .ds44-btn--contextual,
 
     .ds44-btnStd, .ds44-btnStd--large {
         background-color: $ds44-background-base;
+
+        &.ds44-bgDark {
+          background: $ds44-background-dark;
+        }
     }
 
 }
