@@ -23,6 +23,7 @@ layout: pattern
 			</div>
 		</div>
 
+        {% capture contenuOngletTrois %}{% include FAQ/FAQ-corpsPage.html %}{% endcapture %}
 		{% include onglets/onglets-composites.html
 		  titleOngletUn="En résumé"
 		  titleOngletDeux="En détail"
@@ -175,8 +176,7 @@ layout: pattern
 						</aside>
 
 					</div>'
-		  contenuOngletTrois='<p>FAQ à compléter</p>
-					<p><a href="#">Lien de test</a></p>'
+		  contenuOngletTrois=contenuOngletTrois
 		%}
 	</section>
 
