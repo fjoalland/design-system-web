@@ -25,9 +25,15 @@ class ButtonMore {
             .forEach((collapserItemElement) => {
                 collapserItemElement.classList.remove('hidden');
             });
+        if (collapserItemElements[0]) {
+            const collapserButtonElement = collapserItemElements[0].querySelector('button');
+            if (collapserButtonElement) {
+                MiscAccessibility.setFocus(collapserButtonElement);
+            }
+        }
 
         if (!collapserElement.querySelector('.ds44-collapser_element.hidden')) {
-            buttonElement.classList.add('hidden');
+            buttonElement.remove();
         }
     }
 }
