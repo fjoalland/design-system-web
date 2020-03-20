@@ -1,7 +1,7 @@
 class StoreLocation {
     constructor () {
         window.addEventListener('load', (evt) => {
-            let cityValue = window.localStorage.getItem('city');
+            let cityValue = window.sessionStorage.getItem('city');
             if (cityValue) {
                 try {
                     cityValue = JSON.parse(cityValue);
@@ -14,7 +14,7 @@ class StoreLocation {
                 }
             }
 
-            let addressValue = window.localStorage.getItem('address');
+            let addressValue = window.sessionStorage.getItem('address');
             if (addressValue) {
                 try {
                     addressValue = JSON.parse(addressValue);

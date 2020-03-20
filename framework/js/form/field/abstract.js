@@ -75,7 +75,7 @@ class FormFieldAbstract {
     }
 
     set (objectIndex, evt) {
-        if(
+        if (
             !evt ||
             !evt.detail
         ) {
@@ -100,8 +100,15 @@ class FormFieldAbstract {
             return null;
         }
 
+        let dataValue = object.valueElement.value;
+        try {
+            dataValue = JSON.parse(dataValue);
+        } catch (ex) {
+        }
         let data = {};
-        data[object.name] = object.valueElement.value;
+        data[object.name] = {
+            'value': dataValue
+        };
 
         return data;
     }
@@ -134,15 +141,23 @@ class FormFieldAbstract {
             )
         ) {
             // Disable linked field
-            MiscEvent.dispatch('field:disable', {'areMaskedLinkedFields': areMaskedLinkedFields}, secondLinkedFieldElement);
+            MiscEvent.dispatch(
+                'field:disable',
+                {
+                    'areMaskedLinkedFields': areMaskedLinkedFields
+                },
+                secondLinkedFieldElement
+            );
         } else {
             // Enabled linked field
-            try {
-                // Try if it is JSON
-                data = JSON.parse(data);
-            } catch (ex) {
-            }
-            MiscEvent.dispatch('field:enable', {'data': data, 'areMaskedLinkedFields': areMaskedLinkedFields}, secondLinkedFieldElement);
+            MiscEvent.dispatch(
+                'field:enable',
+                {
+                    'data': data,
+                    'areMaskedLinkedFields': areMaskedLinkedFields
+                },
+                secondLinkedFieldElement
+            );
         }
     }
 
@@ -161,7 +176,7 @@ class FormFieldAbstract {
     }
 
     enableElements (objectIndex, evt) {
-        if(
+        if (
             evt &&
             evt.detail &&
             evt.detail.areMaskedLinkedFields
@@ -181,7 +196,7 @@ class FormFieldAbstract {
     }
 
     disableElements (objectIndex, evt) {
-        if(
+        if (
             evt &&
             evt.detail &&
             evt.detail.areMaskedLinkedFields
@@ -205,20 +220,7 @@ class FormFieldAbstract {
             return false;
         }
 
-        let currentValues = evt.detail.data[Object.keys(evt.detail.data)[0]];
-        try {
-            currentValues = JSON.parse(currentValues);
-        } catch (ex) {
-        }
-
-        if (typeof currentValues === 'object' && currentValues.value !== undefined) {
-            if (!object.valuesAllowed.includes(currentValues.value)) {
-                return false;
-            }
-
-            return true;
-        }
-
+        let currentValues = evt.detail.data[Object.keys(evt.detail.data)[0]].value;
         if (typeof currentValues === 'object') {
             const valuesIntersection = (object.valuesAllowed.filter(value => currentValues.includes(value)));
             if (valuesIntersection.length === 0) {
@@ -269,13 +271,24 @@ class FormFieldAbstract {
         let isValid = true;
         let data = {};
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
+            // Is the field in the form that is being validated
             if (!evt.detail.formElement.contains(this.objects[objectIndex].containerElement)) {
+                continue;
+            }
+
+            // Don't validate a hidden field
+            if (this.objects[objectIndex].containerElement.closest('.ds44-select-list_elem_child.hidden')) {
                 continue;
             }
 
             if (this.checkValidity(objectIndex) === false) {
                 isValid = false;
-            } else {
+            } else if (
+                evt.detail.formElement.classList.contains('ds44-listSelect') ||
+                !this.objects[objectIndex].containerElement.closest('.ds44-select-list_elem_child')
+            ) {
+                // Don't take into consideration data from sub elements
+                // The data is already injected in the parent value
                 const newData = this.getData(objectIndex);
                 if (newData) {
                     data = Object.assign(data, newData);
@@ -322,7 +335,7 @@ class FormFieldAbstract {
     showErrorMessage (objectIndex, errorMessageElementId = null) {
         const object = this.objects[objectIndex];
 
-        let errorElement = object.containerElement.querySelector('.ds44-errorMsg-container');
+        let errorElement = object.containerElement.querySelector(':scope > .ds44-errorMsg-container');
         if (!errorElement) {
             errorElement = document.createElement('div');
             errorElement.classList.add('ds44-errorMsg-container');

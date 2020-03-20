@@ -106,7 +106,6 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
         } else {
             object.metadataElement.value = null;
         }
-
     }
 
     getData (objectIndex) {
@@ -116,13 +115,13 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
         }
 
         const object = this.objects[objectIndex];
-        data[object.name] = {
-            'value': data[object.name],
+        const extendedData = {};
+        extendedData[object.name] = {
             'text': object.textElement.value,
             'metadata': (object.metadataElement.value ? JSON.parse(object.metadataElement.value) : null)
         };
 
-        return data;
+        return MiscUtils.merge(data, extendedData);
     }
 
     record (objectIndex) {

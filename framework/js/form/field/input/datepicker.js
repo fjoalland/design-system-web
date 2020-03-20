@@ -293,7 +293,7 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
         );
         if (
             previousDateValueElement &&
-            (new Date(data[object.name]) < new Date(previousDateValueElement.value))
+            (new Date(data[object.name].value) < new Date(previousDateValueElement.value))
         ) {
             return false;
         }

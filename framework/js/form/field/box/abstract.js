@@ -93,7 +93,9 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
         }
 
         let data = {};
-        data[object.name] = inputElementValues;
+        data[object.name] = {
+            'value': inputElementValues
+        };
 
         return data;
     }
@@ -101,7 +103,7 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
     removeInvalid (objectIndex) {
         const object = this.objects[objectIndex];
 
-        let errorElement = object.containerElement.querySelector('.ds44-errorMsg-container');
+        let errorElement = object.containerElement.querySelector(':scope > .ds44-errorMsg-container');
         if (errorElement) {
             errorElement.innerHTML = '';
             errorElement.classList.add('hidden');

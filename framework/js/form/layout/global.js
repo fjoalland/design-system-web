@@ -109,21 +109,20 @@ class FormLayoutGlobal {
                 }
 
                 let dataValue = formValidity.data[dataKey];
-
                 try {
                     // Try if it is JSON
                     dataValue = JSON.parse(dataValue);
                 } catch (ex) {
                 }
-                formattedData[dataKey] = dataValue
+                formattedData[dataKey] = dataValue;
             }
 
             // Save city and adresse in local storage
             if(formattedData['commune']) {
-                window.localStorage.setItem('city', JSON.stringify(formattedData['commune']));
+                window.sessionStorage.setItem('city', JSON.stringify(formattedData['commune']));
             }
             if(formattedData['adresse']) {
-                window.localStorage.setItem('address', JSON.stringify(formattedData['adresse']));
+                window.sessionStorage.setItem('address', JSON.stringify(formattedData['adresse']));
             }
 
             if (object.formElement.getAttribute('data-is-ajax') === 'true') {

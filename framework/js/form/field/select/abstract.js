@@ -632,7 +632,7 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
             return;
         }
 
-        let errorElement = object.containerElement.querySelector('.ds44-errorMsg-container');
+        let errorElement = object.containerElement.querySelector(':scope > .ds44-errorMsg-container');
         if (errorElement) {
             errorElement.innerHTML = '';
             errorElement.classList.add('hidden');
