@@ -22,17 +22,12 @@ class FooterStandard {
     }
 
     backToTop (evt) {
-        if (evt && evt.stopPropagation) {
-            evt.stopPropagation();
-        }
-        if (evt && evt.preventDefault) {
-            evt.preventDefault();
-        }
+        evt.stopPropagation();
+        evt.preventDefault();
 
         const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
         if (scrollTop > 0) {
-            window.requestAnimationFrame(this.backToTop.bind(this));
-            window.scrollTo(0, scrollTop - scrollTop / 8);
+            MiscUtils.scrollTo(0)
         }
     }
 }
