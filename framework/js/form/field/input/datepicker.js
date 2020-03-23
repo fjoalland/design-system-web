@@ -326,9 +326,6 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
                 'onSelect': this.selectDate.bind(this, objectIndex)
             })
         };
-        if (object.calendarButtonElement) {
-            object.calendarButtonElement.setAttribute('aria-expanded', 'true');
-        }
     }
 
     hideCalendar () {
@@ -337,10 +334,6 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
 
             this.calendar.object.destroy();
             this.calendar = null;
-
-            if (object && object.calendarButtonElement) {
-                object.calendarButtonElement.setAttribute('aria-expanded', 'false');
-            }
         }
     }
 

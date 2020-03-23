@@ -117,9 +117,15 @@
     {% assign buttonAttributes = buttonAttributes | append : ' aria-disabled="true"' %}
 {% endif %}
 
+{% if include.ariaDescribedBy %}
+    {% assign ariaDescribedBy = include.ariaDescribedBy %}
+{% else %}
+    {% assign ariaDescribedBy = '' %}
+{% endif %}
+
 {% if include.explanation %}
     {% capture explanation %}
         <span id="explanation-{{ id }}" class="ds44-labelTypeInfoComp">{{ include.explanation }}</span>
     {% endcapture %}
-    {% assign attributes = attributes | append: ' aria-labelledby="explanation-' | append: id | append: '"' %}
+    {% assign ariaDescribedBy = ariaDescribedBy | append: ' explanation-' | append: id %}
 {% endif %}
