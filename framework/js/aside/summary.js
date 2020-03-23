@@ -50,7 +50,7 @@ class AsideSummary {
                 this.isMoving = true;
             }
 
-            if (scrollTop > this.maximumTop) {
+            if (scrollTop > this.getMaximumTop()) {
                 this.summaryElement.style.position = 'absolute';
             } else {
                 this.summaryElement.style.position = 'fixed';
@@ -107,11 +107,15 @@ class AsideSummary {
     }
 
     getTop () {
-        if (this.getScrollTop() > this.maximumTop) {
+        if (this.getScrollTop() > this.getMaximumTop()) {
             return this.containerElement.offsetHeight - this.summaryElement.offsetHeight;
         }
 
-        return Math.min(this.maximumTop, this.borderTop + document.querySelector('.ds44-header').offsetHeight);
+        return Math.min(this.getMaximumTop(), this.borderTop + document.querySelector('.ds44-header').offsetHeight);
+    }
+
+    getMaximumTop () {
+        return this.maximumTop - (this.borderTop + document.querySelector('.ds44-header').offsetHeight);
     }
 
     goTo (evt) {
