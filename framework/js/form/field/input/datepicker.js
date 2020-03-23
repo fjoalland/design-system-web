@@ -65,8 +65,7 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
         }
 
         this.record(objectIndex);
-        this.showHideResetButton(objectIndex);
-        this.enableDisableLinkedField(objectIndex);
+        this.showNotEmpty(objectIndex);
     }
 
     reset (objectIndex) {
@@ -354,8 +353,7 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
 
         this.focusOnTextElement(objectIndex);
         this.record(objectIndex);
-        this.showHideResetButton(objectIndex);
-        this.enableDisableLinkedField(objectIndex);
+        this.showNotEmpty(objectIndex);
 
         // Let's roll some time so we can show with day is chosen
         window.setTimeout(this.hideCalendar.bind(this), 200);
