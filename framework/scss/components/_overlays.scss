@@ -123,11 +123,6 @@ top: -2500px;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 
-  ~ footer[role=contentinfo] {
-      .ds44-bgGray {
-        padding-bottom: $ds44-padding-xxlarge;
-      }
-  }
   &#btnFAQ  {
     right: 2rem;
   }
