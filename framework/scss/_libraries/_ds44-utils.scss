@@ -113,7 +113,7 @@
   padding-top : $ds44-padding-xxlarge;      // 5rem
 }
 .ds44--xxl-padding-b {
-  padding-bottom : $ds44-padding-xxlarge;   // 5rem
+  padding-bottom : $ds44-padding-xxlarge !important;  // 5rem
 }
 .ds44--3xl-padding {
   padding    : $ds44-padding-xlarge*3;      // 9rem
@@ -125,7 +125,7 @@
   padding-top    : $ds44-padding-xlarge*3; // 9rem
 }
 .ds44--3xl-padding-b {
-  padding-bottom : $ds44-padding-xlarge*3; // 9rem
+  padding-bottom : $ds44-padding-xlarge*3;  // 9rem
 }
 
 // margins
@@ -441,7 +441,7 @@
     margin-left: 0;
     margin-right: 0;
   }
-  
+
   .ds44-negativeOffset-2 {
     margin-left: 0;
     margin-right: 0;
