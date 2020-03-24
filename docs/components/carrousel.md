@@ -19,6 +19,9 @@ variations:
 
 - title: Slider homepage
   pattern: carrousel/carrousel-home.html
+
+- title: Slider x10
+  pattern: carrousel/carrousel-x10.html
 ---
 
 
