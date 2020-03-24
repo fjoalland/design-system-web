@@ -76,6 +76,10 @@ button, a.ds44-btnStd, a > .ds44-btnStd, .ds44-btnStd > a, .ds44-btnIcoText--max
         right: $ds44-container-large-margin;
     }
 
+    &.ds44-theme {
+      border:$ds44-contextual-color;
+    }
+
 }
 
 a > .ds44-btnStd,
@@ -303,6 +307,7 @@ a > .ds44-btn--contextual,
 .ds44-btnStd {
   &.ds44-fullWBtn {
       padding: 1rem $ds44-padding-box;
+      border-radius: 0;
   }
 }
 

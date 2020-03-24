@@ -337,7 +337,8 @@
 
 @media (min-width: $ds44-medium) {
 
-  .ds44-show-mobile {
+  .ds44-show-mobile,
+  .ds44-hide-medium {
     display: none !important;
   }
 

@@ -422,6 +422,10 @@ main {
     }
 }
 
+.ds44-resultsSearch--mobile {
+  display: none;
+}
+
 
 /* Liste à puces avec ancres (page dossier actualités) */
 .ds44-list {
@@ -599,6 +603,42 @@ main {
                 width: 100%;
             }
         }
+    }
+
+    .ds44-resultsSearch {
+      display: none;
+    }
+
+    .ds44-resultsSearch--mobile {
+      display: block;
+
+      .ds44-list {
+        .ds44-docListElem {
+          display: inline-block;
+          margin-left: $ds44-margin-base;
+          margin-right: $ds44-margin-base;
+
+         i ~ a {
+            text-decoration: none;
+            width: auto;
+            font-weight: bold;
+            font-size: 0.875em;
+          }
+        }
+      }
+
+      .ds44-bgDark {
+
+        .h3-like,
+        .ds44-textLegend {
+          color: $ds44-color-inverse;
+        }
+      }
+
+      .ds44-medium-flex-col .ds44-btnStd.ds44-theme {
+        text-align: center;
+        i { float: none; }
+      }
     }
 
 
