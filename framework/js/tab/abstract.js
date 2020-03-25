@@ -7,11 +7,15 @@ class TabAbstract {
             });
     }
 
+    getHrefFromElement (element) {
+        return element.getAttribute('href') || element.getAttribute('data-href');
+    }
+
     create (containerElement) {
         containerElement
             .querySelectorAll('.js-tablist__link')
             .forEach((tabHandleElement) => {
-                const tabHref = this.getTabFromHref(tabHandleElement.getAttribute('href'));
+                const tabHref = this.getTabFromHref(this.getHrefFromElement(tabHandleElement));
                 const tabPanel = document.querySelector(tabHref);
                 if (
                     !tabPanel ||
@@ -62,7 +66,7 @@ class TabAbstract {
             return;
         }
 
-        const tabHref = this.getTabFromHref(tabHandleElement.getAttribute('href'));
+        const tabHref = this.getTabFromHref(this.getHrefFromElement(tabHandleElement));
         const tabPanel = document.querySelector(tabHref);
         if (!tabPanel) {
             return;
@@ -77,7 +81,7 @@ class TabAbstract {
             .closest('.js-tabs')
             .querySelectorAll('.js-tablist__link')
             .forEach((tabHandleElement) => {
-                const tabHref = this.getTabFromHref(tabHandleElement.getAttribute('href'));
+                const tabHref = this.getTabFromHref(this.getHrefFromElement(tabHandleElement));
                 const tabPanel = document.querySelector(tabHref);
                 if (!tabPanel) {
                     return;
@@ -120,7 +124,7 @@ class TabAbstract {
             evt.preventDefault();
         }
 
-        const tabHandleHref = evt.currentTarget.firstElementChild.getAttribute('href');
+        const tabHandleHref = this.getHrefFromElement(evt.currentTarget.firstElementChild);
         const currentTabHandle = document.querySelector('.js-tablist__link.ds44-tabs__linkSelected[href="' + tabHandleHref + '"]');
         if (!currentTabHandle) {
             return;

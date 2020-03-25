@@ -25,9 +25,10 @@ class TabUtile extends TabAbstract {
     showTabCallback (tabHandleElement, tabPanel) {
         super.showTabCallback(tabHandleElement, tabPanel);
 
-        if (tabHandleElement.getAttribute('href') === '#ds44-choiceY') {
+        const href = this.getHrefFromElement(tabHandleElement);
+        if (href === '#ds44-choiceY') {
             MiscAccessibility.setFocus(document.querySelector('#ds44-choiceY #form-bloc-utils-Y'));
-        } else if (tabHandleElement.getAttribute('href') === '#ds44-choiceN') {
+        } else if (href === '#ds44-choiceN') {
             MiscAccessibility.setFocus(document.querySelector('#ds44-choiceN .h4-like'));
         }
     }
