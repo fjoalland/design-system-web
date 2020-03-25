@@ -75,6 +75,7 @@ class AsideSummary {
                 .querySelectorAll('.ds44-list--puces a')
                 .forEach((aElement) => {
                     aElement.classList.remove('active');
+                    aElement.removeAttribute('aria-location');
 
                     const sectionId = aElement.getAttribute('href').replace(/^#/, '');
                     const sectionElement = document.querySelector('#' + sectionId);
@@ -89,6 +90,7 @@ class AsideSummary {
                 });
             if (activeAElement) {
                 activeAElement.classList.add('active');
+                activeAElement.setAttribute('aria-location', 'true');
             }
         }
     }
@@ -148,7 +150,7 @@ class AsideSummary {
             }
 
             const titleElement = sectionElement.querySelector('h2');
-            if(titleElement) {
+            if (titleElement) {
                 MiscAccessibility.setFocus(titleElement);
             }
         }
@@ -196,7 +198,7 @@ class AsideSummary {
         this.menu.classList.remove('show');
         MiscAccessibility.hide(this.menu);
 
-        if(evt) {
+        if (evt) {
             // Focus on button only if close button clicked
             MiscAccessibility.setFocus(showModalButtonElement);
         }
