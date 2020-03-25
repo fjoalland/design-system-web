@@ -34,6 +34,8 @@ Les overlays, aussi appelés "pop-ins" ou "modales", sont des boites de dialogue
 
 ## Notes d'intégration
 
+Attention, le code des modales doit être dans tous les cas placé en bas de page dans le DOM, après le footer. 
+
 
 
 ## Usage
