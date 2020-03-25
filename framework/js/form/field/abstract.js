@@ -24,7 +24,7 @@ class FormFieldAbstract {
     create (element) {
         const object = {
             'id': MiscUtils.generateId(),
-            'name': element.getAttribute('name'),
+            'name': (element.getAttribute('name') || element.getAttribute('data-name')),
             'containerElement': (element.closest('.ds44-form__container') || element),
             'isRequired': (element.getAttribute('required') !== null || element.getAttribute('data-required') === 'true'),
             'isEnabled': !(element.getAttribute('readonly') !== null || element.getAttribute('disabled') !== null || element.getAttribute('data-disabled') === 'true')

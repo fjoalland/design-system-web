@@ -4,7 +4,7 @@
     {% assign containerClass = containerClass | append: ' ds44-inputDisabled' %}
 {% endif %}
 
-<div id="{{ id }}" name="{{ name }}" class="ds44-form__checkbox_container {{ containerClass }}" {{ containerAttributes }}>
+<div id="{{ id }}" data-name="{{ name }}" class="ds44-form__checkbox_container {{ containerClass }}" {{ containerAttributes }}>
     {% if include.required == 'true' %}
         <p id="mandatory-message-{{ id }}" class="ds44-mandatory_message">Au moins une de ces cases doit être cochée :</p>
         {% capture ariaDescribedBy %}mandatory-message-{{ id }}{% if ariaDescribedBy != '' %} {{ ariaDescribedBy }}{% endif %}{% endcapture %}

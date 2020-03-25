@@ -102,19 +102,16 @@
 
 {% if include.required == 'true' %}
     {% assign requiredStar = '<sup aria-hidden="true">*</sup>' %}
-    {% assign attributes = attributes | append : ' required aria-required="true"' %}
+    {% assign attributes = attributes | append : ' required' %}
     {% assign containerAttributes = containerAttributes | append : ' data-required="true"' %}
-    {% assign buttonAttributes = buttonAttributes | append : ' aria-required="true"' %}
-    {% assign boxAttributes = boxAttributes | append: ' aria-required="true"' %}
 {% else %}
     {% assign requiredStar = '' %}
 {% endif %}
 
 {% if include.disabled == 'true' %}
     {% assign boxAttributes = boxAttributes | append: ' aria-disabled="true"' %}
-    {% assign inputAttributes = inputAttributes | append: ' readonly aria-readonly="true"' %}
+    {% assign inputAttributes = inputAttributes | append: ' readonly' %}
     {% assign containerAttributes = containerAttributes | append : ' data-disabled="true"' %}
-    {% assign buttonAttributes = buttonAttributes | append : ' aria-disabled="true"' %}
 {% endif %}
 
 {% if include.ariaDescribedBy %}
