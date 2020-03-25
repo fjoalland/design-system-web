@@ -50,6 +50,16 @@
 
 }
 
+.ds44-littleMain {
+  min-height:100vh;
+	display:flex;
+	flex-direction:column;
+
+  #content {
+	   flex-grow:1; 
+  }
+}
+
 main {
     padding-top: $header-height-large;
 }

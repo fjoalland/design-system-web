@@ -7,7 +7,7 @@
 <div id="{{ id }}" name="{{ name }}" class="ds44-form__checkbox_container {{ containerClass }}" {{ containerAttributes }}>
     {% if include.required == 'true' %}
         <p id="mandatory-message-{{ id }}" class="ds44-mandatory_message">Au moins une de ces cases doit être cochée :</p>
-        {% assign ariaDescribedBy = ariaDescribedBy | append: ' mandatory-message-' | append: id %}
+        {% capture ariaDescribedBy %}mandatory-message-{{ id }}{% if ariaDescribedBy != '' %} {{ ariaDescribedBy }}{% endif %}{% endcapture %}
     {% endif %}
 
     {% assign choices = (include.choices | split:',') %}
