@@ -8,7 +8,7 @@ description: Modèle de page basée sur le template "centré".
 status: A valider
 
 variations:
-- title: Page type Accueil Annuaire
+- title: Page Dossier actualités
   pattern: page/LA__dossierActualites.html
 - title: Template carrefour
   pattern: templates/template-entryMenu.html
