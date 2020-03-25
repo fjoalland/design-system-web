@@ -74,6 +74,7 @@ button, a.ds44-btnStd, a > .ds44-btnStd, .ds44-btnStd > a, .ds44-btnIcoText--max
         @include ds44-font-sizes(largeButton);
         padding: $ds44-padding-large;
         right: $ds44-container-large-margin;
+        transition: bottom 0s;
     }
 
     &.ds44-theme {
