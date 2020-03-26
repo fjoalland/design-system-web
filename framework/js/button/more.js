@@ -33,7 +33,7 @@ class ButtonMore {
         }
 
         if (!collapserElement.querySelector('.ds44-collapser_element.hidden')) {
-            buttonElement.remove();
+            buttonElement.classList.add('hidden');
         }
     }
 }
