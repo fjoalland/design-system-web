@@ -344,10 +344,133 @@ input[type=radio],
  * Moteurs de recherche à facettes
  */
 
-.ds44-facetteContainer {
-    padding: $ds44-padding-large;
-    position: relative;
-    color: $ds44-color-base;
+.ds44-facette {
+    .ds44-facette-body {
+        @media (max-width: $ds44-medium - .0625) {
+            display: none;
+        }
+
+        .ds44-textLegend--mentions {
+            display: none;padding: 1rem 0 0.5rem 0;
+            padding: 1rem 0 0.5rem 0;
+        }
+
+        .ds44-facetteContainer {
+            padding: $ds44-padding-large;
+            position: relative;
+            color: $ds44-color-base;
+
+            @media (max-width: $ds44-small - .0625) {
+                padding: 2.5rem; // on augmente les marges en mobile pour décoller les labels
+            }
+
+            &.ds44-theme {
+                .ds44-fieldContainer {
+
+                    .ds44-select__shape {
+                        background: $ds44-contextual-color;
+                        border-color: $ds44-dark;
+
+                        .ds44-selectLabel {
+                            color: $ds44-dark;
+                            width: auto;
+                        }
+                    }
+
+                    &--select {
+                        flex: none;
+
+                        .ds44-select-container {
+                            width: 200%;
+                            max-width: 100vw;
+
+                            @media (max-width: $ds44-small - .0625) {
+                                width: 100%;
+                            }
+                        }
+                    }
+                }
+
+                .ds44-heading {
+                    margin: 0.5em 1em;
+
+                    @media (max-width: $ds44-medium - .0625) {
+                        margin: 0 0 1em 0;
+                    }
+                }
+
+                .ds44-push {
+                    margin-left: auto;
+
+                    @media (max-width: $ds44-medium - .0625) {
+                        margin: 0;
+                    }
+
+                    li {
+                        display: inline-block;
+                        margin: 0.6em $ds44-padding-medium;
+
+                        a {
+                            text-decoration: none;
+                            width: auto;
+                            font-weight: bold;
+                            @include ds44-font-sizes(smallText); // 14px
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .ds44-facette-mobile-button {
+        .ds44-facette-mobile-button-collapse {
+            display: block;
+        }
+
+        .ds44-facette-mobile-button-expand {
+            display: none;
+        }
+    }
+
+    .ds44-facette-mobile-export {
+        text-align: center;
+        padding: 1rem 0;
+
+        .ds44-list {
+            font-size: 1.4rem;
+
+            .ds44-docListElem {
+                display: inline-block;
+                margin-left: $ds44-margin-base;
+                margin-right: $ds44-margin-base;
+                padding-left: 1.9rem;
+
+                i ~ a {
+                    text-decoration: none;
+                    width: auto;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+
+    @media (max-width: $ds44-medium - .0625) {
+        &.ds44-facette-mobile-expanded {
+            .ds44-facette-body {
+                display: block;
+            }
+
+            .ds44-facette-mobile-button {
+                .ds44-facette-mobile-button-collapse {
+                    display: none;
+                }
+
+                .ds44-facette-mobile-button-expand {
+                    display: block;
+                }
+            }
+        }
+    }
 }
 
 .ds44-fieldContainer {
@@ -371,57 +494,6 @@ input[type=radio],
         flex-basis: 20%;
     }
 }
-
-.ds44-facetteContainer {
-    &.ds44-theme {
-        .ds44-fieldContainer {
-
-            .ds44-select__shape {
-                background: $ds44-contextual-color;
-                border-color: $ds44-dark;
-
-                .ds44-selectLabel {
-                    color: $ds44-dark;
-                    width: auto;
-                }
-            }
-
-            &--select {
-                flex: none;
-
-                .ds44-select-container {
-                    width: 200%;
-                    max-width: 100vw;
-                }
-            }
-        }
-
-        .ds44-heading {
-            margin: 0.5em 1em;
-        }
-
-        .ds44-push {
-            margin-left: auto;
-
-            li {
-                display: inline-block;
-                margin: 0.6em $ds44-padding-medium;
-
-                a {
-                    text-decoration: none;
-                    width: auto;
-                    font-weight: bold;
-                    @include ds44-font-sizes(smallText); // 14px
-                }
-            }
-        }
-    }
-}
-
-.ds44-resultsSearch .ds44-textLegend--mentions {
-  display: none;
-}
-
 
 .ds44-labelStd {
     font-size: 1.4rem;
@@ -887,45 +959,10 @@ input[type=radio],
         .ds44-btnStd .icon {
             float: right;
         }
-
     }
-
-    .ds44-facetteContainer {
-
-        &.ds44-theme {
-
-            .ds44-heading {
-                margin: 0 0 1em 0;
-            }
-
-            .ds44-push {
-                margin: 0;
-            }
-        }
-    }
-
 }
 
 @media (max-width: $ds44-small - .0625) {
-
-    .ds44-facetteContainer {
-        padding: 2.5rem; // on augmente les marges en mobile pour décoller les labels
-
-        &.ds44-theme {
-
-            .ds44-fieldContainer {
-
-                &--select {
-                    flex: none;
-
-                    .ds44-select-container {
-                        width: 100%;
-                    }
-                }
-            }
-        }
-    }
-
     .ds44-fieldContainer {
         margin-right: 0;
         margin-bottom: 2.5rem; // marge identique au padding du ds44-facetteContainer

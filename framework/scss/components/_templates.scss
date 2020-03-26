@@ -51,13 +51,13 @@
 }
 
 .ds44-littleMain {
-  min-height:100vh;
-	display:flex;
-	flex-direction:column;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 
-  #content {
-	   flex-grow:1; 
-  }
+    #content {
+        flex-grow: 1;
+    }
 }
 
 main {
@@ -251,48 +251,57 @@ main {
     display: block;
     position: relative;
 
-    .ds44-innerBoxContainer--list {
+    .ds44-listResults {
         width: 100%;
         transition: width $ds44-timing-x2 $ds44-transition-std;
-    }
 
-    .ds44-js-results-container {
-        position: relative;
-
-        .ds44-js-results-card {
-            background-color: #ffffff;
-            transition: left $ds44-timing-x2 $ds44-transition-std;
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            left: 200%;
-        }
-
-        &.ds44-js-show-card .ds44-js-results-card {
-            left: 0;
+        .ds44-js-results-container {
             position: relative;
+
+            .ds44-js-results-card {
+                background-color: #ffffff;
+                transition: left $ds44-timing-x2 $ds44-transition-std;
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                left: 200%;
+            }
+
+            &.ds44-js-show-card .ds44-js-results-card {
+                left: 0;
+                position: relative;
+            }
+
+            &.ds44-js-show-card .ds44-js-results-list {
+                display: none;
+            }
         }
 
-        &.ds44-js-show-card .ds44-js-results-list {
-            display: none;
+        .ds44-textLegend {
+            padding-right: 20%;
+
+            @media (max-width: $ds44-medium - .0625) {
+                padding-right: 0;
+            }
         }
-    }
 
-    .ds44-textLegend {
-        padding-right: 20%;
-    }
+        .ds44-list {
+            &--results {
+                flex-direction: row;
+                flex-wrap: wrap;
+                padding-bottom: $ds44-padding-xlarge;
 
-    .ds44-list {
-        &--results {
-            flex-direction: row;
-            flex-wrap: wrap;
-            padding-bottom: $ds44-padding-xlarge;
+                li {
+                    display: grid;
+                    margin: $ds44-medium-vmargin;
+                    margin-bottom: 0;
+                    flex-basis: 30%;
 
-            li {
-                display: grid;
-                margin: $ds44-medium-vmargin;
-                margin-bottom: 0;
-                flex-basis: 30%;
+                    @media (max-width: $ds44-medium - .0625) {
+                        margin: 0;
+                        flex-basis: auto;
+                    }
+                }
             }
         }
     }
@@ -301,6 +310,22 @@ main {
         display: none;
         transition: width $ds44-timing-x2 $ds44-transition-std;
         position: relative;
+
+        .ds44-map-marker {
+            background: url('../../../assets/images/cd44-marker-big-black.svg') no-repeat center center transparent;
+            background-size: cover;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: block;
+
+            &:hover,
+            &:active,
+            &:focus,
+            &.active {
+                background-image: url('../../../assets/images/cd44-marker-hover-big-black.svg');
+            }
+        }
     }
 
     .ds44-btnStd-showMap {
@@ -308,35 +333,51 @@ main {
         top: 10px;
         right: 10px;
         display: block;
+
+        @media (max-width: $ds44-medium - .0625) {
+            display: none;
+        }
     }
-}
 
-
-/* -------Resultats avec carte - tuiles en colonne gauche avec carte à droite */
-.ds44-results {
+    /* -------Resultats avec carte - tuiles en colonne gauche avec carte à droite */
 
     &--mapVisible {
         height: 80vh;
         display: flex;
         overflow: hidden;
 
-        .ds44-innerBoxContainer--list {
+        @media (max-width: $ds44-medium - .0625) {
+            height: auto;
+            display: block;
+            overflow: auto;
+        }
+
+        .ds44-listResults {
             width: 33.333333%;
             overflow-x: hidden;
             overflow-y: scroll;
-        }
 
-        .ds44-textLegend {
-            padding-right: 0;
-        }
+            @media (max-width: $ds44-large - .0625) {
+                width: 50%;
+            }
 
-        .ds44-list {
-            &--results {
-                flex-direction: column;
+            @media (max-width: $ds44-medium - .0625) {
+                width: 100%;
+                display: none;
+            }
 
-                li {
-                    display: inherit;
-                    flex-basis: auto;
+            .ds44-textLegend {
+                padding-right: 0;
+            }
+
+            .ds44-list {
+                &--results {
+                    flex-direction: column;
+
+                    li {
+                        display: inherit;
+                        flex-basis: auto;
+                    }
                 }
             }
         }
@@ -344,6 +385,15 @@ main {
         .ds44-mapResults {
             display: block;
             width: 66.666666%;
+
+            @media (max-width: $ds44-large - .0625) {
+                width: 50%;
+            }
+
+            @media (max-width: $ds44-medium - .0625) {
+                height: 50vh;
+                width: 100%;
+            }
 
             .ds44-js-map {
                 position: absolute;
@@ -366,6 +416,10 @@ main {
                     white-space: nowrap;
                     width: auto;
                     padding: 0 1.5rem;
+
+                    @media (max-width: $ds44-medium - .0625) {
+                        display: none;
+                    }
                 }
 
                 .mapboxgl-ctrl-zoom-in,
@@ -412,28 +466,6 @@ main {
             display: none;
         }
     }
-}
-
-.ds44-mapResults {
-    .ds44-map-marker {
-        background: url('../../../assets/images/cd44-marker-big-black.svg') no-repeat center center transparent;
-        background-size: cover;
-        width: 40px;
-        height: 40px;
-        cursor: pointer;
-        display: block;
-
-        &:hover,
-        &:active,
-        &:focus,
-        &.active {
-            background-image: url('../../../assets/images/cd44-marker-hover-big-black.svg');
-        }
-    }
-}
-
-.ds44-resultsSearch--mobile {
-  display: none;
 }
 
 
@@ -562,21 +594,6 @@ main {
             }
         }
     }
-
-    /* Liste resultats recherche facettes */
-    .ds44-results {
-        &--mapVisible {
-
-            .ds44-innerBoxContainer--list {
-                width: 50%;
-            }
-
-            .ds44-mapResults {
-                width: 50%;
-            }
-        }
-    }
-
 }
 
 @media (max-width: $ds44-medium - .0625) {
@@ -592,71 +609,9 @@ main {
             width: 100%;
         }
     }
-
-    /* Liste resultats recherche facettes */
-    .ds44-results {
-
-        .ds44-list--results li {
-            margin: 0;
-            display: grid;
-            flex-basis: auto;
-        }
-
-        &--mapVisible {
-            display: block;
-
-            .ds44-innerBoxContainer--list {
-                width: 100%;
-            }
-
-            .ds44-mapResults {
-                width: 100%;
-            }
-        }
-    }
-
-    .ds44-resultsSearch {
-      display: none;
-    }
-
-    .ds44-resultsSearch--mobile {
-      display: block;
-
-      .ds44-list {
-        .ds44-docListElem {
-          display: inline-block;
-          margin-left: $ds44-margin-base;
-          margin-right: $ds44-margin-base;
-
-         i ~ a {
-            text-decoration: none;
-            width: auto;
-            font-weight: bold;
-            font-size: 0.875em;
-          }
-        }
-      }
-
-      .ds44-bgDark {
-
-        .h3-like,
-        .ds44-textLegend {
-          color: $ds44-color-inverse;
-        }
-      }
-
-      .ds44-medium-flex-col .ds44-btnStd.ds44-theme {
-        text-align: center;
-        i { float: none; }
-      }
-    }
-
-
 }
 
 @media (max-width: $ds44-small - .0625) {
-
-
     .ds44-titleContainer {
         min-height: 250px;
 

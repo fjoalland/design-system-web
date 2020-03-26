@@ -134,7 +134,7 @@ class MapSearch extends MapAbstract {
             });
     }
 
-    toggleView (objectIndex, evt) {
+    toggleView (objectIndex) {
         const object = this.objects[objectIndex];
 
         const resultsElement = object.mapElement.closest('.ds44-results')

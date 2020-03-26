@@ -2,37 +2,46 @@
 {% include images/loader.html %}
 
 <div class="ds44-facette">
-    <form data-is-ajax="true" action="/json/recherche.json">
-        {% include form/layout/partial/recherche-facette-main.html %}
-
-        {% capture ariaDescribedBy %}filter-by-{{ id }}{% if ariaDescribedBy != '' %} {{ ariaDescribedBy }}{% endif %}{% endcapture %}
-
-        <div class="ds44-facetteContainer ds44-theme ds44-flex-container ds44-medium-flex-col">
-            <div class="ds44-flex-container ds44-medium-flex-col">
-                <p id="filter-by-{{ id }}" class="ds44-heading ds44-fg1">Filtrer par</p>
-                <div class="ds44-fieldContainer ds44-fg1 ds44-fieldContainer--select">
-                    {% include form/field/select/checkbox.html label="Choix multiple" containerAttributes='data-auto-submit="true"' ariaDescribedBy=ariaDescribedBy %}
-                </div>
-                <div class="ds44-fieldContainer ds44-fg1 ds44-fieldContainer--select">
-                    {% include form/field/select/radio.html label="Choix unique" containerAttributes='data-auto-submit="true"' ariaDescribedBy=ariaDescribedBy %}
-                </div>
+    <div class="ds44-facette-body">
+        <!--
+        <div class="ds44-facette-mobile-header ds44-show-tiny-to-medium ds44-hide-medium">
+            <div class="ds44-container-menuBackLink">
+                <p role="heading" aria-level="1" class="ds44-menuBackLink" id="titreRechercher">Ma recherche</p>
             </div>
-            <div class="ds44-push ds44-small-fg1">
-                <ul class="ds44-list">
-                    <li class="ds44-docListElem">
-                        <i class="icon icon-star-empty ds44-docListIco" aria-hidden="true"></i>
-                        <a href="#">Ma sélection (2)</a>
-                    </li>
-                    <li class="ds44-docListElem">
-                        <i class="icon icon-pdf ds44-docListIco" aria-hidden="true"></i>
-                        <a href="#">PDF</a>
-                    </li>
-                    <li class="ds44-docListElem">
-                        <i class="icon icon-csv ds44-docListIco" aria-hidden="true"></i>
-                        <a href="#">CSV</a>
-                    </li>
-                </ul>
-            </div>
+            <button type="button" class="ds44-btnOverlay ds44-btnOverlay--closeOverlay" aria-label="Fermer le menu Sommaire">
+                <i class="icon icon-cross icon--xlarge" aria-hidden="true"></i><span class="ds44-btnInnerText--bottom">Fermer</span>
+            </button>
         </div>
-    </form>
+        -->
+        <form data-is-ajax="true" action="/json/recherche.json">
+            {% include form/layout/partial/recherche-facette-main.html %}
+
+            {% capture ariaDescribedBy %}filter-by-{{ id }}{% if ariaDescribedBy != '' %} {{ ariaDescribedBy }}{% endif %}{% endcapture %}
+
+            <div class="ds44-facetteContainer ds44-theme ds44-flex-container ds44-medium-flex-col">
+                <div class="ds44-flex-container ds44-medium-flex-col">
+                    <p id="filter-by-{{ id }}" class="ds44-heading ds44-fg1">Filtrer par</p>
+                    <div class="ds44-fieldContainer ds44-fg1 ds44-fieldContainer--select">
+                        {% include form/field/select/checkbox.html label="Choix multiple" containerAttributes='data-auto-submit="true"' ariaDescribedBy=ariaDescribedBy %}
+                    </div>
+                    <div class="ds44-fieldContainer ds44-fg1 ds44-fieldContainer--select">
+                        {% include form/field/select/radio.html label="Choix unique" containerAttributes='data-auto-submit="true"' ariaDescribedBy=ariaDescribedBy %}
+                    </div>
+                </div>
+                <div class="ds44-push ds44-small-fg1 ds44-hide-tiny-to-medium ds44-show-medium">
+                    {% include form/layout/partial/recherche-facette-export.html %}
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="ds44-facette-mobile-button ds44-bgDark ds44--l-padding ds44-show-tiny-to-medium ds44-hide-medium">
+        <button class="ds44-btnStd ds44-btn--contextual ds44-w100 ds44-js-toggle-search-view">
+            <span class="ds44-btnInnerText ds44-facette-mobile-button-collapse">Affiner ma recherche</span>
+            <span class="ds44-btnInnerText ds44-facette-mobile-button-expand">Masquer ma recherche</span>
+        </button>
+    </div>
+    <div class="ds44-facette-mobile-export ds44-push ds44-small-fg1 ds44-show-tiny-to-medium ds44-hide-medium">
+        {% include form/layout/partial/recherche-facette-export.html %}
+    </div>
 </div>
+
