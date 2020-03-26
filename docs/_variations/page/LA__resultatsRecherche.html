@@ -8,36 +8,12 @@ layout: pattern
 %}
 
 <main role="main" id="content">
-    <section class="ds44-container-large ds44-resultsSearch">
+    <section class="ds44-container-large">
         {% include form/layout/recherche-facettes-filtres.html %}
-    </section>
-    <section class="ds44-container-large ds44-resultsSearch--mobile">
-        <div class="ds44-bgDark ds44--l-padding">
-          <button class="ds44-btnStd ds44-btn--contextual ds44-w100">
-            <span class="ds44-btnInnerText">Modifier et affiner ma recherche</span>
-          </button>
-          {% include menu/inc-modifs-recherche.html %}
-        </div>
-        <div class="ds44-mtb2 center">
-            <ul class="ds44-list">
-                <li class="ds44-docListElem">
-                    <i class="icon icon-star-empty ds44-docListIco" aria-hidden="true"></i>
-                    <a href="#">Ma sélection (2)</a>
-                </li>
-                <li class="ds44-docListElem">
-                    <i class="icon icon-pdf ds44-docListIco" aria-hidden="true"></i>
-                    <a href="#">PDF</a>
-                </li>
-                <li class="ds44-docListElem">
-                    <i class="icon icon-csv ds44-docListIco" aria-hidden="true"></i>
-                    <a href="#">CSV</a>
-                </li>
-            </ul>
-        </div>
     </section>
     <section class="ds44-container-large">
         <div class="ds44-flex-container ds44-results ds44-results--mapVisible">
-            <div class="ds44-innerBoxContainer ds44-innerBoxContainer--list">
+            <div class="ds44-listResults ds44-innerBoxContainer ds44-innerBoxContainer--list">
                 <div class="ds44-js-results-container">
                     <div class="ds44-js-results-card" data-url="/json/search-card.json" aria-hidden="true"></div>
                     <div class="ds44-js-results-list">
@@ -56,10 +32,9 @@ layout: pattern
     </section>
 </main>
 
-<button class="ds44-btnStd ds44-btn--invert ds44-fullWBtn ds44-btn-fixed ds44-show-tiny-to-medium ds44-hide-medium" id="ds44-summary-button" type="button" data-target="#showMap">
+<button type="button" title="Afficher la carte" aria-label="Afficher la carte" class="ds44-btnStd ds44-btn--invert ds44-fullWBtn ds44-btn-fixed ds44-show-tiny-to-medium ds44-hide-medium ds44-js-toggle-map-view">
     <span class="ds44-btnInnerText">Afficher la carte</span><i class="icon icon-map" aria-hidden="true"></i>
 </button>
-
 
 
 {% include footer/footer-LA.html %}

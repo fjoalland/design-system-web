@@ -12,6 +12,7 @@ class FormLayoutSearch {
     create (element) {
         const object = {
             'id': MiscUtils.generateId(),
+            'containerElement': element.closest('.ds44-facette'),
             'formElement': element,
             'parameters': {},
             'searchData': {},
@@ -23,6 +24,11 @@ class FormLayoutSearch {
         // Bind events
         MiscEvent.addListener('form:submit', this.submit.bind(this, objectIndex), object.formElement);
         MiscEvent.addListener('search:refresh', this.search.bind(this, objectIndex));
+        object.containerElement
+            .querySelectorAll('.ds44-js-toggle-search-view')
+            .forEach((searchToggleViewElement) => {
+                MiscEvent.addListener('click', this.toggleSearchView.bind(this, objectIndex), searchToggleViewElement);
+            });
 
         // Initialization
         if (!this.loadFromUrl(objectIndex)) {
@@ -59,7 +65,7 @@ class FormLayoutSearch {
 
             // Start search
             object.hasSearched = true;
-            this.search(objectIndex, {'detail': {'parameters': object.parameters}});
+            this.search(objectIndex, { 'detail': { 'parameters': object.parameters } });
 
             return true;
         }
@@ -84,7 +90,7 @@ class FormLayoutSearch {
 
                 // Start search
                 object.hasSearched = true;
-                this.search(objectIndex, {'detail': {'parameters': object.parameters}});
+                this.search(objectIndex, { 'detail': { 'parameters': object.parameters } });
 
                 return true;
             }
@@ -151,6 +157,7 @@ class FormLayoutSearch {
         // Save search data
         object.searchData = this.formatSearchData(response);
 
+        object.containerElement.classList.remove('ds44-facette-mobile-expanded');
         this.showSearchData(objectIndex, options);
         MiscEvent.dispatch('loader:requestHide');
     }
@@ -171,6 +178,16 @@ class FormLayoutSearch {
             'maxResults': response['max-result'],
             'results': response['result']
         };
+    }
+
+    toggleSearchView (objectIndex) {
+        const object = this.objects[objectIndex];
+
+        if (object.containerElement.classList.contains('ds44-facette-mobile-expanded')) {
+            object.containerElement.classList.remove('ds44-facette-mobile-expanded')
+        } else {
+            object.containerElement.classList.add('ds44-facette-mobile-expanded')
+        }
     }
 }
 
