@@ -118,6 +118,21 @@ class FormFieldInputAbstract extends FormFieldAbstract {
         object.valueElement.value = value;
     }
 
+    getData (objectIndex) {
+        let data = super.getData(objectIndex);
+        if (!data) {
+            return null;
+        }
+
+        const object = this.objects[objectIndex];
+        const extendedData = {};
+        extendedData[object.name] = {
+            'text': object.labelElement.innerText.replace(/\*$/, '')
+        };
+
+        return MiscUtils.merge(data, extendedData);
+    }
+
     getText (objectIndex) {
         const object = this.objects[objectIndex];
         if (

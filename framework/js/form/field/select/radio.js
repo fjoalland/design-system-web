@@ -172,14 +172,23 @@ class FormFieldSelectRadio extends FormFieldSelectAbstract {
         let values = [];
         if (data && data[object.name].value) {
             values = data[object.name].value;
-            if(typeof values !== 'object') {
+            if (typeof values !== 'object') {
                 values = [values];
             }
         }
 
         radioElements.forEach((radioElement) => {
-            radioElement.checked = (values.includes(radioElement.value));
-            MiscEvent.dispatch('change', null, radioElement);
+            if (values.constructor === ({}).constructor) {
+                // Values is JSON
+                const listChildElement = radioElement.closest('.ds44-select-list_elem').querySelector('.ds44-select-list_elem_child')
+                if (listChildElement) {
+                    // Has children form elements
+                    // Todo: complete code
+                }
+            } else {
+                radioElement.checked = (values.includes(radioElement.value));
+                MiscEvent.dispatch('change', null, radioElement);
+            }
         });
     }
 

@@ -574,6 +574,7 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
             .forEach((listElement) => {
                 const domData = this.getDomData(listElement);
 
+                const text = [];
                 let isFound = false;
                 if (additionalData) {
                     for (let additionalDataKey in additionalData) {
@@ -581,10 +582,12 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
                             continue;
                         }
 
-                        if (listElement.contains(object.selectListElement.querySelector('[name="' + additionalDataKey + '"]'))) {
+                        if (listElement.contains(object.selectListElement.querySelector('[name="' + additionalDataKey + '"], [data-name="' + additionalDataKey + '"]'))) {
                             let value = {};
                             value[additionalDataKey] = additionalData[additionalDataKey];
                             values.push(value);
+
+                            text.push(value[additionalDataKey].text + ' ' + this.formatValue(value[additionalDataKey].value));
 
                             isFound = true;
                         }
@@ -594,7 +597,7 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
                     values.push(domData.value);
                 }
 
-                texts.push(domData.text);
+                texts.push(domData.text + (text.length > 0 ? ' : ' + text.join(' / ') : ''));
             });
         if (values.length === 0) {
             // No value
@@ -698,5 +701,18 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         } else {
             object.buttonElement.setAttribute('aria-describedby', errorMessageElementId + ' ' + object.textElement.getAttribute('id'));
         }
+    }
+
+    formatValue (value) {
+        if (
+            typeof value == 'string' &&
+            value.match(/^(19|20)\d\d([- /.])(0?[1-9]|1[012])\2(0?[1-9]|[12][0-9]|3[01])$/)
+        ) {
+            // Date
+            const dateArray = value.split('-');
+            value = dateArray[2] + '/' +dateArray[1] + '/' +dateArray[0];
+        }
+
+        return value;
     }
 }

@@ -83,9 +83,11 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
         const object = this.objects[objectIndex];
 
         const inputElementValues = [];
+        const inputElementTexts = [];
         object.inputElements.forEach((inputElement) => {
             if (inputElement.checked) {
                 inputElementValues.push(inputElement.value);
+                inputElementTexts.push(MiscDom.getNextSibling(inputElement).innerText);
             }
         });
         if (inputElementValues.length === 0) {
@@ -94,7 +96,8 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
 
         let data = {};
         data[object.name] = {
-            'value': inputElementValues
+            'value': inputElementValues,
+            'text': inputElementTexts.join(', ')
         };
 
         return data;
