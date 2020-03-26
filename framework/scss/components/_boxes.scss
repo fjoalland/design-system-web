@@ -189,7 +189,16 @@
 }
 
 
+@media (min-width: $ds44-medium) {
 
+  .grid-12-small-1 .colPush.col-6{
+    margin-right: $ds44-medium-vmargin;
+  }
+  .grid-12-small-1 .colPush.col-6:last-of-type{
+    margin-right: 0;
+  }
+
+}
 
 @media (max-width: $ds44-medium - .0625) {
 
