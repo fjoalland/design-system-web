@@ -164,6 +164,7 @@ a.ds44-card {
 
 .ds44-card__section {
     padding: $ds44-padding-medium $ds44-padding-box;
+    height: 100%;
 }
 
 .ds44-card__globalLink {
@@ -226,7 +227,7 @@ a.ds44-card {
 
     &--dim110 {
         min-width: 31%;
-        
+
         @media (min-width: $ds44-extra-large) {
             min-width: 110px;
         }
