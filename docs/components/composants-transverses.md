@@ -23,10 +23,10 @@ variations:
 ---
 
 
-## Principes généraux
-
-
 ## Notes d'intégration
+
+Dans les composants, les modales sont codées au sein du <main> pour des raisons pratiques (afin de tester le fonctionnement). 
+**Les modales doivent être codées après le footer** dans les pages finales.
 
 
 ## Usage
