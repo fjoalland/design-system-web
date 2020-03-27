@@ -587,7 +587,11 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
                             value[additionalDataKey] = additionalData[additionalDataKey];
                             values.push(value);
 
-                            text.push(value[additionalDataKey].text + ' ' + this.formatValue(value[additionalDataKey].value));
+                            if(text.length > 0) {
+                                text.push(value[additionalDataKey].text.toLowerCase() + ' ' + this.formatValue(value[additionalDataKey].value));
+                            } else {
+                                text.push(value[additionalDataKey].text + ' ' + this.formatValue(value[additionalDataKey].value));
+                            }
 
                             isFound = true;
                         }
@@ -597,7 +601,7 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
                     values.push(domData.value);
                 }
 
-                texts.push(domData.text + (text.length > 0 ? ' : ' + text.join(' / ') : ''));
+                texts.push(domData.text + (text.length > 0 ? ' : ' + text.join(' ') : ''));
             });
         if (values.length === 0) {
             // No value
