@@ -310,22 +310,6 @@ main {
         display: none;
         transition: width $ds44-timing-x2 $ds44-transition-std;
         position: relative;
-
-        .ds44-map-marker {
-            background: url('../../../assets/images/cd44-marker-big-black.svg') no-repeat center center transparent;
-            background-size: cover;
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
-            display: block;
-
-            &:hover,
-            &:active,
-            &:focus,
-            &.active {
-                background-image: url('../../../assets/images/cd44-marker-hover-big-black.svg');
-            }
-        }
     }
 
     .ds44-btnStd-showMap {
@@ -465,6 +449,21 @@ main {
         .ds44-btnStd-showMap {
             display: none;
         }
+    }
+}
+.ds44-map-marker {
+    background: url('../../../assets/images/cd44-marker-big-black.svg') no-repeat center center transparent;
+    background-size: cover;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: block;
+
+    &:hover,
+    &:active,
+    &:focus,
+    &.active {
+        background-image: url('../../../assets/images/cd44-marker-hover-big-black.svg');
     }
 }
 
