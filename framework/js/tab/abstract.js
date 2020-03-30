@@ -1,12 +1,21 @@
-class Tab {
-    constructor() {
-        MiscEvent.addListener('keyPress:spacebar', this.move.bind(this));
-        MiscEvent.addListener('keyPress:enter', this.move.bind(this));
-
+class TabAbstract {
+    constructor (selector) {
         document
+            .querySelectorAll(selector)
+            .forEach((containerElement) => {
+                this.create(containerElement);
+            });
+    }
+
+    getHrefFromElement (element) {
+        return element.getAttribute('href') || element.getAttribute('data-href');
+    }
+
+    create (containerElement) {
+        containerElement
             .querySelectorAll('.js-tablist__link')
-            .forEach((tabHandle) => {
-                const tabHref = this.getTabFromHref(tabHandle.getAttribute('href'));
+            .forEach((tabHandleElement) => {
+                const tabHref = this.getTabFromHref(this.getHrefFromElement(tabHandleElement));
                 const tabPanel = document.querySelector(tabHref);
                 if (
                     !tabPanel ||
@@ -15,22 +24,27 @@ class Tab {
                     return;
                 }
 
-                const tabPanelExit = tabPanel.children[tabPanel.children.length - 1];
-                MiscEvent.addListener('click', this.change.bind(this), tabHandle);
-                MiscEvent.addListener('click', this.back.bind(this), tabPanelExit);
+                MiscEvent.addListener('click', this.change.bind(this), tabHandleElement);
+                MiscEvent.addListener('keypress', this.move.bind(this), tabHandleElement);
+
+                const tabPanelExitElement = tabPanel.querySelector('.ds44-keyboard-show:last-child');
+                if (tabPanelExitElement) {
+                    MiscEvent.addListener('click', this.back.bind(this), tabPanelExitElement);
+                    MiscEvent.addListener('keypress', this.move.bind(this), tabPanelExitElement);
+                }
             });
 
         let selectedTabHandle = null;
         const tabHref = this.getTabFromHref(document.location.href);
-        const selectedTabHandleFromUrl = document.querySelector('.js-tablist__link[href="' + tabHref + '"]');
+        const selectedTabHandleFromUrl = containerElement.querySelector('.js-tablist__link[href="' + tabHref + '"]');
         if (selectedTabHandleFromUrl) {
             selectedTabHandle = selectedTabHandleFromUrl;
         } else {
-            const selectedTabHandleFromDom = document.querySelector('.js-tablist__link[aria-current]');
+            const selectedTabHandleFromDom = containerElement.querySelector('.js-tablist__link[aria-current]');
             if (selectedTabHandleFromDom) {
                 selectedTabHandle = selectedTabHandleFromDom;
             } else {
-                selectedTabHandle = document.querySelector('.js-tablist__link');
+                selectedTabHandle = this.getDefaultTabHandle(containerElement);
             }
         }
         if (selectedTabHandle) {
@@ -38,52 +52,80 @@ class Tab {
         }
     }
 
-    // Effectue une transition des display:none sur les contenus des onglets
-    change(evt) {
-        if(evt.preventDefault) {
+    getDefaultTabHandle (containerElement) {
+        return containerElement.querySelector('.js-tablist__link');
+    }
+
+    change (evt) {
+        if (evt.preventDefault) {
             evt.preventDefault();
         }
 
-        const tabHandle = evt.currentTarget;
-        if (tabHandle.classList.contains('ds44-tabs__linkSelected')) {
+        const tabHandleElement = evt.currentTarget;
+        if (tabHandleElement.classList.contains('ds44-tabs__linkSelected')) {
             return;
         }
 
-        const tabHref = this.getTabFromHref(tabHandle.getAttribute('href'));
+        const tabHref = this.getTabFromHref(this.getHrefFromElement(tabHandleElement));
         const tabPanel = document.querySelector(tabHref);
         if (!tabPanel) {
             return;
         }
 
+        this.changeTab(tabHandleElement, tabPanel);
+    }
+
+    changeTab (tabHandleElement, tabPanel) {
         // Hide others
-        document
+        tabHandleElement
+            .closest('.js-tabs')
             .querySelectorAll('.js-tablist__link')
-            .forEach((tabHandle) => {
-                const tabHref = this.getTabFromHref(tabHandle.getAttribute('href'));
+            .forEach((tabHandleElement) => {
+                const tabHref = this.getTabFromHref(this.getHrefFromElement(tabHandleElement));
                 const tabPanel = document.querySelector(tabHref);
                 if (!tabPanel) {
                     return;
                 }
 
-                tabHandle.classList.remove('ds44-tabs__linkSelected');
-                tabPanel.style.opacity = 0;
-                MiscUtils.timerClass(tabPanel, 'display', 'none', 150);
+                tabHandleElement.classList.remove('ds44-tabs__linkSelected');
+                tabHandleElement.removeAttribute('aria-disabled');
+                this.hideTab(tabHandleElement, tabPanel);
                 MiscAccessibility.hide(tabPanel, true);
             });
 
         // Show selected tab
-        tabHandle.classList.add('ds44-tabs__linkSelected');
-        MiscUtils.timerClass(tabPanel, 'opacity', '1', 300);
-        MiscUtils.timerClass(tabPanel, 'display', 'block', 150);
+        tabHandleElement.classList.add('ds44-tabs__linkSelected');
+        tabHandleElement.setAttribute('aria-disabled', 'true');
+        this.showTab(tabHandleElement, tabPanel);
         MiscAccessibility.show(tabPanel, true);
     }
 
-    back(evt) {
-        if(evt.preventDefault) {
+    showTab (tabHandleElement, tabPanel) {
+        window.setTimeout(this.showTabCallback.bind(this, tabHandleElement, tabPanel), 300);
+    }
+
+    showTabCallback (tabHandleElement, tabPanel) {
+        tabPanel.style.opacity = 1;
+        tabPanel.style.display = 'block';
+    }
+
+    hideTab (tabHandleElement, tabPanel) {
+        tabPanel.style.opacity = 0;
+
+        window.setTimeout(this.hideTabCallback.bind(this, tabHandleElement, tabPanel), 150);
+    }
+
+    hideTabCallback (tabHandleElement, tabPanel) {
+        tabPanel.style.display = 'none';
+    }
+
+    back (evt) {
+        if (evt.preventDefault) {
             evt.preventDefault();
         }
 
-        const currentTabHandle = document.querySelector('.js-tablist__link.ds44-tabs__linkSelected');
+        const tabHandleHref = this.getHrefFromElement(evt.currentTarget.firstElementChild);
+        const currentTabHandle = document.querySelector('.js-tablist__link.ds44-tabs__linkSelected[href="' + tabHandleHref + '"]');
         if (!currentTabHandle) {
             return;
         }
@@ -92,12 +134,12 @@ class Tab {
         let header = document.querySelector('header .ds44-header');
         if (header) {
             let wasHidden = false;
-            if(header.classList.contains('hidden')) {
+            if (header.classList.contains('hidden')) {
                 wasHidden = true;
                 header.classList.remove('hidden')
             }
             headerHeight = header.offsetHeight;
-            if(wasHidden) {
+            if (wasHidden) {
                 header.classList.add('hidden');
             }
         }
@@ -106,29 +148,28 @@ class Tab {
         window.scrollTo(0, MiscUtils.getPositionY(currentTabHandle) - headerHeight)
     }
 
-    move(evt) {
+    move (evt) {
         evt.preventDefault();
 
-        const newEvt = {'currentTarget': document.activeElement};
-        if(newEvt.currentTarget.classList.contains('js-tablist__link')) {
+        const eventKey = (evt.key === ' ' ? 'spacebar' : evt.key).toLowerCase();
+        if (eventKey !== 'spacebar' && eventKey !== 'enter') {
+            return;
+        }
+
+        if (evt.currentTarget.classList.contains('js-tablist__link')) {
             // Change
-            this.change(newEvt);
-        } else if(newEvt.currentTarget.parentElement.classList.contains('ds44-keyboard-show')) {
+            this.change(evt);
+        } else if (evt.currentTarget.classList.contains('ds44-keyboard-show')) {
             // Back
-            this.back(newEvt);
+            this.back(evt);
         }
     }
 
-    // Récupère le tag ID d'un HREF, s'il existe
-    getTabFromHref(href) {
+    getTabFromHref (href) {
         if (href.indexOf('#') !== -1) {
             return href.slice(href.indexOf('#'));
         }
 
         return '#';
     }
-
 }
-
-// Singleton
-new Tab();

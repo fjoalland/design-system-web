@@ -1,94 +1,270 @@
-class FormField {
-    constructor(selector, category) {
+class FormFieldAbstract {
+    constructor (selector, category) {
         this.category = category;
         this.objects = [];
-        this.mainClassName = 'ds44-moveLabel';
-        this.errorMessages = {
-            'default': '"{fieldName}" n\'est pas valide',
-            'valueMissing': 'Veuillez renseigner : {fieldName}',
-            'patternMismatch': 'Veuillez renseigner "{fieldName}" avec le bon format',
-        };
+        this.labelClassName = 'ds44-moveLabel';
+        this.errorMessage = 'Veuillez renseigner : {fieldName}';
 
-        document
-            .querySelectorAll(selector)
-            .forEach((element) => {
-                this.create(element);
-            });
+        if (typeof selector === 'object') {
+            // Elements passed as parameter, not text selector
+            selector
+                .forEach((element) => {
+                    this.create(element);
+                });
+        } else {
+            document
+                .querySelectorAll(selector)
+                .forEach((element) => {
+                    this.create(element);
+                });
+        }
+        this.initialize();
+    }
+
+    create (element) {
+        const object = {
+            'id': MiscUtils.generateId(),
+            'name': (element.getAttribute('name') || element.getAttribute('data-name')),
+            'containerElement': (element.closest('.ds44-form__container') || element),
+            'isRequired': (element.getAttribute('required') !== null || element.getAttribute('data-required') === 'true'),
+            'isEnabled': !(element.getAttribute('readonly') !== null || element.getAttribute('disabled') !== null || element.getAttribute('data-disabled') === 'true')
+        };
+        element.removeAttribute('data-required');
+        element.removeAttribute('data-disabled');
+
+        const valuesAllowed = element.getAttribute('data-values');
+        if (valuesAllowed) {
+            object.valuesAllowed = JSON.parse(valuesAllowed);
+        }
+
+        this.objects.push(object);
+    }
+
+    initialize () {
+        for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
+            const object = this.objects[objectIndex];
+
+            MiscEvent.addListener('field:set', this.set.bind(this, objectIndex), object.containerElement);
+            MiscEvent.addListener('field:enable', this.enable.bind(this, objectIndex), object.containerElement);
+            MiscEvent.addListener('field:disable', this.disable.bind(this, objectIndex), object.containerElement);
+
+            this.addBackupAttributes(objectIndex);
+        }
 
         MiscEvent.addListener('form:validate', this.validate.bind(this));
     }
 
-    create(element) {
-        const object = {
-            'id': MiscUtils.generateId(),
-            'name': element.getAttribute('id'),
-            'textElement': element,
-            'labelElement': MiscDom.getPreviousSibling(element, 'span'),
-            'resetButton': MiscDom.getNextSibling(element, '.ds44-reset'),
-            'containerElement': element.closest('.ds44-form__container'),
+    addBackupAttributes (objectIndex) {
+        const object = this.objects[objectIndex];
+
+        if (object.inputElements) {
+            object.inputElements.forEach((inputElement) => {
+                if (inputElement.getAttribute('aria-describedby')) {
+                    inputElement.setAttribute(
+                        'data-bkp-aria-describedby',
+                        inputElement.getAttribute('aria-describedby')
+                    );
+                }
+            });
+        }
+    }
+
+    empty (objectIndex) {
+        this.setData(objectIndex);
+        this.showNotEmpty(objectIndex);
+    }
+
+    showNotEmpty (objectIndex) {
+        this.enableDisableLinkedField(objectIndex);
+    }
+
+    set (objectIndex, evt) {
+        if (
+            !evt ||
+            !evt.detail
+        ) {
+            return;
+        }
+
+        this.setData(objectIndex, evt.detail);
+        this.enter(objectIndex);
+        this.showNotEmpty(objectIndex);
+    }
+
+    setData (objectIndex, data = null) {
+        // Abstract method
+    }
+
+    getData (objectIndex) {
+        const object = this.objects[objectIndex];
+        if (!object.valueElement) {
+            return null;
+        }
+
+        if (!object.valueElement.value) {
+            return null;
+        }
+
+        let dataValue = object.valueElement.value;
+        try {
+            dataValue = JSON.parse(dataValue);
+        } catch (ex) {
+        }
+        let data = {};
+        data[object.name] = {
+            'value': dataValue
         };
-        this.objects.push(object);
-        const objectIndex = (this.objects.length - 1);
 
-        if (object.labelElement) {
-            object.labelElement.classList.remove(this.mainClassName);
-        }
-
-        MiscEvent.addListener('focus', this.focus.bind(this, objectIndex), element);
-        MiscEvent.addListener('blur', this.blur.bind(this, objectIndex), element);
-        MiscEvent.addListener('invalid', this.invalid.bind(this, objectIndex), element);
-        MiscEvent.addListener('form:validate', this.validate.bind(this, objectIndex));
-        MiscEvent.addListener('keyUp:*', this.write.bind(this, objectIndex));
-        if(object.resetButton) {
-            MiscEvent.addListener('click', this.reset.bind(this, objectIndex), object.resetButton);
-        }
-        if(object.labelElement) {
-            MiscEvent.addListener('click', this.focusOnTextElement.bind(this, objectIndex), object.labelElement);
-        }
+        return data;
     }
 
-    write(objectIndex) {
+    enableDisableLinkedField (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (object.textElement !== document.activeElement) {
-            return;
-        }
 
-        this.showHideResetButton(objectIndex);
-    }
-
-    reset(objectIndex) {
-        const object = this.objects[objectIndex];
-        if (!object.textElement) {
+        const linkedFieldsContainerElement = object.containerElement.closest('.ds44-js-linked-fields');
+        if (!linkedFieldsContainerElement) {
             return;
         }
 
-        object.textElement.value = null;
-        this.showHideResetButton(objectIndex);
-        MiscAccessibility.setFocus(object.textElement);
-    }
-
-    showHideResetButton(objectIndex) {
-        const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.resetButton) {
+        const secondLinkedFieldElement = MiscDom.getNextSibling(object.containerElement);
+        if (
+            !secondLinkedFieldElement ||
+            secondLinkedFieldElement === object.containerElement
+        ) {
             return;
         }
 
-        if(!object.textElement.value) {
-            // Hide reset button
-            object.resetButton.style.display = 'none';
+        // Has a linked field
+        const areMaskedLinkedFields = !!object.containerElement.closest('.ds44-js-masked-fields');
+        let data = this.getData(objectIndex);
+        if (
+            !data ||
+            (
+                data[object.name] &&
+                data[object.name].metadata &&
+                data[object.name].metadata.hasLinkedField === false
+            )
+        ) {
+            // Disable linked field
+            MiscEvent.dispatch(
+                'field:disable',
+                {
+                    'areMaskedLinkedFields': areMaskedLinkedFields
+                },
+                secondLinkedFieldElement
+            );
         } else {
-            // Hide reset button
-            object.resetButton.style.display = 'block';
+            // Enabled linked field
+            MiscEvent.dispatch(
+                'field:enable',
+                {
+                    'data': data,
+                    'areMaskedLinkedFields': areMaskedLinkedFields
+                },
+                secondLinkedFieldElement
+            );
         }
     }
 
-    validate(evt) {
+    enable (objectIndex, evt) {
+        if (!this.isEnableAllowed(objectIndex, evt)) {
+            this.disable(objectIndex, evt);
+
+            return;
+        }
+
+        const object = this.objects[objectIndex];
+
+        object.isEnabled = true;
+        this.empty(objectIndex);
+        this.enableElements(objectIndex, evt);
+    }
+
+    enableElements (objectIndex, evt) {
+        if (
+            evt &&
+            evt.detail &&
+            evt.detail.areMaskedLinkedFields
+        ) {
+            const object = this.objects[objectIndex];
+            object.containerElement.classList.remove('hidden');
+        }
+    }
+
+    disable (objectIndex, evt) {
+        const object = this.objects[objectIndex];
+        object.isEnabled = false;
+
+        this.empty(objectIndex);
+        this.removeInvalid(objectIndex);
+        this.disableElements(objectIndex, evt);
+    }
+
+    disableElements (objectIndex, evt) {
+        if (
+            evt &&
+            evt.detail &&
+            evt.detail.areMaskedLinkedFields
+        ) {
+            const object = this.objects[objectIndex];
+            object.containerElement.classList.add('hidden');
+        }
+    }
+
+    isEnableAllowed (objectIndex, evt) {
+        const object = this.objects[objectIndex];
+        if (!object.valuesAllowed) {
+            return true;
+        }
+
+        if (
+            !evt ||
+            !evt.detail ||
+            !evt.detail.data
+        ) {
+            return false;
+        }
+
+        let currentValues = evt.detail.data[Object.keys(evt.detail.data)[0]].value;
+        if (typeof currentValues === 'object') {
+            const valuesIntersection = (object.valuesAllowed.filter(value => currentValues.includes(value)));
+            if (valuesIntersection.length === 0) {
+                return false;
+            }
+
+            return true;
+        }
+
+        if (!object.valuesAllowed.includes(currentValues)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    enter (objectIndex) {
+        const object = this.objects[objectIndex];
+        if (!object.labelElement) {
+            return;
+        }
+
+        if (!object.isEnabled) {
+            return;
+        }
+
+        object.labelElement.classList.add(this.labelClassName);
+    }
+
+    quit (objectIndex) {
+        const object = this.objects[objectIndex];
+        if (!object.labelElement) {
+            return;
+        }
+
+        object.labelElement.classList.remove(this.labelClassName);
+    }
+
+    validate (evt) {
         if (
             !evt ||
             !evt.detail ||
@@ -100,16 +276,29 @@ class FormField {
         let isValid = true;
         let data = {};
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
+            // Is the field in the form that is being validated
             if (!evt.detail.formElement.contains(this.objects[objectIndex].containerElement)) {
+                continue;
+            }
+
+            // Don't validate a hidden field
+            if (this.objects[objectIndex].containerElement.closest('.ds44-select-list_elem_child.hidden')) {
                 continue;
             }
 
             if (this.checkValidity(objectIndex) === false) {
                 isValid = false;
-                break;
+            } else if (
+                evt.detail.formElement.classList.contains('ds44-listSelect') ||
+                !this.objects[objectIndex].containerElement.closest('.ds44-select-list_elem_child')
+            ) {
+                // Don't take into consideration data from sub elements
+                // The data is already injected in the parent value
+                const newData = this.getData(objectIndex);
+                if (newData) {
+                    data = Object.assign(data, newData);
+                }
             }
-
-            data = Object.assign(data, this.getData(objectIndex));
         }
 
         MiscEvent.dispatch(
@@ -123,112 +312,52 @@ class FormField {
         );
     }
 
-    getData(objectIndex) {
-        const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-
-        let data = {};
-        data[object.name] = object.textElement.value;
-
-        return data;
+    removeInvalid (objectIndex) {
+        // Abstract method
     }
 
-    focusOnTextElement(objectIndex) {
+    checkValidity (objectIndex) {
+        this.removeInvalid(objectIndex);
+
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
+        if (
+            object.isRequired &&
+            object.isEnabled &&
+            !this.getData(objectIndex)
+        ) {
+            this.invalid(objectIndex);
+
+            return false;
         }
 
-        MiscAccessibility.setFocus(object.textElement);
+        return true;
     }
 
-    focus(objectIndex) {
-        const object = this.objects[objectIndex];
-
-        if (object.labelElement) {
-            object.labelElement.classList.add(this.mainClassName);
-        }
+    invalid (objectIndex) {
+        // Abstract method
     }
 
-    blur(objectIndex) {
+    showErrorMessage (objectIndex, errorMessageElementId = null) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.labelElement) {
-            return;
-        }
 
-        if (!object.textElement.value) {
-            object.labelElement.classList.remove(this.mainClassName);
-        }
-    }
-
-    checkValidity(objectIndex) {
-        const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
+        let errorElement = object.containerElement.querySelector(':scope > .ds44-errorMsg-container');
+        if (!errorElement) {
+            errorElement = document.createElement('div');
+            errorElement.classList.add('ds44-errorMsg-container');
+            errorElement.setAttribute('aria-live', 'polite');
+            object.containerElement.appendChild(errorElement);
+        } else {
+            errorElement.innerHTML = '';
+            errorElement.classList.remove('hidden');
         }
 
-        object.textElement.removeAttribute('aria-invalid');
-        object.textElement.removeAttribute('aria-describedby');
-        object.textElement.classList.remove('ds44-error');
-
-        if (object.containerElement) {
-            let elementError = object.containerElement.querySelector('.ds44-errorMsg-container');
-            if (elementError) {
-                elementError.remove();
-            }
-        }
-
-        return object.textElement.checkValidity();
-    }
-
-    invalid(objectIndex) {
-        const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.labelElement) {
-            return;
-        }
-        if (!object.containerElement) {
-            return;
-        }
-
-        let errorElement = object.containerElement.querySelector('.ds44-errorMsg-container');
-        if (errorElement) {
-            errorElement.remove();
-        }
-
-        let errorMessage = null;
-        for (let key in object.textElement.validity) {
-            if (key === 'valid') {
-                continue;
-            }
-
-            let isInError = object.textElement.validity[key];
-            if (isInError && this.errorMessages[key]) {
-                errorMessage = this.errorMessages[key];
-                break;
-            }
-        }
-        if (errorMessage === null) {
-            errorMessage = this.errorMessages['default'];
-        }
-        errorMessage = this.formatErrorMessage(errorMessage, object.labelElement);
-
-        errorElement = document.createElement('div');
-        errorElement.classList.add('ds44-errorMsg-container');
-        object.containerElement.appendChild(errorElement);
-
-        const errorMessageElementId = MiscUtils.generateId();
         let errorMessageElement = document.createElement('p');
-        errorMessageElement.setAttribute('id', errorMessageElementId);
+        if (errorMessageElementId) {
+            errorMessageElement.setAttribute('id', errorMessageElementId);
+        }
         errorMessageElement.classList.add('ds44-msgErrorText');
         errorMessageElement.classList.add('ds44-msgErrorInvalid');
+        errorMessageElement.setAttribute('tabindex', '-1');
         errorElement.appendChild(errorMessageElement);
 
         let errorIconElement = document.createElement('i');
@@ -240,16 +369,26 @@ class FormField {
 
         let errorTextElement = document.createElement('span');
         errorTextElement.classList.add('ds44-iconInnerText');
-        errorTextElement.innerHTML = errorMessage;
+        errorTextElement.innerHTML = this.formatErrorMessage(objectIndex);
         errorMessageElement.appendChild(errorTextElement);
-
-        object.textElement.classList.add('ds44-error');
-        object.textElement.setAttribute('aria-invalid', 'true');
-        object.textElement.setAttribute('aria-describedby', errorMessageElementId);
     }
 
-    formatErrorMessage(errorMessage, labelElement) {
+    formatErrorMessage (objectIndex) {
+        const errorMessage = this.getErrorMessage(objectIndex);
+
+        const object = this.objects[objectIndex];
+        if (!object.labelElement) {
+            return errorMessage;
+        }
+
         return errorMessage
-            .replace('{fieldName}', labelElement.innerText.replace(/\*$/, ''));
+            .replace(
+                '{fieldName}',
+                object.labelElement.innerText.replace(/\*$/, '')
+            );
+    }
+
+    getErrorMessage (objectIndex) {
+        return this.errorMessage;
     }
 }

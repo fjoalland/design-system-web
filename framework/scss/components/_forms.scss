@@ -11,7 +11,7 @@
     @include ds44-font-sizes(button);
 }
 
-::-moz-placeholder {  /* Firefox 19+ */
+::-moz-placeholder { /* Firefox 19+ */
     color: $ds44-dark;
     font-family: $ds44-font-family-base;
     @include ds44-font-sizes(button);
@@ -23,9 +23,9 @@
     @include ds44-font-sizes(button);
 }
 
- /**
-  * Input basics
-  */
+/**
+ * Input basics
+ */
 
 input {
     font-family: $ds44-font-family-base;
@@ -33,12 +33,13 @@ input {
 
 .ds44-form__container {
     position: relative;
-    margin: $ds44-large-vmargin 0;
+    margin: 2.5rem 0;
 
     &.ds44-checkBox-radio_list {
-      margin: $ds44-large-vmargin/2 0;
+        margin: $ds44-large-vmargin/2 0;
     }
 }
+
 .ds44-form__container--external {
     margin: 0 0 $ds44-large-vmargin 0;
 }
@@ -52,22 +53,22 @@ input {
     margin-bottom: 0;
     text-align: left;
 
-    .ds44-labelTypePlaceholder,
-    .ds44-labelTypePlaceholderLarge {
+    .ds44-labelTypePlaceholder {
         position: absolute;
-        top: 1.2rem ;
+        top: 1.2rem;
         left: $ds44-padding-box;
         transition: all $ds44-timing-standard ease-in-out;
         color: $ds44-gray;
         overflow: hidden;
         text-overflow: ellipsis;
         width: calc(100% - 40px);
+        width: -webkit-calc(100% - 40px);
         white-space: nowrap;
         cursor: text;
 
         &.ds44-moveLabel {
             font-size: 1.3rem; // 13px instead of 14px
-            top: -$ds44-padding-medium*2;
+            top: -$ds44-padding-medium*1.8;
             left: 0;
             color: $ds44-dark;
         }
@@ -82,19 +83,28 @@ input {
         font-size: 1.6rem;
     }
 
-    .ds44-labelTypeInfoComp{
+    .ds44-labelTypeInfoComp {
+        font-size: 1.3rem;
         position: absolute;
-        top: -$ds44-large-vmargin;
+        bottom: -$ds44-large-vmargin;
         right: $ds44-padding-box;
         color: $ds44-gray;
     }
 }
 
 .ds44-formLabel--external {
-    font-size: .9375em; // 15px
+    @include ds44-font-sizes(button);
     color: $ds44-color-dark-text;
     margin: $ds44-small-vmargin 0;
     display: block;
+
+    .ds44-labelTypeInfoComp {
+        position: absolute;
+        top: 0;
+        right: $ds44-padding-box;
+        color: $ds44-gray;
+    }
+
 }
 
 .ds44-form__container--external {
@@ -105,6 +115,9 @@ input {
 
 textarea {
     font-family: $ds44-font-family-base;
+    min-height: 120px !important;
+    height: auto !important;
+    margin: 0;
 }
 
 .ds44-inpStd {
@@ -116,10 +129,18 @@ textarea {
     border: 1px solid $ds44-gray;
     min-width: 100%;
     vertical-align: middle;
-    min-height: $ds44-normalHeight;
+    height: $ds44-normalHeight;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
 
     &:disabled {
         background-color: $ds44-light-bg;
+    }
+
+    .ds44-selectLabel {
+        font-size: 0.875em;
     }
 }
 
@@ -133,6 +154,10 @@ textarea {
     min-width: 100%;
     vertical-align: middle;
     height: $ds44-largeHeight;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
 
     &:disabled {
         background-color: $ds44-light-bg;
@@ -147,18 +172,47 @@ textarea {
     color: $ds44-color-soft-text;
 }
 
+/* Datepicker */
+
+.ds44-datepicker {
+    position: relative;
+}
+
 /* Bouton de reset de champ */
 
-.ds44-reset {
+.ds44-reset,
+.ds44-calendar {
     position: absolute;
     right: 0;
-    top: calc(50% - 13px);
-    display: none;
+    top: calc(50% - 15px);
+    top: -webkit-calc(50% - 15px);
     padding-right: 1.5rem;
     color: $ds44-color-dark-text;
 
     .ds44-formLabel--external & {
-        top: calc(50% + 3px);
+        top: calc(50% + -1px);
+        top: -webkit-calc(50% + -1px);
+    }
+}
+
+.ds44-reset {
+    display: none;
+    top: calc(50% - 1.3rem);
+    top: -webkit-calc(50% - 1.3rem);
+    z-index: 2;
+
+    .ds44-datepicker & {
+        right: 3.4rem;
+    }
+
+    .ds44-select__shape & {
+        top: 1rem;
+        right: 3rem;
+    }
+
+    .ds44-select__shape.ds44-inpLarge & {
+        top: 1.8rem;
+        right: 4rem;
     }
 }
 
@@ -270,37 +324,185 @@ input[type=radio],
     }
 }
 
+.ds44-form__checkbox_container.ds44-inputDisabled label,
+.ds44-form__radio_container.ds44-inputDisabled label {
+    color: $ds44-gray;
 
+    &:before {
+        border-color: $ds44-gray;
+        background-color: $ds44-lightgray;
+    }
+}
+
+.ds44-form__checkbox_container .ds44-mandatory_message,
+.ds44-form__radio_container .ds44-mandatory_message {
+    font-size: 1.2rem;
+    padding-top: 0.8rem;
+}
 
 /**
  * Moteurs de recherche à facettes
  */
 
-.ds44-facetteContainer {
-     padding: $ds44-padding-large;
-     position: relative;
+.ds44-facette {
+    .ds44-facette-body {
+        @media (max-width: $ds44-medium - .0625) {
+            display: none;
+        }
+
+        .ds44-textLegend--mentions {
+            display: none;padding: 1rem 0 0.5rem 0;
+            padding: 1rem 0 0.5rem 0;
+        }
+
+        .ds44-facetteContainer {
+            padding: $ds44-padding-large;
+            position: relative;
+            color: $ds44-color-base;
+
+            @media (max-width: $ds44-small - .0625) {
+                padding: 2.5rem; // on augmente les marges en mobile pour décoller les labels
+            }
+
+            &.ds44-theme {
+                .ds44-fieldContainer {
+
+                    .ds44-select__shape {
+                        background: $ds44-contextual-color;
+                        border-color: $ds44-dark;
+
+                        .ds44-selectLabel {
+                            color: $ds44-dark;
+                            width: auto;
+                        }
+                    }
+
+                    &--select {
+                        flex: none;
+                        width: 20%;
+
+                        .ds44-select-container {
+                            width: 200%;
+                            max-width: 100vw;
+
+                            @media (max-width: $ds44-small - .0625) {
+                                width: 100%;
+                            }
+                        }
+                    }
+                }
+
+                .ds44-heading {
+                    margin: 0.5em 1em;
+
+                    @media (max-width: $ds44-medium - .0625) {
+                        margin: 0 0 1em 0;
+                    }
+                }
+
+                .ds44-push {
+                    margin-left: auto;
+
+                    @media (max-width: $ds44-medium - .0625) {
+                        margin: 0;
+                    }
+
+                    li {
+                        display: inline-block;
+                        margin: 0.6em $ds44-padding-medium;
+
+                        a {
+                            text-decoration: none;
+                            width: auto;
+                            font-weight: bold;
+                            @include ds44-font-sizes(smallText); // 14px
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .ds44-facette-mobile-button {
+        .ds44-facette-mobile-button-collapse {
+            display: block;
+        }
+
+        .ds44-facette-mobile-button-expand {
+            display: none;
+        }
+    }
+
+    .ds44-facette-mobile-export {
+        text-align: center;
+        padding: 1rem 0;
+
+        .ds44-list {
+            font-size: 1.4rem;
+
+            .ds44-docListElem {
+                display: inline-block;
+                margin-left: $ds44-margin-base;
+                margin-right: $ds44-margin-base;
+                padding-left: 1.9rem;
+
+                i ~ a {
+                    text-decoration: none;
+                    width: auto;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+
+    @media (max-width: $ds44-medium - .0625) {
+        &.ds44-facette-mobile-expanded {
+            .ds44-facette-body {
+                display: block;
+            }
+
+            .ds44-facette-mobile-button {
+                .ds44-facette-mobile-button-collapse {
+                    display: none;
+                }
+
+                .ds44-facette-mobile-button-expand {
+                    display: block;
+                }
+            }
+        }
+    }
 }
 
 .ds44-fieldContainer {
-     margin-right: $ds44-margin-base;
-     position: relative;
+    margin-right: $ds44-margin-base;
+    position: relative;
 
-     &:last-child {
-         margin-right: 0;
-     }
+    &:last-child {
+        margin-right: 0;
+        flex-shrink: 0.1;
+    }
 
-     .ds44-form__container {
-         margin: 0;
-     }
+    &:last-child > .ds44-btnStd {
+        white-space: nowrap;
+    }
+
+    .ds44-form__container {
+        margin: 0;
+    }
+
+    &--select {
+        flex-basis: 20%;
+    }
 }
 
 .ds44-labelStd {
-     font-size: 1.4rem;
+    font-size: 1.4rem;
 }
 
 .ds44-labelLarge {
-     font-size: 1.6rem;
-     line-height: 1rem;
+    font-size: 1.6rem;
+    line-height: 1rem;
 }
 
 
@@ -310,8 +512,7 @@ input[type=radio],
 
 .ds44-listSelect { // faux champ de formulaire, conteneur pour les listes de sélection
     background-color: $ds44-light-color;
-    padding: $ds44-padding-large;
-    padding-bottom: 0;
+    padding: $ds44-padding-large/2 $ds44-padding-large 0 $ds44-padding-large;
 }
 
 .ds44-select__shape {
@@ -340,6 +541,15 @@ input[type=radio],
     color: $ds44-color-soft-text;
     font-weight: normal;
     margin-bottom: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: calc(100% - 40px);
+    width: -webkit-calc(100% - 40px);
+    white-space: nowrap;
+
+    .ds44-inputDisabled & {
+        cursor: default;
+    }
 }
 
 .ds44-moveSelectLabel {
@@ -368,11 +578,11 @@ input[type=radio],
     &:focus,
     &:hover,
     &:active {
-      cursor: pointer;
+        cursor: pointer;
     }
 
     label {
-        @include ds44-font-sizes(formListElem);
+        @include ds44-font-sizes(bodySize);
         display: block;
         color: $ds44-color-dark-text;
 
@@ -385,7 +595,7 @@ input[type=radio],
     }
 
     .ds44-form__container {
-        margin: 0;
+        margin-top: 0;
     }
 }
 
@@ -422,6 +632,7 @@ input[type=radio],
         @include ds44-font-sizes(formListElem);
         color: $ds44-color-dark-text;
         min-width: calc(100% - 4.5rem);
+        min-width: -webkit-calc(100% - 4.5rem);
         cursor: pointer;
     }
 
@@ -449,7 +660,7 @@ input[type=radio],
     }
 
     .ds44-collapser_content--level2 {
-        padding-left: $ds44-container-vmargin!important;
+        padding-left: $ds44-container-vmargin !important;
     }
 }
 
@@ -461,7 +672,7 @@ input[type=radio],
     width: 2rem;
 
     .ds44-noLineH::before {
-        line-height: 0!important;
+        line-height: 0 !important;
     }
 }
 
@@ -491,8 +702,8 @@ input[type=radio],
     &:focus,
     &:hover,
     &:active {
-      text-decoration: underline;
-      cursor: pointer;
+        text-decoration: underline;
+        cursor: pointer;
     }
 
     label {
@@ -527,12 +738,22 @@ input[type=radio],
 
 // ellipsis
 .ds44-selectDisplay {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: calc(100% - 40px);
+    width: calc(100% - 2.4rem);
+    width: -webkit-calc(100% - 2.4rem);
     display: block;
-    white-space: nowrap;
     color: $ds44-color-dark-text;
+
+    .ds44-inpLarge & {
+        width: calc(100% - 4.4rem);
+        width: -webkit-calc(100% - 4.4rem);
+    }
+
+    p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+        white-space: nowrap;
+    }
 }
 
 
@@ -551,50 +772,152 @@ input[type=radio],
     padding: $ds44-padding-small $ds44-padding-box;
 
     .ds44-msgErrorText {
-      margin: $ds44-paragraph-margin-bottom 0;
-      color: $ds44-color-dark-text;
+        margin: $ds44-paragraph-margin-bottom 0;
+        color: $ds44-color-dark-text;
     }
 
     .icon {
         color: $ds44-error;
     }
 
-    .ds44-iconInnerText{
-      vertical-align: middle;
+    .ds44-iconInnerText {
+        vertical-align: middle;
+    }
+}
+
+.ds44-errorLabel {
+    font-size: 1.6rem;
+}
+
+/**
+* Valid messages
+*/
+
+
+.ds44-valid {
+    border-color: $ds44-valid;
+}
+
+.ds44-message-container {
+    @include ds44-font-sizes(errMsg);
+
+    .ds44-message-text {
+        margin: $ds44-paragraph-margin-bottom 0;
+        color: $ds44-color-dark-text;
+        padding: $ds44-padding-box;
+
+        &.success {
+            background-color: $ds44-valid-bg;
+
+            .icon {
+                color: $ds44-valid;
+            }
+        }
+
+        &.error {
+            background-color: $ds44-error-bg;
+
+            .icon {
+                color: $ds44-error;
+            }
+        }
+    }
+
+    .ds44-iconInnerText {
+        vertical-align: middle;
+    }
+}
+
+/**
+ * Date picker
+ */
+.ds44-datepicker__shape {
+    cursor: pointer;
+    background-color: $ds44-light-color;
+
+    input {
+        border: none;
+        outline: none;
+        text-align: center;
+        width: 2.6rem;
+        background-color: transparent;
+
+        &:last-of-type {
+            width: 4.2rem;
+        }
+    }
+
+    span {
+        display: none;
+    }
+
+    &.show {
+        span {
+            display: inline;
+        }
     }
 }
 
 
- /**
-  * Champs liés : Thèmes sous-thèmes, Lieu rayon, etc...
-  */
+/**
+ * Champs liés : Thèmes sous-thèmes, Lieu rayon, etc...
+ */
 
-.ds44-champsLies .ds44-inpStd,
-.ds44-champsLies .ds44-inpLarge {
-    &--first {
-      border-radius: 3px 0 0 3px;
+.ds44-champsLies {
+
+    > .ds44-form__container,
+    > .ds44-form__checkbox_container,
+    > .ds44-form__radio_container {
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    > .ds44-form__checkbox_container,
+    > .ds44-form__radio_container {
+        padding: 0 1.5rem;
+    }
+
+    > .ds44-form__container:first-of-type,
+    > .ds44-form__checkbox_container:first-of-type,
+    > .ds44-form__radio_container:first-of-type {
+
+        width: 59.5%;
+
+        input,
+        .ds44-select__shape,
+        .ds44-datepicker__shape {
+            border-radius: 3px 0 0 3px;
+        }
+    }
+
+    > .ds44-form__container:last-of-type,
+    > .ds44-form__checkbox_container:last-of-type,
+    > .ds44-form__radio_container:last-of-type {
+
+        width: 40%;
+        margin-left: -4px;
+
+        input,
+        .ds44-select__shape,
+        .ds44-datepicker__shape {
+            border-radius: 0 3px 3px 0;
+            margin-left: -1px;
+        }
+    }
+
+    .ds44-inputDisabled,
+    .ds44-inputDisabled input,
+    .ds44-inputDisabled textarea,
+    .ds44-inputDisabled label {
+        background: $ds44-lightgray;
+        cursor: default;
     }
 }
 
-.ds44-champsLies .ds44-inpStd,
-.ds44-champsLies .ds44-inpLarge {
-    &--last {
-      border-radius: 0 3px 3px 0;
-      margin-left: -1px;
 
-      &.ds44-inputDisabled p{
-        color: #666;
-      }
-    }
-}
-
-.ds44-inputDisabled {
-  background: $ds44-lightgray ;
-}
-
-.ds44-inpStd  {
+.ds44-inpStd {
     & .ds44-btnIco {
-      padding: 0.5rem 1.5rem ;
+        padding: 0.5rem 1.5rem;
     }
 }
 
@@ -617,14 +940,55 @@ input[type=radio],
 
 @media (max-width: $ds44-medium - .0625) {
 
+    .ds44-medium-flex-col {
 
+        .ds44-fieldContainer { // les champs de formulaire prennent une marge pour permettre aux labels d'être visibles
+            margin-right: 0;
+            margin-bottom: 2.5rem;
+
+            &:last-child {
+                margin-bottom: .5rem;
+            }
+
+            &:first-child {
+                margin-top: .5rem;
+            }
+
+        }
+
+        .ds44-theme .ds44-fieldContainer--select {
+          width: 100%;
+        }
+
+        .ds44-btnStd {
+            width: 100%;
+            text-align: left;
+        }
+
+        .ds44-btnStd .icon {
+            float: right;
+        }
+    }
+
+    .ds44-theme  {
+
+        &.ds44-medium-flex-col {
+
+            .ds44-fieldContainer--select {
+              width: 100% !important;
+
+                .ds44-select-container {
+                  width: 100% !important;
+                }
+            }
+        }
+    }
 }
 
 @media (max-width: $ds44-small - .0625) {
-
     .ds44-fieldContainer {
         margin-right: 0;
-        margin-bottom: $ds44-large-vmargin;
+        margin-bottom: 2.5rem; // marge identique au padding du ds44-facetteContainer
 
         &:last-child {
             margin-bottom: 0;
@@ -640,21 +1004,45 @@ input[type=radio],
         }
     }
 
+    .ds44-champsLies {
 
-    .ds44-champsLies .ds44-inpStd,
-    .ds44-champsLies .ds44-inpLarge {
-        &--first {
-          border-radius: 3px 3px 0 0;
+        > .ds44-form__container,
+        > .ds44-form__checkbox_container,
+        > .ds44-form__radio_container {
+            display: block;
+        }
+
+        > .ds44-form__container:first-of-type,
+        > .ds44-form__checkbox_container:first-of-type,
+        > .ds44-form__radio_container:first-of-type {
+            width: 100%;
+            margin: 0;
+
+            input,
+            .ds44-select__shape,
+            .ds44-datepicker__shape {
+                border-radius: 3px 3px 0 0;
+            }
+        }
+
+        > .ds44-form__container:last-of-type,
+        > .ds44-form__checkbox_container:last-of-type,
+        > .ds44-form__radio_container:last-of-type {
+            width: 100%;
+            margin: 0;
+
+            input,
+            .ds44-select__shape,
+            .ds44-datepicker__shape {
+                border-radius: 0 0 3px 3px;
+                margin: -1px 0 0 0;
+            }
+        }
+
+        > .ds44-form__container:last-of-type {
+            margin-top: 2.5rem;
         }
     }
 
-    .ds44-champsLies .ds44-inpStd,
-    .ds44-champsLies .ds44-inpLarge {
-        &--last {
-          border-radius: 0 0 3px 3px;
-          margin: -1px 0 0 0;
-
-        }
-    }
 
 }

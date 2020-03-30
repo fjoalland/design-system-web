@@ -8,6 +8,7 @@
     padding-top: 66.13%;
     position: relative;
 }
+
 .ds44-imgRatio {
     width: 100%;
     height: 100%;
@@ -20,79 +21,67 @@
 
 /* Ratio img tuile 1:1 */
 .ds44-container-imgRatio--carre {
-  padding-top: 100%;
+    padding-top: 100%;
 }
 
 /* Ratio img tuile 31:13 */
 .ds44-container-imgRatio--tuileMiseEnAvant {
-  padding-top: 41.93%;
-  p {
-    font-size: 0.875em;
-  }
+    padding-top: 41.93%;
+
+    p {
+        font-size: 0.875em;
+    }
 }
 
 /* legend block positionnement */
 .ds44-legendeContainer .ds44-blockAbsolute {
-  position: absolute;
-  z-index: 1;
-  width: 30vw;
+    position: absolute;
+    z-index: 1;
+    width: 27.5vw;
 }
+
 .ds44-legendeContainer .ds44-blockAbsolute--br {
-  bottom: 0;
-  right: 0;
+    bottom: 0;
+    right: 0;
 }
+
 .ds44-legendeContainer .ds44-blockAbsolute--bl {
-  bottom: 0;
-  left: 0;
+    bottom: 0;
+    left: 0;
 }
+
 .ds44-legendeContainer .ds44-blockAbsolute--tl {
-  top: 0;
-  left: 0;
+    top: 0;
+    left: 0;
 }
+
 .ds44-legendeContainer .ds44-blockAbsolute--tr {
-  top: 0;
-  right: 0;
+    top: 0;
+    right: 0;
 }
 
 /* Ratio img profil */
 .ds44-container-imgRatio--profil {
-  padding-top: 0;
-  width: 110px;
-  height: 110px;
+    padding-top: 0;
+    width: 110px;
+    height: 110px;
 }
+
+.ds44-container-imgRatio--profilXL {
+    padding-top: 0;
+    width: 160px;
+    height: 160px;
+}
+
 .ds44-imgRatio--profil {
-  border-radius: 50%;
+    border-radius: 50%;
 }
 
 /* Ratio img A4 99:70 */
 .ds44-container-imgRatio--A4 {
-  padding-top: 141.43%;
+    padding-top: 141.43%;
 }
 
-
-
-/* legend block positionnement */
-.ds44-legendeContainer .ds44-blockAbsolute {
-position: absolute;
-z-index: 1;
-width: 30vw;
-}
-.ds44-legendeContainer .ds44-blockAbsolute--br {
-bottom: 0;
-right: 0;
-}
-.ds44-legendeContainer .ds44-blockAbsolute--bl {
-bottom: 0;
-left: 0;
-}
-.ds44-legendeContainer .ds44-blockAbsolute--tl {
-top: 0;
-left: 0;
-}
-.ds44-legendeContainer .ds44-blockAbsolute--tr {
-top: 0;
-right: 0;
-}
 
 
 /* légende d'image */
@@ -115,136 +104,132 @@ figure {
 }
 
 /* loader */
-.ds44-loader{
-  position: absolute;
-  width: $ds44-loader-size;
-  height: $ds44-loader-size;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
+.ds44-loader {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255,255,255,0.9);
+  position: fixed;
+  top: 0;
+  left:0;
+  z-index: 10000;
 
-  .ds44-loader-circular {
-    animation: rotate 2s linear infinite;
-    height: $ds44-loader-size;
-    position: relative;
-    width: $ds44-loader-size;
+  .ds44-loader-body {
+      position: absolute;
+      width: $ds44-loader-size;
+      height: $ds44-loader-size;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
 
-    .ds44-loader-path {
-      stroke-dasharray: 1,200;
-      stroke-dashoffset: 0;
-      stroke: $ds44-dark ;
-      animation: dash 1.5s ease-in-out infinite;
-      stroke-linecap: round;
-    }
+      .ds44-loader-circular {
+          animation: rotate 2s linear infinite;
+          height: $ds44-loader-size;
+          position: relative;
+          width: $ds44-loader-size;
+
+          .ds44-loader-path {
+              stroke-dasharray: 1, 200;
+              stroke-dashoffset: 0;
+              stroke: $ds44-dark;
+              animation: dash 1.5s ease-in-out infinite;
+              stroke-linecap: round;
+          }
+      }
   }
+
 }
 
-@keyframes rotate{
- 100%{
-  transform: rotate(360deg);
- }
+
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
 }
-@keyframes dash{
- 0%{
-  stroke-dasharray: 1,200;
-  stroke-dashoffset: 0;
- }
- 50%{
-  stroke-dasharray: 89,200;
-  stroke-dashoffset: -35;
- }
- 100%{
-  stroke-dasharray: 89,200;
-  stroke-dashoffset: -124;
- }
+
+@keyframes dash {
+    0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -35;
+    }
+    100% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -124;
+    }
 }
 
 /* =======
   MEDIA QUERIES
   === */
 
-@media (max-width: $ds44-large) {
-
-    .ds44-legendeContainer .ds44-blockAbsolute {
-      width: 50%;
-    }
-    .ds44-legendeContainer.ds44-container-imgRatio {
-      height: auto;
-    }
-
-    /* Image Map */
-
-  .ds44-imgMap {
-  max-width: none;
-  }
-
-}
-
-@media (min-width: $ds44-large - .625) {
-
-.grid-12-small-1 .ds44-legendeContainer{
-  padding-top: 85%;
-}
-.grid-12-small-1 .col-6{
-  margin-right: $ds44-medium-vmargin/2;
-}
-.grid-12-small-1 .col-6:last-of-type{
-  margin-right: 0;
-  margin-left: $ds44-medium-vmargin/2;
-}
-
-}
-
 @media (max-width: $ds44-large - .625) {
 
-  .ds44-legendeContainer .ds44-blockAbsolute {
-    width: 50vw;
-  }
-  .ds44-legendeContainer.ds44-container-imgRatio {
-    height: auto;
-  }
+    .ds44-legendeContainer .ds44-blockAbsolute {
+        width: 50vw;
+    }
+    .ds44-legendeContainer.ds44-container-imgRatio {
+        height: auto;
+    }
 
 }
+
+@media (min-width: $ds44-large) {
+
+    .grid-12-small-1 .ds44-legendeContainer {
+        padding-top: 85%;
+    }
+    .grid-12-small-1 .col-6 {
+        margin-right: $ds44-medium-vmargin/2;
+    }
+    .grid-12-small-1 .col-6:last-of-type {
+        margin-right: 0;
+        margin-left: $ds44-medium-vmargin/2;
+    }
+
+}
+
 
 @media (max-width: $ds44-medium - .625) {
 
-  .ds44-legendeContainer .ds44-blockAbsolute {
-    width: 60vw;
-  }
+    .ds44-legendeContainer .ds44-blockAbsolute {
+        width: 60vw;
+    }
 
 }
 
-
-@media (min-width: $ds44-small - .625) {
-  .ds44-container-imgRatio--tuileMiseEnAvant .ds44-card__title {
-      font-size: 2.4rem; // 24px
-  }
-  .col .ds44-container-imgRatio--tuileMiseEnAvant .ds44-card__title {
-      font-size: 1.7rem; // 17px
-  }
-}
 
 @media (max-width: $ds44-small - .625) {
 
-  .ds44-legendeContainer.ds44-container-imgRatio .ds44-imgRatio ,
-  .ds44-legendeContainer.ds44-container-imgRatio{
-    height: auto;
-    position: relative;
-    padding-top: 0%;
-  }
+    .ds44-legendeContainer.ds44-container-imgRatio .ds44-imgRatio,
+    .ds44-legendeContainer.ds44-container-imgRatio {
+        height: auto;
+        position: relative;
+        padding-top: 0%;
+    }
 
 
+    .ds44-legendeContainer .ds44-blockAbsolute {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+    }
 
-  .ds44-legendeContainer .ds44-blockAbsolute {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    bottom: 0;
-    left: 0;
-  }
+    .ds44-imgCaption {
+        display: none;
+    }
 
-  .ds44-imgCaption {
-    display: none;
-  }
+}
 
+@media (min-width: $ds44-small) {
+    .ds44-container-imgRatio--tuileMiseEnAvant .ds44-card__title {
+        font-size: 2.4rem; // 24px
+    }
+    .col .ds44-container-imgRatio--tuileMiseEnAvant .ds44-card__title {
+        font-size: 1.7rem; // 17px
+    }
 }

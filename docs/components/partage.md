@@ -16,6 +16,9 @@ variations:
 - title: Barre de partage du footer
   description: Bloc de pictos de partage pour pied de page
   pattern: partage/partage-footer.html
+- title: Barre de partage slider homepage
+  description: Bloc de pictos de partage qui se situe dans le slider de la page d'accueil
+  pattern: partage/partage-sliderHome.html
 ---
 
 

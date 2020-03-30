@@ -4,9 +4,34 @@
   padding-right: $ds44-container-large-margin;
 }
 
+.swipper-carousel-wrap--homepage {
+    .swiper-container {
+      padding: 0;
+      margin: 0;
+
+      .swiper-wrapper {
+        margin: 0;
+        grid-gap:0;
+
+        .swiper-slide {
+          width: 100%;
+          margin: 0;
+        }
+      }
+    }
+
+    .ds44-btnIco {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      z-index: 100;
+    }
+}
+
 .swiper-container {
   padding: 1rem 1.6rem 3rem 1.6rem;
   margin: 0 calc(5.5% - 1.6rem);
+  margin: 0 -webkit-calc(5.5% - 1.6rem);
 }
 .swiper-container .ds44-card {
   margin-bottom: 0;
@@ -18,9 +43,10 @@ div .swiper-button-prev {
     height: auto;
     position: absolute;
     top: calc(50% - 15px);
+    top: -webkit-calc(50% - 15px);
     transform: translateY(-50%);
     border-radius: 3px;
-    z-index: 800;
+    z-index: 50;
     padding: 15px 20px;
     margin: 0;
     display: block;
@@ -63,47 +89,29 @@ div .swiper-button-disabled {
     top: auto;
 }
 
-div .swipper-carousel-wrap {
-    position: relative;
-    width: 100%;
-    padding: 0px 36px;
-}
-
 div .swiper-slide {
     z-index: 1;
+    height: auto;
 }
 
-/*style quand il n'y a pas de js*/
+.swipper-carousel-slideshow-slave {
+  height: 100%;
+  width: 100%;
 
-.ds44-carousel-swiper {
-    flex-wrap: wrap;
+    .swiper-container {
+      height: 100%;
+      width: 100%;
+    }
 }
 
-.ds44-carousel-swiper li {
-    width: calc(25% - 10px);
-    flex-shrink: 1;
-    margin-right: 10px;
-}
-
-.ds44-carousel-swiper li:last-child {
-    margin-right: 0px;
-}
-
-.ds44-carousel-swiper.grid-3-small-1 li:nth-child(3n) {
-    margin-right: 0px;
-}
-
-.ds44-carousel-swiper.grid-4-small-1 li:nth-child(4n) {
-    margin-right: 0px;
+.ds44-ssTitreCarrousel {  
+  font-size: 3.4rem;
 }
 
 @media screen and (max-width: $ds44-medium - .0625) {
 
-  .ds44-carousel-swiper li {
-      width: auto;
-  }
-
-  .ds44-container-large.swipper-carousel-wrap {
+  .ds44-container-large.swipper-carousel-wrap,
+  .ds44-homepage-container .swipper-carousel-wrap {
     margin: 0;
   }
 
@@ -131,8 +139,11 @@ div .swiper-slide {
     .swipper-carousel-wrap {
         margin-left: -$ds44-mobile-margins;
         margin-right: -$ds44-mobile-margins;
+    }
 
-      }
+    .ds44-ssTitreCarrousel {  
+      font-size: 2.4rem;
+    }
 
 
 }

@@ -14,7 +14,7 @@ $ds44-max-inner-size : 70em !default;     // 1120px
 $ds44-max-size       : 100em !default;    // 1600px
 
 // surcharge de la grillade pour réaligner le breakpoint tablette
-$medium: 1020px;
+$medium: 65em !default;     // 1024px (KNACSS crée ses breakpoints en retirant une unité)
 
 
 // ----------
@@ -138,7 +138,7 @@ $ds44-line-height-base : 1.5 !default;
 $ds44-largeHeight         : 6.5rem !default;
 $ds44-normalHeight        : 4.5rem !default;
 $header-height-large      : 9.8rem;
-$header-height-medium     : 12rem; // En raison de l'agrandissement du header, lié au passage sur deux lignes des contenus en mode tablette
+$header-height-medium     : 11.4rem; // En raison de l'agrandissement du header, lié au passage sur deux lignes des contenus en mode tablette
 $header-height-small      : 6.2rem;
 
 
@@ -177,7 +177,7 @@ $ds44-padding-xxlarge         : $ds44-padding-base *5   !default;
 $ds44-light             : #FFF                !default;
 $ds44-dark              : #000                !default;
 $ds44-gray              : #666                !default;
-$ds44-lightgray         : #F5F5F5             !default;
+$ds44-lightgray         : #E6E6E6             !default;
 $ds44-darkgray          : #333                !default;
 $ds44-LA                : #99E6D1             !default;
 $ds44-Agenda            : #FFD883             !default;

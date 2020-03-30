@@ -1,0 +1,63 @@
+---
+layout: pattern
+---
+
+<p class="h3-like">Tuile lieu</p>
+<br>
+<p class="h4-like">Tuile lieu sans partenaire</p>
+<br>
+{% include card/card--lieu.html is-partner="false" titreTuileLieu="Numéro d’appel gratuit FAIRE" idTuile="1" %}
+<br>
+<p class="h4-like">Tuile lieu avec partenaire</p>
+<br>
+{% include card/card--lieu.html is-partner="true" titreTuileLieu="Agence nationale de l’Habitat (ANAH)" idTuile="2" %}
+<br>
+<p class="h4-like">Tuile lieu sans partenaire mise en avant</p>
+<br>
+{% include card/card--lieu.html is-partner="false" titreTuileLieu="CLIC Pilot’âge de la région nazairienne" is-focus="true" idTuile="3" %}
+<br>
+<p class="h4-like">Tuile lieu avec partenaire mise en avant</p>
+<br>
+{% include card/card--lieu.html is-partner="true" titreTuileLieu="CLIC Pilot’âge de la région nazairienne" is-focus="true" idTuile="4" %}
+<hr />
+<p class="h3-like">Tuile communiqué de presse</p>
+<br>
+{% include card/card--communique.html 
+    titreCom="Mort de Steve Maia Caniço : pour Philippe Grosvalet, tous les parlementaires de Loire-Atlantique doivent demander une commission d’enquête."
+    idTuile="5"
+    marker="date" 
+    text="31 juillet 2019"
+    %}
+<hr />
+<p class="h3-like">Tuile équipement</p>
+<br>
+{% include card/card--communique.html 
+    titreCom="Création d’une salle d’activités de proximité dédiée à la jeunesse à Saint-Lyphard" 
+    idTuile="6"
+    marker="tag" 
+    text="Urbanisme, cadre de vie"
+    content='<p class="ds44-mt1"><strong>Financement départemental :</strong> 37 228 €</p>'
+%}
+<hr />
+<p class="h3-like">Tuile commune</p>
+<br>
+{% include card/card--communique.html 
+    titreCom="Aigrefeuille-sur-Maine" 
+    idTuile="7"
+    marker="user" 
+    text="<strong>Maire :</strong> Jean-Guy CORNU"
+    content='<p class="ds44-docListElem ds44-mt-std"><i class="icon icon-marker ds44-docListIco" aria-hidden="true"></i>Hôtel de Ville<br />29 avenue de la Vendée<br />44140 Aigrefeuille-sur-Maine</p>'
+%}
+<hr />
+<p class="h3-like">Tuile événement agenda</p>
+<br>
+{% include card/card--contact.html
+    is-partner="false" 
+    has-picture="true"
+    titreTuile="La représentation exotique dans les arts décoratifs" 
+    idTuile="8"
+    cardContent='<p class="ds44-docListElem ds44-mt-std"><i class="icon icon-date ds44-docListIco" aria-hidden="true"></i>28 novembre 2019</p>
+    <p class="ds44-docListElem ds44-mt-std"><i class="icon icon-tag ds44-docListIco" aria-hidden="true"></i>Conférence</p>
+    <p class="ds44-docListElem ds44-mt-std"><i class="icon icon-user ds44-docListIco" aria-hidden="true"></i>Les amis du Musée Dobrée</p>'
+%}
+<br>

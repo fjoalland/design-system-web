@@ -1,0 +1,16 @@
+{% include form/_variables.html %}
+
+{% capture mainContent %}
+{{ explanation }}
+<input type="text" id="{{ id }}" name="{{ name }}" class="{{ mainClass }}" {{ title }} {{ attributes }} {{ inputAttributes }} {{ placeholder }} {% if ariaDescribedBy != '' %}aria-describedby="{{ ariaDescribedBy }}"{% endif %} />{% include form/field/partial/reset.html %}
+{% endcapture %}
+
+{% capture labelContent %}
+{% include form/field/partial/label.html content=mainContent disabled=include.disabled %}
+{% endcapture %}
+
+{% if include.hidden == 'true' %}
+    {% assign containerClass = containerClass | append : ' hidden' %}
+{% endif %}
+
+{% include form/field/partial/container.html content=labelContent containerClass=containerClass %}

@@ -1,16 +1,16 @@
 class MiscAccessibility {
-    static getEnabledElementsSelector() {
+    static getEnabledElementsSelector () {
         return ['a[href]', 'link[href]', 'button', 'textarea', 'input:not([type="hidden"])', 'select', 'object', 'area'].map(selector => selector + ':not([disabled])');
     }
 
-    static getProtectedElementsSelector() {
-        return ['i', 'sup'];
+    static getProtectedElementsSelector () {
+        return ['i', 'sup', 'svg'];
     }
 
     // Fonction qui va forcer le focus à faire une boucle sur un élément
     // en ajoutant deux inputs 'hidden' qui peuvent être focus, au début
     // et à la fin
-    static addFocusLoop(element, elementName) {
+    static addFocusLoop (element, elementName) {
         MiscAccessibility.removeFocusLoop();
 
         if (!element) {
@@ -46,7 +46,7 @@ class MiscAccessibility {
     }
 
     // Delete loop elements
-    static removeFocusLoop() {
+    static removeFocusLoop () {
         document
             .querySelectorAll('.ds44-tmpFocusHidden')
             .forEach((element) => {
@@ -65,7 +65,7 @@ class MiscAccessibility {
     }
 
     // Mettre le focus sur un élément précis
-    static setFocus(element, selector) {
+    static setFocus (element, selector) {
         if (!element && selector) {
             element = document.querySelector(selector);
         }
@@ -74,19 +74,24 @@ class MiscAccessibility {
         }
     }
 
-    static show(element, force = false, bubble = true) {
+    static show (element, force = false, bubble = true, isChild = false) {
         if (!element) {
             return;
         }
 
-        if (MiscAccessibility.getProtectedElementsSelector().indexOf(element.tagName.toLowerCase()) === -1) {
+        if (
+            MiscAccessibility.getProtectedElementsSelector().indexOf(element.tagName.toLowerCase()) === -1 &&
+            element.getAttribute('data-a11y-exclude') !== 'true'
+        ) {
             if (force !== true) {
-                MiscAccessibility.record(element);
+                MiscAccessibility.record(element, isChild);
             } else {
-                MiscAccessibility.reinstate(element);
+                MiscAccessibility.reinstate(element, isChild);
             }
 
-            element.removeAttribute('aria-hidden');
+            if (!isChild) {
+                element.removeAttribute('aria-hidden');
+            }
             if (element.closest(MiscAccessibility.getEnabledElementsSelector()) === element) {
                 element.removeAttribute('tabindex');
             }
@@ -94,24 +99,29 @@ class MiscAccessibility {
 
         if (bubble) {
             Array.from(element.children).map((childElement) => {
-                MiscAccessibility.show(childElement, force, bubble);
+                MiscAccessibility.show(childElement, force, bubble, true);
             });
         }
     }
 
-    static hide(element, force = false, bubble = true) {
+    static hide (element, force = false, bubble = true, isChild = false) {
         if (!element) {
             return;
         }
 
-        if (MiscAccessibility.getProtectedElementsSelector().indexOf(element.tagName.toLowerCase()) === -1) {
+        if (
+            MiscAccessibility.getProtectedElementsSelector().indexOf(element.tagName.toLowerCase()) === -1 &&
+            element.getAttribute('data-a11y-exclude') !== 'true'
+        ) {
             if (force !== true) {
-                MiscAccessibility.record(element);
+                MiscAccessibility.record(element, isChild);
             } else {
-                MiscAccessibility.reinstate(element);
+                MiscAccessibility.reinstate(element, isChild);
             }
 
-            element.setAttribute('aria-hidden', true);
+            if (!isChild) {
+                element.setAttribute('aria-hidden', true);
+            }
             if (element.closest(MiscAccessibility.getEnabledElementsSelector()) === element) {
                 element.setAttribute('tabindex', '-1');
             }
@@ -119,34 +129,41 @@ class MiscAccessibility {
 
         if (bubble) {
             Array.from(element.children).map((childElement) => {
-                MiscAccessibility.hide(childElement, force, bubble);
+                MiscAccessibility.hide(childElement, force, bubble, true);
             });
         }
     }
 
-    static record(element) {
+    static record (element, isChild) {
         if (!element) {
             return;
         }
 
-        if (!element.hasAttribute('data-bkp-aria-hidden')) {
+        if (!isChild && !element.hasAttribute('data-bkp-aria-hidden')) {
             element.setAttribute('data-bkp-aria-hidden', (element.getAttribute('aria-hidden') || ''));
         }
-        if (!element.hasAttribute('data-bkp-tabindex')) {
+        if (
+            element.closest(MiscAccessibility.getEnabledElementsSelector()) === element &&
+            !element.hasAttribute('data-bkp-tabindex')
+        ) {
             element.setAttribute('data-bkp-tabindex', (element.getAttribute('tabindex') || ''));
         }
     }
 
-    static reinstate(element) {
+    static reinstate (element, isChild) {
         if (!element) {
             return;
         }
 
-        if (element.hasAttribute('data-bkp-aria-hidden')) {
+        if (!isChild && element.hasAttribute('data-bkp-aria-hidden')) {
             element.removeAttribute('data-bkp-aria-hidden');
         }
         if (element.hasAttribute('data-bkp-tabindex')) {
             element.removeAttribute('data-bkp-tabindex');
         }
+    }
+
+    static flattenText (text) {
+        return text.replace(/\n/gi, ' ').replace(/[ ]+/gi, ' ').trim();
     }
 }

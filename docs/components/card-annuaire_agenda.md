@@ -20,14 +20,25 @@ variations:
   description: Ce type de tuile met en avant des magazines avec le visuel sur la droite et le contenu textuel sur la droite.
   pattern: cards/card--AA--magazine.html
 
-
-- title: Communes
-  description: Ce type de tuile de forme verticale présente un titre suivi d'une liste d'informations.
-  pattern: cards/card--AA--commune.html
+- title: Action éducative
+  description:
+  pattern: cards/card--AA--educative.html
 
 - title: Variantes
   description: Liste des différentes variantes de tuile de type photo + contenu ou contenu seul
   pattern: cards/card--AA--variantes.html
+  
+- title: Fiches
+  description: Tuile déployée - extension de tuile
+  pattern: cards/card--fiches.html
+
+- title: Offre emploi
+  description:
+  pattern: cards/card--AA--emploi.html
+
+- title: Autres tuiles
+  description:
+  pattern: cards/card--AA--autres.html
 ---
 
 ## Usage
@@ -44,7 +55,7 @@ Lorem ipsum
 
 Les composants de tuile sont intégrés via des inclusions dans le DS. Certains paramètres sont importants pour l'accessibilité **mais pas codés directement dans le composant**. Ils sont générés via un paramètre passé dans l'include. Par exemple :
 - Ajouter un target="_blank" sur les liens qui téléchargent des documents et un title comportant le libellé du lien, le poids du document et la mention "nouvelle fenêtre". Ce qui se traduit dans le DS par :
-`include card/card--horizontal.html title="Bien vieillir en Loire-Atlantique - PDF - 291,3 Ko - nouvelle fenêtre" text="PDF - 291,3 Ko" target='target="_blank"' ariaLevel='"aria-level="3"'`
+`include card/card--horizontal.html title="Bien vieillir en Loire-Atlantique - PDF - 291,3 Ko - nouvelle fenêtre" text="PDF - 291,3 Ko" target='target="_blank"' arialevel='"aria-level="3"'`
 
 **Ne pas oublier ces paramètres lors de l'intégration du composant dans le CMS**.
 

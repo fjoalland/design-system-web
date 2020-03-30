@@ -1,174 +1,266 @@
-class Carousel {
-    constructor() {
+class CarouselAbstract {
+    constructor (selector) {
         this.previousSlideMessage = 'Voir le contenu précédent';
         this.nextSlideMessage = 'Voir le contenu suivant';
         this.queryTitreTuile = '.ds44-card__title a[href]:not([disabled])';
-        this.carousels = [];
-        const screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        this.objects = [];
+        this.breakpoint = window.matchMedia('(max-width: 63.375em)');
 
         document
-            .querySelectorAll('.swipper-carousel-wrap')
-            .forEach((wrapElement, carouselIndex) => {
-                const previousElement = wrapElement.querySelector('.swiper-button-prev');
-                const nextElement = wrapElement.querySelector('.swiper-button-next');
-                const wrapperElement = wrapElement.querySelector('.swiper-wrapper');
-                const swiperElement = wrapElement.querySelector('.swiper-container');
-                if (
-                    !previousElement ||
-                    !nextElement ||
-                    !wrapperElement ||
-                    !swiperElement
-                ) {
-                    return;
-                }
-
-                const slides = swiperElement.querySelectorAll('.swiper-slide');
-                if (!slides.length) {
-                    return;
-                }
-
-                const nbSlides = slides.length;
-                let nbVisibleSlides = 1;
-                let hasLoop = (nbSlides > 1);
-                if (screenWidth >= 768) {
-                    nbVisibleSlides = wrapperElement.classList.contains('grid-3-small-1') ? 3 : 4;
-                    hasLoop = (nbSlides > nbVisibleSlides);
-                }
-
-                wrapperElement.classList.remove('ds44-carousel-swiper');
-                wrapperElement.classList.remove('grid-4-small-1');
-                wrapperElement.classList.remove('grid-3-small-1');
-
-                const notification = wrapperElement.querySelector('.swiper-notification');
-                if (notification) {
-                    notification.remove();
-                }
-
-                // Create swiper
-                this.carousels[carouselIndex] = {
-                    'wrapElement': wrapElement,
-                    'nextElement': nextElement,
-                    'previousElement': previousElement,
-                    'swiperElement': swiperElement,
-                    'slides': slides,
-                    'nbSlides': nbSlides,
-                    'nbVisibleSlides': nbVisibleSlides,
-                    'setFocus': false,
-                    'swiper': new Swiper(
-                        swiperElement,
-                        {
-                            init: false,
-                            direction: 'horizontal',
-                            spaceBetween: 16,
-                            watchOverflow: true,
-                            watchSlidesVisibility: true,
-                            navigation: {
-                                nextEl: nextElement,
-                                prevEl: previousElement,
-                            },
-                            slidesPerView: nbVisibleSlides,
-                            loop: hasLoop,
-                        }
-                    )
-                };
-
-                // si on loop, il faut gerer la navigation des tuiles avec les differents event de swiper
-                // cela implique d'initialiser et mettre a jour l'apparence des boutons de navigation et des tuiles du carousel
-                if (hasLoop) {
-                    this.carousels[carouselIndex].swiper.on(
-                        'init',
-                        this.startSwiper.bind(this, carouselIndex)
-                    );
-                    this.carousels[carouselIndex].swiper.on(
-                        'slideChangeTransitionEnd',
-                        ((carouselIndex) => {
-                            this.updatePreviousAndNextSlideMessage(carouselIndex);
-                            this.updateCardAccessibility(carouselIndex);
-                        }).bind(this, carouselIndex)
-                    );
-
-                    this.carousels[carouselIndex].swiper.init();
-                }
+            .querySelectorAll(selector)
+            .forEach((wrapElement) => {
+                this.create(wrapElement);
             });
+
+        MiscEvent.addListener('resize', this.resize.bind(this), window);
+
+        this.breakpoint.addListener(this.breakpointChecker.bind(this));
+        this.breakpointChecker();
     }
 
-    startSwiper(carouselIndex) {
-        const carousel = this.carousels[carouselIndex];
-        [carousel.nextElement, carousel.previousElement]
-            .forEach(button => {
-                button.classList.remove('swiper-button-disabled');
-                button.removeAttribute('aria-label');
-                button.removeAttribute('role');
+    create (wrapElement) {
+        const wrapperElement = wrapElement.querySelector('.swiper-wrapper');
+        const swiperElement = wrapElement.querySelector('.swiper-container');
+        if (
+            !wrapperElement ||
+            !swiperElement
+        ) {
+            return;
+        }
 
-                const ua = navigator.userAgent;
-                if (!ua.includes('Edge/42')) {
-                    button.classList.add('ds44-not-edge-42');
-                }
-            });
+        const slideElements = swiperElement.querySelectorAll('.swiper-slide');
+        if (!slideElements.length) {
+            return;
+        }
+
+        // Get nb visible slides
+        const nbSlides = slideElements.length;
+        const nbVisibleSlides = parseInt(wrapElement.getAttribute('data-nb-visible-slides'), 10);
+        const mobileOnly = (wrapElement.getAttribute('data-mobile-only') === 'true');
+
+        // Create object
+        const object = {
+            'wrapElement': wrapElement,
+            'wrapperElement': wrapperElement,
+            'swiperElement': swiperElement,
+            'nbSlides': nbSlides,
+            'nbVisibleSlides': nbVisibleSlides,
+            'mobileOnly': mobileOnly,
+            'isInitialized': false
+        };
+        const previousElement = wrapElement.querySelector('.swiper-button-prev');
+        if (previousElement) {
+            object.previousElement = previousElement;
+        }
+        const nextElement = wrapElement.querySelector('.swiper-button-next');
+        if (nextElement) {
+            object.nextElement = nextElement;
+        }
+
+        // Record object
+        this.objects.push(object);
     }
 
-    updatePreviousAndNextSlideMessage(carouselIndex) {
-        const carousel = this.carousels[carouselIndex];
+    createSwipper (objectIndex) {
+        const object = this.objects[objectIndex];
+        if (object.swiper) {
+            return;
+        }
+
+        // Component initialization in full JS mode
+        object.wrapperElement.classList.remove.apply(
+            object.wrapperElement.classList,
+            Array.from(object.wrapperElement.classList).filter(className => className.startsWith('grid-'))
+        );
+
+        object.swiper = new Swiper(
+            object.swiperElement,
+            this.getSwiperParameters(object)
+        );
+
+        object.swiper.on('slidePrevTransitionEnd', this.slide.bind(this, objectIndex, 'backward'));
+        object.swiper.on('slideNextTransitionEnd', this.slide.bind(this, objectIndex, 'forward'));
+
+        object.swiper.init();
+        object.isInitialized = true;
+
+        // Enable previous and next buttons
+        if (object.previousElement && object.nextElement) {
+            [object.previousElement, object.nextElement]
+                .forEach(button => {
+                    button.classList.remove('swiper-button-disabled');
+
+                    const ua = navigator.userAgent;
+                    if (!ua.includes('Edge/42')) {
+                        button.classList.add('ds44-not-edge-42');
+                    }
+                });
+        }
+    }
+
+    destroySwipper (objectIndex) {
+        const object = this.objects[objectIndex];
+        if (!object.swiper) {
+            return;
+        }
+
+        object.swiper.destroy(true, true);
+        object.swiper = null;
+        object.isInitialized = false;
+
+        object.wrapperElement.classList.add('grid-' + object.nbVisibleSlides + '-small-1');
+
+        if (object.previousElement && object.nextElement) {
+            [object.previousElement, object.nextElement]
+                .forEach(button => {
+                    button.classList.add('swiper-button-disabled');
+                });
+        }
+    }
+
+    getSwiperParameters (object) {
+        const swiperParameters = {
+            'init': false,
+            'direction': 'horizontal',
+            'spaceBetween': 16,
+            'watchOverflow': true,
+            'watchSlidesVisibility': true,
+            'slidesPerView': 1,
+            'loop': true,
+            'breakpoints': {
+                '768': {
+                    'slidesPerView': object.nbVisibleSlides
+                }
+            },
+            'a11y': {
+                'enabled': false
+            }
+        };
+
+        if (object.previousElement && object.nextElement) {
+            swiperParameters.navigation = {
+                prevEl: object.previousElement,
+                nextEl: object.nextElement
+            };
+        }
+
+        return swiperParameters;
+    }
+
+    updatePreviousAndNextSlideMessage (objectIndex) {
+        const object = this.objects[objectIndex];
+        if (!object.previousElement || !object.nextElement) {
+            return;
+        }
 
         let titleElement = null;
-        let blocTitleElement = carousel.wrapElement.previousElementSibling;
+        let blocTitleElement = object.wrapElement.previousElementSibling;
         if (blocTitleElement) {
-            // on est dans le composant simple
+            // On est dans le composant simple
             titleElement = blocTitleElement;
         } else {
-            // on est dans une page
-            blocTitleElement = carousel.wrapElement.parentElement.previousElementSibling;
+            // On est dans une page
+            blocTitleElement = object.wrapElement.parentElement.previousElementSibling;
             if (blocTitleElement) {
                 titleElement = blocTitleElement.querySelector('.h2-like');
             }
         }
 
-        const titleCarousel = (titleElement ? titleElement.innerText : 'Carousel n°' + (carouselIndex + 1));
-        const indexPreviousElement = (carousel.swiper.realIndex === 0 ? carousel.nbSlides : carousel.swiper.realIndex);
-        let indexNextElement = carousel.swiper.realIndex + carousel.nbVisibleSlides + 1;
-        if (indexNextElement > carousel.nbSlides) {
-            indexNextElement -= carousel.nbSlides;
+        const titleCarousel = (titleElement ? titleElement.innerText : 'Carousel n°' + (objectIndex + 1));
+        const indexPreviousElement = (object.swiper.realIndex === 0 ? object.nbSlides : object.swiper.realIndex);
+        const nbVisibleSlides = object.swiperElement.querySelectorAll('.swiper-slide.swiper-slide-visible').length;
+        let indexNextElement = object.swiper.realIndex + nbVisibleSlides + 1;
+        if (indexNextElement > object.nbSlides) {
+            indexNextElement -= object.nbSlides;
         }
 
-        const titlePreviousElement = this.previousSlideMessage + ' ' + titleCarousel + ' - ' + indexPreviousElement + '/' + carousel.nbSlides;
-        const titleNextElement = this.nextSlideMessage + ' ' + titleCarousel + ' - ' + indexNextElement + '/' + carousel.nbSlides;
-        carousel.previousElement.setAttribute('title', titlePreviousElement);
-        carousel.nextElement.setAttribute('title', titleNextElement);
-
-        const innerTextNextElement = carousel.nextElement.querySelector('.visually-hidden');
-        if (innerTextNextElement) {
-            innerTextNextElement.innerText = titleNextElement;
-        }
-        const innerTextPreviousElement = carousel.previousElement.querySelector('.visually-hidden');
+        const titlePreviousElement = MiscAccessibility.flattenText(this.previousSlideMessage + ' : ' + titleCarousel + ' - ' + indexPreviousElement + '/' + object.nbSlides);
+        object.previousElement.setAttribute('title', titlePreviousElement);
+        const innerTextPreviousElement = object.previousElement.querySelector('.visually-hidden');
         if (innerTextPreviousElement) {
             innerTextPreviousElement.innerText = titlePreviousElement;
+        }
+
+        const titleNextElement = MiscAccessibility.flattenText(this.nextSlideMessage + ' : ' + titleCarousel + ' - ' + indexNextElement + '/' + object.nbSlides);
+        object.nextElement.setAttribute('title', titleNextElement);
+        const innerTextNextElement = object.nextElement.querySelector('.visually-hidden');
+        if (innerTextNextElement) {
+            innerTextNextElement.innerText = titleNextElement;
         }
     }
 
     // Met a jour la visibilite des tuiles en fonction du placement et du nombre de tuile visible
-    updateCardAccessibility(carouselIndex) {
-        const carousel = this.carousels[carouselIndex];
+    updateCardAccessibility (objectIndex, direction) {
+        const object = this.objects[objectIndex];
 
-        let isFirstVisibleSlide = true;
-        carousel.swiperElement
+        object.swiperElement
             .querySelectorAll('.swiper-slide')
-            .forEach((slide) => {
-                if (slide.classList.contains('swiper-slide-visible')) {
+            .forEach((slideElement) => {
+                if (slideElement.classList.contains('swiper-slide-visible')) {
                     // Show slide
-                    MiscAccessibility.show(slide, true);
-                    if (carousel.setFocus && isFirstVisibleSlide) {
-                        isFirstVisibleSlide = false;
-                        MiscAccessibility.setFocus(slide.querySelector(this.queryTitreTuile));
-                    }
+                    MiscAccessibility.show(slideElement, true);
                 } else {
                     // Hide slide
-                    MiscAccessibility.hide(slide, true);
+                    MiscAccessibility.hide(slideElement, true);
                 }
             });
 
-        carousel.setFocus = true;
+        if (object.isInitialized) {
+            let slideElement = null;
+            const visibleSlideElements = object.swiperElement.querySelectorAll('.swiper-slide.swiper-slide-visible');
+            if (direction === 'backward') {
+                slideElement = visibleSlideElements[0];
+            } else {
+                slideElement = visibleSlideElements[visibleSlideElements.length - 1];
+            }
+            if (slideElement) {
+                MiscAccessibility.setFocus(slideElement.querySelector(this.queryTitreTuile));
+            }
+        }
+    }
+
+    slide (objectIndex, direction) {
+        const object = this.objects[objectIndex];
+
+        if (object.previousElement && object.nextElement) {
+            this.updatePreviousAndNextSlideMessage(objectIndex);
+        }
+        this.updateCardAccessibility(objectIndex, direction);
+    }
+
+    resize () {
+        for (let objectIndex in this.objects) {
+            if (!this.objects.hasOwnProperty(objectIndex)) {
+                continue;
+            }
+
+            const object = this.objects[objectIndex];
+            if (object.swiper && object.previousElement && object.nextElement) {
+                this.updatePreviousAndNextSlideMessage(objectIndex);
+            }
+        }
+    }
+
+    breakpointChecker () {
+        for (let objectIndex in this.objects) {
+            if (!this.objects.hasOwnProperty(objectIndex)) {
+                continue;
+            }
+
+            const object = this.objects[objectIndex];
+            if (!object.mobileOnly) {
+                this.createSwipper(objectIndex);
+
+                continue;
+            }
+
+            if (this.breakpoint.matches === true) {
+                // Below breakpoint
+                this.createSwipper(objectIndex);
+            } else {
+                // Above breakpoint
+                this.destroySwipper(objectIndex);
+            }
+        }
     }
 }
-
-// Singleton
-new Carousel();

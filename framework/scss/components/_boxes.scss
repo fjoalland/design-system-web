@@ -6,8 +6,9 @@
     background-position-y: center;
 
     &.ds44-wave-white {
-        background-position-y: bottom -280px;
+        background-position: bottom -120px left 0;
         height:100%;
+        background-size: 1200px;
     }
     &.ds44-bgCircle {
         background-position: left -240px bottom -200px;
@@ -68,6 +69,7 @@
 
 .ds44-boxPushContent {
     max-width: calc(55% + 15px);
+    max-width: -webkit-calc(55% + 15px);
     align-self: center;
     padding: $ds44-padding-box;
 
@@ -79,14 +81,17 @@
         align-items: center;
         padding-right: $ds44-padding-xlarge;
 
+        &.ds44-titlePushH {
+            max-width: 45%;
+        }
+
+        &.ds44-contentPushH {
+            max-width: 30%;
+        }
+
         p {
             margin: 0;
             padding-left: 1.5rem;
-            max-width: 30%;
-
-            &[role="heading"] {
-                max-width: 45%;
-            }
         }
 
     }
@@ -99,7 +104,13 @@
 
     &--horizontal {
         width: calc(30% - 15px);
+        width: -webkit-calc(30% - 15px);
+
+        & img {
+          max-height: 110px;
+        }
     }
+
 
 }
 
@@ -128,7 +139,8 @@
   MEDIA QUERIES
   === */
 
-@media (min-width: $ds44-large - .625) {
+
+@media (min-width: $ds44-large) {
 
   .grid-12-small-1 .colPush{
     margin-right: $ds44-medium-vmargin;
@@ -136,10 +148,25 @@
   .grid-12-small-1 .colPush:last-of-type{
     margin-right: 0;
   }
+  .grid-12-small-1 .colFocusProjets{
+    margin-left: $ds44-medium-vmargin;
+  }
+  .grid-12-small-1 .colFocusProjets:first-of-type{
+    margin-left: 0;
+  }
+  .ds44-innerBoxContainer {
+      &--list {
+        padding: $ds44-padding-xlarge $ds44-padding-xlarge;
+      }
+  }
 
 }
 
 @media (max-width: $ds44-large - .0625) {
+
+  .grid-2-small-1 {
+    grid-template-columns : repeat(1, 1fr);
+  }
 
   .ds44-box .col{
     margin-top: 2em;
@@ -152,6 +179,23 @@
 
   .grid-12-small-1 .colPush{
     margin-bottom:  $ds44-medium-vmargin;
+  }
+  .ds44-innerBoxContainer {
+      &--list {
+        padding: $ds44-padding-xlarge;
+      }
+  }
+
+}
+
+
+@media (min-width: $ds44-medium) {
+
+  .grid-12-small-1 .colPush.col-6{
+    margin-right: $ds44-medium-vmargin;
+  }
+  .grid-12-small-1 .colPush.col-6:last-of-type{
+    margin-right: 0;
   }
 
 }
@@ -182,11 +226,15 @@
         &--horizontal {
             width: 100%;
             text-align: center;
+            & img {
+              max-height: 300px;
+            }
         }
 
     }
 
 }
+
 
 @media (max-width: $ds44-tiny - .0625) {
 
@@ -226,8 +274,14 @@
 
         &--horizontal {
             width: calc(20% - 15px);
+            width: -webkit-calc(20% - 15px);
         }
+    }
 
+    .ds44-innerBoxContainer {
+        &--list {
+          padding: $ds44-padding-xlarge $ds44-padding-xlarge*2;
+        }
     }
 
 }

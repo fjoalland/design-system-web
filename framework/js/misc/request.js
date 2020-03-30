@@ -1,5 +1,5 @@
 class MiscRequest {
-    static send(url, successCallback, errorCallback, parameters = null, method = 'GET') {
+    static send (url, successCallback, errorCallback, parameters = null, method = 'GET') {
         const xhr = new XMLHttpRequest();
         xhr.open(method.toUpperCase(), url, true);
         xhr.onreadystatechange = () => {
@@ -35,8 +35,14 @@ class MiscRequest {
         return xhr;
     }
 
-    static response(xhr, callback) {
+    static response (xhr, callback) {
         if (xhr && callback) {
+            if (!xhr.getResponseHeader('content-type')) {
+                callback(xhr.response);
+
+                return;
+            }
+
             const responseHeaders = xhr.getResponseHeader('content-type').toLowerCase().split(';');
             if (responseHeaders.indexOf('application/json') !== -1) {
                 callback(JSON.parse(xhr.response));

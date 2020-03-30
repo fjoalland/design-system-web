@@ -1,0 +1,78 @@
+---
+layout: pattern
+---
+
+{% include header/inc-header.html
+    logo='<picture class="ds44-logo"><img src="../../assets/images/logo-loire-atlantique.svg" alt="Retour à l&apos;accueil du site loire-atlantique.fr"></picture>'
+    variante1='<button type="button" class="ds44-btnIcoText--maxi ds44--xl-padding" id="open-search"><span class="ds44-btnInnerText">Rechercher</span><i class="icon icon-magnifier icon--large" aria-hidden="true"></i></button>'
+%}
+
+<main role="main" id="content">
+
+    <section class="ds44-container-large ds44-homepage-container ds44--xxl-padding-b">
+        <div class="grid-12-small-1">
+            <div class="col-8-small-1">
+                {% include carrousel/carrousel-homepage.html %}
+            </div>
+            <div class="col-4-small-1 ds44-hide-mobile">
+                <div class="ds44-flex-container ds44-flex-container--column ds44-h100">
+                    <div class="ds44-fl1 ds44-imgInsta ds44-hide-tinyToLarge">
+                        {% include carrousel/carrousel-partage.html %}
+                    </div>
+                    <div>
+                        {% include partage/partage-sliderHome.html %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ds44-container-fluid ds44-mt3 ds44--xl-padding-tb">
+        <div class="ds44-container-large ds44--mobile--m-padding-b">
+            <header class="txtcenter ds44--mobile--m-padding-b">
+                <h2 class="h2-like center">En ce moment</h2>
+                <p class="ds44-component-chapo ds44-centeredBlock">Les actualités du Département, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore.</p>
+            </header>
+        </div>
+        <div class="ds44-container-large">
+            {% include card/card--miseEnAvant.html title="1 M d’Euros pour la SNSM et SOS Méditerranée" has-info="false" positionBloc="bl" %}
+        </div>
+        {% include carrousel/carrousel-x4.html %}
+        <div class="txtcenter ds44-mb-std ds44-container-large">
+            <button class="ds44-btnStd ds44-btnStd--large ds44-btnFullMobile" type="button" title="Recevoir toutes les actualités par mail">
+                <span class="ds44-btnInnerText">Recevoir toutes les actualités par mail</span>
+                <i class="icon icon-long-arrow-right" aria-hidden="true"></i>
+            </button>
+        </div>
+    </section>
+
+    <section class="ds44-container-fluid ds44-lightBG ds44-wave-white ds44--xl-padding-tb">
+        <div class="ds44-container-large ds44--mobile--m-padding-b">
+            <header class="txtcenter ds44--mobile--m-padding-b">
+                <h2 class="h2-like center">Les rendez-vous</h2>
+                <p class="ds44-component-chapo ds44-centeredBlock">Les idées de sorties en Loire Atlantique, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore.</p>
+            </header>
+        </div>
+        <div class="ds44-container-large">
+            {% include card/card--miseEnAvant.html title="Exposition Précieux poisons d’Amazonie" has-info="true" date="Du 29/06/19 au 01/09/19" tag="marker" localisation="Domaine Garenne Lemot" positionBloc="tl" %}
+        </div>
+        {% include carrousel/carrousel-x3--bgGrey.html %}
+        <div class="txtcenter ds44-mb-std ds44-container-large">
+            <button class="ds44-btnStd ds44-btnStd--large ds44-btnFullMobile" type="button" title="Plus d’idées de sorties sur l’agenda">
+                <span class="ds44-btnInnerText">+ d’idées de sorties sur l’agenda</span>
+                <i class="icon icon-long-arrow-right" aria-hidden="true"></i>
+            </button>
+        </div>
+    </section>
+
+    <section class="ds44-container-fluid ds44--xxl-padding-t ds44--p35b">
+        {% include composants-transverses/focus-projets.html %}
+    </section>
+
+    <section class="ds44-container-fluid ">
+        {% include composants-transverses/sites-applis-noModal.html %}
+    </section>
+
+</main>
+{% include footer/footer-LA.html %}
+{% include modal/inc-navigation-applis.html %}

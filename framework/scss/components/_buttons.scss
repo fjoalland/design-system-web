@@ -3,7 +3,7 @@
 */
 
 
-button, a.ds44-btnStd, a > .ds44-btnStd, .ds44-btnStd > a  {
+button, a.ds44-btnStd, a > .ds44-btnStd, .ds44-btnStd > a, .ds44-btnIcoText--maxi  {
     display: inline-block;
     cursor: pointer;
     user-select: none;
@@ -18,15 +18,19 @@ button, a.ds44-btnStd, a > .ds44-btnStd, .ds44-btnStd > a  {
     &:focus {
         -webkit-tap-highlight-color: transparent;
     }
+
+    .ds44-inputDisabled & {
+        cursor: default;
+    }
 }
 
 .ds44-btnStd, a.ds44-btnStd, a > .ds44-btnStd, .ds44-btnStd > a {
     @include ds44-font-sizes(button);
-    padding: $ds44-padding-box;
+    padding: 1rem $ds44-padding-box;
     border-radius: $ds44-border-radius;
     border: 1px solid $ds44-dark;
     font-weight: bold;
-    line-height: 1;
+    line-height: 1.3;
     min-height: $ds44-normalHeight;
 
     &:focus,
@@ -38,8 +42,43 @@ button, a.ds44-btnStd, a > .ds44-btnStd, .ds44-btnStd > a  {
 
     &.ds44-btnStd--plat {
         border: none;
+        padding: $ds44-padding-large/2;
+
+        &:hover,
+        &:active,
+        &:focus,
+        &:hover > span,
+        &:active > span,
+        &:focus > span {
+          box-shadow: none;
+          text-decoration: underline;
+        }
+    }
+
+    &.ds44-bntALeft {
+        text-align: left;
+        position: relative;
+
+        .ds44-btnInnerText {
+            padding-right: 3rem;
+        }
+
+        .icon {
+            position: absolute;
+            right: 1.5rem;
+            top: calc(50% - 9px);
+        }
+    }
+
+    &.ds44-btnQuestion {
+        @include ds44-font-sizes(largeButton);
         padding: $ds44-padding-large;
-        min-height: 6rem;
+        right: $ds44-container-large-margin;
+        transition: bottom 0s;
+    }
+
+    &.ds44-theme {
+      border:$ds44-contextual-color;
     }
 
 }
@@ -48,6 +87,7 @@ a > .ds44-btnStd,
 .ds44-btnStd > a,
 .ds44-btnStd--large > a,
 a > .ds44-btnStd--large { // gestion de l'alignement des icones dans les boutons wysiwyg
+
 
     .icon {
         line-height: 1.1;
@@ -66,13 +106,13 @@ a > .ds44-btnStd--large   // pour wysiwyg
 }
 
 .ds44-btn--invert, a.ds44-btn--invert, a > .ds44-btn--invert, .ds44-btn--invert > a {
-    background-color: $ds44-background-dark;
-    color: $ds44-color-inverse;
+    background-color: $ds44-background-dark!important;
+    color: $ds44-color-inverse!important;
 
     &:focus,
     &:hover,
     &:active {
-        background-color: $ds44-hover-dark;
+        background-color: $ds44-hover-dark!important;
     }
 }
 
@@ -81,17 +121,28 @@ a.ds44-btn--contextual,
 .ds44-contextualBtnLink,
 a > .ds44-btn--contextual,
 .ds44-btn--contextual > a {
-    background-color: $ds44-contextual-color;
+    background-color: $ds44-contextual-color!important;
     border-color: $ds44-contextual-color;
 
     &:focus,
     &:hover,
     &:active {
-        background-color: $ds44-contextual-hover;
+        background-color: $ds44-contextual-hover!important;
         border-color: $ds44-contextual-color;
     }
 }
 
+.ds44-bgGray, .ds44-lightBG {
+
+    .ds44-btnStd, .ds44-btnStd--large {
+        background-color: $ds44-background-base;
+
+        &.ds44-bgDark {
+          background: $ds44-background-dark;
+        }
+    }
+
+}
 
 /* == Icon-text buttons == */
 
@@ -121,9 +172,11 @@ a > .ds44-btn--contextual,
 
 // Buttons for header (full height)
 .ds44-btnIcoText--maxi {
-    font-size: .9375em;
+    font-size: .97em;
     font-weight: bold;
     text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
 }
 
 // text container for icon-text buttons
@@ -190,10 +243,38 @@ a > .ds44-btn--contextual,
     &.ds44-bgDark:focus {
         background-color: $ds44-gray;
     }
+
+    &--carre {
+      padding: 0;
+      height: 44px;
+      width: 44px;
+    }
 }
 
 .ds44-btnOpen {
-    top: .75rem;
+    top: 0;
+    width: 100%;
+    text-align: right;
+    height: inherit;
+
+    &.ds44-btnIco {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .icon {
+        line-height: normal;
+
+        &:before {
+            line-height: normal;
+            margin-top: -1rem;
+            display: inline-block;
+        }
+
+        &.icon--sizeL:before {
+            margin-top: -0.5rem;
+        }
+    }
 }
 
 /* == Specific buttons == */
@@ -224,6 +305,13 @@ a > .ds44-btn--contextual,
     font-weight: bold;
 }
 
+.ds44-btnStd {
+  &.ds44-fullWBtn {
+      padding: 1rem $ds44-padding-box;
+      border-radius: 0;
+  }
+}
+
 .ds44-btnSelect {
 
     @include ds44-font-sizes(largeButton);  // 16px
@@ -233,6 +321,14 @@ a > .ds44-btn--contextual,
         vertical-align: middle;
     }
 
+}
+
+button.ds44-theme {
+  &:focus,
+  &:hover,
+  &:active {
+      background: $ds44-contextual-hover;
+  }
 }
 
 .ds44-choiceYN button {
@@ -260,6 +356,36 @@ a.ds44-btnStd--retourPage {
     text-align: center;
 }
 
+
+// Bouton Cluster map
+.ds44-btnStd {
+
+  &--cluster {
+    border-radius: 50%;
+    width: 43px;
+    height: 43px;
+    padding: 0;
+    @include ds44-font-sizes(largeButton);  // 16px
+    min-height: inherit;
+    border: 2px solid $ds44-dark;
+
+    &--bigger {
+      width: 63px;
+      height: 63px;
+    }
+
+    &:hover {
+      border: 2px solid $ds44-dark;
+    }
+
+    & .ds44-btnInnerText {
+      line-height: 1;
+    }
+  }
+}
+
+
+
 /* medium screens */
 /* ------------- */
 
@@ -279,6 +405,12 @@ a.ds44-btnStd--retourPage {
         margin-bottom: 20px;
     }
 
+    .ds44-btnStd, a.ds44-btnStd, a > .ds44-btnStd, .ds44-btnStd > a {
+        &.ds44-btnQuestion {
+            right: $ds44-components-vmargin;
+        }
+    }
+
 }
 
 /* small screens */
@@ -296,6 +428,15 @@ a.ds44-btnStd--retourPage {
         top: 1.5rem;
     }
 
+    .ds44-btnStd, a.ds44-btnStd, a > .ds44-btnStd, .ds44-btnStd > a {
+
+        &.ds44-btnFullMobile {
+          width: 100%;
+          text-align: center;
+        }
+
+    }
+
 }
 
 @media (max-width: $ds44-small - .0625) {
@@ -303,14 +444,13 @@ a.ds44-btnStd--retourPage {
     .ds44-btnIcoText--maxi {
 
         position: relative;
-        background-color: transparent;
         margin: 0 1rem;
         padding: 0 0 .5rem 0;
         text-align: center;
         min-width: 6rem;
 
         .ds44-btnInnerText {
-            font-size: .5625em; // 9px
+            font-size: .86rem;
             position: absolute;
             bottom: 0;
             left: 0;
@@ -339,6 +479,10 @@ a.ds44-btnStd--retourPage {
 
         &.ds44-btnStd--plat {
             padding: $ds44-padding-medium;
+        }
+
+        &.ds44-btnQuestion {
+            right: $ds44-mobile-margins;
         }
 
     }

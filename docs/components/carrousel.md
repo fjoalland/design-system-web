@@ -10,10 +10,18 @@ description: Les carrousels sont des sliders latéraux actionnés par les flèch
 variations:
 - title: Slider quatre tuiles
   pattern: carrousel/carrousel-x4.html
+
 - title: Slider trois tuiles
   pattern: carrousel/carrousel-x3.html
+
 - title: Slider dates trois tuiles
   pattern: carrousel/carrousel-x3--date.html
+
+- title: Slider homepage
+  pattern: carrousel/carrousel-home.html
+
+- title: Slider x10
+  pattern: carrousel/carrousel-x10.html
 ---
 
 

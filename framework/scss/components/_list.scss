@@ -28,10 +28,29 @@
         display: inline-block;
         vertical-align: top;
         width: calc(100% - 25px); // retrait du lien pour caler l'icone à gauche
+        width: -webkit-calc(100% - 25px); // retrait du lien pour caler l'icone à gauche
     }
 
     &:first-child:after {
       padding-bottom: 0;
+    }
+}
+
+.ds44-uList {
+    > li {
+        margin-top: .5rem !important;
+    }
+}
+
+.ds44-errorList {
+        padding-left: 1.5rem !important;
+    > li {
+        margin-top: .2rem !important;
+        list-style-image: none !important;
+        padding-left: 20px;
+        background: url(../../../assets/images/right.svg) no-repeat left -9px;
+        background-size: 20px;
+        font-size: 1.6rem;
     }
 }
 

@@ -5,8 +5,55 @@
   MEDIA QUERIES
   === */
 
+  .ds44-partage-sliderHome {
 
-  @media (max-width: $ds44-small) {
+    padding: 1em 2em;
+    height: 100%;
+
+    p[role="heading"] {
+      font-size: 2.4rem;
+      line-height: 1.2em;
+    }
+    p.hashtag {
+      font-size: 1.9rem;
+    }
+    .ds44-list {
+      text-align: center;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+
+      li {
+        width: 50%;
+
+          a {
+            display: inline-block;
+            font-size: 1.5em;
+            padding: 1rem 1.5rem;
+          }
+      }
+    }
+  }
+
+  .ds44-partage {
+      > ul {
+          margin-top: 0;
+      }
+  }
+
+  @media (max-width: $ds44-large - .0625) {
+
+    .ds44-partage-sliderHome {
+        width: 100%;
+
+        > .ds44-list {
+            flex-wrap: inherit;
+        }
+    }
+
+  }
+
+
+  @media (max-width: $ds44-small - .0625) {
 
     .ds44-partage {
         flex-direction: column;

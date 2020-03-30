@@ -1,33 +1,41 @@
 class MiscDom {
-    static getAttribute(element, attributeName, defautValue = null) {
+    static getAttribute (element, attributeName, defautValue = null) {
         return (element.hasAttribute(attributeName) === true ? element.getAttribute(attributeName) : defautValue);
     }
 
-    static addClasses(element, classNames) {
+    static addClasses (element, classNames) {
         if (typeof classNames === 'string') {
             classNames = [classNames];
         }
 
         for (let index in classNames) {
+            if (!classNames.hasOwnProperty(index)) {
+                continue;
+            }
+
             element.classList.add(classNames[index]);
         }
     }
 
-    static removeClasses(element, classNames) {
+    static removeClasses (element, classNames) {
         if (typeof classNames === 'string') {
             classNames = [classNames];
         }
 
         for (let index in classNames) {
+            if (!classNames.hasOwnProperty(index)) {
+                continue;
+            }
+
             element.classList.remove(classNames[index]);
         }
     }
 
-    static hasClass(element, className) {
+    static hasClass (element, className) {
         return element.classList.contains(className);
     }
 
-    static getOffset(element) {
+    static getOffset (element) {
         let rect = element.getBoundingClientRect();
         let scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -37,7 +45,11 @@ class MiscDom {
         };
     }
 
-    static getPreviousSibling(element, selector) {
+    static getPreviousSibling (element, selector) {
+        if (!element) {
+            return null;
+        }
+
         let sibling = element.previousElementSibling;
         if (!selector) {
             return sibling;
@@ -51,7 +63,11 @@ class MiscDom {
         }
     };
 
-    static getNextSibling(element, selector) {
+    static getNextSibling (element, selector) {
+        if (!element) {
+            return null;
+        }
+
         let sibling = element.nextElementSibling;
         if (!selector) {
             return sibling;

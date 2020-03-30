@@ -1,0 +1,15 @@
+{% include form/_variables.html %}
+
+{% capture mainContent %}
+<textarea rows="5" cols="1" id="{{ id }}" name="{{ name }}" class="{{ mainClass }}" {{ title }} {{ attributes }} {{ inputAttributes }} {% if ariaDescribedBy != '' %}aria-describedby="{{ ariaDescribedBy }}"{% endif %}></textarea>
+{% endcapture %}
+
+{% capture labelContent %}
+{% include form/field/partial/label.html content=mainContent disabled=include.disabled %}
+{% endcapture %}
+
+{% if include.hidden == 'true' %}
+    {% assign containerClass = containerClass | append : ' hidden' %}
+{% endif %}
+
+{% include form/field/partial/container.html content=labelContent containerClass=containerClass %}

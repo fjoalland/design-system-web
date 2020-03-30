@@ -79,8 +79,20 @@ h2, .h2-like {
   display: inline;
 
   // Any element after the title gains margin top
-  & + * {
+  &:not(h1):not(.h1-like):not(.h3-like):not(.h4-like) + *,
+  & + .ds44-introduction {
     margin-top: $ds44-components-vmargin;
+  }
+
+  &.ds44-theme {
+    background: linear-gradient(to bottom, #99E6D1 55%, rgba(255, 255, 255, 1) 55% )!important;
+  }
+
+  &--light {
+    background: none;
+    padding: 0;
+    display: block;
+    margin-top: $ds44-margin-base !important;
   }
 
 }
@@ -143,7 +155,7 @@ h6, .h6-like {
     }
 
   }
-  
+
 }
 
 
@@ -215,10 +227,10 @@ ul:not(.ds44-list):not(.ds44-collapser) {
   > li {
     list-style-position: outside;
     margin-top: $ds44-padding-box;
-    list-style-image: url(../../../assets/images/right.png);
-    
+    list-style-image: url(../../../assets/images/right.svg);
+
     ul:not(.ds44-list) {
-      
+
       // second-level
       > li {
         list-style-type: disc;

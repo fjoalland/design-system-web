@@ -1,5 +1,5 @@
 class MiscUrl {
-    static getHashParameters() {
+    static getHashParameters () {
         const url = document.location.href;
         if (
             url.indexOf('#') === -1 ||
@@ -29,7 +29,7 @@ class MiscUrl {
             );
     }
 
-    static setHashParameters(parameters = {}) {
+    static setHashParameters (parameters = {}) {
         let newUrl = document.location.href.split('#')[0] + '#';
 
         const sortedParameters = {};
@@ -38,9 +38,13 @@ class MiscUrl {
         });
 
         for (let key in sortedParameters) {
+            if (!sortedParameters.hasOwnProperty(key)) {
+                continue;
+            }
+
             let value = sortedParameters[key];
 
-            if(typeof value === 'object') {
+            if (typeof value === 'object') {
                 value = JSON.stringify(value);
             }
             newUrl += key.toLowerCase() + (value ? '=' + window.decodeURIComponent(value) : '') + '&';

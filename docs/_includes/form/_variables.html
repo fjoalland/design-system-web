@@ -1,0 +1,128 @@
+{% if include.id %}
+    {% assign id = include.id %}
+{% else %}
+    {% assign min = 0 %}
+    {% assign max = 100000 %}
+    {% assign diff = max | minus: min %}
+    {% assign randomNumber = "now" | date: "%N" | modulo: diff | plus: min %}
+    {% assign id = 'form-element-' | append : randomNumber %}
+{% endif %}
+
+{% if include.name %}
+    {% assign name = include.name %}
+{% else %}
+    {% assign name = id %}
+{% endif %}
+
+{% if include.class %}
+    {% assign mainClass = include.class %}
+{% else %}
+    {% assign mainClass = 'ds44-inpStd' %}
+{% endif %}
+
+{% if mainClass contains 'ds44-inpLarge' %}
+    {% assign placeholderClass = 'ds44-labelTypePlaceholder ds44-labelTypePlaceholderLarge' %}
+    {% assign iconClass = 'icon--sizeXL' %}
+{% else %}
+    {% assign placeholderClass = 'ds44-labelTypePlaceholder' %}
+    {% assign iconClass = 'icon--sizeL' %}
+{% endif %}
+
+{% if include.title %}
+    {% if include.required == 'true' %}
+        {% assign title = 'title="' | append: include.title | append: ' - obligatoire"' %}
+    {% else %}
+        {% assign title = 'title="' | append: include.title | append: '"' %}
+    {% endif %}
+{% else %}
+    {% if include.label and include.required == 'true' %}
+        {% assign title = 'title="' | append: include.label | append: ' - obligatoire"' %}
+    {% else %}
+        {% assign title = '' %}
+    {% endif %}
+{% endif %}
+
+{% if include.label %}
+    {% assign label = include.label %}
+{% else %}
+    {% assign label = 'Étiquette non définie' %}
+{% endif %}
+
+{% if include.attributes %}
+    {% assign attributes = include.attributes %}
+{% else %}
+    {% assign attributes = '' %}
+{% endif %}
+
+{% if include.boxAttributes %}
+    {% assign boxAttributes = include.boxAttributes %}
+{% else %}
+    {% assign boxAttributes = '' %}
+{% endif %}
+
+{% if include.inputAttributes %}
+    {% assign inputAttributes = include.inputAttributes %}
+{% else %}
+    {% assign inputAttributes = '' %}
+{% endif %}
+
+{% if include.containerClass %}
+    {% assign containerClass = include.containerClass %}
+{% else %}
+    {% assign containerClass = 'ds44-form__container' %}
+{% endif %}
+
+{% if include.containerAttributes %}
+    {% assign containerAttributes = include.containerAttributes %}
+{% else %}
+    {% assign containerAttributes = '' %}
+{% endif %}
+
+{% if include.buttonAttributes %}
+    {% assign buttonAttributes = include.buttonAttributes %}
+{% else %}
+    {% assign buttonAttributes = '' %}
+{% endif %}
+
+{% if include.labelClass %}
+    {% assign labelClass = include.labelClass %}
+{% else %}
+    {% if include.placeholder %}
+        {% assign labelClass = 'ds44-formLabel--external' %}
+    {% else %}
+        {% assign labelClass = 'ds44-formLabel' %}
+    {% endif %}
+{% endif %}
+
+{% if include.placeholder %}
+    {% assign placeholder = 'placeholder="' | append: include.placeholder | append: '"' %}
+{% else %}
+    {% assign placeholder = '' %}
+{% endif %}
+
+{% if include.required == 'true' %}
+    {% assign requiredStar = '<sup aria-hidden="true">*</sup>' %}
+    {% assign attributes = attributes | append : ' required' %}
+    {% assign containerAttributes = containerAttributes | append : ' data-required="true"' %}
+{% else %}
+    {% assign requiredStar = '' %}
+{% endif %}
+
+{% if include.disabled == 'true' %}
+    {% assign boxAttributes = boxAttributes | append: ' aria-disabled="true"' %}
+    {% assign inputAttributes = inputAttributes | append: ' readonly' %}
+    {% assign containerAttributes = containerAttributes | append : ' data-disabled="true"' %}
+{% endif %}
+
+{% if include.ariaDescribedBy %}
+    {% assign ariaDescribedBy = include.ariaDescribedBy %}
+{% else %}
+    {% assign ariaDescribedBy = '' %}
+{% endif %}
+
+{% if include.explanation %}
+    {% capture explanation %}
+        <span id="explanation-{{ id }}" class="ds44-labelTypeInfoComp">{{ include.explanation }}</span>
+    {% endcapture %}
+    {% capture ariaDescribedBy %}explanation-{{ id }}{% if ariaDescribedBy != '' %} {{ ariaDescribedBy }}{% endif %}{% endcapture %}
+{% endif %}

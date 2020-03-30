@@ -14,10 +14,39 @@
 
         .ds44-card__section {
             padding: $ds44-padding-large;
+            position: relative;
         }
 
         .ds44-innerBoxContainer {
             padding: 0;
+        }
+    }
+
+    &.ds44-js-card {
+
+        &:focus,
+        &:hover,
+        &:active {
+            cursor: pointer;
+
+            a {
+                text-decoration: underline;
+            }
+        }
+
+    }
+
+    &.ds44-card--fiche {
+        background: transparent;
+
+        .ds44-card__section {
+            padding: 0;
+        }
+
+        &:focus,
+        &:hover,
+        &:active {
+            box-shadow: none;
         }
     }
 
@@ -36,6 +65,7 @@
         .ds44-cardTitle {
             padding-top: $ds44-padding-large;
         }
+
     }
 
     &.ds44-cardIsFocus {
@@ -74,10 +104,14 @@
 
         a {
           text-decoration: none;
+            &:hover, &:focus, &:active {
+                text-decoration: underline;
+            }
         }
-        a:hover {
-          text-decoration: underline;
-        }
+    }
+
+    .ds44-cardGlobalLink {
+        text-decoration: none;
     }
 
     .ds44-imgRatio {
@@ -120,9 +154,9 @@ a.ds44-card {
     &--elu {
       text-align: center;
       padding-top : $ds44-padding-large;
-      cursor: pointer;
 
-      .ds44-container-imgRatio--profil {
+      .ds44-container-imgRatio--profil,
+      .ds44-container-imgRatio--profilXL {
         margin: 0 auto;
       }
     }
@@ -130,7 +164,7 @@ a.ds44-card {
 
 .ds44-card__section {
     padding: $ds44-padding-medium $ds44-padding-box;
-    position: relative;
+    height: 100%;
 }
 
 .ds44-card__globalLink {
@@ -187,8 +221,16 @@ a.ds44-card {
     width: auto;
     min-width: 38%;
 
-    @media (min-width: $ds44-small - .0625) and (max-width: ($ds44-large - .0625)) {
+    @media (min-width: $ds44-small) and (max-width: ($ds44-large - .0625)) {
         min-width: 20%;
+    }
+
+    &--dim110 {
+        min-width: 31%;
+
+        @media (min-width: $ds44-extra-large) {
+            min-width: 110px;
+        }
     }
 }
 
@@ -245,6 +287,7 @@ a.ds44-card {
     }
 }
 
+.ds44-cardDate,
 .ds44-cardLocalisation {
     font-size: .8125em;
 
@@ -260,4 +303,16 @@ a.ds44-card {
             min-height: 100%;
         }
     }
+}
+
+/*
+    MEDIA QUERIES
+    */
+
+@media (max-width: $ds44-tiny - .0625) {
+
+    .ds44-tiny-reducedFont .ds44-card__globalLink {
+        font-size: smaller;
+    }
+
 }

@@ -49,6 +49,8 @@
 
 .ds44-header {
     min-height: $header-height-large;
+    max-height: $header-height-medium;
+    overflow: hidden;
     position: fixed;
     top: 0;
     padding: 0;
@@ -69,6 +71,10 @@
     .ds44-blocBandeau {
         margin-left: 5.5%; /* Aligner sur le body */
     }
+
+    .ds44-colRight {
+      min-height: $header-height-large;
+    }
 }
 
 /* Bandeau */
@@ -80,6 +86,14 @@
     width: 100%;
     top: 0;
     left: 0;
+}
+
+
+/* MDPH Site Handicap header */
+.mdph-logo {
+  &--tablet {
+    display: none;
+  }
 }
 
 
@@ -104,9 +118,16 @@
     }
 
     // when reduced, header column right and buttons gain flex display
+    .ds44-header {
+        min-height: $header-height-medium;
+        padding: 0;
+        left: 0;
+    }
+
     .ds44-header .ds44-colRight {
         display: flex;
         justify-content: flex-end;
+        min-height: $header-height-medium;
 
         .ds44-btnIcoText--maxi {
             display: flex;
@@ -116,6 +137,8 @@
             margin: 0 0 0 1rem;
             min-width: 0;
             align-items: center;
+            line-height: 1.2;
+            padding: $ds44-padding-xlarge  $ds44-padding-large;
 
             .icon + .ds44-btnInnerText,
             .ds44-btnInnerText + .icon {
@@ -125,7 +148,6 @@
             .ds44-btnInnerText {
                 position: relative;
                 white-space: nowrap;
-                margin-top: .5rem;
             }
 
         }
@@ -135,50 +157,14 @@
 
 @media (max-width: $ds44-medium - .0625) {
 
-    .ds44-header {
-        min-height: 0;
-    }
-
-    .ds44-header .ds44-colRight {
-
-        .ds44-btn--contextual {
-
-            &:focus,
-            &:hover,
-            &:active {
-                background-color: transparent;
-                border-color: transparent;
-            }
-        }
-    }
-
-}
-
-/* -------------- */
-/* small screens */
-/* ------------ */
-
-@media (max-width: $ds44-small - .0625) {
-
-    .ds44-header {
-        min-height: $header-height-small;
-        padding: .5rem 0 0 0;
-        left: 0;
-    }
 
     .ds44-logoContainer {
         flex-wrap: wrap;
-
-        img {
-            height: 35px;
-            max-width: none;
-        }
     }
 
     .ds44-headerImg {
         min-height: 245px;
     }
-
 
     .ds44-rsHeadLink {
         padding-left: 0;
@@ -188,35 +174,78 @@
         margin: 0 1rem;
     }
 
+    /* MDPH Site Handicap header */
+    .mdph-logo {
+      display: none;
+
+      &--tablet {
+        display: block;
+      }
+    }
+
+
 }
 
-@media (max-width: $ds44-tiny - 1) {
+/* -------------- */
+/* small screens */
+/* ------------ */
 
-    .ds44-logoContainer {
-        flex-direction: column;
-        flex-wrap: nowrap;
+@media (max-width: $ds44-small - .0625) {
 
-        .ds44-titreLogo {
-            margin-left: 0;
-            margin-top: .5rem;
-            text-align: center;
-            font-size: .5625em;
-        }
 
-    }
+  .ds44-logoContainer {
+      flex-direction: column;
+      flex-wrap: nowrap;
 
-    .ds44-header .ds44-colRight {
 
-        .ds44-btnIcoText--maxi {
+      img {
+          height: 35px;
+          max-width: none;
+      }
 
-            &.ds44--xl-padding {
-                padding-left: 0;
-                padding-right: 0;
-            }
-        }
-    }
-    .ds44-overlay--navApplis.ds44-wave-grey {
-        background: #fff;
+      .ds44-titreLogo {
+          margin-left: 0;
+          margin-top: .5rem;
+          text-align: center;
+          font-size: .5625em;
+      }
+
+  }
+
+  .ds44-overlay--navFromBottom.ds44-wave-grey {
+      background: #fff;
+  }
+
+  .ds44-header .ds44-colRight {
+
+    min-height: $header-height-small;
+
+      .ds44-btnIcoText--maxi {
+          margin-left: 0;
+
+          &.ds44--xl-padding {
+              padding: .5rem 1rem 1rem 1rem;
+          }
+
+          &.ds44-btn--menu {
+              padding: .6rem 1.5rem 1rem 1.5rem;
+          }
+      }
+  }
+
+  .ds44-header {
+      min-height: $header-height-small;
+  }
+
+}
+
+@media (max-width: $ds44-tiny - .0625) {
+
+  .ds44-logoContainer {
+
+      img {
+          width: 100%;
+      }
     }
 
 }
