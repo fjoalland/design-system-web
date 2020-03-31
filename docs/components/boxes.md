@@ -20,7 +20,7 @@ variations:
 - title: Blocs libres
   description: Encadrés colorés
   pattern: boxes/box-libres.html
-- title: Equipements financés
+- title: En chiffres
   description: Encadrés illustrés
   pattern: boxes/box-equipements.html
 - title: Pushs
