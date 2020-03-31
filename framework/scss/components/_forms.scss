@@ -82,14 +82,14 @@ input {
         top: $ds44-padding-large;
         font-size: 1.6rem;
     }
+}
 
-    .ds44-labelTypeInfoComp {
-        font-size: 1.3rem;
-        position: absolute;
-        bottom: -$ds44-large-vmargin;
-        right: $ds44-padding-box;
-        color: $ds44-gray;
-    }
+.ds44-labelTypeInfoComp {
+    font-size: 1.3rem;
+    position: absolute;
+    bottom: -$ds44-large-vmargin;
+    right: $ds44-padding-box;
+    color: $ds44-gray;
 }
 
 .ds44-formLabel--external {
@@ -97,13 +97,6 @@ input {
     color: $ds44-color-dark-text;
     margin: $ds44-small-vmargin 0;
     display: block;
-
-    .ds44-labelTypeInfoComp {
-        position: absolute;
-        top: 0;
-        right: $ds44-padding-box;
-        color: $ds44-gray;
-    }
 
 }
 
@@ -214,6 +207,10 @@ textarea {
         top: 1.8rem;
         right: 4rem;
     }
+}
+
+.ds44-formLabel--external ~ .ds44-reset {
+    top: 53%;
 }
 
 /**
