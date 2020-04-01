@@ -42,9 +42,24 @@
     padding: $ds44-padding-xlarge;
 }
 
+// Equipements financiers
+
 .ds44-boxPic {
     float: left;
-    margin-right: $spacer-medium;
+    margin-right: $spacer-medium/2;
+    width: 150px;
+    min-width: max-content;
+}
+
+// Chiffres clés
+
+.ds44-numberIncrement {
+  display: inline-block !important;
+  flex-shrink: 0;
+
+  + .h1-like {
+    display: inline-block !important;
+  }
 }
 
 .ds44-txtExergue {
