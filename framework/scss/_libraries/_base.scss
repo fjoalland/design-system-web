@@ -10,9 +10,10 @@
   }
 }
 
-/* switching to border-box model for all elements */
+/* switching to border-box model for all elements and adding smooth scrolling */
 html {
   box-sizing: border-box;
+  scroll-behavior: smooth; // all browsers but Safari
 }
 
 *,
@@ -65,6 +66,10 @@ h1, .h1-like {
   line-height: 1;
   padding: 0;
   display: block;
+
+  &--bigger {
+    font-size: 11rem;
+  }
 }
 
 h2, .h2-like {
@@ -140,6 +145,16 @@ h6, .h6-like {
   }
   background: transparent;
   font-weight: $weight-medium;
+  padding: 0;
+  display: block;
+}
+.ds44-smallTitle {
+  @include ds44-font-sizes(smallTitle);
+  @if variable_exists(ds44-font-family-base) {
+    font-family: $ds44-font-family-base;
+  }
+  background: transparent;
+  font-weight: $weight-bold;
   padding: 0;
   display: block;
 }

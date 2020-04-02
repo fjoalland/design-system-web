@@ -13,6 +13,7 @@ class MapSearch extends MapAbstract {
         object.isVisible = true;
 
         MiscEvent.addListener('search:update', this.search.bind(this, objectIndex));
+        MiscEvent.addListener('resize', this.resize.bind(this, objectIndex), window);
     }
 
     afterLoad (objectIndex) {
@@ -20,17 +21,94 @@ class MapSearch extends MapAbstract {
 
         object.map.addControl(new window.mapboxgl.NavigationControl(), 'bottom-right');
         object.map.addControl(new window.mapboxgl.FullscreenControl(), 'bottom-left');
-        object.map.addControl(new MapControlToggleView(), 'top-right');
+        object.map.addControl(new window.MapboxLanguage({ defaultLanguage: 'fr' }));
+        object.map.setLayoutProperty('country-label', 'text-field', ['get', 'name_fr']);
 
-        document
-            .querySelectorAll('.ds44-js-toggle-map-view')
-            .forEach((mapToggleViewElement) => {
-                MiscEvent.addListener('click', this.toggleView.bind(this, objectIndex), mapToggleViewElement);
-            });
+        MiscEvent.addListener('fullscreenchange', this.translateMap.bind(this, objectIndex));
+        this.translateMap(objectIndex);
+
+        const mapToggleViewElement = document.querySelector('.ds44-js-toggle-map-view');
+        if (mapToggleViewElement) {
+            MiscEvent.addListener('click', this.toggleView.bind(this, objectIndex), mapToggleViewElement);
+        }
 
         object.map.on('moveend', this.move.bind(this, objectIndex));
         if (object.results) {
             this.show(objectIndex);
+        }
+    }
+
+    translateMap (objectIndex) {
+        const object = this.objects[objectIndex];
+
+        const mapFullScreenElement = object.mapElement.querySelector('.mapboxgl-ctrl-fullscreen');
+        if (mapFullScreenElement) {
+            mapFullScreenElement.removeAttribute('aria-label');
+            mapFullScreenElement.setAttribute('title', 'Afficher la carte en plein écran');
+
+            let spanElement = mapFullScreenElement.querySelector('.visually-hidden');
+            if (!spanElement) {
+                spanElement = document.createElement('span')
+                spanElement.classList.add('visually-hidden');
+                mapFullScreenElement.appendChild(spanElement);
+            }
+            spanElement.innerText = 'Afficher la carte en plein écran';
+        }
+
+        const mapShrinkElement = object.mapElement.querySelector('.mapboxgl-ctrl-shrink');
+        if (mapShrinkElement) {
+            mapShrinkElement.removeAttribute('aria-label');
+            mapShrinkElement.setAttribute('title', 'Sortir du mode plein écran de la carte');
+
+            let spanElement = mapShrinkElement.querySelector('.visually-hidden');
+            if (!spanElement) {
+                spanElement = document.createElement('span')
+                spanElement.classList.add('visually-hidden');
+                mapShrinkElement.appendChild(spanElement);
+            }
+            spanElement.innerText = 'Sortir du mode plein écran de la carte';
+        }
+
+        const mapZoomInElement = object.mapElement.querySelector('.mapboxgl-ctrl-zoom-in');
+        if (mapZoomInElement) {
+            mapZoomInElement.removeAttribute('aria-label');
+            mapZoomInElement.setAttribute('title', 'Augmenter la taille de la carte');
+
+            let spanElement = mapZoomInElement.querySelector('.visually-hidden');
+            if (!spanElement) {
+                spanElement = document.createElement('span')
+                spanElement.classList.add('visually-hidden');
+                mapZoomInElement.appendChild(spanElement);
+            }
+            spanElement.innerText = 'Augmenter la taille de la carte';
+        }
+
+        const mapZoomOutElement = object.mapElement.querySelector('.mapboxgl-ctrl-zoom-out');
+        if (mapZoomOutElement) {
+            mapZoomOutElement.removeAttribute('aria-label');
+            mapZoomOutElement.setAttribute('title', 'Diminuer la taille de la carte');
+
+            let spanElement = mapZoomOutElement.querySelector('.visually-hidden');
+            if (!spanElement) {
+                spanElement = document.createElement('span')
+                spanElement.classList.add('visually-hidden');
+                mapZoomOutElement.appendChild(spanElement);
+            }
+            spanElement.innerText = 'Diminuer la taille de la carte';
+        }
+
+        const mapCompassElement = object.mapElement.querySelector('.mapboxgl-ctrl-compass');
+        if (mapCompassElement) {
+            mapCompassElement.removeAttribute('aria-label');
+            mapCompassElement.setAttribute('title', 'Repositionner la carte vers le nord');
+
+            let spanElement = mapCompassElement.querySelector('.visually-hidden');
+            if (!spanElement) {
+                spanElement = document.createElement('span')
+                spanElement.classList.add('visually-hidden');
+                mapCompassElement.appendChild(spanElement);
+            }
+            spanElement.innerText = 'Repositionner la carte vers le nord';
         }
     }
 
@@ -139,15 +217,26 @@ class MapSearch extends MapAbstract {
 
         const resultsElement = object.mapElement.closest('.ds44-results')
         if (resultsElement) {
+            const mapToggleViewElement = resultsElement.querySelector('.ds44-js-toggle-map-view');
             if (resultsElement.classList.contains('ds44-results--mapVisible')) {
                 resultsElement.classList.remove('ds44-results--mapVisible')
                 object.isVisible = false;
+
+                if (mapToggleViewElement) {
+                    const text = mapToggleViewElement.innerText.replace('Masquer ', 'Afficher ');
+                    mapToggleViewElement.querySelector('span').innerHTML = text;
+                    mapToggleViewElement.setAttribute('title', text);
+                }
             } else {
                 resultsElement.classList.add('ds44-results--mapVisible')
                 object.isVisible = true;
-                window.setTimeout(this.resizeMap.bind(this, objectIndex), 200);
-                window.setTimeout(this.resizeMap.bind(this, objectIndex), 600);
-                window.setTimeout(this.resizeMap.bind(this, objectIndex), 1000);
+                this.resize(objectIndex);
+
+                if (mapToggleViewElement) {
+                    const text = mapToggleViewElement.innerText.replace('Afficher ', 'Masquer ');
+                    mapToggleViewElement.querySelector('span').innerHTML = text;
+                    mapToggleViewElement.setAttribute('title', text);
+                }
             }
         }
     }
@@ -166,6 +255,12 @@ class MapSearch extends MapAbstract {
         if (resultElement) {
             resultElement.classList.remove('active');
         }
+    }
+
+    resize (objectIndex) {
+        window.setTimeout(this.resizeMap.bind(this, objectIndex), 200);
+        window.setTimeout(this.resizeMap.bind(this, objectIndex), 600);
+        window.setTimeout(this.resizeMap.bind(this, objectIndex), 1000);
     }
 
     resizeMap (objectIndex) {

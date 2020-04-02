@@ -1,0 +1,156 @@
+/*
+* CD44 Design System - timeline
+*/
+
+.ds44-timeline_index {
+
+  font-size: 2.2rem;
+
+  p {
+    display: inline-block;
+    font-weight: bolder;
+  }
+
+  ul {
+    display: inline-block;
+
+    li {    
+      display: inline-block;
+
+      > a {
+        padding-left: 40px;
+        background: url(../../../assets/images/right.png) no-repeat left 15px center;
+        margin-right: 1rem;
+      }
+    }
+  }
+
+}
+
+.ds44-timeline_container {
+
+  position: relative;
+
+  &::before {
+    content: "";
+    width: 3px;
+    height: 100%;
+    position: absolute;
+    background-color: $ds44-contextual-color;
+    left: 50%;
+    top: 40px;
+    z-index: 10;
+  }
+
+  .ds44-timeline_elem {
+    width: calc(50% - 5rem); // 50% - taille de la marge à droite
+    margin-right: 5rem;
+    padding-bottom: 4rem;
+    margin-bottom: 4rem;
+    border-bottom: 2px solid $ds44-contextual-color;
+    position: relative;
+
+    p, hr {
+      margin-top: 3rem;
+    }
+
+  }
+
+  .ds44-timeline_elem::after {
+    content: "";
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    border: 5px solid #FFF;
+    background-color: #000;
+    border-radius: 25px;
+    left: calc(100% + 39px); // taille du conteneur + (sa marge - (la moitié de la taille du rond - moitié de la taille de la ligne verticale))
+    top: 25px;
+    z-index: 20;
+  }
+
+  .ds44-timeline_elem:nth-child(odd) .h2-like {
+
+    margin-left: calc(100% + 10rem);
+
+  }
+
+  .ds44-timeline_elem:nth-child(even) {
+    margin-right: 0;
+    margin-left: calc(50% + 5rem);
+
+    &::after {
+      left: -61px; // - (marge du conteneur + (la moitié de la taille du rond - moitié de la taille de la ligne verticale))
+      top: 25px;
+    }
+    
+  }
+
+}
+
+@media (max-width: $ds44-medium - .0625) {
+
+  .ds44-timeline_index {
+
+      text-align: left;
+
+    p {
+      display: block;
+    }
+  
+    ul {
+      display: block;
+  
+      li {    
+        display: block;
+  
+        > a {
+          padding-left: 25px;
+          background: url(../../../assets/images/right.png) no-repeat left;
+          margin-right: 0;
+        }
+      }
+    }
+  
+  }
+
+    
+  .ds44-timeline_container {
+
+    position: relative;
+
+    &::before {
+      left: 1.5rem;
+    }
+
+    .ds44-timeline_elem {
+      width: auto;
+      margin-right: 1.5rem;
+      margin-left: 4rem;
+    }
+
+    .ds44-timeline_elem::after {
+      left: -36px; // - (marge du conteneur - position de la ligne + moitié de la taille du rond - moitié de la largeur de la ligne)
+      top: 14px; // championnat de rugby français
+    }
+
+    .ds44-timeline_elem:nth-child(odd) .h2-like {
+
+      margin-left: 0;
+
+    }
+
+    .ds44-timeline_elem:nth-child(even) {
+      margin-left: 4rem;
+      margin-right: 2rem;
+
+      &::after {
+        left: -36px;
+        top: 14px;
+      }
+      
+    }
+
+  }
+
+}
