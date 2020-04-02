@@ -33,7 +33,7 @@ variations:
   description: Différents styles d'encadrés deux colonnes
   pattern: boxes/box-deuxCol.html
 - title: Alerte
-  description: Encadré d'alerte que l'on retrouvera sous le header principal. Elle peut se replier / se réouvrir et conserver l'état sur la durée de la session pour l’alerte en question car il peut y en avoir plusieurs à des endroits différents du site.
+  description: Encadré d'alerte que l'on retrouvera sous le header principal. Il peut se replier / se réouvrir et conserver l'état sur la durée de la session pour l’alerte en question car il peut y en avoir plusieurs à des endroits différents du site.
   pattern: boxes/box-alert.html
 ---
 
