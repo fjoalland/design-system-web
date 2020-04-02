@@ -79,7 +79,7 @@ class FormLayoutGlobal {
                 evt.stopPropagation();
                 evt.preventDefault();
 
-                MiscEvent.dispatch('form:validate', {'formElement': object.formElement});
+                MiscEvent.dispatch('form:validate', { 'formElement': object.formElement });
 
                 return false;
             }
@@ -118,11 +118,21 @@ class FormLayoutGlobal {
             }
 
             // Save city and adresse in local storage
-            if(formattedData['commune']) {
+            if (formattedData['commune']) {
                 window.sessionStorage.setItem('city', JSON.stringify(formattedData['commune']));
             }
-            if(formattedData['adresse']) {
+            if (formattedData['adresse']) {
                 window.sessionStorage.setItem('address', JSON.stringify(formattedData['adresse']));
+            }
+
+            // Statistics
+            if (object.formElement.getAttribute('data-statistic')) {
+                MiscEvent.dispatch(
+                    'statistic:gtag:event',
+                    {
+                        'statistic': JSON.parse(object.formElement.getAttribute('data-statistic')),
+                        'data': formattedData
+                    });
             }
 
             if (object.formElement.getAttribute('data-is-ajax') === 'true') {
@@ -156,6 +166,8 @@ class FormLayoutGlobal {
             }
             object.formElement.submit();
         } catch (ex) {
+            console.log(ex);
+
             evt.stopPropagation();
             evt.preventDefault();
 
