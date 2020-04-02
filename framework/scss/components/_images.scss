@@ -140,6 +140,31 @@ figure {
 }
 
 
+/* Mosaiques */
+.ds44-mosaique {
+  margin: 0;
+  padding: 0;
+
+    & + .ds44-mosaique {
+      margin-top: $ds44-medium-vmargin;
+    }
+
+    li {
+      cursor: pointer;
+    }
+    li.row-2 + li  {
+      margin-bottom: $ds44-medium-vmargin;
+    }
+    .ds44-legendeContainer.ds44-container-imgRatio {
+        height: 100%;
+    }
+}
+
+.ds44-gutter {
+  grid-column-gap: $ds44-medium-vmargin;
+}
+
+
 @keyframes rotate {
     100% {
         transform: rotate(360deg);
@@ -210,6 +235,13 @@ figure {
         padding-top: 0%;
     }
 
+    .ds44-mosaique {
+      .ds44-legendeContainer.ds44-container-imgRatio .ds44-imgRatio,
+      .ds44-legendeContainer.ds44-container-imgRatio {
+          height: 100%;
+      }
+    }
+
 
     .ds44-legendeContainer .ds44-blockAbsolute {
         position: relative;
@@ -232,4 +264,16 @@ figure {
     .col .ds44-container-imgRatio--tuileMiseEnAvant .ds44-card__title {
         font-size: 1.7rem; // 17px
     }
+}
+
+@media (max-width: $ds44-tiny ) {
+
+    /* Mosaiques */
+    .ds44-gutter {
+
+      li {
+        margin-bottom: $ds44-medium-vmargin;
+      }
+    }
+
 }
