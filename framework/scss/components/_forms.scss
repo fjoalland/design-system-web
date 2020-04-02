@@ -48,48 +48,49 @@ input {
     @include ds44-font-sizes(button);
     color: $ds44-graytext-color;
     display: block;
-    position: relative;
     font-weight: normal;
     margin-bottom: 0;
     text-align: left;
+    position: absolute;
+    top: 1.2rem;
+    left: $ds44-padding-box;
+    transition: all $ds44-timing-standard ease-in-out;
+    width: calc(100% - 40px);
+    width: -webkit-calc(100% - 40px);
+
+    &.ds44-moveLabel {
+        font-size: 1.3rem; // 13px instead of 14px
+        top: -$ds44-padding-medium*1.8;
+        left: 0;
+        color: $ds44-dark;
+    }
+
+    .ds44-bgDark &.ds44-moveLabel {
+        color: $ds44-light-color;
+    }
 
     .ds44-labelTypePlaceholder {
-        position: absolute;
-        top: 1.2rem;
-        left: $ds44-padding-box;
-        transition: all $ds44-timing-standard ease-in-out;
         color: $ds44-gray;
         overflow: hidden;
         text-overflow: ellipsis;
-        width: calc(100% - 40px);
-        width: -webkit-calc(100% - 40px);
         white-space: nowrap;
         cursor: text;
-
-        &.ds44-moveLabel {
-            font-size: 1.3rem; // 13px instead of 14px
-            top: -$ds44-padding-medium*1.8;
-            left: 0;
-            color: $ds44-dark;
-        }
-
-        .ds44-bgDark &.ds44-moveLabel {
-            color: $ds44-light-color;
-        }
+        width: 100%;
+        display: block;
     }
 
     .ds44-labelTypePlaceholderLarge {
         top: $ds44-padding-large;
         font-size: 1.6rem;
     }
+}
 
-    .ds44-labelTypeInfoComp {
-        font-size: 1.3rem;
-        position: absolute;
-        bottom: -$ds44-large-vmargin;
-        right: $ds44-padding-box;
-        color: $ds44-gray;
-    }
+.ds44-labelTypeInfoComp {
+    font-size: 1.3rem;
+    position: absolute;
+    bottom: -$ds44-large-vmargin;
+    right: $ds44-padding-box;
+    color: $ds44-gray;
 }
 
 .ds44-formLabel--external {
@@ -97,13 +98,6 @@ input {
     color: $ds44-color-dark-text;
     margin: $ds44-small-vmargin 0;
     display: block;
-
-    .ds44-labelTypeInfoComp {
-        position: absolute;
-        top: 0;
-        right: $ds44-padding-box;
-        color: $ds44-gray;
-    }
 
 }
 
@@ -172,12 +166,6 @@ textarea {
     color: $ds44-color-soft-text;
 }
 
-/* Datepicker */
-
-.ds44-datepicker {
-    position: relative;
-}
-
 /* Bouton de reset de champ */
 
 .ds44-reset,
@@ -201,7 +189,7 @@ textarea {
     top: -webkit-calc(50% - 1.3rem);
     z-index: 2;
 
-    .ds44-datepicker & {
+    .ds44-datepicker__shape + & {
         right: 3.4rem;
     }
 
@@ -214,6 +202,10 @@ textarea {
         top: 1.8rem;
         right: 4rem;
     }
+}
+
+.ds44-formLabel--external ~ .ds44-reset {
+    top: 53%;
 }
 
 /**
