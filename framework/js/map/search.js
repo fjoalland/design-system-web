@@ -14,6 +14,15 @@ class MapSearch extends MapAbstract {
 
         MiscEvent.addListener('search:update', this.search.bind(this, objectIndex));
         MiscEvent.addListener('resize', this.resize.bind(this, objectIndex), window);
+
+        // Show results at startup for mobiles
+        const breakpoint = window.matchMedia('(max-width: 767px)');
+        if(breakpoint.matches) {
+            const resultsElement = object.mapElement.closest('.ds44-results.ds44-results--mapVisible')
+            if (resultsElement) {
+                this.toggleView(objectIndex);
+            }
+        }
     }
 
     afterLoad (objectIndex) {
