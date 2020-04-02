@@ -22,7 +22,7 @@ variations:
   pattern: boxes/box-libres.html
 - title: En chiffres
   description: Encadrés illustrés
-  pattern: boxes/box-equipements.html
+  pattern: boxes/box-chiffres.html
 - title: Pushs
   description: Encadrés publicitaires
   pattern: boxes/box-push.html
