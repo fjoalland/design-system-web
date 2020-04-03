@@ -1,14 +1,8 @@
-<ul class="grid-3 grid-3-tiny-1 ds44-mosaique ds44-gutter ds44-list">
+<ul class="grid-3-tiny-1 ds44-mosaique ds44-gutter ds44-list">
   <li>
-    <figure class="ds44-legendeContainer ds44-container-imgRatio ds44-container-imgRatio--A4" data-target="#overlay-mosaique" data-js="ds44-modal">
-      <img src="../../assets/images/header-page-accueil.jpg" alt="" class="ds44-imgRatio">
-      <figcaption class="ds44-imgCaption" aria-describedby="image{% increment my_counter %}">Légende associée © Copyright</figcaption>
-    </figure>
+    {% include images/inc-mosaiques_img-base.html srcImg='src="../../assets/images/header-page-accueil.jpg"' portrait="true" legend="Légende associée © Copyright" %}
   </li>
   <li class="col-2">
-    <figure class="ds44-legendeContainer ds44-container-imgRatio" data-target="#overlay-mosaique" data-js="ds44-modal">
-      <img src="../../assets/images/img_article_bigger@2x.jpg" alt="" class="ds44-imgRatio">
-      <figcaption class="ds44-imgCaption" aria-describedby="image{% increment my_counter %}">Légende associée © Copyright</figcaption>
-    </figure>
+    {% include images/inc-mosaiques_img-base.html srcImg='src="../../assets/images/img_article_bigger@2x.jpg"' legend="Légende associée © Copyright" %}
   </li>
 </ul>
