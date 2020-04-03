@@ -1,6 +1,7 @@
 class StatisticGtag {
     constructor () {
         MiscEvent.addListener('statistic:gtag:event', this.sendEvent.bind(this));
+        document.body.addEventListener('click', this.detectClick.bind(this), true);
     }
 
     sendEvent (evt) {
@@ -24,6 +25,11 @@ class StatisticGtag {
         if (evt.detail.statistic.label) {
             gtagEvent.eventLabel = this.populate(evt.detail.statistic.label, evt.detail.data);
         }
+
+        this.send(gtagEvent);
+    }
+
+    send (gtagEvent) {
         if (MiscUtils.isInDevMode()) {
             console.log('Event gtag: ' + JSON.stringify(gtagEvent));
         } else {
@@ -32,20 +38,70 @@ class StatisticGtag {
     }
 
     populate (input, data) {
-        for (const key in data) {
-            if (!data.hasOwnProperty(key)) {
-                continue;
+        const matches = input.match(/\$[a-zA-Z-_\|]+/g);
+        if (!matches) {
+            return input;
+        }
+
+        for (let i = 0; i < matches.length; i++) {
+            const match = matches[i].replace('$', '');
+
+            let value = null;
+            if (!match.includes('|')) {
+                // Simple data key
+                if (data[match]) {
+                    value = data[match].value;
+                }
+            } else {
+                // Nested data key
+                let nestedValue = Object.assign({}, data);
+                const dataKeys = match.split('|');
+                for (let j = 0; j < dataKeys.length; j++) {
+                    nestedValue = nestedValue[dataKeys[j]];
+
+                    if (typeof nestedValue === 'undefined') {
+                        nestedValue = null;
+                        break;
+                    }
+                }
+                value = nestedValue;
             }
 
-            const value = data[key].value;
-            if (typeof value === 'object') {
-                continue;
+            if (
+                value !== null &&
+                typeof value === 'object'
+            ) {
+                input = input.replace('$' + match, JSON.stringify(value));
+            } else {
+                input = input.replace('$' + match, (value || ''));
             }
-
-            input = input.replace('$' + key, value);
         }
 
         return input;
+    }
+
+    detectClick (evt) {
+        if (!evt.target) {
+            return;
+        }
+
+        const statisticElement = evt.target.closest('[data-statistic]:not(form)')
+        if (statisticElement) {
+            try {
+                const statistic = JSON.parse(statisticElement.getAttribute('data-statistic'));
+                const gtagEvent = {
+                    'event': statistic.name,
+                    'eventCategory': statistic.category,
+                    'eventAction': statistic.action
+                };
+                if (statistic.label) {
+                    gtagEvent.eventLabel = statistic.label;
+                }
+
+                this.send(gtagEvent);
+            } catch (ex) {
+            }
+        }
     }
 }
 
