@@ -4,7 +4,7 @@ group: templates
 permalink:
 
 title: Page 404
-description: Modèle de page d'erreur.
+description: Modèle de page d'erreur type 404.
 status: A valider
 
 variations:
