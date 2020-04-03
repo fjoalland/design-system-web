@@ -338,9 +338,6 @@ input[type=radio],
 
 .ds44-facette {
     .ds44-facette-body {
-        @media (max-width: $ds44-medium - .0625) {
-            display: none;
-        }
 
         .ds44-textLegend--mentions {
             display: none;padding: 1rem 0 0.5rem 0;
@@ -443,6 +440,16 @@ input[type=radio],
                     font-weight: bold;
                 }
             }
+        }
+    }
+
+}
+
+
+.ds44-mainResults .ds44-facette {
+    .ds44-facette-body {
+        @media (max-width: $ds44-medium - .0625) {
+            display: none;
         }
     }
 
