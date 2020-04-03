@@ -199,8 +199,8 @@
   margin-bottom: 3.5rem;                           // 3.5rem
 }
 .ds44-mlr35 {
-  margin-left: 3.5rem;           
-  margin-right: 3.5rem;          
+  margin-left: 3.5rem;
+  margin-right: 3.5rem;
 }
 .ds44-mlr4 {
   margin-left: 4rem!important;                     // 4rem
@@ -782,6 +782,17 @@
   }
 
 }
+
+
+/* === Display === */
+
+.ds44-block {
+  display: block !important;
+}
+.ds44-inlineBlock {
+  display: inline-block !important;
+}
+
 
 /* === LINKS === */
 
