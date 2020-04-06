@@ -193,7 +193,7 @@ figure {
 @media (max-width: $ds44-large - .625) {
 
     .ds44-legendeContainer .ds44-blockAbsolute {
-        width: 50vw;
+        width: 70%;
     }
     .ds44-legendeContainer.ds44-container-imgRatio {
         height: auto;
@@ -203,19 +203,25 @@ figure {
 
 @media (min-width: $ds44-large) {
 
-    .grid-12-small-1 .ds44-legendeContainer {
-        padding-top: 85%;
-    }
-    .grid-12-small-1 .col-6 {
-        margin-right: $ds44-medium-vmargin/2;
-    }
-    .grid-12-small-1 .col-6:last-of-type {
-        margin-right: 0;
-        margin-left: $ds44-medium-vmargin/2;
-    }
+
+
 
 }
 
+@media (min-width: $ds44-medium - .625) {
+
+  .grid-12-small-1 .ds44-legendeContainer {
+      padding-top: 85%;
+  }
+  .grid-12-small-1 .col-6 {
+      margin-right: $ds44-medium-vmargin/2;
+  }
+  .grid-12-small-1 .col-6:last-of-type {
+      margin-right: 0;
+      margin-left: $ds44-medium-vmargin/2;
+  }
+
+}
 
 @media (max-width: $ds44-medium - .625) {
 
