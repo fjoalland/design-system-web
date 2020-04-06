@@ -30,12 +30,12 @@
                     {% assign savedAriaDescribedBy = ariaDescribedBy %}
                     <div class="col">
                         <p id="bloc-utile-informations" class="h4-like" aria-level="3" role="heading" tabindex="-1">Pourquoi cette page ne vous a pas été utile ?</p>
-                        {% capture ariaDescribedBy1 %}bloc-utile-informations{% if savedAriaDescribedBy != '' %} {{ savedAriaDescribedBy }}{% endif %}{% endcapture %}
+                        {% capture ariaDescribedBy1 %}bloc-utile-informations{% if savedAriaDescribedBy and savedAriaDescribedBy != '' %} {{ savedAriaDescribedBy }}{% endif %}{% endcapture %}
                         {% include form/layout/checkboxes.html name="bloc-utile-informations-questions" choices="1:L’information n’est pas assez complète,2:L’information est trop compliquée,3:Il y a trop à lire" required="true" ariaDescribedBy=ariaDescribedBy1 %}
                     </div>
                     <div class="col ds44--xl-padding-l">
                         <p id="form-bloc-utils-N">Aidez-nous à améliorer cette page en nous laissant un commentaire :</p>
-                        {% capture ariaDescribedBy2 %}form-bloc-utils-N{% if savedAriaDescribedBy != '' %} {{ savedAriaDescribedBy }}{% endif %}{% endcapture %}
+                        {% capture ariaDescribedBy2 %}form-bloc-utils-N{% if savedAriaDescribedBy and savedAriaDescribedBy != '' %} {{ savedAriaDescribedBy }}{% endif %}{% endcapture %}
                         {% include form/field/input/textarea.html label="Commentaire" ariaDescribedBy=ariaDescribedBy2 %}
                     </div>
                 </div>
