@@ -4,6 +4,10 @@ class ResultStandard {
         this.savedScrollTop = null;
 
         MiscEvent.addListener('search:update', this.fillList.bind(this));
+        const listContainerElement = document.querySelector('.ds44-results .ds44-js-results-container .ds44-js-results-list');
+        if (listContainerElement) {
+            MiscEvent.addListener('click', this.showMore.bind(this), listContainerElement);
+        }
     }
 
     fillCard (evt) {
@@ -114,6 +118,22 @@ class ResultStandard {
         }
     }
 
+    showMore (evt) {
+        if (
+            !evt ||
+            !evt.target ||
+            !evt.target.closest('.ds44-js-search-button')
+        ) {
+            return;
+        }
+
+        MiscEvent.dispatch(
+            'search:refresh',
+            {
+                'next': true
+            });
+    }
+
     fillList (evt) {
         const containerElement = document.querySelector('.ds44-results .ds44-js-results-container');
         if (!containerElement) {
@@ -125,10 +145,13 @@ class ResultStandard {
             return;
         }
 
+        // Nb display results
+        const nbDisplayedResults = (evt.detail.pageIndex + 1) * evt.detail.nbResultsPerPage;
+
         // Manage legend
         const legendElement = listContainerElement.querySelector('.ds44-textLegend');
         if (legendElement) {
-            if (evt.detail.nbResults > evt.detail.maxResults) {
+            if (nbDisplayedResults > evt.detail.maxResults) {
                 legendElement.classList.remove('hidden');
             } else {
                 legendElement.classList.add('hidden');
@@ -152,15 +175,19 @@ class ResultStandard {
 
         // Remove existing results
         let listElement = listContainerElement.querySelector('.ds44-list');
-        if (listElement) {
+        if (listElement && !evt.detail.addUp) {
             listElement.remove();
+            listElement = null;
         }
-        listElement = document.createElement('ul');
-        listElement.className = 'ds44-list ds44-list--results ds44-flex-container';
-        listContainerElement.appendChild(listElement);
+        if (!listElement) {
+            listElement = document.createElement('ul');
+            listElement.className = 'ds44-list ds44-list--results ds44-flex-container';
+            listContainerElement.appendChild(listElement);
+        }
 
         // Add new results
-        const results = evt.detail.results;
+        let firstResultElement = null;
+        const results = (evt.detail.addUp ? evt.detail.newResults : evt.detail.results);
         for (let resultIndex in results) {
             if (!results.hasOwnProperty(resultIndex)) {
                 continue;
@@ -190,9 +217,53 @@ class ResultStandard {
                 MiscEvent.addListener('click', this.fillCard.bind(this), listItemElement);
             }
             listElement.appendChild(listItemElement);
+
+            if (!firstResultElement) {
+                firstResultElement = listItemElement;
+            }
+        }
+
+        // Add pager
+        let pagerElement = listContainerElement.querySelector('.ds44-js-search-pager');
+        if (
+            pagerElement &&
+            (
+                !evt.detail.addUp ||
+                nbDisplayedResults >= evt.detail.nbResults
+            )
+        ) {
+            pagerElement.remove();
+            pagerElement = null;
+        }
+
+        if (nbDisplayedResults < evt.detail.nbResults) {
+            if(!pagerElement) {
+                pagerElement = document.createElement('div');
+                pagerElement.className = 'txtcenter center ds44--xl-padding-b ds44-js-search-pager';
+                listContainerElement.appendChild(pagerElement);
+                let pagerTitleElement = document.createElement('p');
+                pagerTitleElement.setAttribute('id', 'idNbResults');
+                pagerElement.appendChild(pagerTitleElement);
+                let pagerButtonElement = document.createElement('button');
+                pagerButtonElement.className = 'ds44-btnStd ds44-btn--invert ds44-js-search-button';
+                pagerButtonElement.setAttribute('aria-describedby', 'idNbResults');
+                pagerButtonElement.innerHTML = '<span class="ds44-btnInnerText">Plus de résultats</span><i class="icon icon-plus" aria-hidden="true"></i>';
+                pagerElement.appendChild(pagerButtonElement);
+            }
+
+            let pagerTitleElement = pagerElement.querySelector('p');
+            pagerTitleElement.innerText = nbDisplayedResults + ' résultats affichés sur ' + evt.detail.nbResults;
+
+            let pagerButtonElement = pagerElement.querySelector('button');
+            pagerButtonElement.setAttribute('title', 'Plus de résultats sur votre recherche sur : ' + evt.detail.searchText);
         }
 
         this.showList();
+
+        if (firstResultElement) {
+            MiscEvent.dispatch('loader:setFocus', {'focusedElement': firstResultElement.querySelector('a')});
+            MiscAccessibility.setFocus(firstResultElement.querySelector('a'));
+        }
     }
 
     focus (evt = null) {

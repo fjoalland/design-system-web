@@ -34,8 +34,7 @@ class FormLayoutUtileAbstract {
             this.url,
             this.submitSuccess.bind(this),
             this.submitError.bind(this),
-            evt.detail.parameters,
-            'POST'
+            evt.detail.parameters
         );
     }
 

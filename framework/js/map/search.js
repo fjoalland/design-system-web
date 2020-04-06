@@ -10,6 +10,7 @@ class MapSearch extends MapAbstract {
         const object = this.objects[objectIndex];
         object.results = null;
         object.zoom = false;
+        object.addUp = false;
         object.isVisible = true;
 
         MiscEvent.addListener('search:update', this.search.bind(this, objectIndex));
@@ -125,6 +126,7 @@ class MapSearch extends MapAbstract {
         const object = this.objects[objectIndex];
         object.results = evt.detail.results;
         object.zoom = evt.detail.zoom;
+        object.addUp = evt.detail.addUp;
 
         if (object.isMapReady) {
             this.show(objectIndex);
@@ -135,19 +137,21 @@ class MapSearch extends MapAbstract {
         const object = this.objects[objectIndex];
 
         // Remove existing markers
-        for (let i = 0; i < object.markers.length; i++) {
-            object.markers[i].remove();
+        if(!object.addUp) {
+            for (let i = 0; i < object.markers.length; i++) {
+                object.markers[i].remove();
+            }
+            object.markers = [];
         }
-        object.markers = [];
 
         // Add new markers
         const lngLats = [];
-        for (let resultIndex in object.results) {
-            if (!object.results.hasOwnProperty(resultIndex)) {
+        for (let resultIndex in object.newResults) {
+            if (!object.newResults.hasOwnProperty(resultIndex)) {
                 continue;
             }
 
-            const result = object.results[resultIndex];
+            const result = object.newResults[resultIndex];
             if (
                 !result.metadata ||
                 !result.metadata.lat ||
