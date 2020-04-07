@@ -172,13 +172,15 @@ textarea {
 /* Bouton de reset de champ */
 
 .ds44-reset,
-.ds44-calendar {
+.ds44-calendar,
+.ds44-location {
     position: absolute;
     right: 0;
     top: calc(50% - 15px);
     top: -webkit-calc(50% - 15px);
     padding-right: 1.5rem;
     color: $ds44-color-dark-text;
+    cursor: pointer;
 
     .ds44-formLabel--external & {
         top: calc(50% + -1px);
@@ -192,7 +194,8 @@ textarea {
     top: -webkit-calc(50% - 1.3rem);
     z-index: 2;
 
-    .ds44-datepicker__shape + & {
+    .ds44-datepicker__shape + & ,
+    .ds44-autocomp--location + & {
         right: 3.4rem;
     }
 
@@ -857,6 +860,16 @@ input[type=radio],
             display: inline;
         }
     }
+}
+
+
+/**
+ * Autocomplete location
+ */
+.ds44-autocomp--location {
+
+
+
 }
 
 
