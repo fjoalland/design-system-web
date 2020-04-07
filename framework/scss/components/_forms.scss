@@ -91,9 +91,18 @@ input {
 .ds44-labelTypeInfoComp {
     font-size: 1.3rem;
     position: absolute;
-    bottom: -$ds44-large-vmargin;
-    right: $ds44-padding-box;
+    bottom: 0;
+    transform-origin: top;
+    transform: translateY($ds44-large-vmargin);
+    right: 1px; // form field border size
     color: $ds44-gray;
+    text-align: right;
+    max-height: 20px;
+    max-width: 85%;
+}
+
+.ds44-theme .ds44-labelTypeInfoComp {
+    color: $ds44-color-dark-text;
 }
 
 .ds44-formLabel--external {
