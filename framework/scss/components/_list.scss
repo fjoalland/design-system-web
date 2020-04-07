@@ -96,20 +96,25 @@
             > a {
               text-decoration: none;
               border-radius: 3px;
-              display: grid;
+              display: flex;
               height: 100%;
               width: 100%;
-              align-items: center;
+              justify-content: center;
               transition: all $ds44-timing-standard ease;
 
+              > span {
+                align-items: center;
+                display: flex;
+              }
+
               &.active {
-                background: $ds44-contextual-hover;
+                background: $ds44-background-dark;
+                color: $ds44-color-inverse;
               }
               &:hover,
               &:active,
               &:focus {
-                background: $ds44-background-dark;
-                color: $ds44-color-inverse;
+                background: $ds44-contextual-hover;
               }
             }
         }
