@@ -118,12 +118,13 @@ class FormLayoutGlobal {
             }
 
             // Save city and adresse in local storage
-            if (formattedData['commune']) {
-                window.sessionStorage.setItem('commune', JSON.stringify(formattedData['commune']));
-            }
-            if (formattedData['adresse']) {
-                window.sessionStorage.setItem('adresse', JSON.stringify(formattedData['adresse']));
-            }
+            const fieldParameters = JSON.parse(window.sessionStorage.getItem('fields') || '{}');
+            ['commune', 'adresse'].forEach((key) => {
+                if (formattedData[key]) {
+                    fieldParameters[key]= formattedData[key];
+                }
+            });
+            window.sessionStorage.setItem('fields', JSON.stringify(fieldParameters));
 
             // Statistics
             if (object.formElement.getAttribute('data-statistic')) {

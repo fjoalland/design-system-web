@@ -41,19 +41,33 @@ class FormFieldAbstract {
     }
 
     initialize () {
-        const externalParameters = Object.assign(
+        // Get data from url and session storage
+        const fieldParameters = window.sessionStorage.getItem('fields');
+        let externalParameters = Object.assign(
             {},
             MiscUrl.getHashParameters(),
-            MiscUrl.getQueryParameters()
+            MiscUrl.getQueryParameters(),
+            (fieldParameters ? JSON.parse(fieldParameters) : {})
         );
+        for (const fieldName in externalParameters) {
+            if (!externalParameters.hasOwnProperty(fieldName)) {
+                continue;
+            }
+
+            const fieldData = externalParameters[fieldName];
+            if(fieldData.value.constructor === ({}).constructor ) {
+                // Value is JSON => sub field
+                externalParameters = Object.assign({}, externalParameters, fieldData.value);
+            }
+        }
+
+        // Initialize each object
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
 
             MiscEvent.addListener('field:enable', this.enable.bind(this, objectIndex), object.containerElement);
             MiscEvent.addListener('field:disable', this.disable.bind(this, objectIndex), object.containerElement);
-            if(window.sessionStorage.getItem(object.name)) {
-                window.addEventListener('load', this.set.bind(this, objectIndex, JSON.parse(window.sessionStorage.getItem(object.name))));
-            } else if (externalParameters[object.name]) {
+            if (externalParameters[object.name]) {
                 window.addEventListener('load', this.set.bind(this, objectIndex, externalParameters[object.name]));
             }
 

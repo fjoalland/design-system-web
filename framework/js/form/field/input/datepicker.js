@@ -338,18 +338,28 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
     }
 
     selectDate (objectIndex, data) {
-        const object = this.objects[objectIndex];
-        const selectedData = new Date(data.date);
-        object.inputElements[0].value = (selectedData.getDate() + '').padStart(2, '0');
-        object.inputElements[1].value = ((selectedData.getMonth() + 1) + '').padStart(2, '0');
-        object.inputElements[2].value = (selectedData.getFullYear() + '').padStart(2, '0');
-
+        this.setDate(objectIndex, data.date);
         this.focusOnTextElement(objectIndex);
         this.record(objectIndex);
         this.showNotEmpty(objectIndex);
 
         // Let's roll some time so we can show with day is chosen
         window.setTimeout(this.hideCalendar.bind(this), 200);
+    }
+
+    showNotEmpty (objectIndex) {
+        super.showNotEmpty(objectIndex);
+
+        const object = this.objects[objectIndex];
+        object.textElement.classList.add('show');
+    }
+
+    setDate (objectIndex, date) {
+        const object = this.objects[objectIndex];
+        const selectedData = new Date(date);
+        object.inputElements[0].value = (selectedData.getDate() + '').padStart(2, '0');
+        object.inputElements[1].value = ((selectedData.getMonth() + 1) + '').padStart(2, '0');
+        object.inputElements[2].value = (selectedData.getFullYear() + '').padStart(2, '0');
     }
 
     getErrorMessage (objectIndex) {
@@ -362,6 +372,15 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
         }
 
         return this.errorMessage;
+    }
+
+    setData (objectIndex, data = null) {
+        super.setData(objectIndex, data);
+
+        if (data && data.value) {
+            this.setDate(objectIndex, data.value);
+            this.focus(objectIndex);
+        }
     }
 }
 
