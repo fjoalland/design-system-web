@@ -117,11 +117,20 @@ class FormLayoutGlobal {
                 formattedData[dataKey] = dataValue;
             }
 
+            // Add technical hidden fields
+            object.formElement
+                .querySelectorAll('input[type="hidden"][name][data-technical-field]')
+                .forEach((hiddenInputElement) => {
+                    formattedData[hiddenInputElement.getAttribute('name')] = {
+                        'value': hiddenInputElement.value
+                    };
+                });
+
             // Save city and adresse in local storage
             const fieldParameters = JSON.parse(window.sessionStorage.getItem('fields') || '{}');
             ['commune', 'adresse'].forEach((key) => {
                 if (formattedData[key]) {
-                    fieldParameters[key]= formattedData[key];
+                    fieldParameters[key] = formattedData[key];
                 }
             });
             window.sessionStorage.setItem('fields', JSON.stringify(fieldParameters));

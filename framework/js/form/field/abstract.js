@@ -55,7 +55,10 @@ class FormFieldAbstract {
             }
 
             const fieldData = externalParameters[fieldName];
-            if(fieldData.value.constructor === ({}).constructor ) {
+            if (
+                fieldData.value &&
+                fieldData.value.constructor === ({}).constructor
+            ) {
                 // Value is JSON => sub field
                 externalParameters = Object.assign({}, externalParameters, fieldData.value);
             }
