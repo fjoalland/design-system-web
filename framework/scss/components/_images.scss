@@ -196,11 +196,16 @@ figure {
         width: 100%;
         position: relative;
     }
-    .ds44-legendeContainer.ds44-container-imgRatio .ds44-imgRatio,
-    .ds44-legendeContainer.ds44-container-imgRatio {
-        height: auto;
+    .ds44-legendeContainer.ds44-container-imgRatio,
+    .ds44-legendeContainer.ds44-container-imgRatio .ds44-imgRatio  {
         position: relative;
         padding-top: 0%;
+    }
+    .ds44-legendeContainer.ds44-container-imgRatio {
+        height: auto;
+    }
+    .ds44-legendeContainer.ds44-container-imgRatio .ds44-imgRatio {
+        height: 400px;
     }
 
 }
@@ -229,12 +234,7 @@ figure {
 
 @media (max-width: $ds44-small - .625) {
 
-    .ds44-legendeContainer.ds44-container-imgRatio .ds44-imgRatio,
-    .ds44-legendeContainer.ds44-container-imgRatio {
-        height: auto;
-        position: relative;
-        padding-top: 0%;
-    }
+
 
     .ds44-mosaique {
       .ds44-legendeContainer.ds44-container-imgRatio .ds44-imgRatio,
@@ -243,13 +243,16 @@ figure {
       }
     }
 
-
     .ds44-legendeContainer .ds44-blockAbsolute {
         position: relative;
         z-index: 1;
         width: 100%;
         bottom: 0;
         left: 0;
+    }
+
+    .ds44-legendeContainer.ds44-container-imgRatio .ds44-imgRatio {
+        height: 300px;
     }
 
     .ds44-imgCaption {
