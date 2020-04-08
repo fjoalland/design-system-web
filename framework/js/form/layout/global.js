@@ -119,10 +119,10 @@ class FormLayoutGlobal {
 
             // Save city and adresse in local storage
             if (formattedData['commune']) {
-                window.sessionStorage.setItem('city', JSON.stringify(formattedData['commune']));
+                window.sessionStorage.setItem('commune', JSON.stringify(formattedData['commune']));
             }
             if (formattedData['adresse']) {
-                window.sessionStorage.setItem('address', JSON.stringify(formattedData['adresse']));
+                window.sessionStorage.setItem('adresse', JSON.stringify(formattedData['adresse']));
             }
 
             // Statistics

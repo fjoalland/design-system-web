@@ -69,8 +69,8 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
         object.inputElements.forEach((inputElement) => {
             if (
                 data &&
-                data.values &&
-                data.values.includes(inputElement.value)
+                data.value &&
+                data.value.includes(inputElement.value)
             ) {
                 inputElement.checked = true;
             } else {

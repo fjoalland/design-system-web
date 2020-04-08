@@ -31,9 +31,7 @@ class FormLayoutSearch {
             });
 
         // Initialization
-        if (!this.loadFromUrl(objectIndex)) {
-            this.loadFromDom(objectIndex);
-        }
+        this.loadFromDom(objectIndex);
     }
 
     submit (objectIndex, evt) {
@@ -51,81 +49,23 @@ class FormLayoutSearch {
         this.search(objectIndex, evt);
     }
 
-    loadFromUrl (objectIndex) {
-        const object = this.objects[objectIndex];
-
-        // Get the data from the url
-        const hashParameters = MiscUrl.getHashParameters();
-        if (hashParameters) {
-            // Save search parameters for further refinements
-            object.parameters = hashParameters;
-
-            // Ask other modules to set the parameters
-            this.setFields(object.parameters);
-
-            // Start search
-            object.hasSearched = true;
-            this.search(objectIndex, { 'detail': { 'parameters': object.parameters } });
-
-            return true;
-        }
-
-        return false;
-    }
-
     loadFromDom (objectIndex) {
-        const object = this.objects[objectIndex];
-
         // Get the data from the dom
-        if (window.searchData) {
-            if (window.searchData.parameters) {
-                // Save search parameters for further refinements
-                object.parameters = window.searchData.parameters;
-
-                // Ask other modules to set the parameters
-                this.setFields(object.parameters);
-
-                // Set url with the search parameters
-                MiscUrl.setHashParameters(object.parameters);
-
-                // Start search
-                object.hasSearched = true;
-                this.search(objectIndex, { 'detail': { 'parameters': object.parameters } });
-
-                return true;
-            }
-
-            // Reset search parameters
-            object.parameters = {};
-
-            // Save response data
-            object.searchData = this.formatSearchData(window.searchData, object.parameters);
-
-            // Show search data straight away, without starting a search
-            object.hasSearched = true;
-            this.showSearchData(objectIndex);
+        if (!window.searchData) {
+            return;
         }
 
-        return false;
-    }
+        const object = this.objects[objectIndex];
 
-    setFields (parameters) {
-        window.addEventListener('load', ((parameters) => {
-            for (let key in parameters) {
-                if (!parameters.hasOwnProperty(key)) {
-                    continue;
-                }
+        // Reset search parameters
+        object.parameters = (window.searchData.parameters || {});
 
-                try {
-                    const data = JSON.parse(parameters[key]);
-                    const fieldElement = document.querySelector('[name="' + key + '"], [data-name="' + key + '"]');
-                    if (fieldElement) {
-                        MiscEvent.dispatch('field:set', data, fieldElement.closest('.ds44-form__checkbox_container, ds44-form__radio_container, .ds44-form__container'));
-                    }
-                } catch (ex) {
-                }
-            }
-        }).bind(this, parameters));
+        // Save response data
+        object.searchData = this.formatSearchData(window.searchData, object.parameters);
+
+        // Show search data straight away, without starting a search
+        object.hasSearched = true;
+        this.showSearchData(objectIndex);
     }
 
     search (objectIndex, evt) {

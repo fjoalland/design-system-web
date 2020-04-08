@@ -41,12 +41,21 @@ class FormFieldAbstract {
     }
 
     initialize () {
+        const externalParameters = Object.assign(
+            {},
+            MiscUrl.getHashParameters(),
+            MiscUrl.getQueryParameters()
+        );
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
 
-            MiscEvent.addListener('field:set', this.set.bind(this, objectIndex), object.containerElement);
             MiscEvent.addListener('field:enable', this.enable.bind(this, objectIndex), object.containerElement);
             MiscEvent.addListener('field:disable', this.disable.bind(this, objectIndex), object.containerElement);
+            if(window.sessionStorage.getItem(object.name)) {
+                window.addEventListener('load', this.set.bind(this, objectIndex, JSON.parse(window.sessionStorage.getItem(object.name))));
+            } else if (externalParameters[object.name]) {
+                window.addEventListener('load', this.set.bind(this, objectIndex, externalParameters[object.name]));
+            }
 
             this.addBackupAttributes(objectIndex);
         }
@@ -78,15 +87,8 @@ class FormFieldAbstract {
         this.enableDisableLinkedField(objectIndex);
     }
 
-    set (objectIndex, evt) {
-        if (
-            !evt ||
-            !evt.detail
-        ) {
-            return;
-        }
-
-        this.setData(objectIndex, evt.detail);
+    set (objectIndex, data) {
+        this.setData(objectIndex, data);
         this.enter(objectIndex);
         this.showNotEmpty(objectIndex);
     }

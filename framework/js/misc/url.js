@@ -1,72 +1,81 @@
 class MiscUrl {
     static getHashParameters () {
-        return MiscUrl.urlToJson('#');
+        const urlParameters = window.location.href.split('#')[1];
+        return MiscUrl.urlToJson(urlParameters);
+    }
+
+    static getQueryParameters () {
+        const urlParameters = window.location.href.split('#')[0].split('?')[1];
+        return MiscUrl.urlToJson(urlParameters);
     }
 
     static setHashParameters (parameters = {}) {
-        let newUrl = document.location.href.split('#')[0];
+        document.location.href = document.location.href.split('?')[0].split('#')[0] + '#' + MiscUrl.jsonToUrl(parameters);
+    }
 
+    static jsonToUrl (parameters) {
         const sortedParameters = {};
         Object.keys(parameters).sort().forEach(function (key) {
             sortedParameters[key] = parameters[key];
         });
 
-        document.location.href = newUrl + '#' + MiscUrl.jsonToUrl(parameters);
+        const urlParameters = new URLSearchParams();
+        MiscUrl.buildUrlParameters(urlParameters, sortedParameters);
+        return urlParameters;
     }
 
-    static buildUrlData (urlData, data, parentKey) {
+    static urlToJson (urlParameters) {
+        const json = {};
+        const urlParams = new URLSearchParams(urlParameters);
+        for (const [key, value] of urlParams.entries()) {
+            const matches = key.match(/\[[^\]]*\]/g);
+            if (!matches) {
+                json[key] = value;
+
+                continue;
+            }
+
+            const fieldName = key.split('[')[0];
+            if (!json[fieldName]) {
+                json[fieldName] = {};
+            }
+            let nestedValue = json[fieldName];
+            for (let i = 0; i < matches.length; i++) {
+                const subKey = matches[i].replace('[', '').replace(']', '');
+                if (i !== (matches.length - 1)) {
+                    if (!nestedValue[subKey]) {
+                        const nextSubKey = matches[(i + 1)].replace('[', '').replace(']', '');
+                        if (nextSubKey == parseInt(nextSubKey, 10)) {
+                            nestedValue[subKey] = [];
+                        } else {
+                            nestedValue[subKey] = {};
+                        }
+                    }
+                    nestedValue = nestedValue[subKey];
+                } else {
+                    nestedValue[subKey] = value;
+                }
+            }
+        }
+
+        return json;
+    }
+
+    static buildUrlParameters (urlParameters, parameters, parentKey) {
         if (
-            data &&
-            typeof data === 'object' &&
-            !(data instanceof Date) &&
-            !(data instanceof File)
+            parameters &&
+            typeof parameters === 'object' &&
+            !(parameters instanceof Date) &&
+            !(parameters instanceof File)
         ) {
-            Object.keys(data).forEach(key => {
-                MiscUrl.buildUrlData(urlData, data[key], parentKey ? `${parentKey}[${key}]` : key);
+            Object.keys(parameters).forEach(key => {
+                MiscUrl.buildUrlParameters(urlParameters, parameters[key], parentKey ? `${parentKey}[${key}]` : key);
             });
 
             return;
         }
 
-        const value = (data == null ? '' : data);
-        urlData.append(parentKey, value);
-    }
-
-    static jsonToUrl (data) {
-        const urlData = new URLSearchParams();
-        MiscUrl.buildUrlData(urlData, data);
-        return urlData;
-    }
-
-    static urlToJson (separator = '?') {
-        const url = document.location.href
-        if (
-            url.indexOf(separator) === -1 ||
-            url.indexOf(separator) === (url.length - 1)
-        ) {
-            // No hash
-            return null;
-        }
-
-        const chunks = decodeURI(url.slice(url.indexOf(separator) + 1)).split('&');
-        const params = {};
-        for (let i = 0; i < chunks.length; i++) {
-            const chunk = chunks[i].split('=');
-
-            const matches = chunk[0].match("\\[[^\\]]*\\]")
-            if (matches[0]) {
-                const propertyName = chunk[0].replace(matches[0], '')
-                const attributeName = matches[0].replace('[', '').replace(']', '')
-
-                if (typeof params[propertyName] === 'undefined') {
-                    params[propertyName] = {};
-                }
-                params[propertyName][attributeName] = chunk[1];
-            } else {
-                params[chunk[0]] = chunk[1];
-            }
-        }
-
-        return params;
+        const value = (parameters == null ? '' : parameters);
+        urlParameters.append(parentKey, value);
     }
 }
