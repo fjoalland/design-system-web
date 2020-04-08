@@ -78,7 +78,7 @@ input {
         font-size: 1.3rem; // 13px instead of 14px
         top: -$ds44-padding-medium*1.8;
         left: 0;
-        color: $ds44-dark;
+        color: $ds44-color-dark-text;
     }
 
     .ds44-bgDark &.ds44-moveLabel,
@@ -91,9 +91,18 @@ input {
 .ds44-labelTypeInfoComp {
     font-size: 1.3rem;
     position: absolute;
-    bottom: -$ds44-large-vmargin;
-    right: $ds44-padding-box;
+    bottom: 0;
+    transform-origin: top;
+    transform: translateY($ds44-large-vmargin);
+    right: 1px; // form field border size
     color: $ds44-gray;
+    text-align: right;
+    max-height: 20px;
+    max-width: 85%;
+}
+
+.ds44-theme .ds44-labelTypeInfoComp {
+    color: $ds44-color-dark-text;
 }
 
 .ds44-formLabel--external {
@@ -172,13 +181,15 @@ textarea {
 /* Bouton de reset de champ */
 
 .ds44-reset,
-.ds44-calendar {
+.ds44-calendar,
+.ds44-location {
     position: absolute;
     right: 0;
     top: calc(50% - 15px);
     top: -webkit-calc(50% - 15px);
     padding-right: 1.5rem;
     color: $ds44-color-dark-text;
+    cursor: pointer;
 
     .ds44-formLabel--external & {
         top: calc(50% + -1px);
@@ -192,7 +203,8 @@ textarea {
     top: -webkit-calc(50% - 1.3rem);
     z-index: 2;
 
-    .ds44-datepicker__shape + & {
+    .ds44-datepicker__shape + & ,
+    .ds44-autocomp--location + & {
         right: 3.4rem;
     }
 
@@ -558,7 +570,7 @@ input[type=radio],
     position: absolute;
     top: -$ds44-padding-medium*1.8; // same as ds44-labelTypePlaceholder
     left: 0;
-    color: $ds44-forms-color;
+    color: $ds44-color-dark-text;
 
     .ds44-bgDark & {
         color: $ds44-color-inverse;
@@ -861,6 +873,16 @@ input[type=radio],
 
 
 /**
+ * Autocomplete location
+ */
+.ds44-autocomp--location {
+
+
+
+}
+
+
+/**
  * Champs liés : Thèmes sous-thèmes, Lieu rayon, etc...
  */
 
@@ -1043,6 +1065,10 @@ input[type=radio],
         > .ds44-form__container:last-of-type {
             margin-top: 2.5rem;
         }
+    }
+
+    .ds44-labelTypeInfoComp {
+        max-width: 100%;
     }
 
 
