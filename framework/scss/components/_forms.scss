@@ -31,6 +31,15 @@ input {
     font-family: $ds44-font-family-base;
 }
 
+input[type="file"] {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
 .ds44-form__container {
     position: relative;
     margin: 2.5rem 0;
@@ -182,7 +191,8 @@ textarea {
 
 .ds44-reset,
 .ds44-calendar,
-.ds44-location {
+.ds44-location,
+.ds44-file {
     position: absolute;
     right: 0;
     top: calc(50% - 15px);
@@ -204,7 +214,8 @@ textarea {
     z-index: 2;
 
     .ds44-datepicker__shape + & ,
-    .ds44-autocomp--location + & {
+    .ds44-autocomp--location + &,
+    .ds44-file__shape + &{
         right: 3.4rem;
     }
 
@@ -871,6 +882,15 @@ input[type=radio],
     }
 }
 
+/**
+ * File
+ */
+
+.ds44-file__shape {
+    cursor: pointer;
+    background-color: $ds44-light-color;
+}
+
 
 /**
  * Autocomplete location
@@ -908,7 +928,8 @@ input[type=radio],
 
         input,
         .ds44-select__shape,
-        .ds44-datepicker__shape {
+        .ds44-datepicker__shape,
+        .ds44-file__shape {
             border-radius: 3px 0 0 3px;
         }
     }
@@ -922,7 +943,8 @@ input[type=radio],
 
         input,
         .ds44-select__shape,
-        .ds44-datepicker__shape {
+        .ds44-datepicker__shape,
+        .ds44-file__shape {
             border-radius: 0 3px 3px 0;
             margin-left: -1px;
         }
@@ -1043,7 +1065,8 @@ input[type=radio],
 
             input,
             .ds44-select__shape,
-            .ds44-datepicker__shape {
+            .ds44-datepicker__shape,
+            .ds44-file__shape {
                 border-radius: 3px 3px 0 0;
             }
         }
@@ -1056,7 +1079,8 @@ input[type=radio],
 
             input,
             .ds44-select__shape,
-            .ds44-datepicker__shape {
+            .ds44-datepicker__shape,
+            .ds44-file__shape {
                 border-radius: 0 0 3px 3px;
                 margin: -1px 0 0 0;
             }
