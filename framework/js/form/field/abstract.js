@@ -45,8 +45,8 @@ class FormFieldAbstract {
         const fieldParameters = window.sessionStorage.getItem('fields');
         let externalParameters = Object.assign(
             {},
-            MiscUrl.getHashParameters(),
             MiscUrl.getQueryParameters(),
+            MiscUrl.getHashParameters(),
             (fieldParameters ? JSON.parse(fieldParameters) : {})
         );
         for (const fieldName in externalParameters) {
