@@ -21,7 +21,7 @@ class MiscUrl {
 
         const urlParameters = new URLSearchParams();
         MiscUrl.buildUrlParameters(urlParameters, sortedParameters);
-        return encodeURIComponent(urlParameters);
+        return urlParameters;
     }
 
     static urlToJson (urlParameters) {
