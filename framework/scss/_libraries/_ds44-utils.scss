@@ -864,11 +864,17 @@
 
 
 
-
 /* =======
   GENERIC MEDIA QUERIES
   === */
 
+@media (min-width: $ds44-tiny) {
+
+  .ds44-minTiny-margin {
+    margin: 0 1rem !important;
+  }
+
+}
 
 @media (min-width: $ds44-medium) {
 
@@ -954,5 +960,6 @@
   .ds44-xl-gap {
     column-gap: 8rem;
   }
+
 
 }
