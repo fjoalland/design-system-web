@@ -3,7 +3,7 @@ class FormFieldAbstract {
         this.category = category;
         this.objects = [];
         this.labelClassName = 'ds44-moveLabel';
-        this.errorMessage = 'Veuillez renseigner : {fieldName}';
+        this.errorMessage = MiscTranslate._('FIELD_MANDATORY_ERROR_MESSAGE');
 
         if (typeof selector === 'object') {
             // Elements passed as parameter, not text selector

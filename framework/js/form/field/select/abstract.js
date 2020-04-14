@@ -429,7 +429,7 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
             // No result
             let elementSelectListItem = document.createElement('li');
             elementSelectListItem.classList.add('ds44-select-list_no_elem');
-            elementSelectListItem.innerHTML = 'Aucun résultat trouvé';
+            elementSelectListItem.innerHTML = MiscTranslate._('NO_RESULTS_FOUND');
             subSelectListElement.appendChild(elementSelectListItem);
         } else {
             // Some result

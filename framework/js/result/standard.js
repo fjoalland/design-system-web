@@ -179,7 +179,12 @@ class ResultStandard {
             titleElement.setAttribute('aria-level', '2');
             listContainerElement.appendChild(titleElement);
         }
-        titleElement.innerText = evt.detail.nbResults + ' résultat' + (evt.detail.nbResults > 1 ? 's' : '');
+        titleElement.innerText = evt.detail.nbResults + ' ';
+        if(evt.detail.nbResults > 1) {
+            titleElement.innerText += MiscTranslate._('RESULTS');
+        } else {
+            titleElement.innerText += MiscTranslate._('RESULT');
+        }
 
         // Remove existing results
         let listElement = listContainerElement.querySelector('.ds44-list');
@@ -255,15 +260,15 @@ class ResultStandard {
                 let pagerButtonElement = document.createElement('button');
                 pagerButtonElement.className = 'ds44-btnStd ds44-btn--invert ds44-js-search-button';
                 pagerButtonElement.setAttribute('aria-describedby', 'idNbResults');
-                pagerButtonElement.innerHTML = '<span class="ds44-btnInnerText">Plus de résultats</span><i class="icon icon-plus" aria-hidden="true"></i>';
+                pagerButtonElement.innerHTML = '<span class="ds44-btnInnerText">' + MiscTranslate._('MORE_RESULTS') + '</span><i class="icon icon-plus" aria-hidden="true"></i>';
                 pagerElement.appendChild(pagerButtonElement);
             }
 
             let pagerTitleElement = pagerElement.querySelector('p');
-            pagerTitleElement.innerText = nbDisplayedResults + ' résultats affichés sur ' + evt.detail.nbResults;
+            pagerTitleElement.innerText = nbDisplayedResults + MiscTranslate._('SEARCH_NB_RESULTS_OUT_OF') + evt.detail.nbResults;
 
             let pagerButtonElement = pagerElement.querySelector('button');
-            pagerButtonElement.setAttribute('title', 'Plus de résultats sur votre recherche sur : ' + evt.detail.searchText);
+            pagerButtonElement.setAttribute('title', MiscTranslate._('MORE_SEARCH_RESULTS') + evt.detail.searchText);
         }
 
         this.showList();

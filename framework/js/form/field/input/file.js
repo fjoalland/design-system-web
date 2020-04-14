@@ -188,10 +188,10 @@ class FormFieldInputFile extends FormFieldInputAbstract {
 
     getErrorMessage (objectIndex) {
         if (!this.hasCorrectSize(objectIndex)) {
-            return 'Veuillez télécharger un fichier à la bonne taille : {fieldName}';
+            return MiscTranslate._('FIELD_VALID_SIZE_ERROR_MESSAGE');
         }
         if (!this.hasCorrectMime(objectIndex)) {
-            return 'Veuillez télécharger un fichier au bon format : {fieldName}';
+            return MiscTranslate._('FIELD_VALID_FORMAT_ERROR_MESSAGE');
         }
 
         return super.getErrorMessage(objectIndex);

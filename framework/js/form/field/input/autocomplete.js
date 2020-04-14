@@ -238,7 +238,7 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
             // No result
             let elementAutoCompleterListItem = document.createElement('li');
             elementAutoCompleterListItem.classList.add('ds44-autocomp-list_no_elem');
-            elementAutoCompleterListItem.innerHTML = 'Aucun résultat trouvé';
+            elementAutoCompleterListItem.innerHTML = MiscTranslate._('NO_RESULTS_FOUND');
             object.autoCompleterListElement.appendChild(elementAutoCompleterListItem);
         } else {
             // Some result
@@ -562,7 +562,7 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
             objectIndex,
             {
                 'value': 'aroundMe',
-                'text': 'Autour de moi',
+                'text': MiscTranslate._('AROUND_ME'),
                 'metadata': {
                     'latitude': position.coords.latitude,
                     'longitude': position.coords.longitude
