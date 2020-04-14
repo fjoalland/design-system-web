@@ -231,9 +231,14 @@ class MapSearch extends MapAbstract {
         const resultsElement = object.mapElement.closest('.ds44-results')
         if (resultsElement) {
             const mapToggleViewElement = resultsElement.querySelector('.ds44-js-toggle-map-view');
+            const mapContainerElement = resultsElement.querySelector('.ds44-mapResults');
             if (resultsElement.classList.contains('ds44-results--mapVisible')) {
                 resultsElement.classList.remove('ds44-results--mapVisible')
                 object.isVisible = false;
+
+                if(mapContainerElement) {
+                    MiscAccessibility.hide(mapContainerElement);
+                }
 
                 if (mapToggleViewElement) {
                     const text = mapToggleViewElement.innerText.replace('Masquer ', 'Afficher ');
@@ -244,6 +249,10 @@ class MapSearch extends MapAbstract {
                 resultsElement.classList.add('ds44-results--mapVisible')
                 object.isVisible = true;
                 this.resize(objectIndex);
+
+                if(mapContainerElement) {
+                    MiscAccessibility.show(mapContainerElement);
+                }
 
                 if (mapToggleViewElement) {
                     const text = mapToggleViewElement.innerText.replace('Afficher ', 'Masquer ');
