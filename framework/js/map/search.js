@@ -8,7 +8,7 @@ class MapSearch extends MapAbstract {
 
         const objectIndex = (this.objects.length - 1);
         const object = this.objects[objectIndex];
-        object.results = null;
+        object.newResults = null;
         object.zoom = false;
         object.addUp = false;
         object.isVisible = true;
@@ -43,7 +43,7 @@ class MapSearch extends MapAbstract {
         }
 
         object.map.on('moveend', this.move.bind(this, objectIndex));
-        if (object.results) {
+        if (object.newResults) {
             this.show(objectIndex);
         }
     }
@@ -124,7 +124,7 @@ class MapSearch extends MapAbstract {
 
     search (objectIndex, evt) {
         const object = this.objects[objectIndex];
-        object.results = evt.detail.results;
+        object.newResults = evt.detail.newResults;
         object.zoom = evt.detail.zoom;
         object.addUp = evt.detail.addUp;
 

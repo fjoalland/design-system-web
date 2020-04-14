@@ -148,6 +148,14 @@ class ResultStandard {
         // Nb display results
         const nbDisplayedResults = (evt.detail.pageIndex + 1) * evt.detail.nbResultsPerPage;
 
+        // Show hide empty results
+        const parentElement = document.querySelector('.ds44-results');
+        if(nbDisplayedResults > 0) {
+            parentElement.classList.remove('ds44-results--empty');
+        } else {
+            parentElement.classList.add('ds44-results--empty');
+        }
+
         // Manage legend
         const legendElement = listContainerElement.querySelector('.ds44-textLegend');
         if (legendElement) {
