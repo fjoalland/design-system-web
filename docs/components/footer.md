@@ -13,6 +13,9 @@ variations:
 - title: Pied de page MDPH
   description:
   pattern: footer/footer-MDPH.html
+- title: Pied de page Archive
+  description:
+  pattern: footer/footer-archive.html
 ---
 
 ## Usage
