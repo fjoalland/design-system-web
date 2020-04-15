@@ -103,7 +103,9 @@ input[type="file"] {
     .ds44-bgDark &.ds44-moveLabel,
     .ds44-bgDark &.ds44-moveLabel .ds44-labelTypePlaceholder,
     .ds44-bgDark &.ds44-moveLabel .ds44-labelTypePlaceholderLarge {
-        color: $ds44-light-color;
+      span {
+          color: $ds44-light-color;
+      }
     }
 }
 
@@ -902,7 +904,7 @@ input[type=radio],
     background-color: $ds44-light-color;
 
     .ds44-fileDisplay {
-        
+
     }
 }
 
