@@ -179,11 +179,11 @@ class ResultStandard {
             titleElement.setAttribute('aria-level', '2');
             listContainerElement.appendChild(titleElement);
         }
-        titleElement.innerText = evt.detail.nbResults + ' ';
+        titleElement.innerText = evt.detail.nbResults;
         if(evt.detail.nbResults > 1) {
-            titleElement.innerText += MiscTranslate._('RESULTS');
+            titleElement.innerText += ' ' + MiscTranslate._('RESULTS');
         } else {
-            titleElement.innerText += MiscTranslate._('RESULT');
+            titleElement.innerText += ' ' + MiscTranslate._('RESULT');
         }
 
         // Remove existing results
@@ -265,7 +265,7 @@ class ResultStandard {
             }
 
             let pagerTitleElement = pagerElement.querySelector('p');
-            pagerTitleElement.innerText = nbDisplayedResults + MiscTranslate._('SEARCH_NB_RESULTS_OUT_OF') + evt.detail.nbResults;
+            pagerTitleElement.innerText = nbDisplayedResults + ' ' + MiscTranslate._('SEARCH_NB_RESULTS_OUT_OF') + ' ' + evt.detail.nbResults;
 
             let pagerButtonElement = pagerElement.querySelector('button');
             pagerButtonElement.setAttribute('title', MiscTranslate._('MORE_SEARCH_RESULTS') + evt.detail.searchText);
