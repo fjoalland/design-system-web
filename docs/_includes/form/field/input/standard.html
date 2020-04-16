@@ -1,8 +1,14 @@
 {% include form/_variables.html %}
 
+{% if include.type %}
+    {% assign type = include.type %}
+{% else %}
+    {% assign type = 'text' %}
+{% endif %}
+
 {% capture mainContent %}
 {{ explanation }}
-<input type="text" id="{{ id }}" name="{{ name }}" class="{{ mainClass }}" {{ title }} {{ attributes }} {{ inputAttributes }} {{ placeholder }} {% if ariaDescribedBy and ariaDescribedBy != '' %}aria-describedby="{{ ariaDescribedBy }}"{% endif %} />{% include form/field/partial/reset.html %}
+<input type="{{ type }}" id="{{ id }}" name="{{ name }}" class="{{ mainClass }}" {{ title }} {{ attributes }} {{ inputAttributes }} {{ placeholder }} {% if ariaDescribedBy and ariaDescribedBy != '' %}aria-describedby="{{ ariaDescribedBy }}"{% endif %} />{% include form/field/partial/reset.html %}
 {% endcapture %}
 
 {% capture labelContent %}
