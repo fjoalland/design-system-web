@@ -169,21 +169,11 @@ class FormFieldInputFile extends FormFieldInputAbstract {
         this.empty(objectIndex);
     }
 
-    checkValidity (objectIndex) {
-        if (super.checkValidity(objectIndex)) {
-            if (
-                !this.hasCorrectSize(objectIndex) ||
-                !this.hasCorrectMime(objectIndex)
-            ) {
-                this.invalid(objectIndex);
-
-                return false;
-            }
-
-            return true;
-        }
-
-        return false;
+    checkFormat (objectIndex) {
+        return (
+            this.hasCorrectSize(objectIndex) &&
+            this.hasCorrectMime(objectIndex)
+        );
     }
 
     getErrorMessage (objectIndex) {

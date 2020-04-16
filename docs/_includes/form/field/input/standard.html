@@ -1,9 +1,19 @@
 {% include form/_variables.html %}
 
+{% assign type = 'text' %}
 {% if include.type %}
-    {% assign type = include.type %}
-{% else %}
-    {% assign type = 'text' %}
+    {% if include.type == 'first-name' %}
+        {% assign attributes = attributes | append : ' autocomplete="given-name"' %}
+    {% elsif include.type == 'last-name' %}
+        {% assign attributes = attributes | append : ' autocomplete="family-name"' %}
+    {% elsif include.type == 'email' %}
+        {% assign type = 'email' %}
+        {% assign attributes = attributes | append : ' autocomplete="email"' %}
+    {% elsif include.type == 'phone' %}
+        {% assign attributes = attributes | append : ' autocomplete="tel"' %}
+    {% elsif include.type == 'postcode' %}
+        {% assign attributes = attributes | append : ' autocomplete="postal-code"' %}
+    {% endif %}
 {% endif %}
 
 {% capture mainContent %}

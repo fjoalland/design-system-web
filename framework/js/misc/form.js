@@ -63,4 +63,16 @@ class MiscForm {
             'data': data
         };
     }
+
+    static isEmail (value) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    }
+
+    static isPhone (value) {
+        return /^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/.test(value);
+    }
+
+    static isPostcode (value) {
+        return /^(?:(?:0[1-9]|[1-8]\d|9[0-5]|9[7-8])\d{3})$/.test(value);
+    }
 }
