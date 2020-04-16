@@ -580,6 +580,12 @@ main {
         }
     }
 
+    .ds44-homepage-noCarrousel {
+       .ds44-titleContainer--home .h1-like {
+         padding: 10rem 3rem 3rem 3rem;
+       }
+    }
+
 }
 
 @media (min-width: $ds44-max-size) {

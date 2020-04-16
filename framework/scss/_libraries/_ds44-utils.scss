@@ -859,7 +859,7 @@
 /* === Surcharges === */
 
 .visually-hidden,
-h1.visually-hidden + *, 
+h1.visually-hidden + *,
 h2.visually-hidden + *,
 h3.visually-hidden + *,
 h4.visually-hidden + *,
@@ -878,6 +878,14 @@ h6.visually-hidden + * {
 
   .ds44-minTiny-margin {
     margin: 0 1rem !important;
+  }
+
+}
+
+@media (min-width: $ds44-small) {
+
+  .ds44-minSmall-margin {
+    margin: 0 15% !important;
   }
 
 }
