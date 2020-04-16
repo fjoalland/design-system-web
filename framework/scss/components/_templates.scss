@@ -369,6 +369,7 @@ main {
 
         @media (max-width: $ds44-medium - .0625) {
             height: auto;
+            margin-top: $ds44-large-vmargin;
             display: block;
             overflow: auto;
         }
@@ -383,7 +384,7 @@ main {
             }
 
             @media (max-width: $ds44-medium - .0625) {
-                width: 100%;
+                display: none;
             }
 
             .ds44-textLegend {
@@ -416,7 +417,7 @@ main {
             }
 
             @media (max-width: $ds44-medium - .0625) {
-                height: 50vh;
+                height: 80vh;
                 width: 100%;
             }
 
