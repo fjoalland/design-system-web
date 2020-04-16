@@ -27,6 +27,7 @@ Licence SIL Open Font
 
 <p>Source : <a href="https://www.fontsquirrel.com/fonts/muli">https://www.fontsquirrel.com/fonts/muli</a></p>
 
+
 ## Titres
 
 {% include pattern-live-preview.html pattern_path="_variations/typography/headings.html" %}
