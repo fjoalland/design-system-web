@@ -384,11 +384,16 @@ main {
             }
 
             @media (max-width: $ds44-medium - .0625) {
-                display: none;
+                width: 100%;
+                padding-top: 0;
             }
 
             .ds44-textLegend {
                 padding-right: 0;
+            }
+
+            .ds44-js-search-pager {
+              display: none;
             }
 
             .ds44-list {
