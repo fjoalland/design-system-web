@@ -66,13 +66,13 @@ layout: pattern
                                         {% include form/field/input/standard.html type="postcode" label="Code postal" explanation="Exemple : 44000" required="true" %}
                                     </li>
                                     <li class="ds44-mb35">
-                                        {% include form/field/input/file.html label="Curriculum vitae" explanation="Formats : PDF ou DOC, taille max. : 10Mo" required="true" %}
+                                        {% include form/field/input/file.html label="Curriculum vitae" explanation="Formats : PDF ou DOC, taille max. : 10Mo" required="true" attributes='data-file-extensions="doc,pdf"' %}
                                     </li>
                                     <li class="ds44-mb35">
-                                        {% include form/field/input/file.html label="Lettre de motivation" explanation="Formats : PDF ou DOC, taille max. : 10Mo" required="true" %}
+                                        {% include form/field/input/file.html label="Lettre de motivation" explanation="Formats : PDF ou DOC, taille max. : 10Mo" required="true" attributes='data-file-extensions="doc,pdf"' %}
                                     </li>
                                     <li class="ds44-mb35">
-                                        {% include form/field/input/file.html label="Pièce complémentaire" explanation="Arrêté de nomination, inscription sur liste d’aptitude, … Formats : PDF ou DOC, taille max. : 10Mo" required="true" %}
+                                        {% include form/field/input/file.html label="Pièce complémentaire" explanation="Arrêté de nomination, inscription sur liste d’aptitude, … Formats : PDF ou DOC, taille max. : 10Mo" required="true" attributes='data-file-extensions="doc,pdf"' %}
                                     </li>
                                 </ul>
                                 <button class="ds44-btnStd ds44-btn--invert ds44-bntFullw ds44-bntALeft" title="Valider l'envoi de votre candidature">
