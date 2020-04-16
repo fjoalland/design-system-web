@@ -70,6 +70,9 @@ input[type="file"] {
         cursor: pointer;
         width: 100%;
         height: 100%;
+        margin: 0;
+        padding: 0;
+        display: block;
 
         span {
             color: $ds44-forms-color;
@@ -103,9 +106,9 @@ input[type="file"] {
     .ds44-bgDark &.ds44-moveLabel,
     .ds44-bgDark &.ds44-moveLabel .ds44-labelTypePlaceholder,
     .ds44-bgDark &.ds44-moveLabel .ds44-labelTypePlaceholderLarge {
-      span {
-          color: $ds44-light-color;
-      }
+        span {
+            color: $ds44-light-color;
+        }
     }
 }
 
@@ -903,8 +906,15 @@ input[type=radio],
     cursor: pointer;
     background-color: $ds44-light-color;
 
-    .ds44-fileDisplay {
+    &.hover {
+        outline-width: 2px;
+        outline-style: solid;
+        outline-color: Highlight;
 
+        @media (-webkit-min-device-pixel-ratio: 0) {
+            outline-color: -webkit-focus-ring-color;
+            outline-style: auto;
+        }
     }
 }
 

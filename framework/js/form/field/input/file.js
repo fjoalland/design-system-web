@@ -94,6 +94,8 @@ class FormFieldInputFile extends FormFieldInputAbstract {
 
             object.inputElements.forEach((inputElement) => {
                 MiscEvent.addListener('change', this.fileUploaded.bind(this, objectIndex), inputElement);
+                MiscEvent.addListener('focus', this.focus.bind(this, objectIndex), inputElement);
+                MiscEvent.addListener('blur', this.blur.bind(this, objectIndex), inputElement);
             });
         }
     }
@@ -113,6 +115,26 @@ class FormFieldInputFile extends FormFieldInputAbstract {
         this.showNotEmpty(objectIndex);
         this.focus(objectIndex);
         this.checkValidity(objectIndex);
+    }
+
+    focus (objectIndex) {
+        const object = this.objects[objectIndex];
+        const shapeElement = object.textElement.closest('.ds44-file__shape');
+        if (shapeElement) {
+            shapeElement.classList.add('hover');
+        }
+
+        super.focus(objectIndex);
+    }
+
+    blur (objectIndex) {
+        const object = this.objects[objectIndex];
+        const shapeElement = object.textElement.closest('.ds44-file__shape');
+        if (shapeElement) {
+            shapeElement.classList.remove('hover');
+        }
+
+        super.blur(objectIndex);
     }
 
     empty (objectIndex) {
