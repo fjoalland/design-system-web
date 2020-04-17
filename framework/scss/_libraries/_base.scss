@@ -13,7 +13,7 @@
 /* switching to border-box model for all elements and adding smooth scrolling */
 html {
   box-sizing: border-box;
-  scroll-behavior: smooth; // all browsers but Safari
+  //scroll-behavior: smooth; // all browsers but Safari
 }
 
 *,
