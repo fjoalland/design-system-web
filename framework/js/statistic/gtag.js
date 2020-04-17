@@ -30,7 +30,7 @@ class StatisticGtag {
     }
 
     send (gtagEvent) {
-        if (MiscUtils.isInDevMode()) {
+        if (MiscUtils.isInDevMode() || !window.dataLayer) {
             console.log('Event gtag: ' + JSON.stringify(gtagEvent));
         } else {
             window.dataLayer.push(gtagEvent);
