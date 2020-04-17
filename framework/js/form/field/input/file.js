@@ -109,12 +109,19 @@ class FormFieldInputFile extends FormFieldInputAbstract {
             return;
         }
 
-        // Success
-        object.textElement.innerText = file.name;
+        if(this.checkValidity(objectIndex)) {
+            // Success
+            object.textElement.innerText = file.name;
+            const textElementId = object.textElement.getAttribute('id');
+            const ariaDescribedBy = object.valueElement.getAttribute('aria-describedby').split(' ');
+            if(!ariaDescribedBy.includes(textElementId)) {
+                ariaDescribedBy.push(textElementId);
+                object.valueElement.setAttribute('aria-describedby', ariaDescribedBy.join(' '));
+            }
 
-        this.showNotEmpty(objectIndex);
-        this.focus(objectIndex);
-        this.checkValidity(objectIndex);
+            this.showNotEmpty(objectIndex);
+            this.focus(objectIndex);
+        }
     }
 
     focus (objectIndex) {
@@ -139,6 +146,14 @@ class FormFieldInputFile extends FormFieldInputAbstract {
 
     empty (objectIndex) {
         super.empty(objectIndex);
+
+        const object = this.objects[objectIndex];
+        const textElementId = object.textElement.getAttribute('id');
+        const ariaDescribedBy = object.valueElement.getAttribute('aria-describedby').split(' ');
+        if(ariaDescribedBy.includes(textElementId)) {
+            ariaDescribedBy.splice(ariaDescribedBy.indexOf(textElementId), 1);
+            object.valueElement.setAttribute('aria-describedby', ariaDescribedBy.join(' '));
+        }
 
         this.blur(objectIndex);
     }
