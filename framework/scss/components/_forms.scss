@@ -930,9 +930,13 @@ input[type=radio],
 /**
  * Autocomplete location
  */
-.ds44-autocomp--location {
 
-
+ .ds44-autocomp--location {
+    padding-right: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    white-space: nowrap;
 }
 
 
