@@ -706,6 +706,10 @@
   position: absolute;
   left: 0;
   top: 0;
+
+  &.icon-marker  {
+    left: 3px;
+  }
 }
 
 /* === Text effects === */
