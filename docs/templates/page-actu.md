@@ -13,7 +13,7 @@ variations:
 - title: Page type "Evénement"
   pattern: page/LA__evenement.html
 - title: Page type "Evénement" sans photo
-  pattern: page/LA__evenement--sansPhoto.html
+  pattern: page/LA__evenement-sansPhoto.html
 - title: Template centré
   pattern: templates/template-generique-centre.html
 ---
