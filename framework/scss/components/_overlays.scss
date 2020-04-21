@@ -192,6 +192,11 @@ top: -2500px;
     & .ds44-js-card {
       cursor: pointer;
       z-index: 700;
+      position: relative;
+
+      [role="heading"]  {
+        padding-right: 1em;
+      }
 
       &:hover {
         [role="heading"] a {
@@ -201,6 +206,13 @@ top: -2500px;
 
       & .ds44-imgRatio {
         z-index: 700;
+      }
+
+      .ds44-cardSelect {
+          position: absolute;
+          top: 0;
+          right: 0;
+          z-index: 800;
       }
     }
   }
