@@ -513,6 +513,18 @@ main {
 }
 
 
+/* Fiche lieu événements */
+
+.ds44-img50 {
+  .ds44-theme {
+      flex-wrap: wrap;
+
+    & .ds44-docListElem {
+      margin: .25em .5em;
+    }
+  }
+}
+
 /* =======
   GENERIC MEDIA QUERIES
   === */
