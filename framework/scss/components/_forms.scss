@@ -207,7 +207,7 @@ textarea {
     overflow: hidden;
     text-overflow: ellipsis;
     display: block;
-    white-space: nowrap;  
+    white-space: nowrap;
 }
 
 /* Bouton de reset de champ */
@@ -740,6 +740,7 @@ input[type=radio],
 
 .ds44-autocomp-list {
     padding: $ds44-padding-medium $ds44-padding-large;
+    text-align: left;
 }
 
 .ds44-autocomp-list_elem,
