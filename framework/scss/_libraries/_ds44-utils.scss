@@ -30,6 +30,9 @@
 .ds44-posLe {
   left: 0;
 }
+.ds44-posTop7 {
+  top: 7px !important;
+}
 
 
 /* === Spacers === */
@@ -706,6 +709,10 @@
   position: absolute;
   left: 0;
   top: 0;
+
+  &.icon-marker  {
+    left: 3px;
+  }
 }
 
 /* === Text effects === */

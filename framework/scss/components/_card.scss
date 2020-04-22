@@ -165,6 +165,7 @@ a.ds44-card {
 .ds44-card__section {
     padding: $ds44-padding-medium $ds44-padding-box;
     height: 100%;
+    position: relative;
 }
 
 .ds44-card__globalLink {

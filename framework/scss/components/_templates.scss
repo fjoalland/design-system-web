@@ -386,6 +386,7 @@ main {
             @media (max-width: $ds44-medium - .0625) {
                 width: 100%;
                 padding-top: 0;
+                padding-bottom: 0;
             }
 
             .ds44-textLegend {
@@ -512,6 +513,18 @@ main {
 }
 
 
+/* Fiche lieu événements */
+
+.ds44-img50 {
+  .ds44-theme {
+      flex-wrap: wrap;
+
+    & .ds44-docListElem {
+      margin: .25em .5em;
+    }
+  }
+}
+
 /* =======
   GENERIC MEDIA QUERIES
   === */
@@ -599,6 +612,7 @@ main {
     .ds44-homepage-noCarrousel {
        .ds44-titleContainer--home .h1-like {
          padding: 10rem 3rem 3rem 3rem;
+         margin: 0;
        }
     }
 
