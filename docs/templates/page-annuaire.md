@@ -10,6 +10,10 @@ status: A valider
 variations:
 - title: Page type "Accueil Annuaire"
   pattern: page/LA__accueilAnnuaire.html
+- title: Page "Accueil annuaire cantons & communes"
+  pattern: page/LA__accueilAnnuaire_communesCantons.html
+- title: Page type "Résultats annuaire cantons & communes"
+  pattern: page/LA__resultsAnnuaire_communesCantons.html
 - title: Template carrefour
   pattern: templates/template-entryMenu.html
 ---

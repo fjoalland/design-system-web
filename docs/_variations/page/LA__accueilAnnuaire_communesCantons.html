@@ -1,0 +1,53 @@
+---
+layout: pattern
+---
+
+{% include header/inc-header.html
+    logo='<picture class="ds44-logo"><img src="../../assets/images/logo-loire-atlantique.svg" alt="Retour à l&apos;accueil du site loire-atlantique.fr"></picture>'
+    variante1='<button type="button" class="ds44-btnIcoText--maxi ds44--xl-padding" id="open-search"><span class="ds44-btnInnerText">Rechercher</span><i class="icon icon-magnifier icon--large" aria-hidden="true"></i></button>'
+%}
+
+<main role="main" id="content">
+
+	<section class="ds44-container-large">
+    <div class="ds44-pageHeaderContainer">
+			<picture class="ds44-pageHeaderContainer__pictureContainer">
+				<img src="../../assets/images/header-page-annuaire.png" alt="" class="ds44-headerImg" />
+			</picture>
+			<div class="ds44-titleContainer">
+				<div class="ds44-alphaGradient ds44-alphaGradient--header">
+					{% include breadcrumb/breadcrumb--invert.html %}
+					<h1 class="h1-like ds44-text--colorInvert">Annuaire des services d’aide et d’accompagnement à domicile (SAAD)</h1>
+				</div>
+			</div>
+		</div>
+  </section>
+
+  <section class="ds44-container-large">
+    <div class="ds44-mtb3 ds44--xl-padding-tb">
+  			<header class="txtcenter ds44--l-padding-b">
+  				<h2 class="h2-like center">Recherchez un service</h2>
+  			</header>
+        {% include form/layout/recherche-facettes.html %}
+
+      <div class="ds44-mt3 ds44--l-padding-t">
+        <div class="ds44-theme ds44-flex-valign-center ds44-flex-container ds44--l-padding-lr ds44-small-flex-col ds44-mobile-padding-tb ">
+          <p class="h4-like ds44-mr1">Rechercher un canton</p>
+          <div class="ds44-w30 ds44-mobile-w100">{% include form/field/select/standard.html label="Nom du canton" %}</div>
+        </div>
+        <div class="ds44-flex-container ds44-results ds44-results--mapVisible ds44-results--mapVisible--fullW ds44-results--empty">
+          <div class="ds44-mapResults">
+              <div class="ds44-js-map"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+	{% include FAQ/FAQ-basPage.html %}
+
+</main>
+
+{% include footer/footer-LA.html %}

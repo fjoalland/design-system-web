@@ -414,6 +414,85 @@ main {
             }
         }
 
+        &--fullW {
+
+          height: 80vh;
+          display: block;
+          overflow: auto;
+
+          .ds44-mapResults {
+              display: block;
+              width: 100% !important;
+              height: 100%;
+
+              .ds44-js-map  {
+                  position: absolute ;
+                  top: 0;
+                  bottom: 0;
+                  width: 100%;
+                  height: 100%;
+
+                  .ds44-btnStd {
+                      font-size: 1.4rem;
+                      font-family: Muli, Arial, Helvetica, sans-serif;
+                  }
+
+                  .mapboxgl-ctrl-group {
+                      background-color: transparent !important;
+                      box-shadow: none !important;
+                  }
+
+                  .mapboxgl-ctrl-toggle-view {
+                      white-space: nowrap;
+                      width: auto;
+                      padding: 0 1.5rem;
+
+                      @media (max-width: $ds44-medium - .0625) {
+                          display: none;
+                      }
+                  }
+
+                  .mapboxgl-ctrl-zoom-in,
+                  .mapboxgl-ctrl-zoom-out,
+                  .mapboxgl-ctrl-compass,
+                  .mapboxgl-ctrl-fullscreen,
+                  .mapboxgl-ctrl-shrink {
+                      color: #ffffff !important;
+                      background-color: #000000 !important;
+                      border-radius: 3px;
+                      border: 1px solid #000;
+                      height: 4.5rem;
+                      width: 4.5rem;
+                  }
+
+                  .mapboxgl-ctrl-zoom-in,
+                  .mapboxgl-ctrl-zoom-out {
+                      margin-bottom: 0.5rem;
+                  }
+
+                  .mapboxgl-ctrl-zoom-in .mapboxgl-ctrl-icon {
+                      background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='20' height='20' viewBox='0 0 20 20'><rect width='20' height='20' fill='none'/><g transform='translate(18092.5 11479)'><line x2='14' transform='translate(-18089.5 -11469)' fill='none' stroke='white' stroke-linecap='round' stroke-width='1.5'/><line x2='14' transform='translate(-18082.5 -11476) rotate(90)' fill='none' stroke='white' stroke-linecap='round' stroke-width='1.5'/></g><rect width='20' height='20' fill='none'/></svg>");
+                  }
+
+                  .mapboxgl-ctrl-zoom-out .mapboxgl-ctrl-icon {
+                      background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='20' height='20' viewBox='0 0 20 20'><rect width='20' height='20' fill='none'/><g transform='translate(18092.5 11479)'><line x2='14' transform='translate(-18089.5 -11469)' fill='none' stroke='white' stroke-linecap='round' stroke-width='1.5'/></g><rect width='20' height='20' fill='none'/></svg>");
+                  }
+
+                  .mapboxgl-ctrl-compass .mapboxgl-ctrl-icon {
+                      background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='22' viewBox='0 0 20 22'><rect width='20' height='20' transform='translate(0 1)' fill='none'/><path d='M3.5,0,7,8H0Z' transform='translate(14 21) rotate(180)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/><path d='M3.5,0,7,8H0Z' transform='translate(7 1)' fill='white' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/><rect width='20' height='22' fill='none'/></svg>");
+                  }
+
+                  .mapboxgl-ctrl-fullscreen .mapboxgl-ctrl-icon {
+                      background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='20' height='20' viewBox='0 0 20 20'><rect width='20' height='20' transform='translate(0 0.415)' fill='none'/><g transform='translate(18466.582 11443.715)'><g transform='translate(-18459.236 -11436.926) rotate(-45)'><path d='M1.414,1.414l2.91,2.91-2.91,2.91' transform='translate(5.277)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.56'/><line x1='6.734' transform='translate(2.341 4.324)' fill='none' stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.56'/></g><g transform='translate(-18460.445 -11433.465) rotate(-135)'><path d='M0,5.821,2.911,2.91,0,0' transform='translate(4.35)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.56'/><line x1='6.735' y2='0.001' transform='translate(0 2.91)' fill='none' stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.56'/></g><g transform='translate(-18452.465 -11433.715) rotate(45)'><path d='M0,5.821,2.91,2.91,0,0' transform='translate(4.35)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.56'/><line x1='6.735' transform='translate(0 2.91)' fill='none' stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.56'/></g><g transform='translate(-18456.33 -11429.598) rotate(135)'><path d='M0,0,2.91,2.911,0,5.821' transform='translate(4.351 0.001)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.56'/><line x1='6.736' y1='0.001' transform='translate(0 2.911)' fill='none' stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.56'/></g></g><rect width='20' height='20' fill='none'/></svg>");
+                  }
+
+                  .mapboxgl-ctrl-shrink .mapboxgl-ctrl-icon {
+                      background-image: url("data:image/svg+xml;charset=utf-8,<svg id='cd44-smallscreen-black' xmlns='http://www.w3.org/2000/svg' width='20.252' height='20.251' viewBox='0 0 20.252 20.251'><rect width='20' height='20' fill='none'/><g transform='translate(18466.582 11443.715)'><g transform='translate(-18446.33 -11439.599) rotate(135)'><path d='M0,0,2.91,2.91,0,5.821' transform='translate(4.35 0)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/><line x1='6.735' transform='translate(0 2.91)' fill='none' stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.5'/></g><g transform='translate(-18462.465 -11443.715) rotate(45)'><path d='M0,5.821,2.911,2.91,0,0' transform='translate(4.35 0)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/><line x1='6.735' y2='0.001' transform='translate(0 2.91)' fill='none' stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.5'/></g><g transform='translate(-18450.445 -11423.464) rotate(-135)'><path d='M0,5.821,2.91,2.91,0,0' transform='translate(4.35 0)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/><line x1='6.735' transform='translate(0 2.91)' fill='none' stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.5'/></g><g transform='translate(-18466.58 -11427.581) rotate(-45)'><path d='M0,0,2.911,2.911,0,5.821' transform='translate(4.35 0)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/><line x1='6.735' y1='0.001' transform='translate(0 2.91)' fill='none' stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.5'/></g></g></svg>");
+                  }
+              }
+            }
+        }
+
         .ds44-mapResults {
             display: block;
             width: 66.666666%;
@@ -427,8 +506,8 @@ main {
                 width: 100%;
             }
 
-            .ds44-js-map {
-                position: absolute;
+            .ds44-js-map  {
+                position: absolute ;
                 top: 0;
                 bottom: 0;
                 width: 100%;
