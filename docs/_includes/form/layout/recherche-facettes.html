@@ -1,10 +1,16 @@
 {% include form/_variables.html %}
 {% include images/loader.html %}
 
+{% if include.url %}
+    {% assign url = include.url %}
+{% else %}
+    {% assign url = '/json/recherche-keyword.json' %}
+{% endif %}
+
 <div class="ds44-facette">
   <div class="ds44-facette-body">
-    <form data-is-ajax="true" action="/json/recherche.json">
-        {% include form/layout/partial/recherche-facette-main.html fieldStyle="large" %}
+    <form data-is-ajax="true" action="{{ url }}">
+        {% include form/layout/partial/recherche-facettes-main.html fieldStyle="large" fields=include.fields %}
     </form>
   </div>
 </div>

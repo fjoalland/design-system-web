@@ -150,27 +150,36 @@ class ResultStandard {
 
         // Show hide empty results
         const parentElement = document.querySelector('.ds44-results');
-        if(nbDisplayedResults > 0) {
+        if (nbDisplayedResults > 0) {
             parentElement.classList.remove('ds44-results--empty');
         } else {
             parentElement.classList.add('ds44-results--empty');
         }
 
-        // Manage legend
-        const legendElement = listContainerElement.querySelector('.ds44-textLegend');
-        if (legendElement) {
-            if (nbDisplayedResults > evt.detail.maxResults) {
-                legendElement.classList.remove('hidden');
-            } else {
-                legendElement.classList.add('hidden');
-            }
-        }
-
-        // Manage title
+        // Remove initial message
         let newSearchElement = listContainerElement.querySelector('#ds44-results-new-search');
         if (newSearchElement) {
             newSearchElement.remove();
         }
+
+        // Manage legend
+        let legendElement = listContainerElement.querySelector('.ds44-textLegend');
+        if (
+            legendElement &&
+            nbDisplayedResults <= evt.detail.maxResults
+        ) {
+            legendElement.remove();
+        } else if (
+            !legendElement &&
+            nbDisplayedResults > evt.detail.maxResults
+        ) {
+            legendElement = document.createElement('p');
+            legendElement.className = 'ds44-textLegend mbs';
+            legendElement.innerText = 'Il y a un trop grand nombre de résultats correspondant à votre recherche. Vous trouverez ci-dessous les 100 plus pertinents. N’hésitez pas à affiner vos critères de recherche.'
+            listContainerElement.appendChild(legendElement);
+        }
+
+        // Manage title
         let titleElement = listContainerElement.querySelector('.h3-like');
         if (!titleElement) {
             titleElement = document.createElement('p');
@@ -180,7 +189,7 @@ class ResultStandard {
             listContainerElement.appendChild(titleElement);
         }
         titleElement.innerText = evt.detail.nbResults;
-        if(evt.detail.nbResults > 1) {
+        if (evt.detail.nbResults > 1) {
             titleElement.innerText += ' ' + MiscTranslate._('RESULTS');
         } else {
             titleElement.innerText += ' ' + MiscTranslate._('RESULT');
@@ -250,7 +259,7 @@ class ResultStandard {
         }
 
         if (nbDisplayedResults < evt.detail.nbResults) {
-            if(!pagerElement) {
+            if (!pagerElement) {
                 pagerElement = document.createElement('div');
                 pagerElement.className = 'txtcenter center ds44--xl-padding-b ds44-js-search-pager';
                 listContainerElement.appendChild(pagerElement);
@@ -274,7 +283,7 @@ class ResultStandard {
         this.showList();
 
         if (firstResultElement) {
-            MiscEvent.dispatch('loader:setFocus', {'focusedElement': firstResultElement.querySelector('a')});
+            MiscEvent.dispatch('loader:setFocus', { 'focusedElement': firstResultElement.querySelector('a') });
             MiscAccessibility.setFocus(firstResultElement.querySelector('a'));
         }
     }

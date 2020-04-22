@@ -1,6 +1,12 @@
 {% include form/_variables.html %}
 {% include images/loader.html %}
 
+{% if include.url %}
+    {% assign url = include.url %}
+{% else %}
+    {% assign url = '/json/recherche-keyword.json' %}
+{% endif %}
+
 <div class="ds44-facette">
     <div class="ds44-facette-body">
         <!--
@@ -13,23 +19,16 @@
             </button>
         </div>
         -->
-        <form data-is-ajax="true" action="/json/recherche.json">
-            {% include form/layout/partial/recherche-facette-main.html %}
-
-            {% capture ariaDescribedBy %}filter-by-{{ id }}{% if ariaDescribedBy and ariaDescribedBy != '' %} {{ ariaDescribedBy }}{% endif %}{% endcapture %}
+        <form data-is-ajax="true" action="{{ url }}">
+            {% include form/layout/partial/recherche-facettes-main.html fields=include.fields %}
 
             <div class="ds44-facetteContainer ds44-theme ds44-flex-container ds44-medium-flex-col">
               <div class="ds44-fg1 ds44-flex-container ds44-medium-flex-col">
                 <p id="filter-by-{{ id }}" class="ds44-heading ds44-small-fg1 ">Filtrer par</p>
-                <div class="ds44-fieldContainer ds44-fg1 ds44-fieldContainer--select">
-                    {% include form/field/select/checkbox.html label="Choix multiple" containerAttributes='data-auto-submit="true"' ariaDescribedBy=ariaDescribedBy %}
-                </div>
-                <div class="ds44-fieldContainer  ds44-fg1 ds44-fieldContainer--select">
-                    {% include form/field/select/radio.html label="Choix unique" containerAttributes='data-auto-submit="true"' ariaDescribedBy=ariaDescribedBy %}
-                </div>
+                  {{ include.subfields }}
               </div>
               <div class="ds44-push ds44-small-fg1 ds44-hide-tiny-to-medium ds44-show-medium">
-                  {% include form/layout/partial/recherche-facette-export.html %}
+                  {% include form/layout/partial/recherche-facettes-export.html %}
               </div>
             </div>
         </form>
@@ -41,6 +40,6 @@
         </button>
     </div>
     <div class="ds44-facette-mobile-export ds44-push ds44-small-fg1 ds44-show-tiny-to-medium ds44-hide-medium">
-        {% include form/layout/partial/recherche-facette-export.html %}
+        {% include form/layout/partial/recherche-facettes-export.html %}
     </div>
 </div>

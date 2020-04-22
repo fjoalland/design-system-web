@@ -45,7 +45,12 @@ layout: pattern
       <header class="txtcenter ds44--l-padding-b">
         <h2 class="h2-like center" id="idTitre2">Recherchez un contact ou une aide</h2>
       </header>
-      {% include form/layout/recherche-facettes.html %}
+        {% capture fields %}
+            <div class="ds44-fieldContainer ds44-fg1">
+                {% include form/field/input/standard.html label="Votre recherche" required="false" class="ds44-inpLarge" title="Zone de saisie de votre recherche" ariaDescribedBy="idTitre2" %}
+            </div>
+        {% endcapture %}
+        {% include form/layout/recherche-facettes.html fields=fields %}
     </div>
   </section>
 

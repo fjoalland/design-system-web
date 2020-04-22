@@ -12,7 +12,12 @@ layout: pattern
         <div class="txtcenter ds44-lightBG ds44--l-padding-b ds44--xl-padding-t ">
             <h1 class="center" id="titre1">Résultats de votre recherche</h1>
         </div>
-        {% include form/layout/recherche-keyword.html %}
+        {% capture fields %}
+            <div class="ds44-fieldContainer ds44-fg1">
+                {% include form/field/input/standard.html label="Votre recherche" required="false" class="ds44-inpLarge" title="Zone de saisie de votre recherche" ariaDescribedBy="titre1 ds44-results-new-search" %}
+            </div>
+        {% endcapture %}
+        {% include form/layout/recherche-facettes.html fields=fields %}
     </section>
     <section class="ds44-container-large">
         <div class="ds44-flex-container ds44-results ds44-results--empty">
@@ -20,14 +25,12 @@ layout: pattern
                 <div class="ds44-js-results-container">
                     <div class="ds44-js-results-card" data-url="/json/search-card.json" aria-hidden="true"></div>
                     <div class="ds44-js-results-list">
-                        <p id="ds44-results-new-search" class="h3-like mbs txtcenter center ds44--3xl-padding-t ds44--3xl-padding-b"><span aria-level="2" rôle="heading">Veuillez faire une recherche ci-dessus pour afficher des résultats.</span></p>
+                        <p id="ds44-results-new-search"><span class="h3-like mbs txtcenter center ds44--3xl-padding-t ds44--3xl-padding-b" aria-level="2" rôle="heading">Veuillez faire une recherche ci-dessus pour afficher des résultats.</span></p>
                     </div>
                 </div>
             </div>
         </div>
-
     </section>
-
 </main>
 
 
