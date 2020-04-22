@@ -127,7 +127,7 @@ class FormFieldInputAbstract extends FormFieldAbstract {
         const object = this.objects[objectIndex];
         const extendedData = {};
         extendedData[object.name] = {
-            'text': object.labelElement.innerText.replace(/\*$/, '')
+            'text': object.valueElement.value
         };
 
         return MiscUtils.merge(data, extendedData);

@@ -45,6 +45,9 @@ class MiscTranslate {
                 'MAP_REORIENTATE': 'Repositionner la carte vers le nord',
                 'RESULTS': 'résultats',
                 'RESULT': 'résultat',
+                'NO_RESULTS_FOR_SEARCH:': 'Il n\'y a aucun résultat pour la recherche sur :',
+                'NO_RESULTS_NEW_SEARCH': 'Merci d\'effectuer une nouvelle recherche',
+                'NB_RESULTS_FOR_SEARCH:': 'pour la recherche sur :',
                 'FORM_GENERAL_ERROR': 'Une erreur est survenue suite à l\'envoi de votre formulaire'
             },
             'en': {
@@ -81,6 +84,9 @@ class MiscTranslate {
                 'MAP_REORIENTATE': 'Reposition the map to the north',
                 'RESULTS': 'results',
                 'RESULT': 'result',
+                'NO_RESULTS_FOR_SEARCH:': 'There are no results for the search on:',
+                'NO_RESULTS_NEW_SEARCH': 'Please make another search',
+                'NB_RESULTS_FOR_SEARCH:': 'for the search on:',
                 'FORM_GENERAL_ERROR': 'An error occurred following the submission of your form'
             }
         })[language];

@@ -180,19 +180,33 @@ class ResultStandard {
         }
 
         // Manage title
+        let focusElement = null;
         let titleElement = listContainerElement.querySelector('.h3-like');
         if (!titleElement) {
-            titleElement = document.createElement('p');
+            titleElement = document.createElement('div');
             titleElement.className = 'h3-like mbs';
             titleElement.setAttribute('role', 'heading');
             titleElement.setAttribute('aria-level', '2');
             listContainerElement.appendChild(titleElement);
         }
-        titleElement.innerText = evt.detail.nbResults;
-        if (evt.detail.nbResults > 1) {
-            titleElement.innerText += ' ' + MiscTranslate._('RESULTS');
+        if (!evt.detail.nbResults) {
+            let titleElementHtml = MiscTranslate._('NO_RESULTS_FOR_SEARCH:') + ' ' + evt.detail.searchText + '. ' + MiscTranslate._('NO_RESULTS_NEW_SEARCH') + '.';
+            titleElement.innerHTML = titleElementHtml;
+            document.title = titleElementHtml;
+            titleElement.setAttribute('tabindex', '-1');
+            focusElement = titleElement;
         } else {
-            titleElement.innerText += ' ' + MiscTranslate._('RESULT');
+            let titleElementHtml = evt.detail.nbResults;
+            if (evt.detail.nbResults > 1) {
+                titleElementHtml += ' ' + MiscTranslate._('RESULTS');
+            } else {
+                titleElementHtml += ' ' + MiscTranslate._('RESULT');
+            }
+            let accessibleSentence = titleElementHtml + ' ' + MiscTranslate._('NB_RESULTS_FOR_SEARCH:') + ' ' + evt.detail.searchText;
+            titleElement.innerHTML = titleElementHtml + '<p class="visually-hidden" tabindex="-1">' + accessibleSentence + '</p>';
+            document.title = accessibleSentence;
+            titleElement.removeAttribute('tabindex');
+            focusElement = titleElement.querySelector('.visually-hidden')
         }
 
         // Remove existing results
@@ -282,9 +296,9 @@ class ResultStandard {
 
         this.showList();
 
-        if (firstResultElement) {
-            MiscEvent.dispatch('loader:setFocus', { 'focusedElement': firstResultElement.querySelector('a') });
-            MiscAccessibility.setFocus(firstResultElement.querySelector('a'));
+        if (focusElement) {
+            MiscEvent.dispatch('loader:setFocus', { 'focusedElement': focusElement });
+            MiscAccessibility.setFocus(focusElement);
         }
     }
 

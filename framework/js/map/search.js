@@ -188,7 +188,10 @@ class MapSearch extends MapAbstract {
             ]);
         }
 
-        if (object.zoom) {
+        if (
+            object.zoom &&
+            (lngLats.length > 0)
+        ) {
             // Zoom the map
             object.zoom = false;
             object.map.fitBounds(

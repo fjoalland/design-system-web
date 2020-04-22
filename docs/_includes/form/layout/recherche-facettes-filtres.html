@@ -23,13 +23,13 @@
             {% include form/layout/partial/recherche-facettes-main.html fields=include.fields %}
 
             <div class="ds44-facetteContainer ds44-theme ds44-flex-container ds44-medium-flex-col">
-              <div class="ds44-fg1 ds44-flex-container ds44-medium-flex-col">
-                <p id="filter-by-{{ id }}" class="ds44-heading ds44-small-fg1 ">Filtrer par</p>
-                  {{ include.subfields }}
-              </div>
-              <div class="ds44-push ds44-small-fg1 ds44-hide-tiny-to-medium ds44-show-medium">
-                  {% include form/layout/partial/recherche-facettes-export.html %}
-              </div>
+                <div class="ds44-fg1 ds44-flex-container ds44-medium-flex-col">
+                    <p id="filter-by-{{ id }}" class="ds44-heading ds44-small-fg1 ">Filtrer par</p>
+                    {{ include.subfields }}
+                </div>
+                <div class="ds44-push ds44-small-fg1 ds44-hide-tiny-to-medium ds44-show-medium">
+                    {% include form/layout/partial/recherche-facettes-export.html %}
+                </div>
             </div>
         </form>
     </div>

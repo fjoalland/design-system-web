@@ -162,7 +162,7 @@ class FormLayoutSearch {
                 data = JSON.parse(data);
             } catch (ex) {
             }
-            searchText.push(data.value);
+            searchText.push(data.text || data.value);
         }
 
         return {
@@ -172,7 +172,7 @@ class FormLayoutSearch {
             'maxResults': response['max-result'],
             'results': results,
             'newResults': response['result'],
-            'searchText': searchText.join(' ')
+            'searchText': searchText.join(', ')
         };
     }
 
