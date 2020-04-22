@@ -67,6 +67,10 @@
   padding-top      : $ds44-padding-large; // 2rem
   padding-bottom   : $ds44-padding-large; // 2rem
 }
+.ds44--l-padding-lr {
+  padding-left      : $ds44-padding-large; // 2rem
+  padding-right   : $ds44-padding-large; // 2rem
+}
 .ds44--l-padding-t {
   padding-top     : $ds44-padding-large; // 2rem
 }
@@ -398,7 +402,7 @@
   }
 
   .ds44-small-fg1 { // étire l'élément en mobile
-    flex-grow: 1;
+    flex-grow: 1 !important;
   }
 
 }
@@ -527,6 +531,9 @@
 }
 .ds44-w98 {
   width: 98%;
+}
+.ds44-w30 {
+  width: 30%;
 }
 
 /* === Height helpers === */
@@ -935,8 +942,17 @@ h6.visually-hidden + * {
     margin-bottom  : $ds44-components-vmargin; // 3rem
   }
 
+  .ds44-mobile-padding-tb {
+    padding-top     : $ds44-padding-medium; // 1rem
+    padding-bottom  : $ds44-padding-medium; // 1rem
+  }
+
   .ds44--mobile--m-padding-b {
     padding-bottom   : $ds44-padding-medium !important; // 1rem
+  }
+
+  .ds44-mobile-w100 {
+    width: 100% !important;
   }
 
 }
