@@ -291,7 +291,7 @@ class ResultStandard {
             pagerTitleElement.innerText = nbDisplayedResults + ' ' + MiscTranslate._('SEARCH_NB_RESULTS_OUT_OF') + ' ' + evt.detail.nbResults;
 
             let pagerButtonElement = pagerElement.querySelector('button');
-            pagerButtonElement.setAttribute('title', MiscTranslate._('MORE_SEARCH_RESULTS') + evt.detail.searchText);
+            pagerButtonElement.setAttribute('title', MiscTranslate._('MORE_SEARCH_RESULTS:') + evt.detail.searchText);
         }
 
         this.showList();

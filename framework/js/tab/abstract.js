@@ -130,22 +130,8 @@ class TabAbstract {
             return;
         }
 
-        let headerHeight = 0;
-        let header = document.querySelector('header .ds44-header');
-        if (header) {
-            let wasHidden = false;
-            if (header.classList.contains('hidden')) {
-                wasHidden = true;
-                header.classList.remove('hidden')
-            }
-            headerHeight = header.offsetHeight;
-            if (wasHidden) {
-                header.classList.add('hidden');
-            }
-        }
-
         MiscAccessibility.setFocus(currentTabHandle);
-        window.scrollTo(0, MiscUtils.getPositionY(currentTabHandle) - headerHeight)
+        window.scrollTo(0, MiscUtils.getPositionY(currentTabHandle) - MiscDom.getHeaderHeight(true))
     }
 
     move (evt) {

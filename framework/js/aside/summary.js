@@ -70,7 +70,7 @@ class AsideSummary {
         if (calculateChapter) {
             // Highlight sections
             let activeAElement = null;
-            const headerHeight = document.querySelector('.ds44-header').offsetHeight;
+            const headerHeight = MiscDom.getHeaderHeight();
             this.summaryElement
                 .querySelectorAll('.ds44-list--puces a')
                 .forEach((aElement) => {
@@ -113,11 +113,11 @@ class AsideSummary {
             return this.containerElement.offsetHeight - this.summaryElement.offsetHeight;
         }
 
-        return Math.min(this.getMaximumTop(), this.borderTop + document.querySelector('.ds44-header').offsetHeight);
+        return Math.min(this.getMaximumTop(), this.borderTop + MiscDom.getHeaderHeight());
     }
 
     getMaximumTop () {
-        return this.maximumTop - (this.borderTop + document.querySelector('.ds44-header').offsetHeight);
+        return this.maximumTop - (this.borderTop + MiscDom.getHeaderHeight());
     }
 
     goTo (evt) {
@@ -130,20 +130,10 @@ class AsideSummary {
         const sectionId = aElement.getAttribute('href').replace(/^#/, '');
         const sectionElement = document.querySelector('#' + sectionId);
         if (sectionElement) {
-            const headerElement = document.querySelector('.ds44-header');
-            let headerHeight = null;
-            if (headerElement.classList.contains('hidden')) {
-                headerElement.classList.remove('hidden');
-                headerHeight = headerElement.offsetHeight;
-                headerElement.classList.add('hidden');
-            } else {
-                headerHeight = headerElement.offsetHeight;
-            }
-
             const scrollTo = MiscUtils.getPositionY(sectionElement);
             if (this.getScrollTop() > scrollTo) {
                 // Going up, the header will show
-                MiscUtils.scrollTo(scrollTo - headerHeight);
+                MiscUtils.scrollTo(scrollTo - MiscDom.getHeaderHeight(true));
             } else {
                 // Going up, the header will hide
                 MiscUtils.scrollTo(scrollTo);

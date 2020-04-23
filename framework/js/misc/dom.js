@@ -80,4 +80,19 @@ class MiscDom {
             sibling = sibling.nextElementSibling;
         }
     };
+
+    static getHeaderHeight (force = false) {
+        const headerElement = document.querySelector('.ds44-header');
+        if (
+            !headerElement ||
+            (
+                headerElement.classList.contains('collapsed') &&
+                !force
+            )
+        ) {
+            return 0;
+        }
+
+        return headerElement.offsetHeight;
+    };
 }

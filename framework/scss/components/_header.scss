@@ -61,7 +61,7 @@
     opacity: 1;
     transition: visibility $ds44-timing-standard ease, opacity $ds44-timing-standard ease, margin-top $ds44-timing-standard ease;
 
-    &.hidden {
+    &.collapsed {
         margin-top: -100px;
         opacity: 0;
         visibility: hidden;
