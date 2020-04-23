@@ -73,7 +73,7 @@ button, a.ds44-btnStd, a > .ds44-btnStd, .ds44-btnStd > a, .ds44-btnIcoText--max
     &.ds44-btnQuestion {
         @include ds44-font-sizes(largeButton);
         padding: $ds44-padding-large;
-        right: $ds44-container-large-margin;
+        right: 7rem;
         transition: bottom 0s;
     }
 
@@ -410,7 +410,7 @@ a.ds44-btnStd--retourPage {
 
     .ds44-btnStd, a.ds44-btnStd, a > .ds44-btnStd, .ds44-btnStd > a {
         &.ds44-btnQuestion {
-            right: $ds44-components-vmargin;
+            right: 7rem;
         }
     }
 
