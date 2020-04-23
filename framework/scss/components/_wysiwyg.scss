@@ -16,6 +16,9 @@
     p + h4 {
       margin-top: $ds44-components-vmargin ;
     }
+    ul:not(.ds44-list):not(.ds44-collapser) > li {
+      margin-top: .5em;
+    }
 }
 
 blockquote {
