@@ -26,19 +26,19 @@ layout: pattern
   <section class="ds44-container-large">
     <div class="ds44-mtb3 ds44--xl-padding-tb">
   			<header class="txtcenter ds44--l-padding-b">
-  				<h2 class="h2-like center">Recherchez un service</h2>
+  				<h2 class="h2-like center" id="titre1">Recherchez un canton</h2>
   			</header>
         {% capture fields %}
             <div class="ds44-fieldContainer ds44-fg1">
-                {% include form/field/input/standard.html label="Votre recherche" required="false" class="ds44-inpLarge" title="Zone de saisie de votre recherche" ariaDescribedBy="titre1" %}
+                {% include form/field/input/standard.html label="Votre recherche" required="false" class="ds44-inpLarge" title="Zone de saisie de votre recherche de canton" ariaDescribedBy="titre1" %}
             </div>
         {% endcapture %}
         {% include form/layout/recherche-facettes.html fields=fields %}
 
       <div class="ds44-mt3 ds44--l-padding-t">
         <div class="ds44-theme ds44-flex-valign-center ds44-flex-container ds44--l-padding-lr ds44-small-flex-col ds44-mobile-padding-tb ">
-          <p class="h4-like ds44-mr1">Rechercher un canton</p>
-          <div class="ds44-w30 ds44-mobile-w100">{% include form/field/select/standard.html label="Nom du canton" %}</div>
+          <label for="button-{{ id }}" class="h4-like ds44-mr1">Rechercher un canton</label>
+          <div class="ds44-w30 ds44-mobile-w100">{% include form/field/select/standard.html label="Nom du canton" title="Sélectionner un canton et accéder à sa fiche de description" %}</div>
         </div>
         <div class="ds44-flex-container ds44-results ds44-results--mapVisible ds44-results--mapVisible--fullW ds44-results--empty">
           <div class="ds44-mapResults">
