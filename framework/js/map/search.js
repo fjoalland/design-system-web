@@ -8,17 +8,22 @@ class MapSearch extends MapAbstract {
 
         const objectIndex = (this.objects.length - 1);
         const object = this.objects[objectIndex];
+        object.parentElement = element.closest('.ds44-mapResults');
+        object.containerElement = element.closest('.ds44-mapResults-container');
         object.newResults = null;
         object.zoom = false;
         object.addUp = false;
         object.isVisible = true;
+        object.isMoving = false;
+        object.maximumTop = null;
 
         MiscEvent.addListener('search:update', this.search.bind(this, objectIndex));
         MiscEvent.addListener('resize', this.resize.bind(this, objectIndex), window);
+        MiscEvent.addListener('scroll', this.scroll.bind(this, objectIndex), window);
 
         // Show results at startup for mobiles
         const breakpoint = window.matchMedia('(max-width: 767px)');
-        if(breakpoint.matches) {
+        if (breakpoint.matches) {
             const resultsElement = object.mapElement.closest('.ds44-results.ds44-results--mapVisible')
             if (resultsElement) {
                 this.toggleView(objectIndex);
@@ -37,10 +42,11 @@ class MapSearch extends MapAbstract {
         MiscEvent.addListener('fullscreenchange', this.translateMap.bind(this, objectIndex));
         this.translateMap(objectIndex);
 
-        const mapToggleViewElement = document.querySelector('.ds44-js-toggle-map-view');
-        if (mapToggleViewElement) {
-            MiscEvent.addListener('click', this.toggleView.bind(this, objectIndex), mapToggleViewElement);
-        }
+        document
+            .querySelectorAll('.ds44-js-toggle-map-view')
+            .forEach((mapToggleViewElement) => {
+                MiscEvent.addListener('click', this.toggleView.bind(this, objectIndex), mapToggleViewElement);
+            });
 
         object.map.on('moveend', this.move.bind(this, objectIndex));
         if (object.newResults) {
@@ -137,7 +143,7 @@ class MapSearch extends MapAbstract {
         const object = this.objects[objectIndex];
 
         // Remove existing markers
-        if(!object.addUp) {
+        if (!object.addUp) {
             for (let i = 0; i < object.markers.length; i++) {
                 object.markers[i].remove();
             }
@@ -233,35 +239,34 @@ class MapSearch extends MapAbstract {
 
         const resultsElement = object.mapElement.closest('.ds44-results')
         if (resultsElement) {
-            const mapToggleViewElement = resultsElement.querySelector('.ds44-js-toggle-map-view');
-            const mapContainerElement = resultsElement.querySelector('.ds44-mapResults');
+            const mapToggleViewElements = resultsElement.querySelectorAll('.ds44-js-toggle-map-view');
             if (resultsElement.classList.contains('ds44-results--mapVisible')) {
                 resultsElement.classList.remove('ds44-results--mapVisible')
                 object.isVisible = false;
 
-                if(mapContainerElement) {
-                    MiscAccessibility.hide(mapContainerElement);
+                if (object.parentElement) {
+                    MiscAccessibility.hide(object.parentElement);
                 }
 
-                if (mapToggleViewElement) {
+                mapToggleViewElements.forEach((mapToggleViewElement) => {
                     const text = mapToggleViewElement.innerText.replace(MiscTranslate._('HIDE') + ' ', MiscTranslate._('SHOW') + ' ');
                     mapToggleViewElement.querySelector('span').innerHTML = text;
                     mapToggleViewElement.setAttribute('title', text);
-                }
+                });
             } else {
                 resultsElement.classList.add('ds44-results--mapVisible')
                 object.isVisible = true;
                 this.resize(objectIndex);
 
-                if(mapContainerElement) {
-                    MiscAccessibility.show(mapContainerElement);
+                if (object.parentElement) {
+                    MiscAccessibility.show(object.parentElement);
                 }
 
-                if (mapToggleViewElement) {
+                mapToggleViewElements.forEach((mapToggleViewElement) => {
                     const text = mapToggleViewElement.innerText.replace(MiscTranslate._('SHOW') + ' ', MiscTranslate._('HIDE') + ' ');
                     mapToggleViewElement.querySelector('span').innerHTML = text;
                     mapToggleViewElement.setAttribute('title', text);
-                }
+                });
             }
         }
     }
@@ -292,6 +297,79 @@ class MapSearch extends MapAbstract {
         const object = this.objects[objectIndex];
 
         object.map.resize();
+
+        this.scroll(objectIndex);
+    }
+
+    scroll (objectIndex) {
+        const object = this.objects[objectIndex];
+        const scrollTop = this.getScrollTop();
+        const enableScrolling = (object.parentElement.offsetHeight > object.containerElement.offsetHeight);
+
+        const oldContainerElementHeight = object.containerElement.offsetHeight;
+        if (enableScrolling) {
+            let mapHeight = (
+                Math.min(MiscUtils.getPositionY(object.parentElement) + object.parentElement.offsetHeight, (scrollTop + this.getScreenHeight())) -
+                Math.max((scrollTop + MiscDom.getHeaderHeight()), MiscUtils.getPositionY(object.parentElement))
+            );
+            object.containerElement.style.height = mapHeight + 'px';
+        } else {
+            object.containerElement.style.height = null;
+        }
+        if (oldContainerElementHeight !== object.containerElement.offsetHeight) {
+            if (object.map && object.map.resize) {
+                object.map.resize();
+            }
+        }
+
+        object.maximumTop = MiscUtils.getPositionY(object.parentElement) + object.parentElement.offsetHeight - object.containerElement.offsetHeight;
+        const top = this.getTop(objectIndex);
+        if (
+            enableScrolling &&
+            scrollTop > MiscUtils.getPositionY(object.parentElement) - top
+        ) {
+            if (!object.isMoving) {
+                object.containerElement.style.width = object.parentElement.offsetWidth + 'px';
+                object.isMoving = true;
+            }
+
+            if (scrollTop > this.getMaximumTop(objectIndex)) {
+                object.containerElement.style.position = 'absolute';
+            } else {
+                object.containerElement.style.position = 'fixed';
+            }
+            object.containerElement.style.top = top + 'px';
+        } else if (object.isMoving) {
+            object.isMoving = false;
+
+            object.containerElement.style.top = null;
+            object.containerElement.style.position = 'static';
+            object.containerElement.style.width = null;
+        }
+    }
+
+    getScrollTop () {
+        return (document.documentElement.scrollTop || document.body.scrollTop);
+    }
+
+    getScreenHeight () {
+        return window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+    }
+
+    getTop (objectIndex) {
+        const object = this.objects[objectIndex];
+
+        if (this.getScrollTop() > this.getMaximumTop(objectIndex)) {
+            return object.parentElement.offsetHeight - object.containerElement.offsetHeight;
+        }
+
+        return Math.min(this.getMaximumTop(objectIndex), MiscDom.getHeaderHeight());
+    }
+
+    getMaximumTop (objectIndex) {
+        const object = this.objects[objectIndex];
+
+        return object.maximumTop - MiscDom.getHeaderHeight();
     }
 }
 
