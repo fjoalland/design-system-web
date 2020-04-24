@@ -725,3 +725,34 @@ main {
     }
 
 }
+
+
+
+/* Media Queries Print / Impression */
+@media print {
+
+  .grid-2-small-1,
+  .grid-12-small-1, {
+    grid-template-columns : repeat(1, 1fr);
+  }
+
+  .ds44-pageHeaderContainer {
+
+    .ds44-titleContainer {
+      min-height: auto;
+      justify-content: flex-start;
+
+      .ds44-alphaGradient {
+        padding: 0 !important
+      }
+      .ds44-text--colorInvert {
+        color: #000;
+      }
+    }
+
+    img {
+      display: none;
+    }
+  }
+
+}
