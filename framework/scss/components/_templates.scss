@@ -114,6 +114,15 @@ main {
     margin: 0 auto $ds44-components-vmargin auto;
 }
 
+.ds44-contenuDossier {
+
+  .ds44-negativeOffset-1,
+  .ds44-negativeOffset-2 {
+    margin-left : 0 !important;
+    margin-right : 0 !important;
+  }
+}
+
 @media (max-width: $ds44-medium - .0625) {
 
     .ds44-container-relmob {
@@ -714,5 +723,36 @@ main {
         padding-left: $ds44-container-large-margin;
         padding-right: $ds44-container-large-margin;
     }
+
+}
+
+
+
+/* Media Queries Print / Impression */
+@media print {
+
+  .grid-2-small-1,
+  .grid-12-small-1, {
+    grid-template-columns : repeat(1, 1fr);
+  }
+
+  .ds44-pageHeaderContainer {
+
+    .ds44-titleContainer {
+      min-height: auto;
+      justify-content: flex-start;
+
+      .ds44-alphaGradient {
+        padding: 0 !important
+      }
+      .ds44-text--colorInvert {
+        color: #000;
+      }
+    }
+
+    img {
+      display: none;
+    }
+  }
 
 }

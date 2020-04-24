@@ -72,5 +72,14 @@ footer .ds44-logo {
         }
     }
 
+}
+
+
+/* Media Queries Print / Impression */
+@media print {
+
+  footer {
+    display: none;
+  }
 
 }
