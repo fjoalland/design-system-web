@@ -722,9 +722,66 @@ main {
 /* Media Queries Print / Impression */
 @media print {
 
+  body {
+    font-size: 1em;
+    width: auto!important;
+    margin: auto!important;
+    background-color: #fff!important;
+    color: #000!important;
+  }
+
+  p, h1, h2, h3, h4, h5, h6, blockquote, ul, ol {
+    color: #000!important;
+  }
+
+
+  p, blockquote {
+    orphans: 3; /* pas de ligne seule en bas */
+    widows: 3; /* pas de ligne seule en haut */
+  }
+  blockquote, ul, ol {
+    page-break-inside: avoid; /* pas de coupure dans ces élements */
+  }
+  h1, .h1-like,
+  h2, .h2-like,
+  h3, .h3-like,
+  h4, .h4-like {
+    page-break-after: avoid; /* pas de saut après ces éléments */
+  }
+  a {
+    color: #000!important;
+    text-decoration: underline!important;
+  }
+
+
+  .ds44-container-large {
+    margin: 0;
+    padding: 0;
+    clear: both;
+    max-width: inherit;
+    display: block  !important;
+  }
+
   .grid-2-small-1,
-  .grid-12-small-1, {
+  .grid-12-small-1 {
     grid-template-columns : repeat(1, 1fr);
+    page-break-inside: auto !important;
+
+    & > * {
+      clear: both !important;
+      display: block !important;
+      grid-column: inherit !important;
+      page-break-inside: auto !important;
+    }
+  }
+
+  .ds44-grid12-offset-2,
+  .ds44-grid12-offset-1 {
+    padding: 0 !important;
+  }
+
+  .ds44-inner-container {
+    max-width: inherit !important;
   }
 
   .ds44-pageHeaderContainer {
@@ -742,8 +799,12 @@ main {
     }
 
     img {
-      display: none;
+      display: none !important;
     }
+  }
+
+  .grid-offset {
+    display: none !important;
   }
 
 }

@@ -375,3 +375,13 @@
     }
 
 }
+
+
+/* Media Queries Print / Impression */
+@media print {
+
+  .ds44-js-aside-summary > * {
+    position: inherit !important;
+  }
+
+}

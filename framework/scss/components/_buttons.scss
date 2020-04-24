@@ -499,6 +499,10 @@ a.ds44-btnStd--retourPage {
   .ds44-btn--invert, a.ds44-btn--invert, a > .ds44-btn--invert, .ds44-btn--invert > a {
       background-color: $ds44-color-inverse!important;
       color: $ds44-background-dark!important;
-      border: 1px solid $ds44-background-dark ; 
+      border: 1px solid $ds44-background-dark ;
+  }
+
+  .ds44-btn-fixed {
+    display: none !important;
   }
 }
