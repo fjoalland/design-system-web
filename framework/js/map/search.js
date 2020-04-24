@@ -252,6 +252,9 @@ class MapSearch extends MapAbstract {
                     const text = mapToggleViewElement.innerText.replace(MiscTranslate._('HIDE') + ' ', MiscTranslate._('SHOW') + ' ');
                     mapToggleViewElement.querySelector('span').innerHTML = text;
                     mapToggleViewElement.setAttribute('title', text);
+                    if (!mapToggleViewElement.closest('.ds44-mapResults-container')) {
+                        MiscAccessibility.setFocus(mapToggleViewElement);
+                    }
                 });
             } else {
                 resultsElement.classList.add('ds44-results--mapVisible')
@@ -266,6 +269,9 @@ class MapSearch extends MapAbstract {
                     const text = mapToggleViewElement.innerText.replace(MiscTranslate._('SHOW') + ' ', MiscTranslate._('HIDE') + ' ');
                     mapToggleViewElement.querySelector('span').innerHTML = text;
                     mapToggleViewElement.setAttribute('title', text);
+                    if (mapToggleViewElement.closest('.ds44-mapResults-container')) {
+                        MiscAccessibility.setFocus(mapToggleViewElement);
+                    }
                 });
             }
         }
