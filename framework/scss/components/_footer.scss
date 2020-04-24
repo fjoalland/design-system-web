@@ -79,7 +79,7 @@ footer .ds44-logo {
 @media print {
 
   footer {
-    display: none;
+    display: none !important;
   }
 
 }
