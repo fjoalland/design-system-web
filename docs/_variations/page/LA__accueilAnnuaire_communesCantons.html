@@ -37,8 +37,8 @@ layout: pattern
 
       <div class="ds44-mt3 ds44--l-padding-t">
         <div class="ds44-theme ds44-flex-valign-center ds44-flex-container ds44--l-padding-lr ds44-small-flex-col ds44-mobile-padding-tb ">
-          <label for="button-{{ id }}" class="h4-like ds44-mr1">Rechercher un canton</label>
-          <div class="ds44-w30 ds44-mobile-w100">{% include form/field/select/standard.html label="Nom du canton" title="Sélectionner un canton et accéder à sa fiche de description" %}</div>
+          <p id="label-rechercheCanton" class="h4-like ds44-mr1">Rechercher un canton</p>
+          <div class="ds44-w30 ds44-mobile-w100">{% include form/field/select/standard.html label="Nom du canton" title="Sélectionner le nom d'un canton et accéder à sa fiche de description" ariaDescribedBy="label-rechercheCanton" %}</div>
         </div>
         <div class="ds44-flex-container ds44-results ds44-results--mapVisible ds44-results--mapVisible--fullW ds44-results--empty">
           <div class="ds44-mapResults">
