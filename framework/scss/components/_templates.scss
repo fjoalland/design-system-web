@@ -114,6 +114,15 @@ main {
     margin: 0 auto $ds44-components-vmargin auto;
 }
 
+.ds44-contenuDossier {
+
+  .ds44-negativeOffset-1,
+  .ds44-negativeOffset-2 {
+    margin-left : 0 !important;
+    margin-right : 0 !important;
+  }
+}
+
 @media (max-width: $ds44-medium - .0625) {
 
     .ds44-container-relmob {
