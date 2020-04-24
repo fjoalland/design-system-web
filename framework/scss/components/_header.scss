@@ -246,3 +246,29 @@
     }
 
 }
+
+
+
+/* Media Queries Print / Impression */
+@media print {
+
+  main {
+    padding: 0;
+  }
+
+  .ds44-header {
+    position: inherit;
+    margin-top: 0;
+    opacity: 1;
+    visibility: visible;
+
+    .ds44-colLeft {
+      text-align: center;
+    }
+    .ds44-colRight {
+      display: none;
+    }
+
+  }
+
+}

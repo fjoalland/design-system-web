@@ -65,3 +65,12 @@
     }
 
   }
+
+
+  /* Media Queries Print / Impression */
+  @media print {
+
+    .ds44-partage {
+      display: none;
+    }
+  }
