@@ -12,7 +12,7 @@
                         <h2 class="h4-like" id="modal-contact-title">Trouvez le bon contact près de chez vous :</h2>
                         <form data-is-ajax="true" action="/json/recherche-contact.json" data-result-destination="#step2">
                             {% capture ariaDescribedBy %}modal-contact-title{% if ariaDescribedBy and ariaDescribedBy != '' %} {{ ariaDescribedBy }}{% endif %}{% endcapture %}
-                            {% include form/field/input/autocomplete.html name="adresse" label="Votre adresse" required="true" attributes='data-url="/json/autocomplete-address.json" data-mode="select-only"' ariaDescribedBy=ariaDescribedBy %}
+                            {% include form/field/input/autocomplete.html name="adresse" label="Votre adresse" required="true" type="address" url="https://api-adresse.data.gouv.fr/search/?lon=-1.8157647&lat=47.2780468" attributes='data-mode="select-only"' ariaDescribedBy=ariaDescribedBy %}
                             <button class="ds44-btnStd ds44-btn--invert" title="Valider votre adresse">
                                 <span class="ds44-btnInnerText">Valider</span><i class="icon icon-long-arrow-right" aria-hidden="true"></i>
                             </button>

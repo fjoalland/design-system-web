@@ -4,8 +4,12 @@
     {% assign mainClass = mainClass | append : ' ds44-autocomp--location' %}
 {% endif %}
 
+{% if include.type == 'address' %}
+    {% assign mainClass = mainClass | append : ' ds44-js-field-address' %}
+{% endif %}
+
 {% capture mainContent %}
-    <input type="text" id="{{ id }}" name="{{ name }}" class="{{ mainClass }}" role="combobox" aria-autocomplete="list" autocomplete="off" aria-expanded="false" {{ title }} {{ attributes }} {{ inputAttributes }} {{ placeholder }} {% if ariaDescribedBy and ariaDescribedBy != '' %}aria-describedby="{{ ariaDescribedBy }}"{% endif %} />{% include form/field/partial/reset.html %}
+    <input type="text" id="{{ id }}" name="{{ name }}" class="{{ mainClass }}" role="combobox" aria-autocomplete="list" autocomplete="off" aria-expanded="false" data-url="{{ include.url }}" {{ title }} {{ attributes }} {{ inputAttributes }} {{ placeholder }} {% if ariaDescribedBy and ariaDescribedBy != '' %}aria-describedby="{{ ariaDescribedBy }}"{% endif %} />{% include form/field/partial/reset.html %}
 
     {% if include.hasLocation == 'true' %}
         <button class="ds44-location" title="Autoriser la localisation automatique 'autour de moi' pour le champ : {{ label }}">
