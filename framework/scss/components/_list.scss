@@ -107,15 +107,15 @@
                 display: flex;
               }
 
+              &:hover{
+                background: $ds44-contextual-hover;
+              }
+
               &.active {
                 background: $ds44-background-dark;
                 color: $ds44-color-inverse;
               }
-              &:hover,
-              &:active,
-              &:focus {
-                background: $ds44-contextual-hover;
-              }
+
             }
         }
     }
@@ -180,5 +180,14 @@
         column-count: 2;
         text-align: left;
     }
+
+}
+
+
+/* Media Queries Print / Impression */
+@media print {
+
+
+
 
 }
