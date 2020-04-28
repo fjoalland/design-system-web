@@ -1,6 +1,6 @@
-class FormLayoutContact {
+class FormLayoutInline {
     constructor () {
-        const formElement = document.querySelector('#overlay-qui-contacter-rech form');
+        const formElement = document.querySelector('form[data-is-inline="true"]');
         if (!formElement) {
             return;
         }
@@ -20,21 +20,21 @@ class FormLayoutContact {
         // Show loader
         MiscEvent.dispatch('loader:requestShow');
 
-        // Get the contact data from the back office
+        // Get the inline data from the back office
         MiscRequest.send(
             evt.currentTarget.getAttribute('action'),
-            this.contactSuccess.bind(this, evt.currentTarget),
-            this.contactError.bind(this, evt.currentTarget),
+            this.inlineSuccess.bind(this, evt.currentTarget),
+            this.inlineError.bind(this, evt.currentTarget),
             evt.detail.parameters
         )
     }
 
-    contactSuccess (formElement, response) {
-        this.showContactData(formElement, response);
+    inlineSuccess (formElement, response) {
+        this.showInlineData(formElement, response);
         MiscEvent.dispatch('loader:requestHide');
     }
 
-    contactError (formElement) {
+    inlineError (formElement) {
         MiscEvent.dispatch(
             'form:notification',
             {
@@ -47,14 +47,14 @@ class FormLayoutContact {
         MiscEvent.dispatch('loader:requestHide');
     }
 
-    showContactData (formElement, contactData) {
+    showInlineData (formElement, inlineData) {
         const destinationElement = document.querySelector(formElement.getAttribute('data-result-destination'));
         if(!destinationElement) {
             return;
         }
 
-        destinationElement.innerHTML = contactData.content_html;
+        destinationElement.innerHTML = inlineData.content_html;
     }
 }
 
-new FormLayoutContact();
+new FormLayoutInline();
