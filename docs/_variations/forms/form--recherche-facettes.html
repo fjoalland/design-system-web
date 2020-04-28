@@ -8,15 +8,25 @@ layout: pattern
         {% include form/field/input/standard.html label="Votre recherche" required="false" class="ds44-inpLarge" title="Zone de saisie de votre recherche" ariaDescribedBy="idTitre1" %}
     </div>
 {% endcapture %}
-{% include form/layout/recherche-facettes.html fields=fields %}
+{% include form/layout/recherche-facettes.html fields=fields fieldStyle="large" %}
 <br>
 <hr />
 <br>
 <p id="idTitre2" class="h4-like">Recherche facette avec filtres</p>
+{% assign formId = 'recherche-facette' %}
+{% capture ariaDescribedBy %}filter-by-{{ formId }}{% endcapture %}
 {% capture fields %}
     <div class="ds44-fieldContainer ds44-fg1">
         {% include form/field/input/standard.html label="Votre recherche" required="false" title="Zone de saisie de votre recherche" ariaDescribedBy="idTitre2" %}
     </div>
 {% endcapture %}
-{% include form/layout/recherche-facettes-filtres.html fields=fields ariaDescribedBy="idTitre2" %}
+{% capture subfields %}
+    <div class="ds44-fieldContainer ds44-fg1 ds44-fieldContainer--select">
+        {% include form/field/select/checkbox.html label="Choix multiple" containerAttributes='data-auto-submit="true"' ariaDescribedBy=ariaDescribedBy %}
+    </div>
+    <div class="ds44-fieldContainer  ds44-fg1 ds44-fieldContainer--select">
+        {% include form/field/select/radio.html label="Choix unique" containerAttributes='data-auto-submit="true"' ariaDescribedBy=ariaDescribedBy %}
+    </div>
+{% endcapture %}
+{% include form/layout/recherche-facettes.html id=formId fields=fields subfields=subfields url="/json/recherche-map.json" ariaDescribedBy="idTitre2" %}
 <br>

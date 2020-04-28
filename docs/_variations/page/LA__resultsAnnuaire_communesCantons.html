@@ -32,7 +32,6 @@ layout: pattern
           <section>
               {% assign formId = 'recherche-facette' %}
               {% capture ariaDescribedBy %}ds44-results-new-search filter-by-{{ formId }}{% endcapture %}
-
               {% capture fields %}
                   <div class="ds44-fieldContainer ds44-fg1">
                       {% include form/field/input/standard.html label="Champ standard" required="true" ariaDescribedBy="ds44-results-new-search" %}
@@ -52,7 +51,7 @@ layout: pattern
                       {% include form/field/select/radio.html label="Choix unique" containerAttributes='data-auto-submit="true"' ariaDescribedBy=ariaDescribedBy %}
                   </div>
               {% endcapture %}
-              {% include form/layout/recherche-facettes-filtres.html id=formId fields=fields subfields=subfields url="/json/recherche-map.json" %}
+              {% include form/layout/recherche-facettes.html id=formId fields=fields subfields=subfields url="/json/recherche-map.json" %}
           </section>
           <section>
               <div class="ds44-flex-container ds44-results ds44-results--mapVisible ds44-results--empty">
