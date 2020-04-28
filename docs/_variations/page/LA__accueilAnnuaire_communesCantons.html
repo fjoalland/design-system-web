@@ -9,49 +9,48 @@ layout: pattern
 
 <main role="main" id="content">
 
-	<section class="ds44-container-large">
-    <div class="ds44-pageHeaderContainer">
-			<picture class="ds44-pageHeaderContainer__pictureContainer">
-				<img src="../../assets/images/header-page-annuaire.png" alt="" class="ds44-headerImg" />
-			</picture>
-			<div class="ds44-titleContainer">
-				<div class="ds44-alphaGradient ds44-alphaGradient--header">
-					{% include breadcrumb/breadcrumb--invert.html %}
-					<h1 class="h1-like ds44-text--colorInvert">Annuaire des services d’aide et d’accompagnement à domicile (SAAD)</h1>
-				</div>
-			</div>
-		</div>
-  </section>
-
-  <section class="ds44-container-large">
-    <div class="ds44-mtb3 ds44--xl-padding-tb">
-  			<header class="txtcenter ds44--l-padding-b">
-  				<h2 class="h2-like center" id="titre1">Recherchez un canton</h2>
-  			</header>
-        {% capture fields %}
-            <div class="ds44-fieldContainer ds44-fg1">
-                {% include form/field/input/standard.html label="Votre recherche" required="false" class="ds44-inpLarge" title="Zone de saisie de votre recherche de canton" ariaDescribedBy="titre1" %}
+    <section class="ds44-container-large">
+        <div class="ds44-pageHeaderContainer">
+            <picture class="ds44-pageHeaderContainer__pictureContainer">
+                <img src="../../assets/images/header-page-annuaire.png" alt="" class="ds44-headerImg" />
+            </picture>
+            <div class="ds44-titleContainer">
+                <div class="ds44-alphaGradient ds44-alphaGradient--header">
+                    {% include breadcrumb/breadcrumb--invert.html %}
+                    <h1 class="h1-like ds44-text--colorInvert">Annuaire des services d’aide et d’accompagnement à domicile (SAAD)</h1>
+                </div>
             </div>
-        {% endcapture %}
-        {% include form/layout/recherche-facettes.html fields=fields %}
-
-      <div class="ds44-mt3 ds44--l-padding-t">
-        <div class="ds44-theme ds44-flex-valign-center ds44-flex-container ds44--l-padding-lr ds44-small-flex-col ds44-mobile-padding-tb ">
-          <p id="label-rechercheCanton" class="h4-like ds44-mr1">Rechercher un canton</p>
-          <div class="ds44-w30 ds44-mobile-w100">{% include form/field/select/standard.html label="Nom du canton" title="Sélectionner le nom d'un canton et accéder à sa fiche de description" ariaDescribedBy="label-rechercheCanton" %}</div>
         </div>
-        <div class="ds44-flex-container ds44-results ds44-results--mapVisible ds44-results--mapVisible--fullW ds44-results--empty">
-          <div class="ds44-mapResults">
-              <div class="ds44-js-map"></div>
-          </div>
+    </section>
+
+    <section class="ds44-container-large">
+        <div class="ds44-mt3 ds44--xl-padding-t">
+            <header class="txtcenter ds44--l-padding-b">
+                <h2 class="h2-like center" id="titre1">Recherchez un canton</h2>
+                <p class="ds44-component-chapo ds44-centeredBlock">Il y a 31 cantons en Loire-Atlantique. Chaque canton est représenté par un binôme d'une femme et d'un homme.</p>
+            </header>
+            {% capture fields %}
+            <div class="ds44-fieldContainer ds44-fg1">
+                {% include form/field/select/standard.html label="Nom du canton" class="ds44-inpLarge" title="Sélectionner un canton" required="true" ariaDescribedBy="idTitre1" %}
+            </div>
+            <div class="ds44-fieldContainer ds44-fg1 ds44-champsLies ds44-js-linked-fields">
+                {% include form/field/input/autocomplete.html label="Commune" required="true" type="city" url="/json/autocomplete-city.json" attributes='data-mode="select-only"' class="ds44-inpLarge" title="Zone de saisie de votre recherche de commune" %}
+                {% include form/field/input/autocomplete.html label="Adresse" required="true" disabled="true" type="address" url="https://api-adresse.data.gouv.fr/search/?lon=-1.8157647&lat=47.2780468" attributes='data-mode="select-only"' class="ds44-inpLarge" %}
+            </div>
+            {% endcapture %}
+            {% include form/layout/recherche-facettes.html fields=fields %}
+
+            <div class="ds44-mt3 ds44--l-padding-t">
+                <div class="ds44-flex-container ds44-results ds44-results--mapVisible ds44-results--mapVisible--fullW ds44-results--empty">
+                    <div class="ds44-mapResults">
+                        <div class="ds44-js-map"></div>
+                    </div>
+                </div>
+            </div>
+            {% include partage/partage-interne.html %}
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-
-
-	{% include FAQ/FAQ-basPage.html %}
 
 </main>
 
