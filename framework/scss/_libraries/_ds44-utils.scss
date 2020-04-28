@@ -30,9 +30,6 @@
 .ds44-posLe {
   left: 0;
 }
-.ds44-posTop7 {
-  top: 7px !important;
-}
 
 
 /* === Spacers === */
@@ -945,6 +942,11 @@ h6.visually-hidden + * {
   .ds44-mobile-padding-tb {
     padding-top     : $ds44-padding-medium; // 1rem
     padding-bottom  : $ds44-padding-medium; // 1rem
+  }
+
+  .ds44-mobile-l-padding-tb {
+    padding-top     : $ds44-padding-large; // 2rem
+    padding-bottom  : $ds44-padding-large; // 2rem
   }
 
   .ds44--mobile--m-padding-b {

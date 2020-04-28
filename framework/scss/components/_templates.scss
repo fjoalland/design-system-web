@@ -634,6 +634,10 @@ main {
 
         & .ds44-docListElem {
             margin: .25em .5em;
+
+            &.h4-like {
+                line-height: 0.85em;
+            }
         }
     }
 }
