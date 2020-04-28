@@ -195,6 +195,16 @@ class FormFieldAbstract {
         const object = this.objects[objectIndex];
 
         object.isEnabled = true;
+        if (
+            evt &&
+            evt.detail &&
+            evt.detail.data
+        ) {
+            object.parentValue = evt.detail.data[Object.keys(evt.detail.data)[0]].value;
+        } else {
+            object.parentValue = null;
+        }
+
         this.empty(objectIndex);
         this.enableElements(objectIndex, evt);
     }
@@ -213,6 +223,7 @@ class FormFieldAbstract {
     disable (objectIndex, evt) {
         const object = this.objects[objectIndex];
         object.isEnabled = false;
+        object.parentValue = null;
 
         this.empty(objectIndex);
         this.removeInvalid(objectIndex);

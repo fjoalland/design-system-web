@@ -23,7 +23,7 @@ layout: pattern
 </form>
 <hr />
 <form>
-    {% include form/field/input/autocomplete.html label="Champ texte libre" required="true" type="address" url="https://api-adresse.data.gouv.fr/search/?lon=-1.8157647&lat=47.2780468" attributes='data-mode="free-text"' %}
+    {% include form/field/input/autocomplete.html label="Champ texte libre" required="true" type="address" url="https://api-adresse.data.gouv.fr/search/?limit=5&citycode=44109" attributes='data-mode="free-text"' %}
     <div><input type="submit" class="ds44-btnStd" value="Tester le champ autocomplétion" /></div>
 </form>
 <hr />
@@ -33,7 +33,7 @@ layout: pattern
 </form>
 <hr />
 <form>
-    {% include form/field/input/autocomplete.html label="Champ adresse" required="true" type="address" url="https://api-adresse.data.gouv.fr/search/?lon=-1.8157647&lat=47.2780468" attributes='data-mode="select-only"' %}
+    {% include form/field/input/autocomplete.html label="Champ adresse" required="true" type="address" url="https://api-adresse.data.gouv.fr/search/?limit=5&citycode=44109" attributes='data-mode="select-only"' %}
     <div><input type="submit" class="ds44-btnStd" value="Tester le champ adresse" /></div>
 </form>
 <hr />

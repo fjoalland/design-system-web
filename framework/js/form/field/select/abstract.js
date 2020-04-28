@@ -380,7 +380,10 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
             return;
         }
 
-        const url = object.textElement.getAttribute('data-url');
+        let url = object.textElement.getAttribute('data-url');
+        if (url.includes('$parentValue')) {
+            url = url.replace('$parentValue', object.parentValue);
+        }
         let urlParameters = null;
         if (parameters) {
             const objectData = parameters[Object.keys(parameters)[0]];

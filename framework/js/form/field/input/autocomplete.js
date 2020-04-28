@@ -204,7 +204,10 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
             return;
         }
 
-        const url = object.textElement.getAttribute('data-url');
+        let url = object.textElement.getAttribute('data-url');
+        if (url.includes('$parentValue')) {
+            url = url.replace('$parentValue', object.parentValue);
+        }
         MiscRequest.send(
             url + (url.includes('?') ? '&' : '?') + 'q=' + encodeURIComponent(object.textElement.value),
             this.autoCompleteSuccess.bind(this, objectIndex),
@@ -286,7 +289,7 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
                 for (let i = 0; i < results.features.length; i++) {
                     const feature = results.features[i];
 
-                    formatedResults[feature.properties.citycode] = {
+                    formatedResults[feature.properties.id] = {
                         value: feature.properties.label,
                         metadata: {
                             latitude: feature.geometry.coordinates[1],

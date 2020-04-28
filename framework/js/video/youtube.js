@@ -51,14 +51,20 @@ class VideoYoutube {
         evt.stopPropagation();
         evt.preventDefault();
 
+        const currentSeekToElement = document.querySelector('.ds44-js-video-seek-to[aria-current]');
+        if (currentSeekToElement) {
+            currentSeekToElement.removeAttribute('aria-current');
+        }
+
         const seekToElement = evt.currentTarget;
+        seekToElement.setAttribute('aria-current', 'true');
         const videoId = seekToElement.getAttribute('data-video-id');
         const seconds = seekToElement.getAttribute('data-seek-to');
 
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
 
-            if(object.id !== videoId) {
+            if (object.id !== videoId) {
                 continue;
             }
 
