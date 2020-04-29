@@ -43,6 +43,7 @@ class FormLayoutGlobal {
             window.setTimeout(
                 ((objectIndex) => {
                     const object = this.objects[objectIndex];
+                    object.hasBeenChecked = false;
                     MiscEvent.dispatch('submit', null, object.formElement);
                 }).bind(this, objectIndex),
                 1000
