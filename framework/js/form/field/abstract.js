@@ -68,13 +68,13 @@ class FormFieldAbstract {
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
 
+            this.addBackupAttributes(objectIndex);
+
             MiscEvent.addListener('field:enable', this.enable.bind(this, objectIndex), object.containerElement);
             MiscEvent.addListener('field:disable', this.disable.bind(this, objectIndex), object.containerElement);
             if (externalParameters[object.name]) {
-                window.addEventListener('load', this.set.bind(this, objectIndex, externalParameters[object.name]));
+                MiscEvent.addListener('load', this.set.bind(this, objectIndex, externalParameters[object.name]), window);
             }
-
-            this.addBackupAttributes(objectIndex);
         }
 
         MiscEvent.addListener('form:validate', this.validate.bind(this));
@@ -108,6 +108,13 @@ class FormFieldAbstract {
         this.setData(objectIndex, data);
         this.enter(objectIndex);
         this.showNotEmpty(objectIndex);
+
+        const object = this.objects[objectIndex];
+        const formElement = object.containerElement.closest('form');
+        if(formElement) {
+            // Tell the parent form that one of its fields has a value at startup
+            MiscEvent.dispatch('form:isNotEmpty', null, formElement);
+        }
     }
 
     setData (objectIndex, data = null) {

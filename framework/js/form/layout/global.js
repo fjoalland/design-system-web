@@ -14,7 +14,8 @@ class FormLayoutGlobal {
             'id': MiscUtils.generateId(),
             'formElement': formElement,
             'hasBeenChecked': false,
-            'validationCategories': MiscForm.getValidationCategories()
+            'validationCategories': MiscForm.getValidationCategories(),
+            'isAutoLoaded': false
         };
         this.objects.push(object);
         const objectIndex = (this.objects.length - 1);
@@ -23,9 +24,30 @@ class FormLayoutGlobal {
         MiscEvent.addListener('submit', this.submit.bind(this, objectIndex), formElement);
         MiscEvent.addListener('form:validation', this.validation.bind(this, objectIndex), formElement);
         MiscEvent.addListener('form:notification', this.notification.bind(this, objectIndex), formElement);
+        MiscEvent.addListener('form:isNotEmpty', this.autoLoad.bind(this, objectIndex), formElement);
 
         // Init
         formElement.setAttribute('novalidate', 'true');
+    }
+
+    autoLoad (objectIndex) {
+        const object = this.objects[objectIndex];
+
+        if (
+            object.isAutoLoaded == false &&
+            object.formElement.getAttribute('data-auto-load') === 'true'
+        ) {
+            object.isAutoLoaded = true;
+
+            // Wait for the fields to be initialized
+            window.setTimeout(
+                ((objectIndex) => {
+                    const object = this.objects[objectIndex];
+                    MiscEvent.dispatch('submit', null, object.formElement);
+                }).bind(this, objectIndex),
+                1000
+            );
+        }
     }
 
     validation (objectIndex, evt) {

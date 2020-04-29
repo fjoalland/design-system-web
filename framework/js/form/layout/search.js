@@ -31,26 +31,7 @@ class FormLayoutSearch {
             });
 
         // Initialization
-        if (element.getAttribute('data-auto-load') === 'true') {
-            MiscEvent.addListener(
-                'load',
-                ((formElement) => {
-                    // Wait for the fields to be initialized
-                    window.setTimeout(
-                        ((formElement) => {
-                            const submitElement = formElement.querySelector('button:not([type="button"]), input[type="submit"]');
-                            if (submitElement) {
-                                submitElement.click();
-                            }
-                        }).bind(this, formElement),
-                        1000
-                    );
-                }).bind(this, element),
-                window
-            );
-        } else {
-            this.loadFromDom(objectIndex);
-        }
+        this.loadFromDom(objectIndex);
     }
 
     submit (objectIndex, evt) {
