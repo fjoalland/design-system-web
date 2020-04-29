@@ -68,9 +68,6 @@
     .ds44-timeline_elem {
         width: calc(50% - 5rem); // 50% - taille de la marge à droite
         margin-right: 5rem;
-        padding-bottom: 4rem;
-        margin-bottom: 4rem;
-        border-bottom: 2px solid $ds44-contextual-color;
         position: relative;
         z-index: 20;
 
@@ -124,6 +121,12 @@
                     top: 14px;
                 }
             }
+        }
+
+        .ds44-timeline_elem_body {
+            border-bottom: 2px solid $ds44-contextual-color;
+            padding-bottom: 4rem;
+            margin-bottom: 4rem;
         }
 
         p, hr {
