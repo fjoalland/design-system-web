@@ -43,6 +43,7 @@ class MiscTranslate {
                 'MAP_CANVAS': 'Carte interactive dans laquelle vous pouvez vous déplacer en utilisant les flèches de direction de votre clavier',
                 'MAP_LOGO': 'Accéder à Mapbox - nouvelle fenêtre',
                 'MAP_IMPROVE': 'Améliorer cette carte',
+                'MAP_IMPROVE_NEW_WINDOW': 'Améliorer cette carte - nouvelle fenêtre',
                 'MAP_FULLSCREEN': 'Afficher la carte en plein écran',
                 'MAP_SHRINK': 'Sortir du mode plein écran de la carte',
                 'MAP_ZOOM_IN': 'Augmenter la taille de la carte',
@@ -53,7 +54,9 @@ class MiscTranslate {
                 'NO_RESULTS_FOR_SEARCH:': 'Il n\'y a aucun résultat pour la recherche sur :',
                 'NO_RESULTS_NEW_SEARCH': 'Merci d\'effectuer une nouvelle recherche',
                 'NB_RESULTS_FOR_SEARCH:': 'pour la recherche sur :',
-                'FORM_GENERAL_ERROR': 'Une erreur est survenue suite à l\'envoi de votre formulaire'
+                'FORM_GENERAL_ERROR': 'Une erreur est survenue suite à l\'envoi de votre formulaire',
+                'NEW_WINDOW': 'nouvelle fenêtre',
+                'TOS_OF': 'Conditions d’utilisation de'
             },
             'en': {
                 'AROUND_ME': 'Around me',
@@ -85,6 +88,7 @@ class MiscTranslate {
                 'MAP_CANVAS': 'Interactive map in which you can move using the arrow keys on your keyboard',
                 'MAP_LOGO': 'Go to Mapbox - new window',
                 'MAP_IMPROVE': 'Improve this map',
+                'MAP_IMPROVE_NEW_WINDOW': 'Improve this map - new window',
                 'MAP_FULLSCREEN': 'Display the map in full screen',
                 'MAP_SHRINK': 'Exit full screen mode of the map',
                 'MAP_ZOOM_IN': 'Increase the size of the map',
@@ -95,7 +99,9 @@ class MiscTranslate {
                 'NO_RESULTS_FOR_SEARCH:': 'There are no results for the search on:',
                 'NO_RESULTS_NEW_SEARCH': 'Please make another search',
                 'NB_RESULTS_FOR_SEARCH:': 'for the search on:',
-                'FORM_GENERAL_ERROR': 'An error occurred following the submission of your form'
+                'FORM_GENERAL_ERROR': 'An error occurred following the submission of your form',
+                'NEW_WINDOW': 'new window',
+                'TOS_OF': 'Terms of service of'
             }
         })[MiscTranslate.getLanguage()];
     }

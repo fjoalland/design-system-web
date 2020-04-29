@@ -79,7 +79,13 @@ class MapSearch extends MapAbstract {
 
         const mapImproveMapElement = object.mapElement.querySelector('.mapbox-improve-map');
         if (mapImproveMapElement) {
+            mapImproveMapElement.setAttribute('title', MiscTranslate._('MAP_IMPROVE_NEW_WINDOW'));
             mapImproveMapElement.innerText = MiscTranslate._('MAP_IMPROVE');
+
+            let currentElement = mapImproveMapElement;
+            while((currentElement = MiscDom.getPreviousSibling(currentElement))) {
+                currentElement.setAttribute('title', MiscTranslate._('TOS_OF') + ' ' + currentElement.innerText + ' - ' + MiscTranslate._('NEW_WINDOW'));
+            }
         }
 
         const mapFullScreenElement = object.mapElement.querySelector('.mapboxgl-ctrl-fullscreen');
