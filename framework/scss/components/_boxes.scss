@@ -258,12 +258,14 @@
     grid-template-columns : repeat(1, 1fr);
   }
 
-  .ds44-box .col{
+  .ds44-box .col,
+  .grid-2-small-1 .col{
     margin-top: 2em;
     padding: 0 !important;
   }
 
-  .ds44-box .col:first-child{
+  .ds44-box .col:first-child,
+  .grid-2-small-1 .col:first-child{
     margin-top: 0;
   }
 
