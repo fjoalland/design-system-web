@@ -628,6 +628,10 @@ input[type=radio],
     .ds44-form__container {
         margin-top: 0;
     }
+
+    &.ds44-noMrg > * {
+        margin: 0 ;
+    }
 }
 
 .ds44-utile-list_elem {
