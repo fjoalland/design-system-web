@@ -57,6 +57,31 @@ class MapSearch extends MapAbstract {
     translateMap (objectIndex) {
         const object = this.objects[objectIndex];
 
+        const mapCanvasElement = object.mapElement.querySelector('.mapboxgl-canvas');
+        if (mapCanvasElement) {
+            mapCanvasElement.setAttribute('role', 'img');
+            mapCanvasElement.setAttribute('aria-label', MiscTranslate._('MAP_CANVAS'));
+        }
+
+        const mapLogoElement = object.mapElement.querySelector('.mapboxgl-ctrl-logo');
+        if (mapLogoElement) {
+            mapLogoElement.removeAttribute('aria-label');
+            mapLogoElement.setAttribute('title', MiscTranslate._('MAP_LOGO'));
+
+            let spanElement = mapLogoElement.querySelector('.visually-hidden');
+            if (!spanElement) {
+                spanElement = document.createElement('span')
+                spanElement.classList.add('visually-hidden');
+                mapLogoElement.appendChild(spanElement);
+            }
+            spanElement.innerText = MiscTranslate._('MAP_LOGO');
+        }
+
+        const mapImproveMapElement = object.mapElement.querySelector('.mapbox-improve-map');
+        if (mapImproveMapElement) {
+            mapImproveMapElement.innerText = MiscTranslate._('MAP_IMPROVE');
+        }
+
         const mapFullScreenElement = object.mapElement.querySelector('.mapboxgl-ctrl-fullscreen');
         if (mapFullScreenElement) {
             mapFullScreenElement.removeAttribute('aria-label');
