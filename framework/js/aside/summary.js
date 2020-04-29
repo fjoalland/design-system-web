@@ -127,7 +127,7 @@ class AsideSummary {
 
     getCursorPosition () {
         if (this.scrollDirection === 'up') {
-            return this.getScrollTop();
+            return this.getScrollTop() + MiscDom.getHeaderHeight(true);
         }
 
         return this.getScrollTop() + window.screen.height;
