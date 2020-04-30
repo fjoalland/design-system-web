@@ -58,7 +58,7 @@ class MapAbstract {
     }
 
     mapLoad (selector) {
-        if(
+        if (
             this.mapLanguageLoaded &&
             this.mapLoaded
         ) {

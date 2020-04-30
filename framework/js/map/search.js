@@ -83,7 +83,7 @@ class MapSearch extends MapAbstract {
             mapImproveMapElement.innerText = MiscTranslate._('MAP_IMPROVE');
 
             let currentElement = mapImproveMapElement;
-            while((currentElement = MiscDom.getPreviousSibling(currentElement))) {
+            while ((currentElement = MiscDom.getPreviousSibling(currentElement))) {
                 currentElement.setAttribute('title', MiscTranslate._('TOS_OF') + ' ' + currentElement.innerText + ' - ' + MiscTranslate._('NEW_WINDOW'));
             }
         }

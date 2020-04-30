@@ -79,7 +79,7 @@ class MenuStandard {
         // Set focus in menu
         MiscAccessibility.setFocus(closeButton);
         MiscAccessibility.addFocusLoop(mainMenu);
-        MiscEvent.dispatch('menu:show', {'element': mainMenu});
+        MiscEvent.dispatch('menu:show', { 'element': mainMenu });
 
         MiscEvent.addListener('click', this.hideMainListener, closeButton);
         MiscEvent.addListener('focusout', this.focusOutListener, this.menu);

@@ -1,7 +1,7 @@
 class OverlayNewsletter {
     constructor () {
         const buttonsElements = document.querySelectorAll('#overlay-newsletter-buttons button');
-        if(buttonsElements.length === 0) {
+        if (buttonsElements.length === 0) {
             return;
         }
 

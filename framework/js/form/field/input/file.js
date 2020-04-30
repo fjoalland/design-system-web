@@ -109,12 +109,12 @@ class FormFieldInputFile extends FormFieldInputAbstract {
             return;
         }
 
-        if(this.checkValidity(objectIndex)) {
+        if (this.checkValidity(objectIndex)) {
             // Success
             object.textElement.innerText = file.name;
             const textElementId = object.textElement.getAttribute('id');
             const ariaDescribedBy = object.valueElement.getAttribute('aria-describedby').split(' ');
-            if(!ariaDescribedBy.includes(textElementId)) {
+            if (!ariaDescribedBy.includes(textElementId)) {
                 ariaDescribedBy.push(textElementId);
                 object.valueElement.setAttribute('aria-describedby', ariaDescribedBy.join(' '));
             }
@@ -150,7 +150,7 @@ class FormFieldInputFile extends FormFieldInputAbstract {
         const object = this.objects[objectIndex];
         const textElementId = object.textElement.getAttribute('id');
         const ariaDescribedBy = object.valueElement.getAttribute('aria-describedby').split(' ');
-        if(ariaDescribedBy.includes(textElementId)) {
+        if (ariaDescribedBy.includes(textElementId)) {
             ariaDescribedBy.splice(ariaDescribedBy.indexOf(textElementId), 1);
             object.valueElement.setAttribute('aria-describedby', ariaDescribedBy.join(' '));
         }
@@ -214,14 +214,20 @@ class FormFieldInputFile extends FormFieldInputAbstract {
     }
 
     getErrorMessage (objectIndex) {
-        if (!this.hasCorrectSize(objectIndex)) {
-            return MiscTranslate._('FIELD_VALID_SIZE_ERROR_MESSAGE');
-        }
-        if (!this.hasCorrectMime(objectIndex)) {
-            return MiscTranslate._('FIELD_VALID_FORMAT_ERROR_MESSAGE');
+        const object = this.objects[objectIndex];
+        const file = object.inputElements[0].files[0];
+        if (!file) {
+            return this.formatErrorMessage(objectIndex);
         }
 
-        return super.getErrorMessage(objectIndex);
+        if (!this.hasCorrectSize(objectIndex)) {
+            return this.formatErrorMessage(objectIndex, 'FIELD_VALID_SIZE_ERROR_MESSAGE', { fileName: file.name });
+        }
+        if (!this.hasCorrectMime(objectIndex)) {
+            return this.formatErrorMessage(objectIndex, 'FIELD_VALID_FORMAT_ERROR_MESSAGE', { fileName: file.name });
+        }
+
+        return this.formatErrorMessage(objectIndex);
     }
 
     hasCorrectSize (objectIndex) {

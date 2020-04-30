@@ -3,7 +3,7 @@ class FormFieldAbstract {
         this.category = category;
         this.objects = [];
         this.labelClassName = 'ds44-moveLabel';
-        this.errorMessage = MiscTranslate._('FIELD_MANDATORY_ERROR_MESSAGE');
+        this.errorMessage = 'FIELD_MANDATORY_ERROR_MESSAGE';
 
         if (typeof selector === 'object') {
             // Elements passed as parameter, not text selector
@@ -111,7 +111,7 @@ class FormFieldAbstract {
 
         const object = this.objects[objectIndex];
         const formElement = object.containerElement.closest('form');
-        if(formElement) {
+        if (formElement) {
             // Tell the parent form that one of its fields has a value at startup
             MiscEvent.dispatch('form:isNotEmpty', null, formElement);
         }
@@ -440,26 +440,26 @@ class FormFieldAbstract {
 
         let errorTextElement = document.createElement('span');
         errorTextElement.classList.add('ds44-iconInnerText');
-        errorTextElement.innerHTML = this.formatErrorMessage(objectIndex);
+        errorTextElement.innerHTML = this.getErrorMessage(objectIndex);
         errorMessageElement.appendChild(errorTextElement);
     }
 
-    formatErrorMessage (objectIndex) {
-        const errorMessage = this.getErrorMessage(objectIndex);
-
-        const object = this.objects[objectIndex];
-        if (!object.labelElement) {
-            return errorMessage;
-        }
-
-        return errorMessage
-            .replace(
-                '{fieldName}',
-                object.labelElement.innerText.replace(/\*$/, '')
-            );
+    getErrorMessage (objectIndex) {
+        return this.formatErrorMessage(objectIndex);
     }
 
-    getErrorMessage (objectIndex) {
-        return this.errorMessage;
+    formatErrorMessage (objectIndex, errorMessage = this.errorMessage, patterns) {
+        const object = this.objects[objectIndex];
+        if (!object.labelElement) {
+            return MiscTranslate._(errorMessage, patterns);
+        }
+
+        if (!patterns) {
+            patterns = {};
+        }
+        if (!patterns.fieldName) {
+            patterns.fieldName = object.labelElement.innerText.replace(/\*$/, '');
+        }
+        return MiscTranslate._(errorMessage, patterns);
     }
 }

@@ -49,7 +49,7 @@ class FormLayoutInline {
 
     showInlineData (formElement, inlineData) {
         const destinationElement = document.querySelector(formElement.getAttribute('data-result-destination'));
-        if(!destinationElement) {
+        if (!destinationElement) {
             return;
         }
 

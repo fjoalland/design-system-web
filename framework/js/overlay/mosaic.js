@@ -1,12 +1,12 @@
 class OverlayMosaic extends OverlayAbstract {
     fill () {
         const sourceFigureElement = this.triggerElement;
-        if(!sourceFigureElement) {
+        if (!sourceFigureElement) {
             return;
         }
 
         const destinationFigureElement = this.modal.querySelector('figure.ds44-legendeContainer');
-        if(!destinationFigureElement) {
+        if (!destinationFigureElement) {
             return;
         }
 

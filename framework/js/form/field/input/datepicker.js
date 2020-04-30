@@ -362,14 +362,14 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
 
     getErrorMessage (objectIndex) {
         if (!this.checkChronology(objectIndex)) {
-            return MiscTranslate._('FIELD_VALID_CHRONOLOGY_ERROR_MESSAGE');
+            return this.formatErrorMessage(objectIndex, 'FIELD_VALID_CHRONOLOGY_ERROR_MESSAGE');
         }
 
         if (this.getText(objectIndex)) {
-            return MiscTranslate._('FIELD_VALID_DATE_FORMAT_ERROR_MESSAGE');
+            return this.formatErrorMessage(objectIndex, 'FIELD_VALID_DATE_FORMAT_ERROR_MESSAGE');
         }
 
-        return this.errorMessage;
+        return this.formatErrorMessage(objectIndex);
     }
 
     setData (objectIndex, data = null) {

@@ -203,35 +203,35 @@ class FormFieldInputAbstract extends FormFieldAbstract {
     getErrorMessage (objectIndex) {
         const object = this.objects[objectIndex];
         if (!object.textElement) {
-            return super.getErrorMessage(objectIndex);
+            return this.formatErrorMessage(objectIndex);
         }
 
         const data = this.getData(objectIndex);
         const autocomplete = object.textElement.getAttribute('autocomplete');
         if (!data || !autocomplete) {
-            return super.getErrorMessage(objectIndex);
+            return this.formatErrorMessage(objectIndex);
         }
 
         if (
             autocomplete === 'email' &&
             !MiscForm.isEmail(data[object.name].value)
         ) {
-            return MiscTranslate._('FIELD_VALID_EMAIL_MESSAGE');
+            return this.formatErrorMessage(objectIndex, 'FIELD_VALID_EMAIL_MESSAGE');
         }
         if (
             autocomplete === 'tel' &&
             !MiscForm.isPhone(data[object.name].value)
         ) {
-            return MiscTranslate._('FIELD_VALID_PHONE_MESSAGE');
+            return this.formatErrorMessage(objectIndex, 'FIELD_VALID_PHONE_MESSAGE');
         }
         if (
             autocomplete === 'postal-code' &&
             !MiscForm.isPostcode(data[object.name].value)
         ) {
-            return MiscTranslate._('FIELD_VALID_POSTCODE_MESSAGE');
+            return this.formatErrorMessage(objectIndex, 'FIELD_VALID_POSTCODE_MESSAGE');
         }
 
-        return super.getErrorMessage(objectIndex);
+        return this.formatErrorMessage(objectIndex);
     }
 
     checkFormat (objectIndex) {

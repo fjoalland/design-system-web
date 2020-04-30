@@ -48,7 +48,7 @@ class LoaderStandard {
     }
 
     setFocusedElement (evt) {
-        if(
+        if (
             !evt ||
             !evt.detail ||
             !evt.detail.focusedElement

@@ -9,7 +9,7 @@ class ButtonQuestion {
         if (!this.footerElement) {
             return;
         }
-        
+
         this.isMoving = false;
         this.maximumTop = null;
 
