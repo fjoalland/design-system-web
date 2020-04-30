@@ -1,46 +1,52 @@
-class MenuStandard {
+class MenuHeader {
     constructor () {
-        this.triggerMainMenuElement = null;
+        this.triggerMenuElement = null;
         this.triggerSubMenuElement = null;
+        this.menuSelector = null;
         this.menu = null;
 
-        this.hideMainListener = this.hideMain.bind(this);
+        this.hideMenuListener = this.hideMenu.bind(this);
         this.focusOutListener = this.focusOut.bind(this);
         this.clickOutListener = this.clickOut.bind(this);
 
-        MiscEvent.addListener('keyUp:escape', this.hideMainListener);
+        MiscEvent.addListener('keyUp:escape', this.hideMenuListener);
 
         document
-            .querySelectorAll('header .ds44-btn--menu')
+            .querySelectorAll('header #open-menu')
             .forEach((element) => {
-                MiscEvent.addListener('click', this.showMain.bind(this), element);
+                MiscEvent.addListener('click', this.showNavigation.bind(this), element);
+            });
+        document
+            .querySelectorAll('header #open-search')
+            .forEach((element) => {
+                MiscEvent.addListener('click', this.showSearch.bind(this), element);
             });
         document
             .querySelectorAll('header .ds44-btnOverlay--closeOverlay')
             .forEach((element) => {
-                MiscEvent.addListener('click', this.hideMainListener, element);
+                MiscEvent.addListener('click', this.hideMenuListener, element);
             });
         document
             .querySelectorAll('#ds44-btn-applis, header .ds44-navList .ds44-menuBtn')
             .forEach((element) => {
-                MiscEvent.addListener('click', this.showSubMenu.bind(this), element);
+                MiscEvent.addListener('click', this.showSubNavigationMenu.bind(this), element);
             });
         document
             .querySelectorAll('header .ds44-btn-backOverlay')
             .forEach((element) => {
-                MiscEvent.addListener('click', this.hideSubMenu.bind(this), element);
+                MiscEvent.addListener('click', this.hideSubNavigationMenu.bind(this), element);
             });
 
         MiscAccessibility.hide(document.querySelector('header .ds44-blocMenu'));
     }
 
-    showMain (evt) {
+    showMenu (evt) {
         if (evt) {
             evt.stopPropagation();
         }
 
         if (this.menu) {
-            this.hideMain();
+            this.hideMenu();
         }
 
         // Get corresponding menu
@@ -50,7 +56,7 @@ class MenuStandard {
         }
 
         // Get menu main section
-        const mainMenu = menu.querySelector('.ds44-overlay--navNiv1')
+        const mainMenu = menu.querySelector(this.menuSelector)
         if (!mainMenu) {
             return;
         }
@@ -62,7 +68,7 @@ class MenuStandard {
         }
 
         // Record the element that triggered the overlay
-        this.triggerMainMenuElement = evt.currentTarget;
+        this.triggerMenuElement = evt.currentTarget;
         this.menu = menu;
 
         // Show menu
@@ -72,8 +78,8 @@ class MenuStandard {
         MiscAccessibility.show(this.menu);
         this.menu
             .querySelectorAll('section.ds44-overlay')
-            .forEach((subMenu) => {
-                MiscAccessibility.hide(subMenu);
+            .forEach((subMainMenu) => {
+                MiscAccessibility.hide(subMainMenu);
             });
 
         // Set focus in menu
@@ -81,13 +87,23 @@ class MenuStandard {
         MiscAccessibility.addFocusLoop(mainMenu);
         MiscEvent.dispatch('menu:show', { 'element': mainMenu });
 
-        MiscEvent.addListener('click', this.hideMainListener, closeButton);
+        MiscEvent.addListener('click', this.hideMenuListener, closeButton);
         MiscEvent.addListener('focusout', this.focusOutListener, this.menu);
         MiscEvent.addListener('click', this.clickOutListener, document.body);
     }
 
+    showNavigation (evt) {
+        this.menuSelector = '.ds44-overlay--navNiv1';
+        this.showMenu(evt, );
+    }
+
+    showSearch (evt) {
+        this.menuSelector = '#menuRech .ds44-overlay';
+        this.showMenu(evt, );
+    }
+
     // Ferme tous les menus, et ajoute un focus sur le bouton qui a ouvert le dernier menu affiché
-    hideMain (evt) {
+    hideMenu (evt) {
         if (evt) {
             evt.stopPropagation();
         }
@@ -98,7 +114,8 @@ class MenuStandard {
         }
 
         // Get menu main section
-        const mainMenu = this.menu.querySelector('.ds44-overlay--navNiv1')
+        const mainMenu = this.menu.querySelector(this.menuSelector)
+        this.menuSelector = null;
         if (!mainMenu) {
             return;
         }
@@ -109,7 +126,7 @@ class MenuStandard {
             return;
         }
 
-        MiscEvent.removeListener('click', this.hideMainListener, closeButton);
+        MiscEvent.removeListener('click', this.hideMenuListener, closeButton);
         MiscEvent.removeListener('focusout', this.focusOutListener, this.menu);
         MiscEvent.removeListener('click', this.clickOutListener, document.body);
 
@@ -120,88 +137,88 @@ class MenuStandard {
         mainMenu.classList.remove('show');
         document
             .querySelectorAll('header .ds44-blocMenu .ds44-overlay')
-            .forEach((subMenu) => {
-                subMenu.classList.remove('show');
+            .forEach((subMainMenu) => {
+                subMainMenu.classList.remove('show');
             });
         MiscAccessibility.hide(this.menu);
 
-        if (this.triggerMainMenuElement) {
-            MiscAccessibility.setFocus(this.triggerMainMenuElement)
+        if (this.triggerMenuElement) {
+            MiscAccessibility.setFocus(this.triggerMenuElement)
         }
 
-        this.triggerMainMenuElement = null;
+        this.triggerMenuElement = null;
         this.menu = null;
 
         MiscEvent.dispatch('menu:hide');
     }
 
-    showSubMenu (evt) {
+    showSubNavigationMenu (evt) {
         // Get current menu
         if (!this.menu) {
             return;
         }
 
-        // Get menu main section
-        const mainMenu = this.menu.querySelector('.ds44-overlay--navNiv1');
-        if (!mainMenu) {
+        // Get menu navigation section
+        const navigationMenu = this.menu.querySelector('.ds44-overlay--navNiv1');
+        if (!navigationMenu) {
             return;
         }
 
-        let subMenu = null;
+        let subNavigationMenu = null;
         if (evt.currentTarget.getAttribute('data-ssmenu')) {
-            subMenu = document.querySelector('#' + evt.currentTarget.getAttribute('data-ssmenu'));
+            subNavigationMenu = document.querySelector('#' + evt.currentTarget.getAttribute('data-ssmenu'));
         } else {
-            subMenu = document.querySelector('#navApplis');
+            subNavigationMenu = document.querySelector('#navApplis');
         }
-        if (!subMenu) {
+        if (!subNavigationMenu) {
             return;
         }
 
         // Get corresponding close button
-        const backButton = subMenu.querySelector('.ds44-btn-backOverlay');
+        const backButton = subNavigationMenu.querySelector('.ds44-btn-backOverlay');
         if (!backButton) {
             return;
         }
 
         this.triggerSubMenuElement = evt.currentTarget;
 
-        MiscAccessibility.hide(mainMenu);
+        MiscAccessibility.hide(navigationMenu);
         MiscAccessibility.removeFocusLoop();
 
-        subMenu.classList.add('show');
-        MiscAccessibility.show(subMenu);
+        subNavigationMenu.classList.add('show');
+        MiscAccessibility.show(subNavigationMenu);
         MiscAccessibility.setFocus(backButton);
-        MiscAccessibility.addFocusLoop(subMenu);
+        MiscAccessibility.addFocusLoop(subNavigationMenu);
     }
 
-    hideSubMenu () {
+    hideSubNavigationMenu () {
         // Get current menu
         if (!this.menu) {
             return;
         }
 
-        // Get menu main section
-        const mainMenu = this.menu.querySelector('.ds44-overlay--navNiv1');
-        if (!mainMenu) {
+        // Get menu navigation section
+        const navigationMenu = this.menu.querySelector('.ds44-overlay--navNiv1');
+        if (!navigationMenu) {
             return;
         }
 
-        const subMenu = this.menu.querySelector('.ds44-overlay.show:not(.ds44-overlay--navNiv1)');
-        if (!subMenu) {
+        const subNavigationMenu = this.menu.querySelector('.ds44-overlay.show:not(.ds44-overlay--navNiv1)');
+        if (!subNavigationMenu) {
             return;
         }
 
         // Get corresponding close button
-        const closeButton = mainMenu.querySelector('.ds44-btnOverlay--closeOverlay');
+        const closeButton = navigationMenu.querySelector('.ds44-btnOverlay--closeOverlay');
         if (!closeButton) {
             return;
         }
 
-        subMenu.classList.remove('show');
-        MiscAccessibility.hide(subMenu);
+        subNavigationMenu.classList.remove('show');
+        MiscAccessibility.hide(subNavigationMenu);
         MiscAccessibility.removeFocusLoop();
 
-        MiscAccessibility.show(mainMenu);
+        MiscAccessibility.show(navigationMenu);
 
         if (this.triggerSubMenuElement) {
             MiscAccessibility.setFocus(this.triggerSubMenuElement)
@@ -209,7 +226,7 @@ class MenuStandard {
         } else {
             MiscAccessibility.setFocus(closeButton);
         }
-        MiscAccessibility.addFocusLoop(mainMenu);
+        MiscAccessibility.addFocusLoop(navigationMenu);
     }
 
     focusOut (evt) {
@@ -225,9 +242,9 @@ class MenuStandard {
             return;
         }
 
-        this.hideMain();
+        this.hideMenu();
     }
 }
 
 // Singleton
-new MenuStandard();
+new MenuHeader();

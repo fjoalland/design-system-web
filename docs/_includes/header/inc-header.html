@@ -9,10 +9,20 @@
             </ul>
             <div class="ds44-flex-container ds44-flex-valign-center">
                 <div class="ds44-colLeft">
-                    <a href="#" class="ds44-logoContainer">{{ include.logo }}</a>
+                    <a href="#" class="ds44-logoContainer">
+                        {% if include.logo %}
+                            {{ include.logo }}
+                        {% else %}
+                            <picture class="ds44-logo"><img src="../../assets/images/logo-loire-atlantique.svg" alt="Retour à l&apos;accueil du site loire-atlantique.fr"></picture>
+                        {% endif %}
+                    </a>
                 </div>
                 <div class="ds44-colRight">
-                    {{ include.variante1 }}
+                    {% if include.variante1 %}
+                        {{ include.variante1 }}
+                    {% else %}
+                        <button type="button" class="ds44-btn--menu ds44-btnIcoText--maxi ds44--xl-padding" id="open-search"><span class="ds44-btnInnerText">Rechercher</span><i class="icon icon-magnifier icon--large" aria-hidden="true"></i></button>
+                    {% endif %}
                     {{ include.variante2 }}
                     <button type="button" class="ds44-btn--menu ds44-btnIcoText--maxi ds44-btn--contextual ds44--xl-padding" aria-label="Ouvrir le menu de navigation" aria-controls="menu" data-open-overlay="true" id="open-menu">
                         <span class="ds44-btnInnerText">Menu</span><i class="icon icon-burger icon--xlarge" aria-hidden="true"></i>
@@ -72,6 +82,9 @@
             </section>
             {% include menu/navigation-principale-n2.html %}
             {% include menu/inc-navigation-applis.html %}
+            {% if include.variante1 == null %}
+                {% include menu/inc-menu-rechercher.html %}
+            {% endif %}
         </div>
     </div>
 </header>
