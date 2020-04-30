@@ -44,7 +44,7 @@ class AsideSummary {
 
     scroll () {
         let calculateChapter = false;
-        const scrollTop = this.getScrollTop();
+        const scrollTop = MiscUtils.getScrollTop();
         const top = this.getTop();
 
         if (this.lastScrollTop > scrollTop) {
@@ -121,20 +121,16 @@ class AsideSummary {
         this.scroll();
     }
 
-    getScrollTop () {
-        return (document.documentElement.scrollTop || document.body.scrollTop);
-    }
-
     getCursorPosition () {
         if (this.scrollDirection === 'up') {
-            return this.getScrollTop() + MiscDom.getHeaderHeight(true);
+            return MiscUtils.getScrollTop() + MiscDom.getHeaderHeight(true);
         }
 
-        return this.getScrollTop() + window.screen.height;
+        return MiscUtils.getScrollTop() + window.screen.height;
     }
 
     getTop () {
-        if (this.getScrollTop() > this.getMaximumTop()) {
+        if (MiscUtils.getScrollTop() > this.getMaximumTop()) {
             return this.containerElement.offsetHeight - this.summaryElement.offsetHeight;
         }
 
@@ -156,7 +152,7 @@ class AsideSummary {
         const sectionElement = document.querySelector('#' + sectionId);
         if (sectionElement) {
             const scrollTo = MiscUtils.getPositionY(sectionElement);
-            if (this.getScrollTop() > scrollTo) {
+            if (MiscUtils.getScrollTop() > scrollTo) {
                 // Going up, the header will show
                 MiscUtils.scrollTo(scrollTo - MiscDom.getHeaderHeight(true));
             } else {

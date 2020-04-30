@@ -22,7 +22,7 @@ class ButtonQuestion {
     }
 
     scroll () {
-        const scrollTop = this.getScrollTop();
+        const scrollTop = MiscUtils.getScrollTop();
         if (scrollTop > this.maximumTop) {
             this.isMoving = true;
 
@@ -38,10 +38,6 @@ class ButtonQuestion {
         this.maximumTop = document.body.offsetHeight - window.innerHeight - this.footerElement.offsetHeight;
 
         this.scroll();
-    }
-
-    getScrollTop () {
-        return (document.documentElement.scrollTop || document.body.scrollTop);
     }
 }
 

@@ -118,4 +118,8 @@ class MiscUtils {
 
         scroll();
     }
+
+    static getScrollTop () {
+        return (document.documentElement.scrollTop || document.body.scrollTop);
+    }
 }

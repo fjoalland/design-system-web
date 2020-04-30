@@ -340,7 +340,7 @@ class MapSearch extends MapAbstract {
 
     scroll (objectIndex) {
         const object = this.objects[objectIndex];
-        const scrollTop = this.getScrollTop();
+        const scrollTop = MiscUtils.getScrollTop();
         const enableScrolling = (object.parentElement.offsetHeight > object.containerElement.offsetHeight);
 
         const oldContainerElementHeight = object.containerElement.offsetHeight;
@@ -385,10 +385,6 @@ class MapSearch extends MapAbstract {
         }
     }
 
-    getScrollTop () {
-        return (document.documentElement.scrollTop || document.body.scrollTop);
-    }
-
     getScreenHeight () {
         return window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
     }
@@ -396,7 +392,7 @@ class MapSearch extends MapAbstract {
     getTop (objectIndex) {
         const object = this.objects[objectIndex];
 
-        if (this.getScrollTop() > this.getMaximumTop(objectIndex)) {
+        if (MiscUtils.getScrollTop() > this.getMaximumTop(objectIndex)) {
             return object.parentElement.offsetHeight - object.containerElement.offsetHeight;
         }
 
