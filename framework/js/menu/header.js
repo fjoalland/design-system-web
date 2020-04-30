@@ -62,7 +62,7 @@ class MenuHeader {
         }
 
         // Get corresponding close button
-        const closeButton = menu.querySelector('.ds44-btnOverlay--closeOverlay');
+        const closeButton = mainMenu.querySelector('.ds44-btnOverlay--closeOverlay');
         if (!closeButton) {
             return;
         }
@@ -121,7 +121,7 @@ class MenuHeader {
         }
 
         // Get corresponding close button
-        const closeButton = this.menu.querySelector('.ds44-btnOverlay--closeOverlay');
+        const closeButton = mainMenu.querySelector('.ds44-btnOverlay--closeOverlay');
         if (!closeButton) {
             return;
         }
