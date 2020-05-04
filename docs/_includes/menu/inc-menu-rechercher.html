@@ -1,5 +1,5 @@
-<section id="menuRech">
-    <div class="ds44-overlay ds44-overlay--navNiv2 ds44-wave-grey ds44-bg-pdr ds44-whiteBG" role="dialog" aria-label="Menu de recherche" aria-hidden="true" aria-labelledby="titreRechercher" {{ include.surcharge }}>
+<section id="menuRech" role="search">
+    <div class="ds44-overlay ds44-overlay--navNiv2 ds44-wave-grey ds44-bg-pdr ds44-whiteBG" role="dialog" aria-label="Menu de recherche" aria-hidden="true" {{ include.surcharge }}>
 
         <div class="ds44-container-menuBackLink">
             <p role="heading" aria-level="1" class="ds44-menuBackLink" id="titreRechercher">Rechercher</p>
@@ -15,7 +15,7 @@
             <div class="grid-12-small-1 ds44-grid-valign-center ds44-w98">
 
                 <div class="col-5-small-1 txtcenter">
-                    <p class="h4-like" id="inp-rech">Recherchez par mots-clés :</p>
+                    <p class="h4-like" id="inp-rech" role="heading" aria-level="2">Recherchez par mots-clés :</p>
                     <form>
                         {% include form/field/input/standard.html label="Votre recherche" required="true" class="ds44-inpLarge" ariaDescribedBy="inp-rech" %}
                         <button type="submit" class="ds44-btnStd ds44-btn--invert" title="Valider votre recherche par mots-clés">
@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="col-5-small-1">
-                    <h3 class="h4-like" id="titreContenus">Accédez aux contenus les plus recherchés :</h3>
+                    <h2 class="h4-like" id="titreContenus">Accédez aux contenus les plus recherchés :</h2>
                     <ul class="ds44-list">
                         <li><a href="#" class="ds44-arrowLink">Inscription à l’animation sportive<i class="icon icon-arrow-right" aria-hidden="true"></i></a></li>
                         <li><a href="#" class="ds44-arrowLink">Recherche d’assistante maternelle<i class="icon icon-arrow-right" aria-hidden="true"></i></a></li>
