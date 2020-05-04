@@ -14,6 +14,7 @@ class VideoYoutube {
             .forEach((seekToElement) => {
                 MiscEvent.addListener('click', this.seekTo.bind(this), seekToElement);
             });
+        MiscEvent.addListener('keyPress:spacebar', this.selectSeekTo.bind(this));
 
         if (hasVideos) {
             window.onYouTubeIframeAPIReady = this.load.bind(this);
@@ -47,9 +48,31 @@ class VideoYoutube {
         }
     }
 
-    seekTo (evt) {
+    selectSeekTo (evt) {
+        if (
+            !document.activeElement ||
+            !document.activeElement.closest('.ds44-js-video-seek-to')
+        ) {
+            return;
+        }
+
         evt.stopPropagation();
         evt.preventDefault();
+
+        this.seekTo({
+            currentTarget: document.activeElement.closest('.ds44-js-video-seek-to')
+        });
+
+        return false;
+    }
+
+    seekTo (evt) {
+        if (evt.stopPropagation) {
+            evt.stopPropagation();
+        }
+        if (evt.preventDefault) {
+            evt.preventDefault();
+        }
 
         const currentSeekToElement = document.querySelector('.ds44-js-video-seek-to[aria-current]');
         if (currentSeekToElement) {
