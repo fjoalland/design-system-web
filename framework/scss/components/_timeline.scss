@@ -97,6 +97,9 @@
 
         &:nth-child(odd) {
             .h2-like {
+                margin-left: calc(100% + 10rem);
+                width: 100%;
+                
                 @media (max-width: $ds44-medium - .0625) {
                     margin-left: 0;
                 }
