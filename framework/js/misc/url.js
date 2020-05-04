@@ -30,7 +30,10 @@ class MiscUrl {
         for (const [key, value] of urlParams.entries()) {
             const matches = key.match(/\[[^\]]*\]/g);
             if (!matches) {
-                json[key] = value;
+                // No square brackets
+                json[key] = {
+                    'value': value
+                };
 
                 continue;
             }
@@ -39,12 +42,7 @@ class MiscUrl {
             if (!json[fieldName]) {
                 json[fieldName] = {};
             }
-            let nestedValue = {};
-            if (typeof json[fieldName] === 'object') {
-                nestedValue = json[fieldName];
-            } else {
-                nestedValue.value = json[fieldName];
-            }
+            let nestedValue = json[fieldName];
             for (let i = 0; i < matches.length; i++) {
                 const subKey = matches[i].replace('[', '').replace(']', '');
                 if (i !== (matches.length - 1)) {
