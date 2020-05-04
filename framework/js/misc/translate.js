@@ -54,6 +54,7 @@ class MiscTranslate {
                 'NO_RESULTS_FOR_SEARCH:': 'Il n\'y a aucun résultat pour la recherche sur :',
                 'NO_RESULTS_NEW_SEARCH': 'Merci d\'effectuer une nouvelle recherche',
                 'NB_RESULTS_FOR_SEARCH:': 'pour la recherche sur :',
+                'RESULTS_MAX_RESULTS': 'Il y a un trop grand nombre de résultats correspondant à votre recherche. Vous trouverez ci-dessous les {maxNbResults} plus pertinents. N’hésitez pas à affiner vos critères de recherche.',
                 'FORM_GENERAL_ERROR': 'Une erreur est survenue suite à l\'envoi de votre formulaire',
                 'NEW_WINDOW': 'nouvelle fenêtre',
                 'TOS_OF': 'Conditions d’utilisation de'
@@ -99,6 +100,7 @@ class MiscTranslate {
                 'NO_RESULTS_FOR_SEARCH:': 'There are no results for the search on:',
                 'NO_RESULTS_NEW_SEARCH': 'Please make another search',
                 'NB_RESULTS_FOR_SEARCH:': 'for the search on:',
+                'RESULTS_MAX_RESULTS': 'There are too many results matching your search. Below are the {maxNbResults} most relevant. Do not hesitate to refine your search criteria.',
                 'FORM_GENERAL_ERROR': 'An error occurred following the submission of your form',
                 'NEW_WINDOW': 'new window',
                 'TOS_OF': 'Terms of service of'

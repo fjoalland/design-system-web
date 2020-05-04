@@ -166,16 +166,16 @@ class ResultStandard {
         let legendElement = listContainerElement.querySelector('.ds44-textLegend');
         if (
             legendElement &&
-            nbDisplayedResults <= evt.detail.maxResults
+            evt.detail.nbResults <= evt.detail.maxNbResults
         ) {
             legendElement.remove();
         } else if (
             !legendElement &&
-            nbDisplayedResults > evt.detail.maxResults
+            evt.detail.nbResults > evt.detail.maxNbResults
         ) {
             legendElement = document.createElement('p');
             legendElement.className = 'ds44-textLegend mbs';
-            legendElement.innerText = 'Il y a un trop grand nombre de résultats correspondant à votre recherche. Vous trouverez ci-dessous les 100 plus pertinents. N’hésitez pas à affiner vos critères de recherche.'
+            legendElement.innerText = MiscTranslate._('RESULTS_MAX_RESULTS', { maxNbResults: evt.detail.maxNbResults })
             listContainerElement.appendChild(legendElement);
         }
 

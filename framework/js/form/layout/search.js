@@ -168,7 +168,7 @@ class FormLayoutSearch {
             'pageIndex': response['page-index'] || 0,
             'nbResultsPerPage': response['nb-result-per-page'] || response['max-result'],
             'nbResults': response['nb-result'],
-            'maxResults': response['max-result'],
+            'maxNbResults': response['max-result'],
             'results': results,
             'newResults': response['result'],
             'searchText': searchText.join(', ')
