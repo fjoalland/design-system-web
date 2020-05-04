@@ -62,8 +62,6 @@ class VideoYoutube {
         this.seekTo({
             currentTarget: document.activeElement.closest('.ds44-js-video-seek-to')
         });
-
-        return false;
     }
 
     seekTo (evt) {
@@ -93,6 +91,10 @@ class VideoYoutube {
 
             object.player.seekTo(seconds, true);
             object.player.playVideo();
+
+            const playerElement = object.videoElement.querySelector('.ds44-video-item');
+            MiscAccessibility.setFocus(playerElement);
+            MiscUtils.scrollTo(MiscUtils.getPositionY(playerElement) - MiscDom.getHeaderHeight(true));
 
             break;
         }
