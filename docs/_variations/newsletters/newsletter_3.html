@@ -128,6 +128,10 @@ Bring inline: Yes */
       mso-table-rspace: 0pt;
     }
 
+    .vTop {
+        vertical-align: top;
+    }
+
     /* Styling your links has become much simpler with the new Yahoo.  In fact, it falls in line with the main credo of styling in email and make sure to bring your styles inline.  Your link colors will be uniform across clients when brought inline.
 Bring inline: Yes. */
     a {
@@ -177,6 +181,10 @@ Bring inline: Yes. */
         list-style-image: url("../../assets/images/newsletter/cd44-link-black.svg");
     }
 
+    ul.list li.icon-puce {
+        list-style-image: url("../../assets/images/newsletter/right.svg");
+    }
+
     ul.list.noMrg {
         padding-left: 30px !important;
     }
@@ -185,6 +193,28 @@ Bring inline: Yes. */
     ul p {
         margin:0 !important;
     }
+
+    .col-left,
+    .col-right {
+        width:50%;
+        vertical-align: top;
+    }
+
+    .col-left {
+        padding-right:15px;
+    }
+
+    .col-right {
+        padding-left:15px;
+    }
+
+    .ds44-introduction {
+      font-size: 19px;
+      font-weight: 700;
+      margin-top: 0;
+      margin-bottom: 2rem;
+      line-height: 27px;
+  }
 
 
     /***************************************************
@@ -203,7 +233,7 @@ MOBILE TARGETING
       LI,
       UL,
       span {
-        font-size: 0.9em;
+        font-size: 14px;
       }
 
       h1 {
@@ -228,60 +258,30 @@ MOBILE TARGETING
         display: block;
       }
 
-      /*DIV {display:none !important;}*/
+      .col-left,
+      .col-right {
+          width:100%;
+          padding:0;
+          display: block;
+      }
 
+      .col-right {
+          margin-top: 20px;
+          text-align: center;
+      }
+
+      .ds44-introduction {
+        font-size: 16px;
+        font-weight: 700;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+        line-height: 23px;
     }
 
-    @media only screen and (max-device-width: 480px) {
 
+}
 
-    }
-
-    /* More Specific Targeting */
-
-    @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
-
-
-    }
-
-    @media only screen and (-webkit-min-device-pixel-ratio: 2) {
-      /* Put your iPhone 4g styles in here */
-    }
-
-    /* Android targeting */
-    @media only screen and (-webkit-device-pixel-ratio:.75) {
-      /* Put CSS for low density (ldpi) Android layouts in here */
-    }
-
-    @media only screen and (-webkit-device-pixel-ratio:1) {
-      /* Put CSS for medium density (mdpi) Android layouts in here */
-    }
-
-    @media only screen and (-webkit-device-pixel-ratio:1.5) {
-      /* Put CSS for high density (hdpi) Android layouts in here */
-    }
-
-    /* end Android targeting */
   </style>
-
-  <!-- Targeting Windows Mobile -->
-  <!--[if IEMobile 7]>
-<style type="text/css">
-
-</style>
-<![endif]-->
-
-  <!-- ***********************************************
-****************************************************
-END MOBILE TARGETING
-****************************************************
-************************************************ -->
-
-  <!--[if gte mso 9]>
-<style>
-/* Target Outlook 2007 and 2010 */
-</style>
-<![endif]-->
 </head>
 
 <body>
@@ -328,7 +328,20 @@ END MOBILE TARGETING
                     <tbody>
                       <tr>
                         <td>
-                          <h1 style="margin: 20px 0; padding: 0;">Du nouveau sur le site <a href="#">assmat.loire-atlantique.fr</a></h1>
+                          <h1 style="margin: 20px 0; padding: 0;">L’engagement en service civique</h1>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </th>
+              </tr>
+              <tr>
+                <th style="background-color:#FFFFFF">
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <img src="../../assets/images/newsletter/img_2.jpg" style="width=100%;" alt="image 2" class="" />
                         </td>
                       </tr>
                     </tbody>
@@ -340,19 +353,19 @@ END MOBILE TARGETING
                   <table class="mail-body" width="100%" cellpadding="0" style="margin:30px 0;">
                     <tbody>
                       <tr>
-                        <td><span>Bonjour,</span>
-                          <p></p>
-                          <p>A consulter ce mois-ci sur le site assmat.loire-atlantique.fr :</p>
-                          <p></p>
-                          <ul class="list">
-                              <li>Un rappel important sur la <a href="#">vaccination contre la rougeole</a></li>
-                              <li>Toutes les informations pour savoir si vous pouvez <a href="#">accueillir un ou une stagiaire.</a></li>
-                          </ul>
-                          <p></p>
-                          <p><strong>Pensez également à mettre à jour vos disponibilités pour la rentrée en vous connectant à votre espace personnel : <a href="#">https://assmat.loire-atlantique.fr/connexionBonjour</a></strong></p>
-                          <p></p>
-                          <p></p>
-                          <p>Bel été à toutes et tous,<br/>Le Département de Loire-Atlantique</p>
+                        <td>
+                            <p class="ds44-introduction">Le Département de Loire-Atlantique agit pour favoriser l’engagement des jeunes afin de leur offrir les moyens de s’épanouir et d’accéder à l’autonomie. Il accompagne les volontaires en service civique en leur permettant de vivre de nouvelles expériences mais aussi de développer et acquérir de nouvelles compétences. </p>
+                            <p>Le Département a le plaisir de vous convier à une soirée festive sur la valorisation de l’engagement et notamment en service civique en format théâtre d’impro sympathiquement drôle par la compagnie La belle boîte.</p>
+                            <p></p>
+                            <p></p>
+                            <h2>Réservez votre date :</h2>
+                            <ul class="list">
+                              <li class="icon-date">Le lundi 27 mai</li>
+                              <li class="icon-location">Foyer de jeunes travailleurs de Beaulieu 9, <br/>Boulevard Vincent Gâche Nantes</li>
+                              <li class="icon-link">Inscription en ligne : <a href="http://www.loire-atlantique.fr/volontaires2019">http://www.loire-atlantique.fr/volontaires2019</a></li>
+                            </ul>
+                            <p></p>
+                            <p>Vous recevrez très prochainement une invitation officielle et des informations complémentaires sur l’organisation de cette soirée.</p>
                         </td>
                       </tr>
                     </tbody>
@@ -367,8 +380,8 @@ END MOBILE TARGETING
                         <td>
                           <h2 style="margin: 0 0 15px 0;">Renseignements</h2>
                           <ul class="list noMrg">
-                              <li class="icon-mail"><a href="#">support.assmat@loire-atlantique.fr</a></li>
-                              <li class="icon-tel"><p>02 40 99 15 44</p></li>
+                              <li class="icon-mail"><a href="#">DVC-JVA.Servicejeunesseetvieassociative@loire-atlantique.fr</a></li>
+                              <li class="icon-tel"><p>02 40 99 57 60</p></li>
                           </ul>
                         </td>
                       </tr>
