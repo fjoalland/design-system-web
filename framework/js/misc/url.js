@@ -39,7 +39,12 @@ class MiscUrl {
             if (!json[fieldName]) {
                 json[fieldName] = {};
             }
-            let nestedValue = json[fieldName];
+            let nestedValue = {};
+            if (typeof json[fieldName] === 'object') {
+                nestedValue = json[fieldName];
+            } else {
+                nestedValue.value = json[fieldName];
+            }
             for (let i = 0; i < matches.length; i++) {
                 const subKey = matches[i].replace('[', '').replace(']', '');
                 if (i !== (matches.length - 1)) {
