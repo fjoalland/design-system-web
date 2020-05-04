@@ -344,6 +344,10 @@ main {
                         max-width: 100%;
                         margin: 0 0 $ds44-medium-vmargin 0;
                     }
+
+                    .ds44-card {
+                        margin-bottom: 0;
+                    }
                 }
             }
         }
@@ -428,8 +432,12 @@ main {
 
                     li {
                         display: inherit;
-                        width: 100%;
-                        max-width: 100%;
+                        width: calc(100% - 3rem);
+                        max-width: calc(100% - 3rem);
+
+                        > * {
+                            width: 100%;
+                        }
                     }
                 }
             }
