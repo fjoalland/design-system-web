@@ -348,6 +348,17 @@ input[type=radio],
     }
 }
 
+.mj-form {
+    input[type=radio],
+    .ds44-radio ,
+    input[type=checkbox],
+    .ds44-checkbox {
+        position: inherit;
+        vertical-align: top;
+        left: 0;
+    }
+}
+
 .ds44-form__checkbox_container.ds44-inputDisabled label,
 .ds44-form__radio_container.ds44-inputDisabled label {
     color: $ds44-gray;
