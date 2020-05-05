@@ -161,7 +161,9 @@ class FormLayoutSearch {
                 data = JSON.parse(data);
             } catch (ex) {
             }
-            searchText.push(data.text || data.value);
+            if (data.text) {
+                searchText.push(data.text);
+            }
         }
 
         return {
