@@ -268,7 +268,8 @@ class MapSearch extends MapAbstract {
                     ]
                 ],
                 {
-                    padding: 50
+                    padding: 50,
+                    maxZoom: 10
                 }
             );
         }
