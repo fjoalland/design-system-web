@@ -19,9 +19,8 @@
 }
 
 .ds44-overlay--navNiv1 {
-left: 0;
-top: -2500px;
-
+    left: 0;
+    top: -2500px;
 
     &.show {
         top: 0;
@@ -35,7 +34,6 @@ top: -2500px;
     right: -2500px;
     z-index: 11000;
 
-
     &.show {
         right: 0;
         opacity: 1;
@@ -45,7 +43,6 @@ top: -2500px;
 .ds44-overlay--navFromBottom {
     bottom: -2500px;
     z-index: 11000;
-
     background-color: $ds44-light-color;
 
     &.show {
@@ -63,7 +60,7 @@ top: -2500px;
 .ds44-modal-container {
     width: 100%;
     height: 100vh;
-    background-color: rgba(0,0,0,.66);
+    background-color: rgba(0, 0, 0, .66);
     position: fixed;
     top: 0;
     bottom: 0;
@@ -79,9 +76,8 @@ top: -2500px;
     align-items: center;
 
     .ds44-navListApplis {
-      margin: 0;
+        margin: 0;
     }
-
 }
 
 .ds44-modal-box {
@@ -101,7 +97,6 @@ top: -2500px;
 }
 
 .ds44-modal-column {
-
     padding-right: $ds44-padding-xxlarge;
 
     &:last-child {
@@ -111,19 +106,18 @@ top: -2500px;
     }
 
     & form {
-      margin: 0;
+        margin: 0;
     }
 }
 
 .ds44-btn-fixed {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  z-index: 100;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 100;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 }
-
 
 /* === Marker Map overlay === */
 
@@ -131,20 +125,20 @@ top: -2500px;
     position: relative;
     background: #fff;
     border-radius: 0;
-    box-shadow: 0 1px 2px rgba(0,0,0,.1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
     padding: 0;
     pointer-events: auto;
 
     & .ds44-js-card {
-      cursor: pointer;
-      z-index: 700;
-      position: relative;
-      background: #ffffff !important;
-      margin: 0 !important ;
+        cursor: pointer;
+        z-index: 700;
+        position: relative;
+        background: #ffffff !important;
+        margin: 0 !important;
 
-      .ds44-cardTitle {
-          font-size: 1.7rem;
-      }
+        .ds44-cardTitle {
+            font-size: 1.7rem;
+        }
     }
 
     & .mapboxgl-popup-close-button {
@@ -159,15 +153,9 @@ top: -2500px;
             background-color: rgba(255, 255, 255, 1);
         }
     }
-
 }
 
-
-
-
 @media (max-width: $ds44-large) {
-
-
     .ds44-modal-column {
         padding-bottom: $ds44-padding-large;
         padding-right: 0;
@@ -175,7 +163,7 @@ top: -2500px;
 
         &:last-child {
             border-left: none;
-            border-top: 2px solid #000;;
+            border-top: 2px solid #000;
             padding-top: $ds44-padding-large;
             padding-left: 0;
         }
@@ -184,18 +172,60 @@ top: -2500px;
     .ds44-modal-box {
         padding: $ds44-padding-box $ds44-padding-medium;
     }
-
 }
 
 @media (max-width: $ds44-tiny) {
-
     .ds44-modal-box {
-
         h1.h2-like {
             max-width: 80%;
             display: inline-block;
-            background: linear-gradient(to bottom, rgba(255,255,255,0) calc(100% - 16px),$ds44-contextual-color 0px);
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0) calc(100% - 16px), $ds44-contextual-color 0px);
         }
     }
+}
 
+/* Tarte au citron */
+#tarteaucitronRoot {
+    &:before {
+        background-color: rgba(0, 0, 0, .66) !important;
+        pointer-events: auto !important;
+        opacity: 1 !important;
+    }
+
+    #tarteaucitronAlertBig {
+        background-color: $ds44-background-base !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        padding: 1.5rem 3rem !important;
+
+        &:before {
+            content: url('../../assets/images/pictos/picto-cookies.svg') !important;
+            font-size: 0 !important;
+            display: block !important;
+        }
+
+        #tarteaucitronDisclaimerAlert {
+            margin: 0 !important;
+            padding: 0 !important;
+            margin-bottom: 2.5rem !important;
+            display: block !important;
+            background-color: $ds44-background-base !important;
+            color: $ds44-color-base !important;
+            font-family: $ds44-font-family-base !important;
+            font-size: 1.6rem !important;
+        }
+
+        button {
+            @extend .ds44-btnStd;
+            @extend .ds44-mobile-reduced-mb;
+            color: $ds44-color-base !important;
+            font-family: $ds44-font-family-base !important;
+            font-size: 1.4rem !important;
+            min-height: 2.4rem !important;
+        }
+
+        #tarteaucitronPersonalize {
+            @extend .ds44-btn--contextual;
+        }
+    }
 }
