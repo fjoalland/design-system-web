@@ -32,9 +32,6 @@ variations:
   description: Les tooltips sont utilisés pour apporter une information supplémentaire.
   pattern: composants-transverses/tooltips.html
 
-- title: Infobulle marker
-  description: Les infobulle marker ont le même comportement que les tooltips, on les trouve sur les cartes. Au clic sur l'icône marqueur, on affiche plus d'informations sur le lieu sélectionné.
-  pattern: composants-transverses/infobulle_marker.html
 
 ---
 
