@@ -32,6 +32,8 @@ class MapSearch extends MapAbstract {
     }
 
     afterLoad (objectIndex) {
+        super.afterLoad(objectIndex);
+
         const object = this.objects[objectIndex];
 
         object.map.addControl(new window.mapboxgl.NavigationControl(), 'bottom-right');
@@ -368,7 +370,9 @@ class MapSearch extends MapAbstract {
     resizeMap (objectIndex) {
         const object = this.objects[objectIndex];
 
-        object.map.resize();
+        if(object.map && object.map.resize) {
+            object.map.resize();
+        }
 
         this.scroll(objectIndex);
     }
