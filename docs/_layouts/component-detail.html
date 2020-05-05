@@ -16,11 +16,13 @@ layout: default
 					{% assign pattern = site.variations | where:"path", pattern_path | first %}
 
 					<a href="#tab-{{ variation.title | downcase | replace: ' ', '-' }}" class="c-tabs__link js-tab" data-code-tabs="tab-{{ variation.title | downcase | replace: ' ', '-' }}">{% if variation.title %}{{ variation.title }}{% endif %}</a>
-					<a href="{{ pattern.url | prepend: site.baseurl }}" target="_blank">&#9974;</a>
+					<a href="{{ pattern.url | prepend: site.baseurl }}" target="_blank" style="vertical-align:middle;" title="Ouverture de la page dans une nouvelle fenêtre">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><g transform="translate(-960 -320)"><rect width="20" height="20" transform="translate(960 320)" fill="#fff" opacity="0"/><g transform="translate(948.378 272.832)"><g transform="translate(23.689 50.996)"><path d="M272.041,55.346a.631.631,0,0,1-.631-.631V52.258h-2.457a.631.631,0,1,1,0-1.262h3.088a.631.631,0,0,1,.631.631v3.088A.631.631,0,0,1,272.041,55.346Z" transform="translate(-268.322 -50.996)"/></g><g transform="translate(20.884 50.996)"><path d="M187.255,58.151a.631.631,0,0,1-.446-1.077l5.893-5.893a.631.631,0,0,1,.892.892L187.7,57.966a.629.629,0,0,1-.446.185Z" transform="translate(-186.624 -50.996)"/></g><path d="M26.324,63.975H16.636a1.647,1.647,0,0,1-1.645-1.645V52.641A1.647,1.647,0,0,1,16.636,51h4.086a.631.631,0,0,1,0,1.262H16.636a.384.384,0,0,0-.384.384v9.688a.384.384,0,0,0,.384.384h9.688a.384.384,0,0,0,.384-.384V58.381a.631.631,0,1,1,1.262,0v3.948A1.647,1.647,0,0,1,26.324,63.975Z" transform="translate(0 0)"/></g></g></svg>
+                    </a>
 				</li><!-- end c-tabs__item -->
 			{% endfor %}
 		</ul><!-- end c-tabs__list -->
-		
+
 		<div class="c-tabs__body">
 
 			{% for variation in page.variations %}
