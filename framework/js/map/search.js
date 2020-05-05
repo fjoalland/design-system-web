@@ -182,7 +182,17 @@ class MapSearch extends MapAbstract {
         }
 
         // Add new markers
-        const lngLats = [];
+        let hasBoundingBox = false;
+        const boundingBox = {
+            longitude: {
+                min: null,
+                max: null
+            },
+            latitude: {
+                min: null,
+                max: null
+            }
+        };
         for (let resultIndex in object.newResults) {
             if (!object.newResults.hasOwnProperty(resultIndex)) {
                 continue;
@@ -199,6 +209,7 @@ class MapSearch extends MapAbstract {
             }
 
             // Create a marker
+            hasBoundingBox = true;
             const lngLat = [
                 result.metadata.long,
                 result.metadata.lat
@@ -219,22 +230,45 @@ class MapSearch extends MapAbstract {
                     )
                     .addTo(object.map)
             );
-            lngLats.push([
-                result.metadata.long,
-                result.metadata.lat
-            ]);
+
+            if (boundingBox.longitude.min === null) {
+                boundingBox.longitude.min = result.metadata.long;
+            } else {
+                boundingBox.longitude.min = Math.min(result.metadata.long, boundingBox.longitude.min);
+            }
+            if (boundingBox.longitude.max === null) {
+                boundingBox.longitude.max = result.metadata.long;
+            } else {
+                boundingBox.longitude.max = Math.max(result.metadata.long, boundingBox.longitude.max);
+            }
+            if (boundingBox.latitude.min === null) {
+                boundingBox.latitude.min = result.metadata.lat;
+            } else {
+                boundingBox.latitude.min = Math.min(result.metadata.lat, boundingBox.latitude.min);
+            }
+            if (boundingBox.latitude.max === null) {
+                boundingBox.latitude.max = result.metadata.lat;
+            } else {
+                boundingBox.latitude.max = Math.max(result.metadata.lat, boundingBox.latitude.max);
+            }
         }
 
-        if (
-            object.zoom &&
-            (lngLats.length > 0)
-        ) {
+        if (object.zoom && hasBoundingBox) {
             // Zoom the map
             object.zoom = false;
             object.map.fitBounds(
-                lngLats,
+                [
+                    [
+                        boundingBox.longitude.min,
+                        boundingBox.latitude.min
+                    ],
+                    [
+                        boundingBox.longitude.max,
+                        boundingBox.latitude.max
+                    ]
+                ],
                 {
-                    'maxZoom': 10
+                    padding: 50
                 }
             );
         }
