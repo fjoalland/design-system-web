@@ -16,11 +16,23 @@ layout: default
 					{% assign pattern = site.variations | where:"path", pattern_path | first %}
 
 					<a href="#tab-{{ variation.title | downcase | replace: ' ', '-' }}" class="c-tabs__link js-tab" data-code-tabs="tab-{{ variation.title | downcase | replace: ' ', '-' }}">{% if variation.title %}{{ variation.title }}{% endif %}</a>
-					<a href="{{ pattern.url | prepend: site.baseurl }}" target="_blank">&#9974;</a>
+					<a href="{{ pattern.url | prepend: site.baseurl }}" target="_blank" style="vertical-align:middle;">
+                        <svg width="20" height="20" viewBox="0 0 20 20">
+                          <g id="cd44-computer-black" clip-path="url(#clip-path)">
+                            <g transform="translate(0.8 3.999)">
+                              <rect id="Rectangle_916" data-name="Rectangle 916" width="13.07" height="9.5" rx="1.25" transform="translate(2.75)" fill="none" stroke="#000" stroke-width="1.5"/>
+                              <path id="Tracé_1087" data-name="Tracé 1087" d="M258.334,370.138a1.933,1.933,0,0,1-1.857,2H241.621a1.933,1.933,0,0,1-1.857-2Z" transform="translate(-239.764 -359.888)"/>
+                              <path id="Tracé_1088" data-name="Tracé 1088" d="M239.764,370.138h18.57a1.933,1.933,0,0,1-1.857,2H241.621A1.933,1.933,0,0,1,239.764,370.138Z" transform="translate(-239.764 -359.888)"/>
+                            </g>
+                            <rect id="Rectangle_917" data-name="Rectangle 917" width="20" height="20" fill="none"/>
+                            <rect id="Rectangle_918" data-name="Rectangle 918" width="20" height="20" fill="none"/>
+                          </g>
+                        </svg>
+                    </a>
 				</li><!-- end c-tabs__item -->
 			{% endfor %}
 		</ul><!-- end c-tabs__list -->
-		
+
 		<div class="c-tabs__body">
 
 			{% for variation in page.variations %}

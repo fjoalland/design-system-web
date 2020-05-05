@@ -17,6 +17,9 @@ Licence CC No Derivatives (pas de modification)
 
 <p>Source : <a href="https://www.fontsquirrel.com/fonts/blogger-sans">https://www.fontsquirrel.com/fonts/blogger-sans</a></p>
 
+<p>Télécharger le dossier contenant la : <a href="../fonts/Blogger-sans.zip">Typographie Blogger</a></p>
+
+
 #### La typographie Muli :
 
 Utilisée pour les textes courants, titres d’encadrés, boutons, …
