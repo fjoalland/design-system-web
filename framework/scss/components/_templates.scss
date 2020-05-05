@@ -312,6 +312,10 @@ main {
             &.ds44-js-show-card .ds44-js-results-list {
                 display: none;
             }
+
+            .ds44-js-results-list > .h3-like[role="heading"]{
+                margin-left: $ds44-medium-vmargin ;
+            }
         }
 
         .ds44-textLegend {
