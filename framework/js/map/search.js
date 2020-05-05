@@ -269,7 +269,7 @@ class MapSearch extends MapAbstract {
                 ],
                 {
                     padding: 50,
-                    maxZoom: 10
+                    maxZoom: 15
                 }
             );
         }
