@@ -21,8 +21,6 @@ class KeyboardStandard {
 
         MiscEvent.dispatch('keyPress:*');
         MiscEvent.dispatch('keyPress:' + (evt.key === ' ' ? 'Spacebar' : evt.key).toLowerCase());
-
-        this.disableSpaceBarScroll(evt);
     }
 
     keyUp (evt) {
@@ -32,12 +30,6 @@ class KeyboardStandard {
 
         MiscEvent.dispatch('keyUp:*');
         MiscEvent.dispatch('keyUp:' + (evt.key === ' ' ? 'Spacebar' : evt.key).toLowerCase());
-    }
-
-    disableSpaceBarScroll (evt) {
-        if (evt.key === ' ' || evt.key === 'Spacebar') {
-            evt.preventDefault();
-        }
     }
 }
 
