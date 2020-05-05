@@ -17,7 +17,7 @@ Licence CC No Derivatives (pas de modification)
 
 <p>Source : <a href="https://www.fontsquirrel.com/fonts/blogger-sans">https://www.fontsquirrel.com/fonts/blogger-sans</a></p>
 
-<p>Télécharger le dossier contenant la : <a href="../fonts/Blogger-sans.zip">Typographie Blogger</a></p>
+<a href="../fonts/Blogger-sans.zip" class="ds44-btnStd ds44-btn--invert"><span class="ds44-btnInnerText">Télécharger la typographie Blogger</span></a>
 
 
 #### La typographie Muli :
@@ -29,6 +29,8 @@ Variantes Regular, Bold
 Licence SIL Open Font
 
 <p>Source : <a href="https://www.fontsquirrel.com/fonts/muli">https://www.fontsquirrel.com/fonts/muli</a></p>
+
+<a href="../fonts/Muli.zip" class="ds44-btnStd ds44-btn--invert"><span class="ds44-btnInnerText">Télécharger la typographie Muli</span></a>
 
 
 ## Titres
