@@ -16,6 +16,7 @@ class MapSearch extends MapAbstract {
         object.isVisible = true;
         object.isMoving = false;
         object.maximumTop = null;
+        object.mapHoveredId = null;
 
         MiscEvent.addListener('search:update', this.search.bind(this, objectIndex));
         MiscEvent.addListener('resize', this.resize.bind(this, objectIndex), window);
@@ -32,9 +33,19 @@ class MapSearch extends MapAbstract {
     }
 
     afterLoad (objectIndex) {
-        super.afterLoad(objectIndex);
-
         const object = this.objects[objectIndex];
+
+        // Add geojson if included
+        const geoJsonUrl = object.mapElement.getAttribute('data-geojson');
+        if (geoJsonUrl) {
+            MiscRequest.send(
+                geoJsonUrl,
+                this.loadGeoJson.bind(this, objectIndex),
+                () => {
+                    console.log('Error when loading the geojson file')
+                }
+            );
+        }
 
         object.map.addControl(new window.mapboxgl.NavigationControl(), 'bottom-right');
         object.map.addControl(new window.mapboxgl.FullscreenControl(), 'bottom-left');
@@ -53,6 +64,108 @@ class MapSearch extends MapAbstract {
         object.map.on('moveend', this.move.bind(this, objectIndex));
         if (object.newResults) {
             this.show(objectIndex);
+        }
+    }
+
+    loadGeoJson (objectIndex, geoJson) {
+        if (geoJson) {
+            const object = this.objects[objectIndex];
+
+            object.map.addSource('map-source', {
+                'type': 'geojson',
+                'data': geoJson,
+                'generateId': true
+            });
+            object.map.addLayer({
+                'id': 'map-fills',
+                'type': 'fill',
+                'source': 'map-source',
+                'paint': {
+                    'fill-color': ['get', 'fill'],
+                    'fill-opacity': [
+                        'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                        0.8,
+                        [
+                            'case',
+                            ['!=', ['get', 'fill-opacity'], 0],
+                            ['get', 'fill-opacity'],
+                            0.4
+                        ]
+                    ]
+                }
+            });
+            object.map.addLayer({
+                'id': 'map-lines',
+                'type': 'line',
+                'source': 'map-source',
+                'paint': {
+                    'line-color': ['get', 'stroke'],
+                    'line-opacity': ['get', 'stroke-opacity'],
+                    'line-width': ['get', 'stroke-width']
+                }
+            });
+            object.map.on('click', 'map-fills', this.showAreaPopup.bind(this, objectIndex));
+            object.map.on('mousemove', 'map-fills', this.mouseEnterArea.bind(this, objectIndex));
+            object.map.on('mouseleave', 'map-fills', this.mouseLeaveArea.bind(this, objectIndex));
+        }
+    }
+
+    showAreaPopup (objectIndex, evt) {
+        if(
+            evt.originalEvent &&
+            evt.originalEvent.target &&
+            evt.originalEvent.target.classList.contains('ds44-map-marker')
+        ) {
+            // Clicked on a marker
+            return;
+        }
+
+        const object = this.objects[objectIndex];
+        new window.mapboxgl.Popup()
+            .setLngLat(evt.lngLat)
+            .setHTML(`
+                <section class="ds44-card ds44-js-card ds44-card--contact ds44-box ds44-bgGray">
+                    <div class="ds44-card__section">
+                        <div class="ds44-innerBoxContainer">
+                            <h4 class="h4-like ds44-cardTitle mts">${evt.features[0].properties.description}</h4>
+                        </div>
+                    </div>
+                </section>
+            `)
+            .addTo(object.map);
+    }
+
+    mouseEnterArea (objectIndex, evt) {
+        const object = this.objects[objectIndex];
+
+        if (evt.features.length > 0) {
+            if (object.mapHoveredId !== null) {
+                object.map.setFeatureState(
+                    { source: 'map-source', id: object.mapHoveredId },
+                    { hover: false }
+                );
+            }
+            object.mapHoveredId = evt.features[0].id;
+            object.map.setFeatureState(
+                { source: 'map-source', id: object.mapHoveredId },
+                { hover: true }
+            );
+
+            object.map.getCanvas().style.cursor = 'pointer';
+        }
+    }
+
+    mouseLeaveArea (objectIndex) {
+        const object = this.objects[objectIndex];
+
+        object.map.getCanvas().style.cursor = '';
+        if (object.mapHoveredId !== null) {
+            object.map.setFeatureState(
+                { source: 'map-source', id: object.mapHoveredId },
+                { hover: false }
+            );
+            object.mapHoveredId = null;
         }
     }
 
@@ -370,7 +483,7 @@ class MapSearch extends MapAbstract {
     resizeMap (objectIndex) {
         const object = this.objects[objectIndex];
 
-        if(object.map && object.map.resize) {
+        if (object.map && object.map.resize) {
             object.map.resize();
         }
 
