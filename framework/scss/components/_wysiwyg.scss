@@ -12,6 +12,8 @@
     }
     p + .h3-like,
     p + h3,
+    ul:not(.ds44-list):not(.ds44-collapser) + h3,
+    ul:not(.ds44-list):not(.ds44-collapser) + .h3-like,
     p + .h4-like,
     p + h4 {
       margin-top: $ds44-components-vmargin ;
@@ -74,6 +76,7 @@ blockquote {
     background-color: $ds44-contextual-color;
     padding: .5rem 1rem;
     display: inline-block;
+    margin: 1.5rem 0 1rem 0;
 }
 
 @media (max-width: 64em) {

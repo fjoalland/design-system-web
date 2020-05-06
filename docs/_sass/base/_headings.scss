@@ -73,6 +73,10 @@ h2,
     background-color: #99E6D1 !important;
 }
 
+h2.c-card__title::before {
+    content: none !important;
+}
+
 .c-text-passage h3,
 .c-text-passage h4,
 .c-text-passage h5 {

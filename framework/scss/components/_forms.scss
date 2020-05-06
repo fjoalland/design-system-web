@@ -589,6 +589,7 @@ input[type=radio],
     width: calc(100% - 40px);
     width: -webkit-calc(100% - 40px);
     white-space: nowrap;
+    text-align: left;
 
     .ds44-inputDisabled & {
         cursor: default;
@@ -613,6 +614,7 @@ input[type=radio],
     box-shadow: $ds44-boxShadow;
     background-color: $ds44-light-color;
     z-index: 15;
+    text-align: left;
 }
 
 .ds44-select-list_elem {
@@ -789,6 +791,7 @@ input[type=radio],
     width: -webkit-calc(100% - 2.4rem);
     display: block;
     color: $ds44-color-dark-text;
+    text-align: left;
 
     .ds44-inpLarge & {
         width: calc(100% - 4.4rem);
