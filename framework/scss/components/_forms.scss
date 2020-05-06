@@ -791,6 +791,7 @@ input[type=radio],
     width: -webkit-calc(100% - 2.4rem);
     display: block;
     color: $ds44-color-dark-text;
+    text-align: left;
 
     .ds44-inpLarge & {
         width: calc(100% - 4.4rem);
