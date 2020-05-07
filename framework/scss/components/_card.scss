@@ -210,7 +210,7 @@ a.ds44-card {
 // Horizontal card specific styles
 
 .ds44-card__section--horizontal {
-    padding: $ds44-padding-small $ds44-padding-xlarge;
+    padding: $ds44-padding-large $ds44-padding-xlarge;
 
     @media (max-width: $ds44-small - .0625) {
         padding-right: $ds44-padding-box;
@@ -295,6 +295,10 @@ a.ds44-card {
     .icon {
         font-size: 1.2rem;
         line-height: 1;
+    }
+
+    &.ds44-docListElem {
+        padding-left: 2rem;
     }
 }
 
