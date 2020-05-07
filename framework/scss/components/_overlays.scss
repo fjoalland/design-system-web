@@ -139,15 +139,23 @@
         .ds44-cardTitle {
             font-size: 1.7rem;
         }
+        &.ds44-cardIsFocus {
+            background-color: #99E6D1 !important;
+            border-color: #666;
+        }
+        .ds44-docListElem {
+            margin-top : 1rem !important;
+        }
     }
 
     & .mapboxgl-popup-close-button {
         border-radius: 0;
-        background-color: rgba(255, 255, 255, 0.5);
+        background-color: rgba(255, 255, 255, 0.75);
         z-index: 1000;
         font-size: 1.4em;
         height: 30px;
         width: 30px;
+        display: none;
 
         &:hover {
             background-color: rgba(255, 255, 255, 1);
