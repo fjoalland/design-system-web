@@ -37,20 +37,12 @@ class MiscRequest {
 
     static response (xhr, callback) {
         if (xhr && callback) {
-            if (!xhr.getResponseHeader('content-type')) {
-                callback(xhr.response);
+            try {
+                const responseJson = JSON.parse(xhr.response);
+                callback(responseJson);
 
                 return;
-            }
-
-            const responseHeaders = xhr.getResponseHeader('content-type').toLowerCase().split(';');
-            if (
-                responseHeaders.indexOf('application/json') !== -1 ||
-                responseHeaders.indexOf('application/geo+json') !== -1
-            ) {
-                callback(JSON.parse(xhr.response));
-
-                return;
+            } catch (ex) {
             }
 
             callback(xhr.response);
