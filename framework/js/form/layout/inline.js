@@ -1,14 +1,27 @@
 class FormLayoutInline {
     constructor () {
-        const formElement = document.querySelector('form[data-is-inline="true"]');
-        if (!formElement) {
-            return;
-        }
+        this.objects = [];
 
-        MiscEvent.addListener('form:submit', this.submit.bind(this), formElement);
+        document
+            .querySelectorAll('form[data-is-inline="true"]')
+            .forEach((formElement) => {
+                this.create(formElement);
+            });
     }
 
-    submit (evt) {
+    create (element) {
+        const object = {
+            'id': MiscUtils.generateId(),
+            'formElement': element
+        };
+        this.objects.push(object);
+        const objectIndex = (this.objects.length - 1);
+
+        // Bind events
+        MiscEvent.addListener('form:submit', this.submit.bind(this, objectIndex), object.formElement);
+    }
+
+    submit (objectIndex, evt) {
         if (
             !evt ||
             !evt.detail ||
@@ -17,24 +30,28 @@ class FormLayoutInline {
             return;
         }
 
+        const object = this.objects[objectIndex];
+
         // Show loader
         MiscEvent.dispatch('loader:requestShow');
 
         // Get the inline data from the back office
         MiscRequest.send(
-            evt.currentTarget.getAttribute('action'),
-            this.inlineSuccess.bind(this, evt.currentTarget),
-            this.inlineError.bind(this, evt.currentTarget),
+            object.formElement.getAttribute('action'),
+            this.inlineSuccess.bind(this, objectIndex),
+            this.inlineError.bind(this, objectIndex),
             evt.detail.parameters
         )
     }
 
-    inlineSuccess (formElement, response) {
-        this.showInlineData(formElement, response);
+    inlineSuccess (objectIndex, response) {
+        this.showInlineData(objectIndex, response);
         MiscEvent.dispatch('loader:requestHide');
     }
 
-    inlineError (formElement) {
+    inlineError (objectIndex) {
+        const object = this.objects[objectIndex];
+
         MiscEvent.dispatch(
             'form:notification',
             {
@@ -42,13 +59,15 @@ class FormLayoutInline {
                 'type': 'error',
                 'message': MiscTranslate._('FORM_GENERAL_ERROR')
             },
-            formElement
+            object.formElement
         );
         MiscEvent.dispatch('loader:requestHide');
     }
 
-    showInlineData (formElement, inlineData) {
-        const destinationElement = document.querySelector(formElement.getAttribute('data-result-destination'));
+    showInlineData (objectIndex, inlineData) {
+        const object = this.objects[objectIndex];
+
+        const destinationElement = document.querySelector(object.formElement.getAttribute('data-result-destination'));
         if (!destinationElement) {
             return;
         }
