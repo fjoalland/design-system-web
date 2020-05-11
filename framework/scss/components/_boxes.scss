@@ -247,7 +247,7 @@
   }
   .ds44-innerBoxContainer {
       &--list {
-        padding: $ds44-padding-xlarge;
+        padding: $ds44-padding-large;
       }
   }
 
@@ -275,7 +275,7 @@
   }
   .ds44-innerBoxContainer {
       &--list {
-        padding: $ds44-padding-xlarge;
+        padding: $ds44-padding-large;
       }
   }
 
@@ -332,7 +332,7 @@
 @media (max-width: $ds44-tiny - .0625) {
 
     .ds44-innerBoxContainer {
-        padding: $ds44-padding-large;
+        padding: $ds44-padding-large/2;
     }
 
     // Pushs

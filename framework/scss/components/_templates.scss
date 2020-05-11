@@ -343,7 +343,7 @@ main {
                 flex-wrap: wrap;
                 padding-bottom: $ds44-padding-xlarge;
 
-                li {
+                > li {
                     display: grid;
                     margin: $ds44-medium-vmargin;
                     width: calc(33.33% - 3rem);
@@ -445,7 +445,7 @@ main {
                         display: none;
                     }
 
-                    li {
+                    > li {
                         display: inherit;
                         width: calc(100% - 3rem);
                         max-width: calc(100% - 3rem);
@@ -463,6 +463,7 @@ main {
 
                     .ds44-container-large {
                         padding: 0;
+                        margin: 0;
 
                         & * {
                             grid-template-columns: repeat(1, 1fr);
@@ -481,10 +482,17 @@ main {
                         .ds44-innerBoxContainer {
 
                             .ds44-grid12-offset-1,
-                            .ds44-grid12-offset-2 {
+                            .ds44-grid12-offset-2{
                                 padding: 0;
                             }
                         }
+
+                        .ds44-negativeOffset-1,
+                        .ds44-negativeOffset-2 {
+                            padding: 0;
+                            margin:  0;
+                        }
+
 
                         .col {
                             padding: 0 !important;
@@ -831,7 +839,7 @@ main {
     orphans: 3; /* pas de ligne seule en bas */
     widows: 3; /* pas de ligne seule en haut */
   }
-  blockquote, ul, ol, table, tbody {
+  blockquote, ul, ol, table, tbody, .ds44-wsg-encadreContour {
     break-inside: avoid; /* pas de coupure dans ces élements */
   }
   h1, .h1-like,
