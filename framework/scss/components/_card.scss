@@ -91,7 +91,8 @@
 
     &:focus,
     &:hover,
-    &:active {
+    &:active,
+    &.active {
         box-shadow: $ds44-boxShadow;
 
         .ds44-cardArrow {

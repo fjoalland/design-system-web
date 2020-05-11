@@ -1,0 +1,51 @@
+<main role="main" id="content" class="ds44-mainResults">
+    <section class="ds44-container-large">
+        {% assign formId = 'recherche-facette' %}
+        {% capture ariaDescribedBy %}filter-by-{{ formId }}{% endcapture %}
+        {% capture fields %}
+        <div class="ds44-fieldContainer ds44-fg1">
+            {% include form/field/input/standard.html label="Champ standard" required="true" %}
+        </div>
+        <div class="ds44-fieldContainer ds44-fg1 ds44-fieldContainer--select">
+            {% include form/field/select/checkbox.html label="Select à cases" required="true" %}
+        </div>
+        <div class="ds44-fieldContainer ds44-fg1">
+            {% include form/field/input/autocomplete.html label="Champ texte libre" required="true" type="address" url="https://api-adresse.data.gouv.fr/search/?limit=5&citycode=44109" attributes='data-mode="free-text"' %}
+        </div>
+        {% endcapture %}
+        {% capture subfields %}
+        <div class="ds44-fieldContainer ds44-fg1 ds44-fieldContainer--select">
+            {% include form/field/select/checkbox.html label="Choix multiple" containerAttributes='data-auto-submit="true"' ariaDescribedBy=ariaDescribedBy %}
+        </div>
+        <div class="ds44-fieldContainer  ds44-fg1 ds44-fieldContainer--select">
+            {% include form/field/select/radio.html label="Choix unique" containerAttributes='data-auto-submit="true"' ariaDescribedBy=ariaDescribedBy %}
+        </div>
+        {% endcapture %}
+        {% include form/layout/recherche-facettes.html id=formId fields=fields subfields=subfields url=include.url %}
+    </section>
+    <section class="ds44-container-large">
+        <div class="ds44-flex-container ds44-results ds44-results--mapVisible ds44-results--empty">
+            <div class="ds44-listResults ds44-innerBoxContainer ds44-innerBoxContainer--list">
+                <div class="ds44-js-results-container">
+                    <div class="ds44-js-results-card" data-url="/json/search-card.json" aria-hidden="true"></div>
+                    <div class="ds44-js-results-list" data-display-mode="inline">
+                        <p id="ds44-results-new-search" class="h3-like mbs txtcenter center ds44--3xl-padding-t ds44--3xl-padding-b">
+                            <span aria-level="2" role="heading">Veuillez faire une recherche ci-dessus pour afficher des résultats.</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <button type="button" title="Masquer la carte" class="ds44-btnStd-showMap ds44-btnStd ds44-btn--invert ds44-js-toggle-map-view">
+                <span class="ds44-btnInnerText">Masquer la carte</span><i class="icon icon-map" aria-hidden="true"></i>
+            </button>
+            <div class="ds44-mapResults">
+                <div class="ds44-mapResults-container">
+                    <div class="ds44-js-map" {{ include.geoJsonAttributes }}></div>
+                    <button type="button" title="Masquer la carte" class="ds44-btnStd-showMap ds44-btnStd ds44-btn--invert ds44-js-toggle-map-view">
+                        <span class="ds44-btnInnerText">Masquer la carte</span><i class="icon icon-map" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

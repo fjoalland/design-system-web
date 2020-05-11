@@ -4,6 +4,8 @@ class ResultStandard {
         this.savedScrollTop = null;
 
         MiscEvent.addListener('search:update', this.fillList.bind(this));
+        MiscEvent.addListener('search:focus', this.resultFocus.bind(this));
+        MiscEvent.addListener('search:blur', this.resultBlur.bind(this));
         const listContainerElement = document.querySelector('.ds44-results .ds44-js-results-container .ds44-js-results-list');
         if (listContainerElement) {
             MiscEvent.addListener('click', this.showMore.bind(this), listContainerElement);
@@ -190,7 +192,7 @@ class ResultStandard {
             listContainerElement.appendChild(titleElement);
         }
         if (!evt.detail.nbResults) {
-            let titleElementHtml = MiscTranslate._('NO_RESULTS_FOR_SEARCH:') + ' ' + evt.detail.searchText + '. ' + MiscTranslate._('NO_RESULTS_NEW_SEARCH') + '.';
+            let titleElementHtml = MiscTranslate._('NO_RESULTS_FOR_SEARCH:') + ' ' + evt.detail.searchText + '.<br>' + MiscTranslate._('NO_RESULTS_NEW_SEARCH') + '.';
             titleElement.innerHTML = titleElementHtml;
             document.title = titleElementHtml;
             titleElement.setAttribute('tabindex', '-1');
@@ -249,7 +251,7 @@ class ResultStandard {
                 MiscEvent.addListener('focus', this.focus.bind(this), listLinkItemElement);
                 MiscEvent.addListener('blur', this.blur.bind(this), listLinkItemElement);
             }
-            if (containerElement.querySelector('.ds44-js-results-card')) {
+            if (listContainerElement.getAttribute('data-display-mode') === 'inline') {
                 MiscEvent.addListener('click', this.fillCard.bind(this), listItemElement);
             }
             listElement.appendChild(listItemElement);
@@ -308,10 +310,7 @@ class ResultStandard {
             return;
         }
 
-        const markerElement = document.querySelector('#search-marker-' + id);
-        if (markerElement) {
-            markerElement.classList.add('active');
-        }
+        MiscEvent.dispatch('search:focus', { 'id': id });
     }
 
     blur (evt = null) {
@@ -320,9 +319,36 @@ class ResultStandard {
             return;
         }
 
-        const markerElement = document.querySelector('#search-marker-' + id);
-        if (markerElement) {
-            markerElement.classList.remove('active');
+        MiscEvent.dispatch('search:blur', { 'id': id });
+    }
+
+    resultFocus (evt) {
+        if(
+            !evt ||
+            !evt.detail ||
+            !evt.detail.id
+        ) {
+            return;
+        }
+
+        const resultElement = document.querySelector('#search-result-' + evt.detail.id + ' .ds44-card');
+        if (resultElement) {
+            resultElement.classList.add('active');
+        }
+    }
+
+    resultBlur (evt) {
+        if(
+            !evt ||
+            !evt.detail ||
+            !evt.detail.id
+        ) {
+            return;
+        }
+
+        const resultElement = document.querySelector('#search-result-' + evt.detail.id + ' .ds44-card');
+        if (resultElement) {
+            resultElement.classList.remove('active');
         }
     }
 }
