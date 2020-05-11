@@ -343,7 +343,7 @@ main {
                 flex-wrap: wrap;
                 padding-bottom: $ds44-padding-xlarge;
 
-                li {
+                > li {
                     display: grid;
                     margin: $ds44-medium-vmargin;
                     width: calc(33.33% - 3rem);
@@ -445,7 +445,7 @@ main {
                         display: none;
                     }
 
-                    li {
+                    > li {
                         display: inherit;
                         width: calc(100% - 3rem);
                         max-width: calc(100% - 3rem);
