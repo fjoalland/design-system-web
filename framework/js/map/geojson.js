@@ -23,6 +23,7 @@ class MapGeojson extends MapAbstract {
         object.map.on('mouseleave', this.geojsonFillsId, this.blur.bind(this, objectIndex));
 
         object.isMapReady = true;
+        object.isGeojsonLoaded = true;
         if (object.newResults) {
             this.show(objectIndex);
         }
@@ -68,15 +69,13 @@ class MapGeojson extends MapAbstract {
     }
 
     show (objectIndex) {
+        this.showGeojson(objectIndex);
+    }
+
+    getGeojsonIds (objectIndex) {
         const object = this.objects[objectIndex];
 
-        // Remove existing geojson
-        if (!object.addUp) {
-            object.map.setFilter(this.geojsonLinesId, ['!has', 'name']);
-            object.map.setFilter(this.geojsonFillsId, ['!has', 'name']);
-        }
-
-        // Add new geojson
+        // Get geojson ids
         const geojsonIds = [];
         for (let resultIndex in object.newResults) {
             if (!object.newResults.hasOwnProperty(resultIndex)) {
@@ -91,24 +90,10 @@ class MapGeojson extends MapAbstract {
                 continue;
             }
 
-            geojsonIds.push(result.id)
+            geojsonIds.push(result.id);
         }
 
-        let filterParameters = [];
-        if (geojsonIds.length === 0) {
-            filterParameters = ['!has', 'name'];
-        } else {
-            filterParameters = [
-                'match',
-                ['get', 'name'],
-                geojsonIds,
-                true,
-                false
-            ];
-        }
-
-        object.map.setFilter(this.geojsonFillsId, filterParameters);
-        object.map.setFilter(this.geojsonLinesId, filterParameters);
+        return geojsonIds;
     }
 
     focus (objectIndex, evt) {
@@ -150,7 +135,7 @@ class MapGeojson extends MapAbstract {
 
             const features = object.map.querySourceFeatures(this.geojsonSourceId);
             for (let i = 0; i < features.length; i++) {
-                if(features[i].properties.name === evt.detail.id) {
+                if (features[i].properties.name === evt.detail.id) {
                     object.map.setFeatureState(
                         { source: this.geojsonSourceId, id: features[i].id },
                         { hover: true }
@@ -174,7 +159,7 @@ class MapGeojson extends MapAbstract {
 
             const features = object.map.querySourceFeatures(this.geojsonSourceId);
             for (let i = 0; i < features.length; i++) {
-                if(features[i].properties.name === evt.detail.id) {
+                if (features[i].properties.name === evt.detail.id) {
                     object.map.setFeatureState(
                         { source: this.geojsonSourceId, id: features[i].id },
                         { hover: false }

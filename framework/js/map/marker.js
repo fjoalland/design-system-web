@@ -153,6 +153,50 @@ class MapMarker extends MapAbstract {
                 }
             );
         }
+
+        if(
+            object.isGeojsonLoaded &&
+            object.mapElement.getAttribute('data-geojson-refine') === 'true'
+        ) {
+            this.showGeojson(objectIndex);
+        }
+    }
+
+    afterLoadGeojson (objectIndex) {
+        const object = this.objects[objectIndex];
+
+        object.isGeojsonLoaded = true;
+        if(object.mapElement.getAttribute('data-geojson-refine') === 'true') {
+            this.showGeojson(objectIndex);
+        }
+    }
+
+    getGeojsonIds(objectIndex) {
+        const object = this.objects[objectIndex];
+
+        const geojsonIds = [];
+        for (let resultIndex in object.newResults) {
+            if (!object.newResults.hasOwnProperty(resultIndex)) {
+                continue;
+            }
+
+            const result = object.newResults[resultIndex];
+            if (
+                !result.metadata ||
+                !result.metadata.lat ||
+                !result.metadata.long ||
+                !result.metadata.html_marker
+            ) {
+                continue;
+            }
+
+            // Get corresponding geojson
+            if(result.metadata.geojson_id) {
+                geojsonIds.push(result.metadata.geojson_id);
+            }
+        }
+
+        return geojsonIds;
     }
 
     focus (evt) {

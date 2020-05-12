@@ -8,6 +8,7 @@ class MapAbstract {
         this.objects = [];
         this.isMapLanguageLoaded = false;
         this.isMapLoaded = false;
+        this.isGeojsonLoaded = false;
         this.geojsonSourceId = 'geojson-source';
         this.geojsonFillsId = 'geojson-fills';
         this.geojsonLinesId = 'geojson-lines';
@@ -187,6 +188,42 @@ class MapAbstract {
 
     afterLoadGeojson (objectIndex) {
         // Abstract method
+    }
+
+    getGeojsonIds (objectIndex) {
+        // Abstract method
+    }
+
+    showGeojson (objectIndex,) {
+        const object = this.objects[objectIndex];
+
+        if (!object.isGeojsonLoaded) {
+            return;
+        }
+
+        // Remove existing geojson
+        if (!object.addUp) {
+            object.map.setFilter(this.geojsonLinesId, ['!has', 'name']);
+            object.map.setFilter(this.geojsonFillsId, ['!has', 'name']);
+        }
+
+        // Show current geojson
+        const geojsonIds = [...new Set(this.getGeojsonIds(objectIndex))];
+        let filterParameters = [];
+        if (geojsonIds.length === 0) {
+            filterParameters = ['!has', 'name'];
+        } else {
+            filterParameters = [
+                'match',
+                ['get', 'name'],
+                geojsonIds,
+                true,
+                false
+            ];
+        }
+
+        object.map.setFilter(this.geojsonFillsId, filterParameters);
+        object.map.setFilter(this.geojsonLinesId, filterParameters);
     }
 
     translateMap (objectIndex) {
