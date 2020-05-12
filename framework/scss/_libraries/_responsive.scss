@@ -407,6 +407,10 @@
     padding: 0 !important;
   }
 
+  .ds44-flex-tablette-center {
+    justify-content: center;
+  }
+
 }
 
 @media (max-width: $ds44-small - .0625) {
@@ -476,5 +480,5 @@
     .ds44-hide-smallScreens {
         display: none !important;
     }
-    
+
 }
