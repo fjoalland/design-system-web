@@ -1,0 +1,84 @@
+{
+    "nb-result": 7,
+    "max-result": 100,
+    "result": [{
+        "id": "c_1209916",
+        "value": "Blain",
+        "metadata": {
+            "url": "https://pp1-jplatform10.loire-atlantique.fr/44/enfance-familles/centre-de-planification-et-d-education-familiale-de-saint-nazaire/c_1209916",
+            "type": "FicheCanton",
+            "lat": "47.2746121",
+            "long": "-2.2153653000000304",
+            "html_list": "<section class=\"ds44-card ds44-js-card ds44-card--contact ds44-bgGray\"> <div class=\"ds44-card__section\"> <div class=\"ds44-innerBoxContainer\"> <h3 class=\"h4-like ds44-cardTitle\" id=\"6\"><a href=\"#\" class=\"ds44-card__globalLink\">Blain</a></h3> <hr class=\"mbs\" aria-hidden=\"true\"> <p class=\"ds44-docListElem ds44-mt-std\"><i aria-hidden=\"true\" class=\"icon icon-user ds44-docListIco\"></i> <strong>Conseiller départemental</strong><br>Marcel Verger <strong>Conseillère départemental</strong><br>Claire Tramier </p> </div> <i class=icon icon-arrow-right ds44-cardArrow aria-hidden=true></i> </div> </section>",
+            "html_marker": "<section class=\"ds44-card ds44-js-card ds44-card--contact ds44-bgGray\"> <div class=\"ds44-card__section\"> <div class=\"ds44-innerBoxContainer\"> <h3 class=\"h4-like ds44-cardTitle\" id=\"6\"><a href=\"#\" class=\"ds44-card__globalLink\">Blain</a></h3> <hr class=\"mbs\" aria-hidden=\"true\"> <p class=\"ds44-docListElem ds44-mt-std\"><i aria-hidden=\"true\" class=\"icon icon-user ds44-docListIco\"></i> <strong>Conseiller départemental</strong><br>Marcel Verger <strong>Conseillère départemental</strong><br>Claire Tramier </p> </div> <i class=icon icon-arrow-right ds44-cardArrow aria-hidden=true></i> </div> </section>"
+        }
+    }, {
+        "id": "c_1209513",
+        "value": "Canton 2",
+        "metadata": {
+            "url": "https://pp1-jplatform10.loire-atlantique.fr/44/enfance-familles/centre-de-planification-d-education-familiale-et-d-interruption-volontaire-de-grossesse/c_1209513",
+            "type": "FicheCanton",
+            "lat": "47.209478",
+            "long": "-1.5509117999999944",
+            "html_list": "<section class=\"ds44-card ds44-js-card ds44-card--contact ds44-bgGray\"> <div class=\"ds44-card__section\"> <div class=\"ds44-innerBoxContainer\"> <h3 class=\"h4-like ds44-cardTitle\" id=\"6\"><a href=\"#\" class=\"ds44-card__globalLink\">Canton 2</a></h3> <hr class=\"mbs\" aria-hidden=\"true\"> <p class=\"ds44-docListElem ds44-mt-std\"><i aria-hidden=\"true\" class=\"icon icon-user ds44-docListIco\"></i> <strong>Conseiller départemental</strong><br>Marcel Verger <strong>Conseillère départemental</strong><br>Claire Tramier </p> </div> <i class=icon icon-arrow-right ds44-cardArrow aria-hidden=true></i> </div> </section>",
+            "html_marker": "<section class=\"ds44-card ds44-js-card ds44-card--contact ds44-bgGray\"> <div class=\"ds44-card__section\"> <div class=\"ds44-innerBoxContainer\"> <h3 class=\"h4-like ds44-cardTitle\" id=\"6\"><a href=\"#\" class=\"ds44-card__globalLink\">Canton 2</a></h3> <hr class=\"mbs\" aria-hidden=\"true\"> <p class=\"ds44-docListElem ds44-mt-std\"><i aria-hidden=\"true\" class=\"icon icon-user ds44-docListIco\"></i> <strong>Conseiller départemental</strong><br>Marcel Verger <strong>Conseillère départemental</strong><br>Claire Tramier </p> </div> <i class=icon icon-arrow-right ds44-cardArrow aria-hidden=true></i> </div> </section>"
+        }
+    }, {
+        "id": "c_1209368",
+        "value": "Canton 3",
+        "metadata": {
+            "url": "https://pp1-jplatform10.loire-atlantique.fr/44/enfance-familles/centre-de-planification-et-d-education-familiale-du-centre-hospitalier-de-saint-nazaire/c_1209368",
+            "type": "FicheCanton",
+            "lat": "47.2617229",
+            "long": "-2.269935499999974",
+            "html_list": "<section class=\"ds44-card ds44-js-card ds44-card--contact ds44-bgGray\"> <div class=\"ds44-card__section\"> <div class=\"ds44-innerBoxContainer\"> <h3 class=\"h4-like ds44-cardTitle\" id=\"6\"><a href=\"#\" class=\"ds44-card__globalLink\">Canton 3</a></h3> <hr class=\"mbs\" aria-hidden=\"true\"> <p class=\"ds44-docListElem ds44-mt-std\"><i aria-hidden=\"true\" class=\"icon icon-user ds44-docListIco\"></i> <strong>Conseiller départemental</strong><br>Marcel Verger <strong>Conseillère départemental</strong><br>Claire Tramier </p> </div> <i class=icon icon-arrow-right ds44-cardArrow aria-hidden=true></i> </div> </section>",
+            "html_marker": "<section class=\"ds44-card ds44-js-card ds44-card--contact ds44-bgGray\"> <div class=\"ds44-card__section\"> <div class=\"ds44-innerBoxContainer\"> <h3 class=\"h4-like ds44-cardTitle\" id=\"6\"><a href=\"#\" class=\"ds44-card__globalLink\">Canton 3</a></h3> <hr class=\"mbs\" aria-hidden=\"true\"> <p class=\"ds44-docListElem ds44-mt-std\"><i aria-hidden=\"true\" class=\"icon icon-user ds44-docListIco\"></i> <strong>Conseiller départemental</strong><br>Marcel Verger <strong>Conseillère départemental</strong><br>Claire Tramier </p> </div> <i class=icon icon-arrow-right ds44-cardArrow aria-hidden=true></i> </div> </section>"
+        }
+    }, {
+        "id": "c_1209316",
+        "value": "4",
+        "metadata": {
+            "url": "https://pp1-jplatform10.loire-atlantique.fr/44/enfance-familles/centre-de-planification-et-d-education-familiale-de-nantes/c_1209316",
+            "type": "FicheCanton",
+            "lat": "47.2075685",
+            "long": "-1.5724043999999822",
+            "geojson_id": "t1_9427",
+            "html_list": "<section class=\"ds44-card ds44-js-card ds44-card--contact ds44-bgGray\"> <div class=\"ds44-card__section\"> <div class=\"ds44-innerBoxContainer\"> <h3 class=\"h4-like ds44-cardTitle\" id=\"6\"><a href=\"#\" class=\"ds44-card__globalLink\">Canton 4</a></h3> <hr class=\"mbs\" aria-hidden=\"true\"> <p class=\"ds44-docListElem ds44-mt-std\"><i aria-hidden=\"true\" class=\"icon icon-user ds44-docListIco\"></i> <strong>Conseiller départemental</strong><br>Marcel Verger <strong>Conseillère départemental</strong><br>Claire Tramier </p> </div> <i class=icon icon-arrow-right ds44-cardArrow aria-hidden=true></i> </div> </section>",
+            "html_marker": "<section class=\"ds44-card ds44-js-card ds44-card--contact ds44-bgGray\"> <div class=\"ds44-card__section\"> <div class=\"ds44-innerBoxContainer\"> <h3 class=\"h4-like ds44-cardTitle\" id=\"6\"><a href=\"#\" class=\"ds44-card__globalLink\">Canton 4</a></h3> <hr class=\"mbs\" aria-hidden=\"true\"> <p class=\"ds44-docListElem ds44-mt-std\"><i aria-hidden=\"true\" class=\"icon icon-user ds44-docListIco\"></i> <strong>Conseiller départemental</strong><br>Marcel Verger <strong>Conseillère départemental</strong><br>Claire Tramier </p> </div> <i class=icon icon-arrow-right ds44-cardArrow aria-hidden=true></i> </div> </section>"
+        }
+    }, {
+        "id": "c_1209282",
+        "value": "Canton 5",
+        "metadata": {
+            "url": "https://pp1-jplatform10.loire-atlantique.fr/44/enfance-familles/centre-de-planification-familiale-de-chateaubriant/c_1209282",
+            "type": "FicheCanton",
+            "lat": "47.7256635",
+            "long": "-1.3816624999999476",
+            "html_list": "<section class=\"ds44-card ds44-js-card ds44-card--contact ds44-bgGray\"> <div class=\"ds44-card__section\"> <div class=\"ds44-innerBoxContainer\"> <h3 class=\"h4-like ds44-cardTitle\" id=\"6\"><a href=\"#\" class=\"ds44-card__globalLink\">Canton 5</a></h3> <hr class=\"mbs\" aria-hidden=\"true\"> <p class=\"ds44-docListElem ds44-mt-std\"><i aria-hidden=\"true\" class=\"icon icon-user ds44-docListIco\"></i> <strong>Conseiller départemental</strong><br>Marcel Verger <strong>Conseillère départemental</strong><br>Claire Tramier </p> </div> <i class=icon icon-arrow-right ds44-cardArrow aria-hidden=true></i> </div> </section>",
+            "html_marker": "<section class=\"ds44-card ds44-js-card ds44-card--contact ds44-bgGray\"> <div class=\"ds44-card__section\"> <div class=\"ds44-innerBoxContainer\"> <h3 class=\"h4-like ds44-cardTitle\" id=\"6\"><a href=\"#\" class=\"ds44-card__globalLink\">Canton 5</a></h3> <hr class=\"mbs\" aria-hidden=\"true\"> <p class=\"ds44-docListElem ds44-mt-std\"><i aria-hidden=\"true\" class=\"icon icon-user ds44-docListIco\"></i> <strong>Conseiller départemental</strong><br>Marcel Verger <strong>Conseillère départemental</strong><br>Claire Tramier </p> </div> <i class=icon icon-arrow-right ds44-cardArrow aria-hidden=true></i> </div> </section>"
+        }
+    }, {
+        "id": "c_1209258",
+        "value": "Canton 6",
+        "metadata": {
+            "url": "https://pp1-jplatform10.loire-atlantique.fr/44/enfance-familles/centre-de-planification-et-d-education-familiale-d-ancenis/c_1209258",
+            "type": "FicheCanton",
+            "lat": "47.3742888",
+            "long": "-1.1739482000000407",
+            "html_list": "<section class=\"ds44-card ds44-js-card ds44-card--contact ds44-bgGray\"> <div class=\"ds44-card__section\"> <div class=\"ds44-innerBoxContainer\"> <h3 class=\"h4-like ds44-cardTitle\" id=\"6\"><a href=\"#\" class=\"ds44-card__globalLink\">Canton 6</a></h3> <hr class=\"mbs\" aria-hidden=\"true\"> <p class=\"ds44-docListElem ds44-mt-std\"><i aria-hidden=\"true\" class=\"icon icon-user ds44-docListIco\"></i> <strong>Conseiller départemental</strong><br>Marcel Verger <strong>Conseillère départemental</strong><br>Claire Tramier </p> </div> <i class=icon icon-arrow-right ds44-cardArrow aria-hidden=true></i> </div> </section>",
+            "html_marker": "<section class=\"ds44-card ds44-js-card ds44-card--contact ds44-bgGray\"> <div class=\"ds44-card__section\"> <div class=\"ds44-innerBoxContainer\"> <h3 class=\"h4-like ds44-cardTitle\" id=\"6\"><a href=\"#\" class=\"ds44-card__globalLink\">Canton 6</a></h3> <hr class=\"mbs\" aria-hidden=\"true\"> <p class=\"ds44-docListElem ds44-mt-std\"><i aria-hidden=\"true\" class=\"icon icon-user ds44-docListIco\"></i> <strong>Conseiller départemental</strong><br>Marcel Verger <strong>Conseillère départemental</strong><br>Claire Tramier </p> </div> <i class=icon icon-arrow-right ds44-cardArrow aria-hidden=true></i> </div> </section>"
+        }
+    }, {
+        "id": "c_1209213",
+        "value": "Canton 7",
+        "metadata": {
+            "url": "https://pp1-jplatform10.loire-atlantique.fr/44/enfance-familles/centre-de-planification-et-d-education-familiale/c_1209213",
+            "type": "FicheCanton",
+            "lat": "47.2501607",
+            "long": "-1.5193242000000282",
+            "geojson_id": "t1_9427",
+            "html_list": "<section class=\"ds44-card ds44-js-card ds44-card--contact ds44-bgGray\"> <div class=\"ds44-card__section\"> <div class=\"ds44-innerBoxContainer\"> <h3 class=\"h4-like ds44-cardTitle\" id=\"6\"><a href=\"#\" class=\"ds44-card__globalLink\">Canton 7</a></h3> <hr class=\"mbs\" aria-hidden=\"true\"> <p class=\"ds44-docListElem ds44-mt-std\"><i aria-hidden=\"true\" class=\"icon icon-user ds44-docListIco\"></i> <strong>Conseiller départemental</strong><br>Marcel Verger <strong>Conseillère départemental</strong><br>Claire Tramier </p> </div> <i class=icon icon-arrow-right ds44-cardArrow aria-hidden=true></i> </div> </section>",
+            "html_marker": "<section class=\"ds44-card ds44-js-card ds44-card--contact ds44-bgGray\"> <div class=\"ds44-card__section\"> <div class=\"ds44-innerBoxContainer\"> <h3 class=\"h4-like ds44-cardTitle\" id=\"6\"><a href=\"#\" class=\"ds44-card__globalLink\">Canton 7</a></h3> <hr class=\"mbs\" aria-hidden=\"true\"> <p class=\"ds44-docListElem ds44-mt-std\"><i aria-hidden=\"true\" class=\"icon icon-user ds44-docListIco\"></i> <strong>Conseiller départemental</strong><br>Marcel Verger <strong>Conseillère départemental</strong><br>Claire Tramier </p> </div> <i class=icon icon-arrow-right ds44-cardArrow aria-hidden=true></i> </div> </section>"
+        }
+    }]
+}
