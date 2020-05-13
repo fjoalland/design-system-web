@@ -579,15 +579,21 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
                             continue;
                         }
 
-                        if (listElement.contains(object.selectListElement.querySelector('[name="' + additionalDataKey + '"], [data-name="' + additionalDataKey + '"]'))) {
+                        const additionalElement = object.selectListElement.querySelector('[name="' + additionalDataKey + '"], [data-name="' + additionalDataKey + '"]');
+                        if (listElement.contains(additionalElement)) {
                             let value = {};
                             value[additionalDataKey] = additionalData[additionalDataKey];
                             values.push(value);
 
+                            let labelText = value[additionalDataKey].text;
+                            const additionalLabelElement = MiscDom.getPreviousSibling(additionalElement, 'label');
+                            if(additionalLabelElement) {
+                                labelText = additionalLabelElement.innerText.replace(/\*$/, '')
+                            }
                             if (text.length > 0) {
-                                text.push(value[additionalDataKey].text.toLowerCase() + ' ' + this.formatValue(value[additionalDataKey].value));
+                                text.push(labelText.toLowerCase() + ' ' + this.formatValue(value[additionalDataKey].value));
                             } else {
-                                text.push(value[additionalDataKey].text + ' ' + this.formatValue(value[additionalDataKey].value));
+                                text.push(labelText + ' ' + this.formatValue(value[additionalDataKey].value));
                             }
 
                             isFound = true;

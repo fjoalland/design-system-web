@@ -249,8 +249,8 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
         )
     }
 
-    checkValidity (objectIndex) {
-        if (!super.checkValidity(objectIndex)) {
+    isValid (objectIndex) {
+        if (!super.isValid(objectIndex)) {
             return false;
         }
 
@@ -259,14 +259,10 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
             !data &&
             !this.isEmpty(objectIndex)
         ) {
-            this.invalid(objectIndex);
-
             return false;
         }
 
         if (!this.checkChronology(objectIndex)) {
-            this.invalid(objectIndex);
-
             return false;
         }
 
@@ -285,7 +281,7 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
         }
 
         const previousDateValueElement = MiscDom.getPreviousSibling(
-            document.querySelector('#' + object.textElement.getAttribute('data-previous-date-id')),
+            document.querySelector('#' + object.textElement.getAttribute('data-previous-date-id')).parentNode,
             'input[type="hidden"]'
         );
         if (

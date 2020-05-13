@@ -24,7 +24,7 @@ class FormLayoutGlobal {
         MiscEvent.addListener('submit', this.submit.bind(this, objectIndex), formElement);
         MiscEvent.addListener('form:validation', this.validation.bind(this, objectIndex), formElement);
         MiscEvent.addListener('form:notification', this.notification.bind(this, objectIndex), formElement);
-        MiscEvent.addListener('form:isNotEmpty', this.autoLoad.bind(this, objectIndex), formElement);
+        MiscEvent.addListener('load', this.autoLoad.bind(this, objectIndex), window);
 
         // Init
         formElement.setAttribute('novalidate', 'true');
@@ -34,8 +34,8 @@ class FormLayoutGlobal {
         const object = this.objects[objectIndex];
 
         if (
-            object.isAutoLoaded == false &&
-            object.formElement.getAttribute('data-auto-load') === 'true'
+            object.formElement.getAttribute('data-auto-load') === 'true' &&
+            object.isAutoLoaded == false
         ) {
             object.isAutoLoaded = true;
 
@@ -43,9 +43,10 @@ class FormLayoutGlobal {
             window.setTimeout(
                 ((objectIndex) => {
                     const object = this.objects[objectIndex];
-                    MiscEvent.dispatch('submit', null, object.formElement);
+                    MiscEvent.dispatch('search:initialize');
+                    MiscEvent.dispatch('submit', { 'dryRun': true }, object.formElement);
                 }).bind(this, objectIndex),
-                1000
+                100
             );
         }
     }
@@ -101,7 +102,10 @@ class FormLayoutGlobal {
                 evt.stopPropagation();
                 evt.preventDefault();
 
-                MiscEvent.dispatch('form:validate', { 'formElement': object.formElement });
+                MiscEvent.dispatch('form:validate', {
+                    'formElement': object.formElement,
+                    'dryRun': ((evt.detail || { 'dryRun': false }).dryRun || false)
+                });
 
                 return false;
             }

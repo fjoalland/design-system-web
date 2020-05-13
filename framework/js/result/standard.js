@@ -3,12 +3,21 @@ class ResultStandard {
         this.currentId = null;
         this.savedScrollTop = null;
 
+        MiscEvent.addListener('search:initialize', this.initialize.bind(this));
         MiscEvent.addListener('search:update', this.fillList.bind(this));
         MiscEvent.addListener('search:focus', this.resultFocus.bind(this));
         MiscEvent.addListener('search:blur', this.resultBlur.bind(this));
         const listContainerElement = document.querySelector('.ds44-results .ds44-js-results-container .ds44-js-results-list');
         if (listContainerElement) {
             MiscEvent.addListener('click', this.showMore.bind(this), listContainerElement);
+        }
+    }
+
+    initialize () {
+        // Show initial message
+        let newSearchElement = document.querySelector('#ds44-results-new-search');
+        if (newSearchElement) {
+            newSearchElement.style.display = 'block';
         }
     }
 

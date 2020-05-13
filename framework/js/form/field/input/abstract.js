@@ -145,34 +145,33 @@ class FormFieldInputAbstract extends FormFieldAbstract {
         return object.textElement.value;
     }
 
-    isValid (inputElement) {
-        let isValid = true;
-        const validityStates = inputElement.validity;
-        for (let key in validityStates) {
-            if (!validityStates.hasOwnProperty(key)) {
-                continue;
-            }
-
-            if (
-                key !== 'valid' &&
-                key !== 'valueMissing' &&
-                validityStates[key]
-            ) {
-                isValid = false;
-                break;
-            }
-        }
-
-        return isValid;
-    }
-
     isEmpty (objectIndex) {
         const object = this.objects[objectIndex];
 
         let isEmpty = !this.getText(objectIndex);
-        object.inputElements.forEach((inputElement) => {
-            isEmpty = (isEmpty && this.isValid(inputElement));
-        });
+        if (isEmpty) {
+            object.inputElements.forEach((inputElement) => {
+                let isValid = true;
+                const validityStates = inputElement.validity;
+                for (let key in validityStates) {
+                    if (!validityStates.hasOwnProperty(key)) {
+                        continue;
+                    }
+
+                    if (
+                        key !== 'valid' &&
+                        key !== 'valueMissing' &&
+                        validityStates[key]
+                    ) {
+                        isValid = false;
+                        break;
+                    }
+                }
+
+                isEmpty = (isEmpty && isValid);
+            });
+        }
+
         return isEmpty;
     }
 

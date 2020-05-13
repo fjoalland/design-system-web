@@ -108,13 +108,6 @@ class FormFieldAbstract {
         this.setData(objectIndex, data);
         this.enter(objectIndex);
         this.showNotEmpty(objectIndex);
-
-        const object = this.objects[objectIndex];
-        const formElement = object.containerElement.closest('form');
-        if (formElement) {
-            // Tell the parent form that one of its fields has a value at startup
-            MiscEvent.dispatch('form:isNotEmpty', null, formElement);
-        }
     }
 
     setData (objectIndex, data = null) {
@@ -323,11 +316,17 @@ class FormFieldAbstract {
                 continue;
             }
 
-            if (this.checkValidity(objectIndex) === false) {
-                isValid = false;
-            } else if (
-                evt.detail.formElement.classList.contains('ds44-listSelect') ||
-                !this.objects[objectIndex].containerElement.closest('.ds44-select-list_elem_child')
+            if (evt.detail.dryRun === true) {
+                isValid = this.isValid(objectIndex);
+            } else {
+                isValid = this.checkValidity(objectIndex);
+            }
+            if (
+                isValid &&
+                (
+                    evt.detail.formElement.classList.contains('ds44-listSelect') ||
+                    !this.objects[objectIndex].containerElement.closest('.ds44-select-list_elem_child')
+                )
             ) {
                 // Don't take into consideration data from sub elements
                 // The data is already injected in the parent value
@@ -372,9 +371,7 @@ class FormFieldAbstract {
         return true;
     }
 
-    checkValidity (objectIndex) {
-        this.removeInvalid(objectIndex);
-
+    isValid (objectIndex) {
         const object = this.objects[objectIndex];
         if (
             (
@@ -384,6 +381,16 @@ class FormFieldAbstract {
             ) ||
             !this.checkFormat(objectIndex)
         ) {
+            return false;
+        }
+
+        return true;
+    }
+
+    checkValidity (objectIndex) {
+        this.removeInvalid(objectIndex);
+
+        if (!this.isValid(objectIndex)) {
             this.invalid(objectIndex);
 
             return false;

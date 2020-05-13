@@ -24,6 +24,7 @@ class FormLayoutSearch {
         // Bind events
         MiscEvent.addListener('form:submit', this.submit.bind(this, objectIndex), object.formElement);
         MiscEvent.addListener('search:refresh', this.search.bind(this, objectIndex));
+        MiscEvent.addListener('load', this.autoLoad.bind(this, objectIndex), window);
         object.containerElement
             .querySelectorAll('.ds44-js-toggle-search-view')
             .forEach((searchToggleViewElement) => {
@@ -32,6 +33,14 @@ class FormLayoutSearch {
 
         // Initialization
         this.loadFromDom(objectIndex);
+    }
+
+    autoLoad (objectIndex) {
+        const object = this.objects[objectIndex];
+
+        if (object.formElement.getAttribute('data-auto-load') !== 'true') {
+            MiscEvent.dispatch('search:initialize');
+        }
     }
 
     submit (objectIndex, evt) {

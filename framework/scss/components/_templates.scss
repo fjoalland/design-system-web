@@ -313,6 +313,10 @@ main {
                 position: relative;
                 background-color: $ds44-background-base;
                 z-index: 1;
+
+                #ds44-results-new-search {
+                    display: none;
+                }
             }
 
             &.ds44-js-show-card .ds44-js-results-card {
