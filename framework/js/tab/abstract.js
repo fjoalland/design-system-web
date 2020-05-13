@@ -76,6 +76,9 @@ class TabAbstract {
     }
 
     changeTab (tabHandleElement, tabPanel) {
+        const tabsElement = tabPanel.parentElement;
+        tabsElement.style.height = tabsElement.offsetHeight + 'px';
+
         // Hide others
         tabHandleElement
             .closest('.js-tabs')
@@ -107,6 +110,9 @@ class TabAbstract {
     showTabCallback (tabHandleElement, tabPanel) {
         tabPanel.style.opacity = 1;
         tabPanel.style.display = 'block';
+
+        const tabsElement = tabPanel.parentElement;
+        tabsElement.style.height = null;
     }
 
     hideTab (tabHandleElement, tabPanel) {
@@ -125,7 +131,11 @@ class TabAbstract {
         }
 
         const tabHandleHref = this.getHrefFromElement(evt.currentTarget.firstElementChild);
-        const currentTabHandle = document.querySelector('.js-tablist__link.ds44-tabs__linkSelected[href="' + tabHandleHref + '"]');
+        const currentTabHandle = document.querySelector(
+            '.js-tablist__link.ds44-tabs__linkSelected' + tabHandleHref + ', ' +
+            '.js-tablist__link.ds44-tabs__linkSelected[href="' + tabHandleHref + '"], ' +
+            '.js-tablist__link.ds44-tabs__linkSelected[data-href="' + tabHandleHref + '"]'
+        );
         if (!currentTabHandle) {
             return;
         }
@@ -145,7 +155,7 @@ class TabAbstract {
         if (evt.currentTarget.classList.contains('js-tablist__link')) {
             // Change
             this.change(evt);
-        } else if (evt.currentTarget.classList.contains('ds44-keyboard-show')) {
+        } else if (evt.currentTarget.closest('.ds44-keyboard-show')) {
             // Back
             this.back(evt);
         }
