@@ -257,6 +257,7 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
                 elementAutoCompleterListItem.classList.add('ds44-autocomp-list_elem');
                 elementAutoCompleterListItem.setAttribute('role', 'option');
                 elementAutoCompleterListItem.setAttribute('data-text', results[key].value);
+                elementAutoCompleterListItem.setAttribute('title', results[key].value);
                 if (object.mode === this.FREE_TEXT_MODE) {
                     elementAutoCompleterListItem.setAttribute('data-value', results[key].value);
                 } else {
@@ -338,16 +339,6 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
             object.containerElement.contains(evt.relatedTarget)
         ) {
             return;
-        }
-
-        if (
-            object.mode === this.SELECT_ONLY_MODE &&
-            !this.getData(objectIndex)
-        ) {
-            object.textElement.value = null;
-            object.currentElementValue = null;
-            object.textElement.removeAttribute('value');
-            this.blur(objectIndex);
         }
 
         this.hide(objectIndex);
@@ -518,18 +509,9 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
         if (selectedListItem) {
             selectedListItem.classList.remove('selected_option');
             selectedListItem.removeAttribute('id');
-            selectedListItem.removeAttribute('aria-selected');
-            selectedListItem.removeAttribute('aria-pressed');
         }
         currentItem.classList.add('selected_option');
         currentItem.setAttribute('id', 'selected_option_' + object.id);
-        currentItem.setAttribute('aria-selected', 'true');
-        if (
-            evt &&
-            evt.currentTarget.tagName.toLowerCase() === 'button'
-        ) {
-            currentItem.setAttribute('aria-pressed', 'true');
-        }
         object.textElement.setAttribute('aria-activedescendant', 'selected_option_' + object.id);
 
         if (this[currentItem.getAttribute('data-value')]) {

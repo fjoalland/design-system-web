@@ -95,6 +95,8 @@ input[type="file"] {
 
     &.ds44-moveLabel .ds44-labelTypePlaceholder,
     &.ds44-moveLabel .ds44-labelTypePlaceholderLarge {
+        height: auto;
+
         span {
             font-size: 1.3rem; // 13px instead of 14px
             color: $ds44-color-dark-text;
