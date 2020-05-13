@@ -40,6 +40,9 @@
 
 // paddings
 
+.ds44-noPdg {
+  padding: 0 !important ;
+}
 .ds44--m-padding {
   padding          : $ds44-padding-medium; // 1rem
 }
