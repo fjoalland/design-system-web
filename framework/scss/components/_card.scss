@@ -91,7 +91,8 @@
 
     &:focus,
     &:hover,
-    &:active {
+    &:active,
+    &.active {
         box-shadow: $ds44-boxShadow;
 
         .ds44-cardArrow {
@@ -165,6 +166,7 @@ a.ds44-card {
 .ds44-card__section {
     padding: $ds44-padding-medium $ds44-padding-box;
     height: 100%;
+    position: relative;
 }
 
 .ds44-card__globalLink {
@@ -209,7 +211,7 @@ a.ds44-card {
 // Horizontal card specific styles
 
 .ds44-card__section--horizontal {
-    padding: $ds44-padding-small $ds44-padding-xlarge;
+    padding: $ds44-padding-large $ds44-padding-xlarge;
 
     @media (max-width: $ds44-small - .0625) {
         padding-right: $ds44-padding-box;
@@ -295,6 +297,11 @@ a.ds44-card {
         font-size: 1.2rem;
         line-height: 1;
     }
+
+    &.ds44-docListElem {
+        padding-left: 2rem;
+        margin-bottom: .5rem;
+    }
 }
 
 .ds44-card--horizontal {
@@ -314,5 +321,16 @@ a.ds44-card {
     .ds44-tiny-reducedFont .ds44-card__globalLink {
         font-size: smaller;
     }
+
+}
+
+/* Media Queries Print / Impression */
+@media print {
+
+    .ds44-card__dateContainer {
+        min-height: 5rem;
+        min-width: 5rem;
+    }
+
 
 }

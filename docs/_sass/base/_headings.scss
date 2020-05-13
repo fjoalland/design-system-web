@@ -27,6 +27,20 @@ h2 {
 	letter-spacing: -0.02rem;
 	margin-bottom: 0.5rem;
 	word-wrap: break-word;
+    margin-top: 6rem;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+h2::before {
+    content: '';
+    width: 3rem;
+    height: 0.3rem;
+    display: block;
+    background-color: #99E6D1;
+    position: absolute;
+    top: -0.75rem;
+    left: 0;
 }
 
 /**
@@ -38,4 +52,33 @@ h3 {
 	letter-spacing: -0.02rem;
 	margin-bottom: 0.3rem;
 	word-wrap: break-word;
+}
+
+
+/**
+ * Heading Style DS CD44
+ */
+h1.c-page-header__title,
+.c-text-passage h2,
+h2,
+.c-text-passage h3,
+.c-text-passage h4,
+.c-text-passage h5 {
+    font-family: 'Blogger Sans', Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: #000000 !important;
+}
+
+.c-text-passage h2::before {
+    background-color: #99E6D1 !important;
+}
+
+h2.c-card__title::before {
+    content: none !important;
+}
+
+.c-text-passage h3,
+.c-text-passage h4,
+.c-text-passage h5 {
+    margin: 3rem 0 1rem !important ;
 }

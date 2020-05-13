@@ -4,8 +4,6 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
 
         this.lastInputValue = null;
         this.calendar = null;
-        this.invalidFormatMessage = 'Date invalide. Merci de respecter le format d’exemple.';
-        this.invalidChronologyMessage = 'La date ne doit pas être inférieure à celle du champ précédent.';
 
         MiscEvent.addListener('keyUp:escape', this.escape.bind(this));
     }
@@ -251,8 +249,8 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
         )
     }
 
-    checkValidity (objectIndex) {
-        if (!super.checkValidity(objectIndex)) {
+    isValid (objectIndex) {
+        if (!super.isValid(objectIndex)) {
             return false;
         }
 
@@ -261,14 +259,10 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
             !data &&
             !this.isEmpty(objectIndex)
         ) {
-            this.invalid(objectIndex);
-
             return false;
         }
 
         if (!this.checkChronology(objectIndex)) {
-            this.invalid(objectIndex);
-
             return false;
         }
 
@@ -287,7 +281,7 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
         }
 
         const previousDateValueElement = MiscDom.getPreviousSibling(
-            document.querySelector('#' + object.textElement.getAttribute('data-previous-date-id')),
+            document.querySelector('#' + object.textElement.getAttribute('data-previous-date-id')).parentNode,
             'input[type="hidden"]'
         );
         if (
@@ -338,12 +332,7 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
     }
 
     selectDate (objectIndex, data) {
-        const object = this.objects[objectIndex];
-        const selectedData = new Date(data.date);
-        object.inputElements[0].value = (selectedData.getDate() + '').padStart(2, '0');
-        object.inputElements[1].value = ((selectedData.getMonth() + 1) + '').padStart(2, '0');
-        object.inputElements[2].value = (selectedData.getFullYear() + '').padStart(2, '0');
-
+        this.setDate(objectIndex, data.date);
         this.focusOnTextElement(objectIndex);
         this.record(objectIndex);
         this.showNotEmpty(objectIndex);
@@ -352,16 +341,40 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
         window.setTimeout(this.hideCalendar.bind(this), 200);
     }
 
+    showNotEmpty (objectIndex) {
+        super.showNotEmpty(objectIndex);
+
+        const object = this.objects[objectIndex];
+        object.textElement.classList.add('show');
+    }
+
+    setDate (objectIndex, date) {
+        const object = this.objects[objectIndex];
+        const selectedData = new Date(date);
+        object.inputElements[0].value = (selectedData.getDate() + '').padStart(2, '0');
+        object.inputElements[1].value = ((selectedData.getMonth() + 1) + '').padStart(2, '0');
+        object.inputElements[2].value = (selectedData.getFullYear() + '').padStart(2, '0');
+    }
+
     getErrorMessage (objectIndex) {
         if (!this.checkChronology(objectIndex)) {
-            return this.invalidChronologyMessage;
+            return this.formatErrorMessage(objectIndex, 'FIELD_VALID_CHRONOLOGY_ERROR_MESSAGE');
         }
 
         if (this.getText(objectIndex)) {
-            return this.invalidFormatMessage;
+            return this.formatErrorMessage(objectIndex, 'FIELD_VALID_DATE_FORMAT_ERROR_MESSAGE');
         }
 
-        return this.errorMessage;
+        return this.formatErrorMessage(objectIndex);
+    }
+
+    setData (objectIndex, data = null) {
+        super.setData(objectIndex, data);
+
+        if (data && data.value) {
+            this.setDate(objectIndex, data.value);
+            this.focus(objectIndex);
+        }
     }
 }
 

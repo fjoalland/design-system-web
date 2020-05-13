@@ -1,5 +1,10 @@
 class MiscRequest {
     static send (url, successCallback, errorCallback, parameters = null, method = 'GET') {
+        if (parameters && method.toLowerCase() === 'get') {
+            url += (url.includes('?') ? '&' : '?') + MiscUrl.jsonToUrl(parameters).toString();
+            parameters = null;
+        }
+
         const xhr = new XMLHttpRequest();
         xhr.open(method.toUpperCase(), url, true);
         xhr.onreadystatechange = () => {
@@ -19,17 +24,12 @@ class MiscRequest {
                 this.response(xhr, errorCallback);
             }
         };
-        if (
-            parameters &&
-            typeof parameters === 'object'
-        ) {
-            if (method.toLowerCase() === 'get') {
-                console.log('Parameters will not follow through on a GET method request')
-            }
+
+        if (parameters) {
             xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
             xhr.send(JSON.stringify(parameters));
         } else {
-            xhr.send(parameters);
+            xhr.send();
         }
 
         return xhr;
@@ -37,17 +37,12 @@ class MiscRequest {
 
     static response (xhr, callback) {
         if (xhr && callback) {
-            if (!xhr.getResponseHeader('content-type')) {
-                callback(xhr.response);
+            try {
+                const responseJson = JSON.parse(xhr.response);
+                callback(responseJson);
 
                 return;
-            }
-
-            const responseHeaders = xhr.getResponseHeader('content-type').toLowerCase().split(';');
-            if (responseHeaders.indexOf('application/json') !== -1) {
-                callback(JSON.parse(xhr.response));
-
-                return;
+            } catch (ex) {
             }
 
             callback(xhr.response);

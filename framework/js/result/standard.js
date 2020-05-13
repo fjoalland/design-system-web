@@ -3,7 +3,22 @@ class ResultStandard {
         this.currentId = null;
         this.savedScrollTop = null;
 
+        MiscEvent.addListener('search:initialize', this.initialize.bind(this));
         MiscEvent.addListener('search:update', this.fillList.bind(this));
+        MiscEvent.addListener('search:focus', this.resultFocus.bind(this));
+        MiscEvent.addListener('search:blur', this.resultBlur.bind(this));
+        const listContainerElement = document.querySelector('.ds44-results .ds44-js-results-container .ds44-js-results-list');
+        if (listContainerElement) {
+            MiscEvent.addListener('click', this.showMore.bind(this), listContainerElement);
+        }
+    }
+
+    initialize () {
+        // Show initial message
+        let newSearchElement = document.querySelector('#ds44-results-new-search');
+        if (newSearchElement) {
+            newSearchElement.style.display = 'block';
+        }
     }
 
     fillCard (evt) {
@@ -114,6 +129,22 @@ class ResultStandard {
         }
     }
 
+    showMore (evt) {
+        if (
+            !evt ||
+            !evt.target ||
+            !evt.target.closest('.ds44-js-search-button')
+        ) {
+            return;
+        }
+
+        MiscEvent.dispatch(
+            'search:refresh',
+            {
+                'next': true
+            });
+    }
+
     fillList (evt) {
         const containerElement = document.querySelector('.ds44-results .ds44-js-results-container');
         if (!containerElement) {
@@ -125,42 +156,85 @@ class ResultStandard {
             return;
         }
 
-        // Manage legend
-        const legendElement = listContainerElement.querySelector('.ds44-textLegend');
-        if (legendElement) {
-            if (evt.detail.nbResults > evt.detail.maxResults) {
-                legendElement.classList.remove('hidden');
-            } else {
-                legendElement.classList.add('hidden');
-            }
+        // Nb display results
+        const nbDisplayedResults = (evt.detail.pageIndex + 1) * evt.detail.nbResultsPerPage;
+
+        // Show hide empty results
+        const parentElement = document.querySelector('.ds44-results');
+        if (nbDisplayedResults > 0) {
+            parentElement.classList.remove('ds44-results--empty');
+        } else {
+            parentElement.classList.add('ds44-results--empty');
         }
 
-        // Manage title
+        // Remove initial message
         let newSearchElement = listContainerElement.querySelector('#ds44-results-new-search');
         if (newSearchElement) {
             newSearchElement.remove();
         }
+
+        // Manage legend
+        let legendElement = listContainerElement.querySelector('.ds44-textLegend');
+        if (
+            legendElement &&
+            evt.detail.nbResults <= evt.detail.maxNbResults
+        ) {
+            legendElement.remove();
+        } else if (
+            !legendElement &&
+            evt.detail.nbResults > evt.detail.maxNbResults
+        ) {
+            legendElement = document.createElement('p');
+            legendElement.className = 'ds44-textLegend mbs';
+            legendElement.innerText = MiscTranslate._('RESULTS_MAX_RESULTS', { maxNbResults: evt.detail.maxNbResults })
+            listContainerElement.appendChild(legendElement);
+        }
+
+        // Manage title
+        let focusElement = null;
         let titleElement = listContainerElement.querySelector('.h3-like');
         if (!titleElement) {
-            titleElement = document.createElement('p');
+            titleElement = document.createElement('div');
             titleElement.className = 'h3-like mbs';
             titleElement.setAttribute('role', 'heading');
             titleElement.setAttribute('aria-level', '2');
             listContainerElement.appendChild(titleElement);
         }
-        titleElement.innerText = evt.detail.nbResults + ' résultat' + (evt.detail.nbResults > 1 ? 's' : '');
+        if (!evt.detail.nbResults) {
+            let titleElementHtml = MiscTranslate._('NO_RESULTS_FOR_SEARCH:') + ' ' + evt.detail.searchText + '.<br>' + MiscTranslate._('NO_RESULTS_NEW_SEARCH') + '.';
+            titleElement.innerHTML = titleElementHtml;
+            document.title = titleElementHtml;
+            titleElement.setAttribute('tabindex', '-1');
+            focusElement = titleElement;
+        } else {
+            let titleElementHtml = evt.detail.nbResults;
+            if (evt.detail.nbResults > 1) {
+                titleElementHtml += ' ' + MiscTranslate._('RESULTS');
+            } else {
+                titleElementHtml += ' ' + MiscTranslate._('RESULT');
+            }
+            let accessibleSentence = titleElementHtml + ' ' + MiscTranslate._('NB_RESULTS_FOR_SEARCH:') + ' ' + evt.detail.searchText;
+            titleElement.innerHTML = titleElementHtml + '<p class="visually-hidden" tabindex="-1">' + accessibleSentence + '</p>';
+            document.title = accessibleSentence;
+            titleElement.removeAttribute('tabindex');
+            focusElement = titleElement.querySelector('.visually-hidden')
+        }
 
         // Remove existing results
         let listElement = listContainerElement.querySelector('.ds44-list');
-        if (listElement) {
+        if (listElement && !evt.detail.addUp) {
             listElement.remove();
+            listElement = null;
         }
-        listElement = document.createElement('ul');
-        listElement.className = 'ds44-list ds44-list--results ds44-flex-container';
-        listContainerElement.appendChild(listElement);
+        if (!listElement) {
+            listElement = document.createElement('ul');
+            listElement.className = 'ds44-list ds44-list--results ds44-flex-container';
+            listContainerElement.appendChild(listElement);
+        }
 
         // Add new results
-        const results = evt.detail.results;
+        let firstResultElement = null;
+        const results = (evt.detail.addUp ? evt.detail.newResults : evt.detail.results);
         for (let resultIndex in results) {
             if (!results.hasOwnProperty(resultIndex)) {
                 continue;
@@ -186,13 +260,57 @@ class ResultStandard {
                 MiscEvent.addListener('focus', this.focus.bind(this), listLinkItemElement);
                 MiscEvent.addListener('blur', this.blur.bind(this), listLinkItemElement);
             }
-            if (containerElement.querySelector('.ds44-js-results-card')) {
+            if (listContainerElement.getAttribute('data-display-mode') === 'inline') {
                 MiscEvent.addListener('click', this.fillCard.bind(this), listItemElement);
             }
             listElement.appendChild(listItemElement);
+
+            if (!firstResultElement) {
+                firstResultElement = listItemElement;
+            }
+        }
+
+        // Add pager
+        let pagerElement = listContainerElement.querySelector('.ds44-js-search-pager');
+        if (
+            pagerElement &&
+            (
+                !evt.detail.addUp ||
+                nbDisplayedResults >= evt.detail.nbResults
+            )
+        ) {
+            pagerElement.remove();
+            pagerElement = null;
+        }
+
+        if (nbDisplayedResults < evt.detail.nbResults) {
+            if (!pagerElement) {
+                pagerElement = document.createElement('div');
+                pagerElement.className = 'txtcenter center ds44--xl-padding-b ds44-js-search-pager';
+                listContainerElement.appendChild(pagerElement);
+                let pagerTitleElement = document.createElement('p');
+                pagerTitleElement.setAttribute('id', 'idNbResults');
+                pagerElement.appendChild(pagerTitleElement);
+                let pagerButtonElement = document.createElement('button');
+                pagerButtonElement.className = 'ds44-btnStd ds44-btn--invert ds44-js-search-button';
+                pagerButtonElement.setAttribute('aria-describedby', 'idNbResults');
+                pagerButtonElement.innerHTML = '<span class="ds44-btnInnerText">' + MiscTranslate._('MORE_RESULTS') + '</span><i class="icon icon-plus" aria-hidden="true"></i>';
+                pagerElement.appendChild(pagerButtonElement);
+            }
+
+            let pagerTitleElement = pagerElement.querySelector('p');
+            pagerTitleElement.innerText = nbDisplayedResults + ' ' + MiscTranslate._('SEARCH_NB_RESULTS_OUT_OF') + ' ' + evt.detail.nbResults;
+
+            let pagerButtonElement = pagerElement.querySelector('button');
+            pagerButtonElement.setAttribute('title', MiscTranslate._('MORE_SEARCH_RESULTS:') + evt.detail.searchText);
         }
 
         this.showList();
+
+        if (focusElement) {
+            MiscEvent.dispatch('loader:setFocus', { 'focusedElement': focusElement });
+            MiscAccessibility.setFocus(focusElement);
+        }
     }
 
     focus (evt = null) {
@@ -201,10 +319,7 @@ class ResultStandard {
             return;
         }
 
-        const markerElement = document.querySelector('#search-marker-' + id);
-        if (markerElement) {
-            markerElement.classList.add('active');
-        }
+        MiscEvent.dispatch('search:focus', { 'id': id });
     }
 
     blur (evt = null) {
@@ -213,9 +328,36 @@ class ResultStandard {
             return;
         }
 
-        const markerElement = document.querySelector('#search-marker-' + id);
-        if (markerElement) {
-            markerElement.classList.remove('active');
+        MiscEvent.dispatch('search:blur', { 'id': id });
+    }
+
+    resultFocus (evt) {
+        if(
+            !evt ||
+            !evt.detail ||
+            !evt.detail.id
+        ) {
+            return;
+        }
+
+        const resultElement = document.querySelector('#search-result-' + evt.detail.id + ' .ds44-card');
+        if (resultElement) {
+            resultElement.classList.add('active');
+        }
+    }
+
+    resultBlur (evt) {
+        if(
+            !evt ||
+            !evt.detail ||
+            !evt.detail.id
+        ) {
+            return;
+        }
+
+        const resultElement = document.querySelector('#search-result-' + evt.detail.id + ' .ds44-card');
+        if (resultElement) {
+            resultElement.classList.remove('active');
         }
     }
 }

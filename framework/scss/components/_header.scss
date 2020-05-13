@@ -61,7 +61,7 @@
     opacity: 1;
     transition: visibility $ds44-timing-standard ease, opacity $ds44-timing-standard ease, margin-top $ds44-timing-standard ease;
 
-    &.hidden {
+    &.collapsed {
         margin-top: -100px;
         opacity: 0;
         visibility: hidden;
@@ -132,7 +132,7 @@
         .ds44-btnIcoText--maxi {
             display: flex;
             flex-direction: column-reverse;
-            justify-content: flex-start;
+            justify-content: space-evenly;
             position: relative;
             margin: 0 0 0 1rem;
             min-width: 0;
@@ -241,11 +241,35 @@
 
 @media (max-width: $ds44-tiny - .0625) {
 
-  .ds44-logoContainer {
-
-      img {
-          width: 100%;
-      }
+    .ds44-logoContainer .mdph-logo--tablet img {
+        width: 100%;
     }
+
+}
+
+
+
+/* Media Queries Print / Impression */
+@media print {
+
+  main {
+    padding: 0;
+  }
+
+  .ds44-header {
+    position: inherit !important;
+    margin-top: 0 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+
+    .ds44-colLeft {
+      text-align: center;
+      display: block !important ;
+    }
+    .ds44-colRight {
+      display: none !important;
+    }
+
+  }
 
 }

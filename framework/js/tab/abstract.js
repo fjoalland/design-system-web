@@ -76,6 +76,9 @@ class TabAbstract {
     }
 
     changeTab (tabHandleElement, tabPanel) {
+        const tabsElement = tabPanel.parentElement;
+        tabsElement.style.height = tabsElement.offsetHeight + 'px';
+
         // Hide others
         tabHandleElement
             .closest('.js-tabs')
@@ -107,6 +110,9 @@ class TabAbstract {
     showTabCallback (tabHandleElement, tabPanel) {
         tabPanel.style.opacity = 1;
         tabPanel.style.display = 'block';
+
+        const tabsElement = tabPanel.parentElement;
+        tabsElement.style.height = null;
     }
 
     hideTab (tabHandleElement, tabPanel) {
@@ -125,27 +131,17 @@ class TabAbstract {
         }
 
         const tabHandleHref = this.getHrefFromElement(evt.currentTarget.firstElementChild);
-        const currentTabHandle = document.querySelector('.js-tablist__link.ds44-tabs__linkSelected[href="' + tabHandleHref + '"]');
+        const currentTabHandle = document.querySelector(
+            '.js-tablist__link.ds44-tabs__linkSelected' + tabHandleHref + ', ' +
+            '.js-tablist__link.ds44-tabs__linkSelected[href="' + tabHandleHref + '"], ' +
+            '.js-tablist__link.ds44-tabs__linkSelected[data-href="' + tabHandleHref + '"]'
+        );
         if (!currentTabHandle) {
             return;
         }
 
-        let headerHeight = 0;
-        let header = document.querySelector('header .ds44-header');
-        if (header) {
-            let wasHidden = false;
-            if (header.classList.contains('hidden')) {
-                wasHidden = true;
-                header.classList.remove('hidden')
-            }
-            headerHeight = header.offsetHeight;
-            if (wasHidden) {
-                header.classList.add('hidden');
-            }
-        }
-
         MiscAccessibility.setFocus(currentTabHandle);
-        window.scrollTo(0, MiscUtils.getPositionY(currentTabHandle) - headerHeight)
+        window.scrollTo(0, MiscUtils.getPositionY(currentTabHandle) - MiscDom.getHeaderHeight(true))
     }
 
     move (evt) {
@@ -159,7 +155,7 @@ class TabAbstract {
         if (evt.currentTarget.classList.contains('js-tablist__link')) {
             // Change
             this.change(evt);
-        } else if (evt.currentTarget.classList.contains('ds44-keyboard-show')) {
+        } else if (evt.currentTarget.closest('.ds44-keyboard-show')) {
             // Back
             this.back(evt);
         }

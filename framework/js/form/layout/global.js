@@ -14,7 +14,8 @@ class FormLayoutGlobal {
             'id': MiscUtils.generateId(),
             'formElement': formElement,
             'hasBeenChecked': false,
-            'validationCategories': MiscForm.getValidationCategories()
+            'validationCategories': MiscForm.getValidationCategories(),
+            'isAutoLoaded': false
         };
         this.objects.push(object);
         const objectIndex = (this.objects.length - 1);
@@ -23,9 +24,31 @@ class FormLayoutGlobal {
         MiscEvent.addListener('submit', this.submit.bind(this, objectIndex), formElement);
         MiscEvent.addListener('form:validation', this.validation.bind(this, objectIndex), formElement);
         MiscEvent.addListener('form:notification', this.notification.bind(this, objectIndex), formElement);
+        MiscEvent.addListener('load', this.autoLoad.bind(this, objectIndex), window);
 
         // Init
         formElement.setAttribute('novalidate', 'true');
+    }
+
+    autoLoad (objectIndex) {
+        const object = this.objects[objectIndex];
+
+        if (
+            object.formElement.getAttribute('data-auto-load') === 'true' &&
+            object.isAutoLoaded == false
+        ) {
+            object.isAutoLoaded = true;
+
+            // Wait for the fields to be initialized
+            window.setTimeout(
+                ((objectIndex) => {
+                    const object = this.objects[objectIndex];
+                    MiscEvent.dispatch('search:initialize');
+                    MiscEvent.dispatch('submit', { 'dryRun': true }, object.formElement);
+                }).bind(this, objectIndex),
+                100
+            );
+        }
     }
 
     validation (objectIndex, evt) {
@@ -79,7 +102,10 @@ class FormLayoutGlobal {
                 evt.stopPropagation();
                 evt.preventDefault();
 
-                MiscEvent.dispatch('form:validate', {'formElement': object.formElement});
+                MiscEvent.dispatch('form:validate', {
+                    'formElement': object.formElement,
+                    'dryRun': ((evt.detail || { 'dryRun': false }).dryRun || false)
+                });
 
                 return false;
             }
@@ -117,12 +143,32 @@ class FormLayoutGlobal {
                 formattedData[dataKey] = dataValue;
             }
 
+            // Add technical hidden fields
+            object.formElement
+                .querySelectorAll('input[type="hidden"][name][data-technical-field]')
+                .forEach((hiddenInputElement) => {
+                    formattedData[hiddenInputElement.getAttribute('name')] = {
+                        'value': hiddenInputElement.value
+                    };
+                });
+
             // Save city and adresse in local storage
-            if(formattedData['commune']) {
-                window.sessionStorage.setItem('city', JSON.stringify(formattedData['commune']));
-            }
-            if(formattedData['adresse']) {
-                window.sessionStorage.setItem('address', JSON.stringify(formattedData['adresse']));
+            const fieldParameters = JSON.parse(window.sessionStorage.getItem('fields') || '{}');
+            ['commune', 'adresse'].forEach((key) => {
+                if (formattedData[key]) {
+                    fieldParameters[key] = formattedData[key];
+                }
+            });
+            window.sessionStorage.setItem('fields', JSON.stringify(fieldParameters));
+
+            // Statistics
+            if (object.formElement.getAttribute('data-statistic')) {
+                MiscEvent.dispatch(
+                    'statistic:gtag:event',
+                    {
+                        'statistic': JSON.parse(object.formElement.getAttribute('data-statistic')),
+                        'data': formattedData
+                    });
             }
 
             if (object.formElement.getAttribute('data-is-ajax') === 'true') {
@@ -138,9 +184,22 @@ class FormLayoutGlobal {
                 return;
             }
 
+            // Regular submission
+            let hasFile = false;
+            object.formElement
+                .querySelectorAll('[name][type="file"]')
+                .forEach((inputFileElement) => {
+                    hasFile = true;
+                    inputFileElement.setAttribute('name', inputFileElement.getAttribute('name') + '[value]');
+                });
+            if (hasFile) {
+                object.formElement.setAttribute('method', 'post');
+                object.formElement.setAttribute('enctype', 'multipart/form-data');
+            }
+
             // Remove name from all elements not to interfere with the next step
             object.formElement
-                .querySelectorAll('[name]')
+                .querySelectorAll('[name]:not([type="file"])')
                 .forEach((element) => {
                     element.removeAttribute('name');
                 });
@@ -156,6 +215,8 @@ class FormLayoutGlobal {
             }
             object.formElement.submit();
         } catch (ex) {
+            console.log(ex);
+
             evt.stopPropagation();
             evt.preventDefault();
 

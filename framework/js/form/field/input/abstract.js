@@ -8,7 +8,7 @@ class FormFieldInputAbstract extends FormFieldAbstract {
         object.textElement = element;
         object.valueElement = element;
         object.inputElements = [element];
-        object.labelElement = MiscDom.getPreviousSibling(element, 'span.ds44-labelTypePlaceholder');
+        object.labelElement = MiscDom.getPreviousSibling(element, 'label');
         object.resetButtonElement = MiscDom.getNextSibling(element, '.ds44-reset');
     }
 
@@ -127,7 +127,7 @@ class FormFieldInputAbstract extends FormFieldAbstract {
         const object = this.objects[objectIndex];
         const extendedData = {};
         extendedData[object.name] = {
-            'text': object.labelElement.innerText.replace(/\*$/, '')
+            'text': object.valueElement.value
         };
 
         return MiscUtils.merge(data, extendedData);
@@ -145,34 +145,33 @@ class FormFieldInputAbstract extends FormFieldAbstract {
         return object.textElement.value;
     }
 
-    isValid (inputElement) {
-        let isValid = true;
-        const validityStates = inputElement.validity;
-        for (let key in validityStates) {
-            if (!validityStates.hasOwnProperty(key)) {
-                continue;
-            }
-
-            if (
-                key !== 'valid' &&
-                key !== 'valueMissing' &&
-                validityStates[key]
-            ) {
-                isValid = false;
-                break;
-            }
-        }
-
-        return isValid;
-    }
-
     isEmpty (objectIndex) {
         const object = this.objects[objectIndex];
 
         let isEmpty = !this.getText(objectIndex);
-        object.inputElements.forEach((inputElement) => {
-            isEmpty = (isEmpty && this.isValid(inputElement));
-        });
+        if (isEmpty) {
+            object.inputElements.forEach((inputElement) => {
+                let isValid = true;
+                const validityStates = inputElement.validity;
+                for (let key in validityStates) {
+                    if (!validityStates.hasOwnProperty(key)) {
+                        continue;
+                    }
+
+                    if (
+                        key !== 'valid' &&
+                        key !== 'valueMissing' &&
+                        validityStates[key]
+                    ) {
+                        isValid = false;
+                        break;
+                    }
+                }
+
+                isEmpty = (isEmpty && isValid);
+            });
+        }
+
         return isEmpty;
     }
 
@@ -200,16 +199,80 @@ class FormFieldInputAbstract extends FormFieldAbstract {
         this.quit(objectIndex);
     }
 
-    removeInvalid (objectIndex) {
+    getErrorMessage (objectIndex) {
         const object = this.objects[objectIndex];
         if (!object.textElement) {
-            return;
+            return this.formatErrorMessage(objectIndex);
         }
 
-        let errorElement = object.containerElement.querySelector(':scope > .ds44-errorMsg-container');
-        if (errorElement) {
-            errorElement.innerHTML = '';
-            errorElement.classList.add('hidden');
+        const data = this.getData(objectIndex);
+        const autocomplete = object.textElement.getAttribute('autocomplete');
+        if (!data || !autocomplete) {
+            return this.formatErrorMessage(objectIndex);
+        }
+
+        if (
+            autocomplete === 'email' &&
+            !MiscForm.isEmail(data[object.name].value)
+        ) {
+            return this.formatErrorMessage(objectIndex, 'FIELD_VALID_EMAIL_MESSAGE');
+        }
+        if (
+            autocomplete === 'tel' &&
+            !MiscForm.isPhone(data[object.name].value)
+        ) {
+            return this.formatErrorMessage(objectIndex, 'FIELD_VALID_PHONE_MESSAGE');
+        }
+        if (
+            autocomplete === 'postal-code' &&
+            !MiscForm.isPostcode(data[object.name].value)
+        ) {
+            return this.formatErrorMessage(objectIndex, 'FIELD_VALID_POSTCODE_MESSAGE');
+        }
+
+        return this.formatErrorMessage(objectIndex);
+    }
+
+    checkFormat (objectIndex) {
+        const object = this.objects[objectIndex];
+        if (!object.textElement) {
+            return true;
+        }
+
+        const data = this.getData(objectIndex);
+        const autocomplete = object.textElement.getAttribute('autocomplete');
+        if (!data || !autocomplete) {
+            return true;
+        }
+
+        if (
+            autocomplete === 'email' &&
+            !MiscForm.isEmail(data[object.name].value)
+        ) {
+            return false;
+        }
+        if (
+            autocomplete === 'tel' &&
+            !MiscForm.isPhone(data[object.name].value)
+        ) {
+            return false;
+        }
+        if (
+            autocomplete === 'postal-code' &&
+            !MiscForm.isPostcode(data[object.name].value)
+        ) {
+            return false;
+        }
+
+        return true;
+    }
+
+    removeInvalid (objectIndex) {
+        super.removeInvalid(objectIndex);
+
+        const object = this.objects[objectIndex];
+        if (object.textElement) {
+            object.textElement.classList.remove('ds44-error');
         }
 
         object.inputElements.forEach((inputElement) => {
@@ -221,8 +284,6 @@ class FormFieldInputAbstract extends FormFieldAbstract {
             }
             inputElement.removeAttribute('aria-invalid');
         });
-        object.textElement.classList.remove('ds44-error');
-
     }
 
     invalid (objectIndex) {

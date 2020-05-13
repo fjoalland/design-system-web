@@ -63,6 +63,11 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
             MiscEvent.addListener('keyUp:arrowdown', this.nextOption.bind(this, objectIndex));
             MiscEvent.addListener('focusout', this.focusOut.bind(this, objectIndex), object.containerElement);
 
+            const locationElement = object.containerElement.querySelector('.ds44-location');
+            if (locationElement) {
+                MiscEvent.addListener('click', this.aroundMe.bind(this, objectIndex), locationElement);
+            }
+
             object.containerElement
                 .querySelectorAll('.ds44-autocomp-buttons button')
                 .forEach((buttonElement) => {
@@ -199,7 +204,10 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
             return;
         }
 
-        const url = object.textElement.getAttribute('data-url');
+        let url = object.textElement.getAttribute('data-url');
+        if (url.includes('$parentValue')) {
+            url = url.replace('$parentValue', object.parentValue);
+        }
         MiscRequest.send(
             url + (url.includes('?') ? '&' : '?') + 'q=' + encodeURIComponent(object.textElement.value),
             this.autoCompleteSuccess.bind(this, objectIndex),
@@ -224,6 +232,9 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
             return;
         }
 
+        // Translate results
+        results = this.translate(objectIndex, results);
+
         object.textElement.removeAttribute('aria-activedescendant');
         Array.from(object.autoCompleterListElement.children).map((childElement) => {
             childElement.remove();
@@ -233,7 +244,7 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
             // No result
             let elementAutoCompleterListItem = document.createElement('li');
             elementAutoCompleterListItem.classList.add('ds44-autocomp-list_no_elem');
-            elementAutoCompleterListItem.innerHTML = 'Aucun résultat trouvé';
+            elementAutoCompleterListItem.innerHTML = MiscTranslate._('NO_RESULTS_FOUND');
             object.autoCompleterListElement.appendChild(elementAutoCompleterListItem);
         } else {
             // Some result
@@ -262,6 +273,36 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
         }
 
         this.show(objectIndex);
+    }
+
+    translate (objectIndex, results) {
+        const object = this.objects[objectIndex];
+        if (!object.textElement) {
+            return results;
+        }
+
+        if (object.textElement.classList.contains('ds44-js-field-address')) {
+            // Address from BAN
+            const formatedResults = {};
+
+            if (results.features) {
+                for (let i = 0; i < results.features.length; i++) {
+                    const feature = results.features[i];
+
+                    formatedResults[feature.properties.id] = {
+                        value: feature.properties.label,
+                        metadata: {
+                            latitude: feature.geometry.coordinates[1],
+                            longitude: feature.geometry.coordinates[0]
+                        }
+                    }
+                }
+            }
+
+            results = formatedResults;
+        }
+
+        return results;
     }
 
     focus (objectIndex) {
@@ -516,31 +557,58 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
         );
 
         this.focusOnTextElement(objectIndex);
-
         this.hide(objectIndex);
-
         this.checkValidity(objectIndex);
     }
 
     aroundMe (objectIndex, currentItem) {
+        if (currentItem instanceof Event) {
+            // Only accept dom elements
+            currentItem = null;
+        }
+
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(this.aroundMeSuccess.bind(this, objectIndex, currentItem));
 
             return;
         }
 
-        this.selectRecord(objectIndex, currentItem);
+        if (currentItem) {
+            this.selectRecord(objectIndex, currentItem);
+        }
     }
 
     aroundMeSuccess (objectIndex, currentItem, position) {
-        currentItem.setAttribute(
-            'data-metadata',
-            JSON.stringify({
-                'latitude': position.coords.latitude,
-                'longitude': position.coords.longitude
-            })
+        if (currentItem) {
+            // Is an option in the autocomplete list
+            currentItem.setAttribute(
+                'data-metadata',
+                JSON.stringify({
+                    'latitude': position.coords.latitude,
+                    'longitude': position.coords.longitude
+                })
+            );
+            this.selectRecord(objectIndex, currentItem);
+
+            return;
+        }
+
+        // Is outside the autocomplete list, set the data straight away
+        this.setData(
+            objectIndex,
+            {
+                'value': 'aroundMe',
+                'text': MiscTranslate._('AROUND_ME'),
+                'metadata': {
+                    'latitude': position.coords.latitude,
+                    'longitude': position.coords.longitude
+                }
+            }
         );
-        this.selectRecord(objectIndex, currentItem);
+
+        this.focusOnTextElement(objectIndex);
+        this.hide(objectIndex);
+        this.checkValidity(objectIndex);
     }
 }
 

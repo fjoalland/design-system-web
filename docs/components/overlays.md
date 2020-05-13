@@ -25,6 +25,12 @@ variations:
 - title: Sites et applis
   description: Modale colonnée type "Sites et applis" qui reprend la structure présente dans le menu
   pattern: overlays/modale-sites-applis.html
+- title: Cookies
+  description: Modale simple qui ne peut se fermer qu'en sélectionnant un choix parmi les boutons proposés
+  pattern: overlays/modale-cookies.html
+- title: Newsletter
+  description: Modale simple qui propose l'abonnement aux magazines et/ou aux newsletters.
+  pattern: overlays/modale-newsletter.html
 ---
 
 
@@ -34,7 +40,7 @@ Les overlays, aussi appelés "pop-ins" ou "modales", sont des boites de dialogue
 
 ## Notes d'intégration
 
-Attention, le code des modales doit être dans tous les cas placé en bas de page dans le DOM, après le footer. 
+Attention, le code des modales doit être dans tous les cas placé en bas de page dans le DOM, après le footer.
 
 
 

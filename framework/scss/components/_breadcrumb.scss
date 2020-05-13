@@ -50,3 +50,12 @@
     }
 
 }
+
+/* Media Queries Print / Impression */
+@media print {
+
+  .ds44-breadcrumb {
+      display: none;
+  }
+
+}

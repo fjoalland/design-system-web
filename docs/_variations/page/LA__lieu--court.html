@@ -2,10 +2,7 @@
 layout: pattern
 ---
 
-{% include header/inc-header.html
-  logo='<picture class="ds44-logo"><img src="../../assets/images/logo-loire-atlantique.svg" alt="Retour à l&apos;accueil du site loire-atlantique.fr"></picture>'
-  variante1='<button type="button" class="ds44-btnIcoText--maxi ds44--xl-padding" id="open-search"><span class="ds44-btnInnerText">Rechercher</span><i class="icon icon-magnifier icon--large" aria-hidden="true"></i></button>'
-%}
+{% include header/inc-header.html %}
 
 <main role="main" id="content">
 
@@ -65,9 +62,9 @@ layout: pattern
                 <li><strong>Plage d’intervention :</strong> 7 jours /7</li>
                 <li><strong>Type d’aide :</strong> APA, PCH</li>
                 <li><strong>Modalités de paiement :</strong> CESU accepté, virement, chèque, prélèvement</li>
-                <li><strong>Modes d’intervention :</strong> Mandataire, Prestataire</li>
+                <li><strong>Modes d’intervention :</strong> {% include composants-transverses/inc-tooltips.html txt="Mandataire" idTooltips="tooltip-case_1" %}, Prestataire</li>
                 <li><strong>Mode de tarification :</strong> tarif libre</li>
-              </ul>              
+              </ul>
             </div>
           </div>
 				</div>

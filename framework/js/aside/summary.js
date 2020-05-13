@@ -13,8 +13,11 @@ class AsideSummary {
         this.borderTop = 20;
         this.isMoving = false;
         this.maximumTop = null;
+        this.lastScrollTop = 0;
+        this.scrollDirection = 'down';
 
         this.resize();
+        this.calculateChapter();
 
         MiscEvent.addListener('scroll', this.scroll.bind(this), window);
         MiscEvent.addListener('resize', this.resize.bind(this), window);
@@ -41,8 +44,15 @@ class AsideSummary {
 
     scroll () {
         let calculateChapter = false;
-        const scrollTop = this.getScrollTop();
+        const scrollTop = MiscUtils.getScrollTop();
         const top = this.getTop();
+
+        if (this.lastScrollTop > scrollTop) {
+            this.scrollDirection = 'up';
+        } else {
+            this.scrollDirection = 'down';
+        }
+        this.lastScrollTop = scrollTop;
 
         if (scrollTop > MiscUtils.getPositionY(this.containerElement) - top) {
             if (!this.isMoving) {
@@ -68,30 +78,37 @@ class AsideSummary {
         }
 
         if (calculateChapter) {
-            // Highlight sections
-            let activeAElement = null;
-            const headerHeight = document.querySelector('.ds44-header').offsetHeight;
-            this.summaryElement
-                .querySelectorAll('.ds44-list--puces a')
-                .forEach((aElement) => {
-                    aElement.classList.remove('active');
-                    aElement.removeAttribute('aria-location');
+            this.calculateChapter();
+        }
+    }
 
-                    const sectionId = aElement.getAttribute('href').replace(/^#/, '');
-                    const sectionElement = document.querySelector('#' + sectionId);
-                    if (sectionElement) {
-                        const sectionElementStyle = sectionElement.currentStyle || window.getComputedStyle(sectionElement);
-                        const startTop = MiscUtils.getPositionY(sectionElement) + parseInt(sectionElementStyle.marginTop, 10);
-                        const stopTop = startTop + sectionElement.offsetHeight + parseInt(sectionElementStyle.marginBottom, 10);
-                        if ((scrollTop + headerHeight) >= startTop && (scrollTop + headerHeight) <= stopTop) {
-                            activeAElement = aElement
-                        }
+    calculateChapter () {
+        // Highlight sections
+        let activeAElement = null;
+        const cursorPosition = this.getCursorPosition();
+        this.summaryElement
+            .querySelectorAll('.ds44-list--puces a')
+            .forEach((aElement) => {
+                aElement.classList.remove('active');
+                aElement.removeAttribute('aria-location');
+                if (!activeAElement) {
+                    activeAElement = aElement
+                }
+
+                const sectionId = aElement.getAttribute('href').replace(/^#/, '');
+                const sectionElement = document.querySelector('#' + sectionId);
+                if (sectionElement) {
+                    const sectionElementStyle = sectionElement.currentStyle || window.getComputedStyle(sectionElement);
+                    const startTop = MiscUtils.getPositionY(sectionElement) + parseInt(sectionElementStyle.marginTop, 10);
+                    const stopTop = startTop + sectionElement.offsetHeight + parseInt(sectionElementStyle.marginBottom, 10);
+                    if (cursorPosition >= startTop) {
+                        activeAElement = aElement
                     }
-                });
-            if (activeAElement) {
-                activeAElement.classList.add('active');
-                activeAElement.setAttribute('aria-location', 'true');
-            }
+                }
+            });
+        if (activeAElement) {
+            activeAElement.classList.add('active');
+            activeAElement.setAttribute('aria-location', 'true');
         }
     }
 
@@ -104,20 +121,24 @@ class AsideSummary {
         this.scroll();
     }
 
-    getScrollTop () {
-        return (document.documentElement.scrollTop || document.body.scrollTop);
+    getCursorPosition () {
+        if (this.scrollDirection === 'up') {
+            return MiscUtils.getScrollTop() + MiscDom.getHeaderHeight(true);
+        }
+
+        return MiscUtils.getScrollTop() + window.screen.height;
     }
 
     getTop () {
-        if (this.getScrollTop() > this.getMaximumTop()) {
+        if (MiscUtils.getScrollTop() > this.getMaximumTop()) {
             return this.containerElement.offsetHeight - this.summaryElement.offsetHeight;
         }
 
-        return Math.min(this.getMaximumTop(), this.borderTop + document.querySelector('.ds44-header').offsetHeight);
+        return Math.min(this.getMaximumTop(), this.borderTop + MiscDom.getHeaderHeight());
     }
 
     getMaximumTop () {
-        return this.maximumTop - (this.borderTop + document.querySelector('.ds44-header').offsetHeight);
+        return this.maximumTop - (this.borderTop + MiscDom.getHeaderHeight());
     }
 
     goTo (evt) {
@@ -130,20 +151,10 @@ class AsideSummary {
         const sectionId = aElement.getAttribute('href').replace(/^#/, '');
         const sectionElement = document.querySelector('#' + sectionId);
         if (sectionElement) {
-            const headerElement = document.querySelector('.ds44-header');
-            let headerHeight = null;
-            if (headerElement.classList.contains('hidden')) {
-                headerElement.classList.remove('hidden');
-                headerHeight = headerElement.offsetHeight;
-                headerElement.classList.add('hidden');
-            } else {
-                headerHeight = headerElement.offsetHeight;
-            }
-
             const scrollTo = MiscUtils.getPositionY(sectionElement);
-            if (this.getScrollTop() > scrollTo) {
+            if (MiscUtils.getScrollTop() > scrollTo) {
                 // Going up, the header will show
-                MiscUtils.scrollTo(scrollTo - headerHeight);
+                MiscUtils.scrollTo(scrollTo - MiscDom.getHeaderHeight(true));
             } else {
                 // Going up, the header will hide
                 MiscUtils.scrollTo(scrollTo);
@@ -172,12 +183,8 @@ class AsideSummary {
         MiscEvent.dispatch('resize', null, window);
         this.menu.classList.add('show');
         MiscAccessibility.show(this.menu);
-
         MiscAccessibility.setFocus(closeButton);
-        MiscAccessibility.addFocusLoop(
-            this.menu,
-            this.menu.getAttribute('aria-label')
-        );
+        MiscAccessibility.addFocusLoop(this.menu);
 
         MiscEvent.dispatch('menu:show', { 'element': this.menu });
     }

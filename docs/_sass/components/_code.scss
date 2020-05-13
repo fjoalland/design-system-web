@@ -19,6 +19,9 @@ code[class*="language-"], pre[class*="language-"] {
 
 .preview + .pattern-code pre {
     border-top: 0;
+    height: 70vh;
+    max-height: 800px;
+    overflow-y: auto;
 }
 
 //
@@ -27,7 +30,7 @@ code[class*="language-"], pre[class*="language-"] {
 .preview-links {
     position: absolute;
     top: 2px;
-    right: 8px;
+    right: 25px;
     z-index: 2;
 }
 

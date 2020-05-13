@@ -13,6 +13,9 @@ variations:
 - title: Pied de page MDPH
   description:
   pattern: footer/footer-MDPH.html
+- title: Pied de page Archive
+  description:
+  pattern: footer/footer-archive.html
 ---
 
 ## Usage
@@ -35,5 +38,3 @@ Ensuite, on crée le colonnage. Ici, 3 colonnes : celle du logo et celles pour l
 Des modifiers sont utilisés pour caler les différents éléments (`ds44-mb3` -> margin-bottom: 3rem, etc.).
 
 La seconde ligne est un flex-container qui répartit les liens et laisse la place à un colonnage double en mode mobile.
-
-## FAQ

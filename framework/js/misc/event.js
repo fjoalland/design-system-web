@@ -1,6 +1,10 @@
 class MiscEvent {
     static dispatch (type, data, target = document) {
-        target.dispatchEvent(new CustomEvent(type, (data ? {'detail': data} : null)));
+        const options = { cancelable: true };
+        if (data) {
+            options.detail = data;
+        }
+        target.dispatchEvent(new CustomEvent(type, options));
     }
 
     static addListener (type, callback, target = document) {

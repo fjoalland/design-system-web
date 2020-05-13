@@ -380,19 +380,16 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
             return;
         }
 
-        const url = object.textElement.getAttribute('data-url');
+        let url = object.textElement.getAttribute('data-url');
+        if (url.includes('$parentValue')) {
+            url = url.replace('$parentValue', object.parentValue);
+        }
         let urlParameters = null;
         if (parameters) {
-            const parameter = parameters[Object.keys(parameters)[0]];
-            if (parameter.value) {
-                urlParameters = object.valueElement.value;
-            } else if (typeof parameter === 'object') {
-                urlParameters = parameter[0];
-            } else {
-                urlParameters = parameter;
+            const objectData = parameters[Object.keys(parameters)[0]];
+            if (objectData) {
+                urlParameters = (url.includes('?') ? '&' : '?') + 'q=' + encodeURIComponent(objectData.value);
             }
-
-            urlParameters = (url.includes('?') ? '&' : '?') + 'q=' + encodeURIComponent(urlParameters);
         }
 
         MiscRequest.send(
@@ -435,7 +432,7 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
             // No result
             let elementSelectListItem = document.createElement('li');
             elementSelectListItem.classList.add('ds44-select-list_no_elem');
-            elementSelectListItem.innerHTML = 'Aucun résultat trouvé';
+            elementSelectListItem.innerHTML = MiscTranslate._('NO_RESULTS_FOUND');
             subSelectListElement.appendChild(elementSelectListItem);
         } else {
             // Some result
@@ -582,15 +579,21 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
                             continue;
                         }
 
-                        if (listElement.contains(object.selectListElement.querySelector('[name="' + additionalDataKey + '"], [data-name="' + additionalDataKey + '"]'))) {
+                        const additionalElement = object.selectListElement.querySelector('[name="' + additionalDataKey + '"], [data-name="' + additionalDataKey + '"]');
+                        if (listElement.contains(additionalElement)) {
                             let value = {};
                             value[additionalDataKey] = additionalData[additionalDataKey];
                             values.push(value);
 
-                            if(text.length > 0) {
-                                text.push(value[additionalDataKey].text.toLowerCase() + ' ' + this.formatValue(value[additionalDataKey].value));
+                            let labelText = value[additionalDataKey].text;
+                            const additionalLabelElement = MiscDom.getPreviousSibling(additionalElement, 'label');
+                            if(additionalLabelElement) {
+                                labelText = additionalLabelElement.innerText.replace(/\*$/, '')
+                            }
+                            if (text.length > 0) {
+                                text.push(labelText.toLowerCase() + ' ' + this.formatValue(value[additionalDataKey].value));
                             } else {
-                                text.push(value[additionalDataKey].text + ' ' + this.formatValue(value[additionalDataKey].value));
+                                text.push(labelText + ' ' + this.formatValue(value[additionalDataKey].value));
                             }
 
                             isFound = true;
@@ -664,22 +667,15 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
     }
 
     removeInvalid (objectIndex) {
+        super.removeInvalid(objectIndex);
+
         const object = this.objects[objectIndex];
-        if (!object.valueElement) {
-            return;
+        if (object.buttonElement) {
+            object.buttonElement.removeAttribute('aria-invalid');
         }
         if (!object.shapeElement) {
-            return;
+            object.shapeElement.classList.remove('ds44-error');
         }
-
-        let errorElement = object.containerElement.querySelector(':scope > .ds44-errorMsg-container');
-        if (errorElement) {
-            errorElement.innerHTML = '';
-            errorElement.classList.add('hidden');
-        }
-
-        object.buttonElement.removeAttribute('aria-invalid');
-        object.shapeElement.classList.remove('ds44-error');
     }
 
     invalid (objectIndex) {
@@ -714,7 +710,7 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         ) {
             // Date
             const dateArray = value.split('-');
-            value = dateArray[2] + '/' +dateArray[1] + '/' +dateArray[0];
+            value = dateArray[2] + '/' + dateArray[1] + '/' + dateArray[0];
         }
 
         return value;

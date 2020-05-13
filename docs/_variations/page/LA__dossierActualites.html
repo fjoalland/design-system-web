@@ -2,10 +2,7 @@
 layout: pattern
 ---
 
-{% include header/inc-header.html
-    logo='<picture class="ds44-logo"><img src="../../assets/images/logo-loire-atlantique.svg" alt="Retour à l&apos;accueil du site loire-atlantique.fr"></picture>'
-    variante1='<button type="button" class="ds44-btnIcoText--maxi ds44--xl-padding" id="open-search"><span class="ds44-btnInnerText">Rechercher</span><i class="icon icon-magnifier icon--large" aria-hidden="true"></i></button>'
-%}
+{% include header/inc-header.html %}
 
 <main role="main" id="content">
 
@@ -43,7 +40,7 @@ layout: pattern
 
                     <div class="col-1 grid-offset ds44-hide-tinyToLarge"></div>
 
-                    <article class="col-7">
+                    <article class="col-7 ds44-contenuDossier">
                         <p class="ds44-textLegend">Publié le 12/09/19</p>
                         <p class="ds44-introduction">Les élu·e·s du Département ont débattu et voté lundi 17, mardi 18 et mercredi 19 le budget pour l’année 2019. L’ensemble des débats, les résumés par journée, mais aussi la datavisualisation du budget sont à retrouver dans ce dossier.</p>
 
@@ -55,7 +52,9 @@ layout: pattern
                             <p>Ce vœu a été approuvé : 55 « oui », 3 « non » et 3 abstentions.</p>
                             <div class="ds44-contenuMedia">
                                 <div class="ds44-inner-container ds44-mtb3">
-                                    <a href="#"><img src="../../assets/images/img_video_bigger@2x.jpg" alt="Vidéo : le Canal ouvre à la navigation" class="ds44-w100"></a>
+                                    <div class="ds44-js-youtube-video" data-video-id="qUBOVeb7ocY">
+                                        <img src="../../assets/images/img_video_bigger@2x.jpg" alt="Vidéo : le Canal ouvre à la navigation" class="ds44-w100 ds44-hiddenPrint">
+                                    </div>
                                 </div>
                             </div>
                         </section>
@@ -97,7 +96,7 @@ layout: pattern
                                 <strong>38 M€</strong>.</p>
                             <div class="ds44-contenuMedia">
                                 <div class="ds44-inner-container ds44-mtb3">
-                                    <a href="#"><img src="../../assets/images/img_video_bigger@2x.jpg" alt="Vidéo : le Canal ouvre à la navigation" class="ds44-w100"></a>
+                                    <a href="#"><img src="../../assets/images/img_video_bigger@2x.jpg" alt="Vidéo : le Canal ouvre à la navigation" class="ds44-w100 ds44-hiddenPrint"></a>
                                 </div>
                             </div>
                             <p class="h3-like mtl" aria-level="3" role="heading">Développement des territoires</p>
@@ -128,57 +127,60 @@ layout: pattern
                             <p class="ds44-introduction" aria-level="3" role="heading">Retrouvez les débats en vidéo, du lundi 17 décembre.</p>
                             <div class="ds44-contenuMedia">
                                 <div class="ds44-inner-container ds44-mtb3">
-                                    <a href="#"><img src="../../assets/images/img_video_bigger@2x.jpg" alt="Vidéo : le Canal ouvre à la navigation" class="ds44-w100"></a>
+                                    <div class="ds44-js-youtube-video" data-video-id="xf79mws2lEM">
+                                        <img src="../../assets/images/img_video_bigger@2x.jpg" alt="Vidéo : le Canal ouvre à la navigation" class="ds44-w100 ds44-hiddenPrint">
+                                    </div>
                                 </div>
                             </div>
                             <p class="h4-like mtl" aria-level="4" role="heading">Les chapitres</p>
-                            <p aria-level="5" role="heading"><strong>Rapport présenté par Monsieur le Président du conseil Départemental :</strong>
-                            </p>
+                            <p aria-level="5" role="heading">Rapport présenté par Monsieur le Président du conseil Départemental :</p>
                             <ul class="ds44-list ds44-list--video">
                                 <li>
-                                    <a href="#">Limites territoriales des régions Pays de la Loire et Bretagne - possibilité d’option pour le Département de la Loire-Atlantique prévue par l’article L. 4122-1-1 du code général des collectivités territoriales</a>
+                                    <a href="#" role="button" tabindex="0" class="ds44-js-video-seek-to" data-video-id="xf79mws2lEM" data-seek-to="215" title="Aller à 00:03:35 : &quot;Limites territoriales des régions Pays de la Loire et Bretagne - possibilité d’option pour le Département de la Loire-Atlantique prévue par l’article L. 4122-1-1 du code général des collectivités territoriales&quot; pour la vidéo : &quot;En direct : vote du budget 2019 (lundi matin)&quot;">Limites territoriales des régions Pays de la Loire et Bretagne - possibilité d’option pour le Département de la Loire-Atlantique prévue par l’article L. 4122-1-1 du code général des collectivités territoriales</a>
                                 </li>
                             </ul>
-                            <p aria-level="5" role="heading"><strong>Développement des territoires :</strong></p>
+                            <p aria-level="5" role="heading">Développement des territoires :</p>
                             <ul class="ds44-list ds44-list--video">
                                 <li>
-                                    <a href="#">Politique départementale en faveur du développement des territoires</a>
+                                    <a href="#" role="button" tabindex="0" class="ds44-js-video-seek-to" data-video-id="xf79mws2lEM" data-seek-to="8808" title="Aller à 02:26:48 : &quot;Politique départementale en faveur du développement des territoires&quot; pour la vidéo : &quot;En direct : vote du budget 2019 (lundi matin)&quot;">Politique départementale en faveur du développement des territoires</a>
                                 </li>
                             </ul>
                             <div class="ds44-contenuMedia">
                                 <div class="ds44-inner-container ds44-mtb3">
-                                    <a href="#"><img src="../../assets/images/img_video_bigger@2x.jpg" alt="Vidéo : le Canal ouvre à la navigation" class="ds44-w100"></a>
+                                    <div class="ds44-js-youtube-video" data-video-id="bEsQKIKFmmc">
+                                        <img src="../../assets/images/img_video_bigger@2x.jpg" alt="Vidéo : le Canal ouvre à la navigation" class="ds44-w100">
+                                    </div>
                                 </div>
                             </div>
                             <p class="h4-like mtl" aria-level="4" role="heading">Les chapitres</p>
-                            <p aria-level="5" role="heading"><strong>Développement des territoires :</strong></p>
+                            <p aria-level="5" role="heading">Développement des territoires :</p>
                             <ul class="ds44-list ds44-list--video">
                                 <li>
-                                    <a href="#">Politique départementale en faveur du développement des territoires</a>
+                                    <a href="#" role="button" tabindex="0" class="ds44-js-video-seek-to" data-video-id="bEsQKIKFmmc" data-seek-to="240" title="Aller à 00:04:00 : &quot;Politique départementale en faveur du développement des territoires&quot; pour la vidéo : &quot;En direct : vote du budget 2019 (lundi après-midi)&quot;">Politique départementale en faveur du développement des territoires</a>
                                 </li>
                             </ul>
-                            <p aria-level="5" role="heading"><strong>Tourisme, mer et littoral :</strong></p>
+                            <p aria-level="5" role="heading">Tourisme, mer et littoral :</p>
                             <ul class="ds44-list ds44-list--video">
                                 <li>
-                                    <a href="#">Projet nautisme - Présentation du plan d’actions</a>
+                                    <a href="#" role="button" tabindex="0" class="ds44-js-video-seek-to" data-video-id="bEsQKIKFmmc" data-seek-to="2146" title="Aller à 00:35:46 : &quot;Projet nautisme - Présentation du plan d’actions&quot; pour la vidéo : &quot;En direct : vote du budget 2019 (lundi après-midi)&quot;">Projet nautisme - Présentation du plan d’actions</a>
                                 </li>
                                 <li>
-                                    <a href="#">Politique mer, littoral et voies navigables</a>
+                                    <a href="#" role="button" tabindex="0" class="ds44-js-video-seek-to" data-video-id="bEsQKIKFmmc" data-seek-to="3576" title="Aller à 00:59:36 : &quot;Politique mer, littoral et voies navigables&quot; pour la vidéo : &quot;En direct : vote du budget 2019 (lundi après-midi)&quot;">Politique mer, littoral et voies navigables</a>
                                 </li>
                                 <li>
-                                    <a href="#">Politique touristique départementale</a>
+                                    <a href="#" role="button" tabindex="0" class="ds44-js-video-seek-to" data-video-id="bEsQKIKFmmc" data-seek-to="5265" title="Aller à 01:27:45 : &quot;Politique touristique départementale&quot; pour la vidéo : &quot;En direct : vote du budget 2019 (lundi après-midi)&quot;">Politique touristique départementale</a>
                                 </li>
                             </ul>
-                            <p aria-level="5" role="heading"><strong>Mobilités :</strong></p>
+                            <p aria-level="5" role="heading">Mobilités :</p>
                             <ul class="ds44-list ds44-list--video">
                                 <li>
-                                    <a href="#">Politique départementale mobilités</a>
+                                    <a href="#" role="button" tabindex="0" class="ds44-js-video-seek-to" data-video-id="bEsQKIKFmmc" data-seek-to="6352" title="Aller à 01:45:52 : &quot;Politique départementale mobilités&quot; pour la vidéo : &quot;En direct : vote du budget 2019 (lundi après-midi)&quot;">Politique départementale mobilités</a>
                                 </li>
                                 <li>
-                                    <a href="#">Livre blanc « inventons la route de demain »</a>
+                                    <a href="#" role="button" tabindex="0" class="ds44-js-video-seek-to" data-video-id="bEsQKIKFmmc" data-seek-to="7702" title="Aller à 02:08:22 : &quot;Livre blanc « inventons la route de demain »&quot; pour la vidéo : &quot;En direct : vote du budget 2019 (lundi après-midi)&quot;">Livre blanc « inventons la route de demain »</a>
                                 </li>
                                 <li>
-                                    <a href="#">Route départementale 31 - Réhabilitation des ponts de Mauves-sur-Loire - Approbation du programme de l’opération - Convention de transfert de maîtrise d’ouvrage</a>
+                                    <a href="#" role="button" tabindex="0" class="ds44-js-video-seek-to" data-video-id="bEsQKIKFmmc" data-seek-to="8812" title="Aller à 02:26:52 : &quot;Route départementale 31 - Réhabilitation des ponts de Mauves-sur-Loire - Approbation du programme de l’opération - Convention de transfert de maîtrise d’ouvrage&quot; pour la vidéo : &quot;En direct : vote du budget 2019 (lundi après-midi)&quot;">Route départementale 31 - Réhabilitation des ponts de Mauves-sur-Loire - Approbation du programme de l’opération - Convention de transfert de maîtrise d’ouvrage</a>
                                 </li>
                             </ul>
                         </section>

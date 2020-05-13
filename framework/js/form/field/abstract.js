@@ -3,7 +3,7 @@ class FormFieldAbstract {
         this.category = category;
         this.objects = [];
         this.labelClassName = 'ds44-moveLabel';
-        this.errorMessage = 'Veuillez renseigner : {fieldName}';
+        this.errorMessage = 'FIELD_MANDATORY_ERROR_MESSAGE';
 
         if (typeof selector === 'object') {
             // Elements passed as parameter, not text selector
@@ -41,14 +41,40 @@ class FormFieldAbstract {
     }
 
     initialize () {
+        // Get data from url and session storage
+        const fieldParameters = window.sessionStorage.getItem('fields');
+        let externalParameters = Object.assign(
+            {},
+            MiscUrl.getQueryParameters(),
+            MiscUrl.getHashParameters(),
+            (fieldParameters ? JSON.parse(fieldParameters) : {})
+        );
+        for (const fieldName in externalParameters) {
+            if (!externalParameters.hasOwnProperty(fieldName)) {
+                continue;
+            }
+
+            const fieldData = externalParameters[fieldName];
+            if (
+                fieldData.value &&
+                fieldData.value.constructor === ({}).constructor
+            ) {
+                // Value is JSON => sub field
+                externalParameters = Object.assign({}, externalParameters, fieldData.value);
+            }
+        }
+
+        // Initialize each object
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
 
-            MiscEvent.addListener('field:set', this.set.bind(this, objectIndex), object.containerElement);
+            this.addBackupAttributes(objectIndex);
+
             MiscEvent.addListener('field:enable', this.enable.bind(this, objectIndex), object.containerElement);
             MiscEvent.addListener('field:disable', this.disable.bind(this, objectIndex), object.containerElement);
-
-            this.addBackupAttributes(objectIndex);
+            if (externalParameters[object.name]) {
+                MiscEvent.addListener('load', this.set.bind(this, objectIndex, externalParameters[object.name]), window);
+            }
         }
 
         MiscEvent.addListener('form:validate', this.validate.bind(this));
@@ -78,15 +104,8 @@ class FormFieldAbstract {
         this.enableDisableLinkedField(objectIndex);
     }
 
-    set (objectIndex, evt) {
-        if (
-            !evt ||
-            !evt.detail
-        ) {
-            return;
-        }
-
-        this.setData(objectIndex, evt.detail);
+    set (objectIndex, data) {
+        this.setData(objectIndex, data);
         this.enter(objectIndex);
         this.showNotEmpty(objectIndex);
     }
@@ -176,6 +195,16 @@ class FormFieldAbstract {
         const object = this.objects[objectIndex];
 
         object.isEnabled = true;
+        if (
+            evt &&
+            evt.detail &&
+            evt.detail.data
+        ) {
+            object.parentValue = evt.detail.data[Object.keys(evt.detail.data)[0]].value;
+        } else {
+            object.parentValue = null;
+        }
+
         this.empty(objectIndex);
         this.enableElements(objectIndex, evt);
     }
@@ -194,6 +223,7 @@ class FormFieldAbstract {
     disable (objectIndex, evt) {
         const object = this.objects[objectIndex];
         object.isEnabled = false;
+        object.parentValue = null;
 
         this.empty(objectIndex);
         this.removeInvalid(objectIndex);
@@ -286,11 +316,17 @@ class FormFieldAbstract {
                 continue;
             }
 
-            if (this.checkValidity(objectIndex) === false) {
-                isValid = false;
-            } else if (
-                evt.detail.formElement.classList.contains('ds44-listSelect') ||
-                !this.objects[objectIndex].containerElement.closest('.ds44-select-list_elem_child')
+            if (evt.detail.dryRun === true) {
+                isValid = this.isValid(objectIndex);
+            } else {
+                isValid = this.checkValidity(objectIndex);
+            }
+            if (
+                isValid &&
+                (
+                    evt.detail.formElement.classList.contains('ds44-listSelect') ||
+                    !this.objects[objectIndex].containerElement.closest('.ds44-select-list_elem_child')
+                )
             ) {
                 // Don't take into consideration data from sub elements
                 // The data is already injected in the parent value
@@ -313,18 +349,48 @@ class FormFieldAbstract {
     }
 
     removeInvalid (objectIndex) {
-        // Abstract method
+        const object = this.objects[objectIndex];
+
+        const informationElement = object.containerElement.querySelector(':scope > .ds44-field-information');
+        if (!informationElement) {
+            return;
+        }
+
+        informationElement.classList.remove('ds44-error');
+        const informationListElement = informationElement.querySelector('.ds44-field-information-list');
+        if (informationListElement) {
+            informationListElement
+                .querySelectorAll('.ds44-field-information-error')
+                .forEach((errorElement) => {
+                    errorElement.remove();
+                });
+        }
+    }
+
+    checkFormat (objectIndex) {
+        return true;
+    }
+
+    isValid (objectIndex) {
+        const object = this.objects[objectIndex];
+        if (
+            (
+                object.isRequired &&
+                object.isEnabled &&
+                !this.getData(objectIndex)
+            ) ||
+            !this.checkFormat(objectIndex)
+        ) {
+            return false;
+        }
+
+        return true;
     }
 
     checkValidity (objectIndex) {
         this.removeInvalid(objectIndex);
 
-        const object = this.objects[objectIndex];
-        if (
-            object.isRequired &&
-            object.isEnabled &&
-            !this.getData(objectIndex)
-        ) {
+        if (!this.isValid(objectIndex)) {
             this.invalid(objectIndex);
 
             return false;
@@ -340,25 +406,37 @@ class FormFieldAbstract {
     showErrorMessage (objectIndex, errorMessageElementId = null) {
         const object = this.objects[objectIndex];
 
-        let errorElement = object.containerElement.querySelector(':scope > .ds44-errorMsg-container');
-        if (!errorElement) {
-            errorElement = document.createElement('div');
-            errorElement.classList.add('ds44-errorMsg-container');
-            errorElement.setAttribute('aria-live', 'polite');
-            object.containerElement.appendChild(errorElement);
+        // Recreate information structure
+        let informationElement = object.containerElement.querySelector(':scope > .ds44-field-information');
+        if (!informationElement) {
+            informationElement = document.createElement('div');
+            informationElement.classList.add('ds44-field-information');
+            informationElement.setAttribute('aria-live', 'polite');
+            object.containerElement.appendChild(informationElement);
+        }
+        informationElement.classList.add('ds44-error');
+
+        let informationListElement = informationElement.querySelector('.ds44-field-information-list');
+        if (!informationListElement) {
+            informationListElement = document.createElement('ul');
+            informationListElement.classList.add('ds44-field-information-list');
+            informationListElement.classList.add('ds44-list');
+            informationElement.appendChild(informationListElement);
         } else {
-            errorElement.innerHTML = '';
-            errorElement.classList.remove('hidden');
+            informationListElement
+                .querySelectorAll('.ds44-field-information-error')
+                .forEach((errorElement) => {
+                    errorElement.remove();
+                });
         }
 
-        let errorMessageElement = document.createElement('p');
+        let errorMessageElement = document.createElement('li');
         if (errorMessageElementId) {
             errorMessageElement.setAttribute('id', errorMessageElementId);
         }
-        errorMessageElement.classList.add('ds44-msgErrorText');
-        errorMessageElement.classList.add('ds44-msgErrorInvalid');
+        errorMessageElement.classList.add('ds44-field-information-error');
         errorMessageElement.setAttribute('tabindex', '-1');
-        errorElement.appendChild(errorMessageElement);
+        informationListElement.appendChild(errorMessageElement);
 
         let errorIconElement = document.createElement('i');
         errorIconElement.classList.add('icon');
@@ -369,26 +447,26 @@ class FormFieldAbstract {
 
         let errorTextElement = document.createElement('span');
         errorTextElement.classList.add('ds44-iconInnerText');
-        errorTextElement.innerHTML = this.formatErrorMessage(objectIndex);
+        errorTextElement.innerHTML = this.getErrorMessage(objectIndex);
         errorMessageElement.appendChild(errorTextElement);
     }
 
-    formatErrorMessage (objectIndex) {
-        const errorMessage = this.getErrorMessage(objectIndex);
-
-        const object = this.objects[objectIndex];
-        if (!object.labelElement) {
-            return errorMessage;
-        }
-
-        return errorMessage
-            .replace(
-                '{fieldName}',
-                object.labelElement.innerText.replace(/\*$/, '')
-            );
+    getErrorMessage (objectIndex) {
+        return this.formatErrorMessage(objectIndex);
     }
 
-    getErrorMessage (objectIndex) {
-        return this.errorMessage;
+    formatErrorMessage (objectIndex, errorMessage = this.errorMessage, patterns) {
+        const object = this.objects[objectIndex];
+        if (!object.labelElement) {
+            return MiscTranslate._(errorMessage, patterns);
+        }
+
+        if (!patterns) {
+            patterns = {};
+        }
+        if (!patterns.fieldName) {
+            patterns.fieldName = object.labelElement.innerText.replace(/\*$/, '');
+        }
+        return MiscTranslate._(errorMessage, patterns);
     }
 }

@@ -2,7 +2,7 @@ class FormLayoutUtileAbstract {
     constructor (selector) {
         this.url = '/plugins/ChartePlugin/types/PortletQueryForeach/displayResult.jsp';
         this.formElement = null;
-        this.submitSuccessText = null;
+        this.submitSuccessText = MiscTranslate._('USEFUL_REQUEST_THANK_YOU');
 
         const formElement = document.querySelector(selector);
         if (formElement) {
@@ -27,15 +27,17 @@ class FormLayoutUtileAbstract {
         // Add other details to parameters
         evt.detail.parameters.url = document.location.href;
         evt.detail.parameters.title = document.title;
-        evt.detail.parameters.date = (new Date()).toLocaleString('fr-FR', {'timeZone': 'UTC', 'timeZoneName': 'short'});
+        evt.detail.parameters.date = (new Date()).toLocaleString('fr-FR', {
+            'timeZone': 'UTC',
+            'timeZoneName': 'short'
+        });
 
         // Get the results from the back office
         MiscRequest.send(
             this.url,
             this.submitSuccess.bind(this),
             this.submitError.bind(this),
-            evt.detail.parameters,
-            'POST'
+            evt.detail.parameters
         );
     }
 
@@ -80,7 +82,7 @@ class FormLayoutUtileAbstract {
             {
                 'id': errorMessageId,
                 'type': 'error',
-                'message': 'Une erreur est survenue suite à l\'envoi de votre formulaire.'
+                'message': MiscTranslate._('FORM_GENERAL_ERROR')
             },
             this.formElement
         );

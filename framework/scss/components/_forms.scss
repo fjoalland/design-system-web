@@ -31,6 +31,15 @@ input {
     font-family: $ds44-font-family-base;
 }
 
+input[type="file"] {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
 .ds44-form__container {
     position: relative;
     margin: 2.5rem 0;
@@ -46,49 +55,60 @@ input {
 
 .ds44-formLabel {
     @include ds44-font-sizes(button);
-    color: $ds44-graytext-color;
     display: block;
-    position: relative;
     font-weight: normal;
     margin-bottom: 0;
     text-align: left;
+    width: calc(100% - 40px);
+    width: -webkit-calc(100% - 40px);
 
-    .ds44-labelTypePlaceholder {
+    .ds44-labelTypePlaceholder,
+    .ds44-labelTypePlaceholderLarge {
         position: absolute;
-        top: 1.2rem;
-        left: $ds44-padding-box;
-        transition: all $ds44-timing-standard ease-in-out;
-        color: $ds44-gray;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        width: calc(100% - 40px);
-        width: -webkit-calc(100% - 40px);
-        white-space: nowrap;
-        cursor: text;
+        top: 0;
+        left: 0;
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        display: block;
 
-        &.ds44-moveLabel {
-            font-size: 1.3rem; // 13px instead of 14px
-            top: -$ds44-padding-medium*1.8;
-            left: 0;
-            color: $ds44-dark;
-        }
-
-        .ds44-bgDark &.ds44-moveLabel {
-            color: $ds44-light-color;
+        span {
+            color: $ds44-forms-color;
+            transition: all $ds44-timing-standard ease-in-out;
+            display: block;
+            margin-top: 1.2rem;
+            margin-left: $ds44-padding-box;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
     }
 
     .ds44-labelTypePlaceholderLarge {
-        top: $ds44-padding-large;
-        font-size: 1.6rem;
+        span {
+            font-size: 1.6rem;
+            margin-top: $ds44-padding-large;
+        }
     }
 
-    .ds44-labelTypeInfoComp {
-        font-size: 1.3rem;
-        position: absolute;
-        bottom: -$ds44-large-vmargin;
-        right: $ds44-padding-box;
-        color: $ds44-gray;
+    &.ds44-moveLabel .ds44-labelTypePlaceholder,
+    &.ds44-moveLabel .ds44-labelTypePlaceholderLarge {
+        span {
+            font-size: 1.3rem; // 13px instead of 14px
+            color: $ds44-color-dark-text;
+            margin-top: -$ds44-padding-medium*1.8;
+            margin-left: 0;
+        }
+    }
+
+    .ds44-bgDark &.ds44-moveLabel,
+    .ds44-bgDark &.ds44-moveLabel .ds44-labelTypePlaceholder,
+    .ds44-bgDark &.ds44-moveLabel .ds44-labelTypePlaceholderLarge {
+        span {
+            color: $ds44-light-color;
+        }
     }
 }
 
@@ -97,13 +117,6 @@ input {
     color: $ds44-color-dark-text;
     margin: $ds44-small-vmargin 0;
     display: block;
-
-    .ds44-labelTypeInfoComp {
-        position: absolute;
-        top: 0;
-        right: $ds44-padding-box;
-        color: $ds44-gray;
-    }
 
 }
 
@@ -172,22 +185,27 @@ textarea {
     color: $ds44-color-soft-text;
 }
 
-/* Datepicker */
-
-.ds44-datepicker {
-    position: relative;
+.ds44-fileDisplay {
+    width: calc(100% - 30px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    white-space: nowrap;
 }
 
 /* Bouton de reset de champ */
 
 .ds44-reset,
-.ds44-calendar {
+.ds44-calendar,
+.ds44-location,
+.ds44-file {
     position: absolute;
     right: 0;
     top: calc(50% - 15px);
     top: -webkit-calc(50% - 15px);
     padding-right: 1.5rem;
     color: $ds44-color-dark-text;
+    cursor: pointer;
 
     .ds44-formLabel--external & {
         top: calc(50% + -1px);
@@ -201,7 +219,9 @@ textarea {
     top: -webkit-calc(50% - 1.3rem);
     z-index: 2;
 
-    .ds44-datepicker & {
+    .ds44-datepicker__shape + &,
+    .ds44-autocomp--location + &,
+    .ds44-file__shape + & {
         right: 3.4rem;
     }
 
@@ -214,6 +234,10 @@ textarea {
         top: 1.8rem;
         right: 4rem;
     }
+}
+
+.ds44-formLabel--external ~ .ds44-reset {
+    top: 53%;
 }
 
 /**
@@ -324,6 +348,18 @@ input[type=radio],
     }
 }
 
+//Ajout de style css pour surcharger, modal mailjet vu avec Jeremie
+.mj-form {
+    input[type=radio],
+    .ds44-radio ,
+    input[type=checkbox],
+    .ds44-checkbox {
+        position: inherit;
+        vertical-align: top;
+        left: 0;
+    }
+}
+
 .ds44-form__checkbox_container.ds44-inputDisabled label,
 .ds44-form__radio_container.ds44-inputDisabled label {
     color: $ds44-gray;
@@ -346,12 +382,10 @@ input[type=radio],
 
 .ds44-facette {
     .ds44-facette-body {
-        @media (max-width: $ds44-medium - .0625) {
-            display: none;
-        }
 
         .ds44-textLegend--mentions {
-            display: none;padding: 1rem 0 0.5rem 0;
+            display: none;
+            padding: 1rem 0 0.5rem 0;
             padding: 1rem 0 0.5rem 0;
         }
 
@@ -434,8 +468,7 @@ input[type=radio],
     }
 
     .ds44-facette-mobile-export {
-        text-align: center;
-        padding: 1rem 0;
+        padding-top: 1rem;
 
         .ds44-list {
             font-size: 1.4rem;
@@ -452,6 +485,16 @@ input[type=radio],
                     font-weight: bold;
                 }
             }
+        }
+    }
+
+}
+
+
+.ds44-mainResults .ds44-facette {
+    .ds44-facette-body {
+        @media (max-width: $ds44-medium - .0625) {
+            display: none;
         }
     }
 
@@ -546,6 +589,7 @@ input[type=radio],
     width: calc(100% - 40px);
     width: -webkit-calc(100% - 40px);
     white-space: nowrap;
+    text-align: left;
 
     .ds44-inputDisabled & {
         cursor: default;
@@ -555,9 +599,9 @@ input[type=radio],
 .ds44-moveSelectLabel {
     font-size: 1.3rem; // 13px
     position: absolute;
-    top: -$ds44-padding-medium*2;
+    top: -$ds44-padding-medium*1.8; // same as ds44-labelTypePlaceholder
     left: 0;
-    color: $ds44-dark;
+    color: $ds44-color-dark-text;
 
     .ds44-bgDark & {
         color: $ds44-color-inverse;
@@ -569,7 +613,8 @@ input[type=radio],
     width: 100%;
     box-shadow: $ds44-boxShadow;
     background-color: $ds44-light-color;
-    z-index: 10;
+    z-index: 15;
+    text-align: left;
 }
 
 .ds44-select-list_elem {
@@ -596,6 +641,10 @@ input[type=radio],
 
     .ds44-form__container {
         margin-top: 0;
+    }
+
+    &.ds44-noMrg > * {
+        margin: 0;
     }
 }
 
@@ -624,7 +673,6 @@ input[type=radio],
 /* multilevel selects */
 
 .ds44-select__categ {
-
     position: relative;
     padding: 0 $ds44-padding-large;
 
@@ -692,6 +740,7 @@ input[type=radio],
 
 .ds44-autocomp-list {
     padding: $ds44-padding-medium $ds44-padding-large;
+    text-align: left;
 }
 
 .ds44-autocomp-list_elem,
@@ -742,6 +791,7 @@ input[type=radio],
     width: -webkit-calc(100% - 2.4rem);
     display: block;
     color: $ds44-color-dark-text;
+    text-align: left;
 
     .ds44-inpLarge & {
         width: calc(100% - 4.4rem);
@@ -769,7 +819,7 @@ input[type=radio],
 .ds44-errorMsg-container {
     @include ds44-font-sizes(errMsg);
     background-color: $ds44-error-bg;
-    padding: $ds44-padding-small $ds44-padding-box;
+    padding: $ds44-padding-box;
 
     .ds44-msgErrorText {
         margin: $ds44-paragraph-margin-bottom 0;
@@ -787,6 +837,51 @@ input[type=radio],
 
 .ds44-errorLabel {
     font-size: 1.6rem;
+}
+
+
+/**
+* Information messages
+*/
+
+.ds44-field-information {
+    .ds44-field-information-list {
+        .ds44-field-information-explanation {
+            text-align: right;
+            font-size: 1.3rem;
+            color: $ds44-gray;
+            padding: $ds44-padding-small $ds44-padding-small 0 0;
+
+            .ds44-theme & {
+                color: $ds44-color-dark-text;
+            }
+        }
+
+        .ds44-field-information-error {
+            @include ds44-font-sizes(errMsg);
+            color: $ds44-color-dark-text;
+            padding: $ds44-padding-box;
+            padding-bottom: 0;
+
+            &:last-child {
+                padding-bottom: $ds44-padding-box;
+            }
+
+            .icon {
+                color: $ds44-error;
+            }
+        }
+    }
+
+    &.ds44-error {
+        background-color: $ds44-error-bg;
+
+        .ds44-field-information-explanation {
+            .ds44-theme & {
+                color: $ds44-gray;
+            }
+        }
+    }
 }
 
 /**
@@ -858,6 +953,39 @@ input[type=radio],
     }
 }
 
+/**
+ * File
+ */
+
+.ds44-file__shape {
+    cursor: pointer;
+    background-color: $ds44-light-color;
+
+    &.hover {
+        outline-width: 2px;
+        outline-style: solid;
+        outline-color: Highlight;
+
+        @media (-webkit-min-device-pixel-ratio: 0) {
+            outline-color: -webkit-focus-ring-color;
+            outline-style: auto;
+        }
+    }
+}
+
+
+/**
+ * Autocomplete location
+ */
+
+.ds44-autocomp--location {
+    padding-right: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    white-space: nowrap;
+}
+
 
 /**
  * Champs liés : Thèmes sous-thèmes, Lieu rayon, etc...
@@ -885,7 +1013,8 @@ input[type=radio],
 
         input,
         .ds44-select__shape,
-        .ds44-datepicker__shape {
+        .ds44-datepicker__shape,
+        .ds44-file__shape {
             border-radius: 3px 0 0 3px;
         }
     }
@@ -899,16 +1028,17 @@ input[type=radio],
 
         input,
         .ds44-select__shape,
-        .ds44-datepicker__shape {
+        .ds44-datepicker__shape,
+        .ds44-file__shape {
             border-radius: 0 3px 3px 0;
             margin-left: -1px;
         }
     }
 
     .ds44-inputDisabled,
-    .ds44-inputDisabled input,
-    .ds44-inputDisabled textarea,
-    .ds44-inputDisabled label {
+    .ds44-inputDisabled ~ input,
+    .ds44-inputDisabled ~ textarea,
+    .ds44-inputDisabled ~ label {
         background: $ds44-lightgray;
         cursor: default;
     }
@@ -957,7 +1087,7 @@ input[type=radio],
         }
 
         .ds44-theme .ds44-fieldContainer--select {
-          width: 100%;
+            width: 100%;
         }
 
         .ds44-btnStd {
@@ -970,15 +1100,15 @@ input[type=radio],
         }
     }
 
-    .ds44-theme  {
+    .ds44-theme {
 
         &.ds44-medium-flex-col {
 
             .ds44-fieldContainer--select {
-              width: 100% !important;
+                width: 100% !important;
 
                 .ds44-select-container {
-                  width: 100% !important;
+                    width: 100% !important;
                 }
             }
         }
@@ -1020,7 +1150,8 @@ input[type=radio],
 
             input,
             .ds44-select__shape,
-            .ds44-datepicker__shape {
+            .ds44-datepicker__shape,
+            .ds44-file__shape {
                 border-radius: 3px 3px 0 0;
             }
         }
@@ -1033,7 +1164,8 @@ input[type=radio],
 
             input,
             .ds44-select__shape,
-            .ds44-datepicker__shape {
+            .ds44-datepicker__shape,
+            .ds44-file__shape {
                 border-radius: 0 0 3px 3px;
                 margin: -1px 0 0 0;
             }
@@ -1042,6 +1174,15 @@ input[type=radio],
         > .ds44-form__container:last-of-type {
             margin-top: 2.5rem;
         }
+    }
+}
+
+
+/* Media Queries Print / Impression */
+@media print {
+
+    .ds44-facette {
+        display: none !important;
     }
 
 

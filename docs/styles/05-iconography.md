@@ -5,7 +5,7 @@ type: detail
 title: Iconographie
 group: styles
 permalink: /styles/iconographie.html
-description: Description des icônes et de leur usage
+description: Un set d’icônes vectorielles sur-mesure est disponible en icon-font.
 
 ---
 
@@ -27,6 +27,8 @@ Une icône peut être positionnée à côté d'un texte, à gauche, à droite, e
     * dans un lien ou une liste : `ds44-iconInnerText`
 
 D'autres cas spécifiques existent (menus, overlays), les classes ne sont alors pas prévues pour fonctionner en dehors de leur composant.
+
+<a href="../fonts/Icofont.zip" class="ds44-btnStd ds44-btn--invert"><span class="ds44-btnInnerText">Télécharger La liste des icônes</span></a>
 
 ## Tailles d'icônes
 

@@ -2,10 +2,7 @@
 layout: pattern
 ---
 
-{% include header/inc-header.html
-    logo='<picture class="ds44-logo"><img src="../../assets/images/logo-loire-atlantique.svg" alt="Retour à l&apos;accueil du site loire-atlantique.fr"></picture>'
-    variante1='<button type="button" class="ds44-btnIcoText--maxi ds44--xl-padding" id="open-search"><span class="ds44-btnInnerText">Rechercher</span><i class="icon icon-magnifier icon--large" aria-hidden="true"></i></button>'
-%}
+{% include header/inc-header.html %}
 
 <main role="main" id="content">
 
@@ -403,12 +400,12 @@ layout: pattern
                     </ul>
 
                 </div>
-                <div class="col-1 grid-offset ds44-hide-tinyToLarge"></div>
+                <div class="col-1 grid-offset ds44-hide-tiny-to-medium"></div>
                 <aside class="col-4">
                     {% include boxes/box-std-commune.html %}
 
                     <section id="services1clic">
-                        <h2 class="h3-like" id="titreClic1">Vos services en 1 clic</h2>
+                        <p role="heading" aria-level="2" class="ds44-box-heading">Vos services en 1 clic</p>
                         {% include card/card--horizontal.html title="Bien vieillir en Loire-Atlantique" text="PDF - 291,3 Ko" target='target="_blank"' ariaLevel='"aria-level="3"' newWindow="- nouvelle fenêtre" %}
                         {% include card/card--horizontal.html title="Téléassistance : un nouveau service avec un téléphone mobile" ariaLevel='"aria-level="3"' %}
                     </section>

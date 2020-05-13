@@ -403,6 +403,14 @@
     display: block!important;
   }
 
+  .ds44-TtM-noPad {
+    padding: 0 !important;
+  }
+
+  .ds44-flex-tablette-center {
+    justify-content: center;
+  }
+
 }
 
 @media (max-width: $ds44-small - .0625) {
@@ -457,5 +465,20 @@
   .ds44-tiny-reducedFont {
     font-size: smaller;
   }
+
+  .ds44-tiny-extra-mb {
+    margin-bottom: $ds44-components-vmargin !important;
+  }
+
+}
+
+
+/* Media Queries Print / Impression */
+@media print {
+
+    .ds44-hide-mobile,
+    .ds44-hide-smallScreens {
+        display: none !important;
+    }
 
 }

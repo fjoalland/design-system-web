@@ -1,0 +1,247 @@
+{
+    "page-index": 0,
+    "nb-result-per-page": 20,
+    "nb-result": 240,
+    "result": [
+        {
+            "id": "c_1235827",
+            "value": "test non tout commune 3",
+            "metadata": {
+                "url": "http://localhost:8080/jcms/departement44/test-non-tout-commune-3/c_1235827",
+                "type": "FicheLieu",
+                "lat": "47.169196",
+                "long": "-1.720505",
+                "html_list": "\n\n\n<h3>\n<a href=\"departement44/test-non-tout-commune-3/c_1235827\" class=\"\" data-jalios-id='c_1235827'>\n  test non tout commune 3\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>",
+                "html_marker": "\n\n\n<h3>\n<a href=\"departement44/test-non-tout-commune-3/c_1235827\" class=\"\" data-jalios-id='c_1235827'>\n  test non tout commune 3\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>"
+            }
+        },
+        {
+            "id": "t1_9798",
+            "value": "Brains",
+            "metadata": {
+                "url": "http://localhost:8080/jcms/departement44/brains/t1_9798",
+                "type": "City",
+                "lat": "47.16962909999999",
+                "long": "-1.7219661999999971",
+                "html_list": "\n\n\n<h3>\n<a href=\"departement44/brains/t1_9798\" class=\"\" data-jalios-id='t1_9798'>\n  Brains\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>",
+                "html_marker": "\n\n\n<h3>\n<a href=\"departement44/brains/t1_9798\" class=\"\" data-jalios-id='t1_9798'>\n  Brains\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>"
+            }
+        },
+        {
+            "id": "c_1235804",
+            "value": "Test recherche commune sectorisation id ref inconnu",
+            "metadata": {
+                "url": "http://localhost:8080/jcms/departement44/test-recherche-commune-sectorisation-id-ref-inconnu/c_1235804",
+                "type": "FicheLieu",
+                "lat": null,
+                "long": null,
+                "html_list": "\n\n\n<h3>\n<a href=\"departement44/test-recherche-commune-sectorisation-id-ref-inconnu/c_1235804\" class=\"\" data-jalios-id='c_1235804'>\n  Test recherche commune sectorisation id ref inconnu\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>",
+                "html_marker": "\n\n\n<h3>\n<a href=\"departement44/test-recherche-commune-sectorisation-id-ref-inconnu/c_1235804\" class=\"\" data-jalios-id='c_1235804'>\n  Test recherche commune sectorisation id ref inconnu\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>"
+            }
+        },
+        {
+            "id": "c_1235802",
+            "value": "Test recherche commune sectorisation",
+            "metadata": {
+                "url": "http://localhost:8080/jcms/departement44/test-recherche-commune-sectorisation/c_1235802",
+                "type": "FicheLieu",
+                "lat": null,
+                "long": null,
+                "html_list": "\n\n\n<h3>\n<a href=\"departement44/test-recherche-commune-sectorisation/c_1235802\" class=\"\" data-jalios-id='c_1235802'>\n  Test recherche commune sectorisation\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>",
+                "html_marker": "\n\n\n<h3>\n<a href=\"departement44/test-recherche-commune-sectorisation/c_1235802\" class=\"\" data-jalios-id='c_1235802'>\n  Test recherche commune sectorisation\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>"
+            }
+        },
+        {
+            "id": "c_1235798",
+            "value": "Test recherche commune",
+            "metadata": {
+                "url": "http://localhost:8080/jcms/departement44/test-recherche-commune/c_1235798",
+                "type": "FicheLieu",
+                "lat": null,
+                "long": null,
+                "html_list": "\n\n\n<h3>\n<a href=\"departement44/test-recherche-commune/c_1235798\" class=\"\" data-jalios-id='c_1235798'>\n  Test recherche commune\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>",
+                "html_marker": "\n\n\n<h3>\n<a href=\"departement44/test-recherche-commune/c_1235798\" class=\"\" data-jalios-id='c_1235798'>\n  Test recherche commune\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>"
+            }
+        },
+        {
+            "id": "c_1235006",
+            "value": "Collège Pierre et Marie Curie ,rue",
+            "metadata": {
+                "url": "http://localhost:8080/jcms/departement44/education-et-colleges/college-pierre-et-marie-curie-rue/c_1235006",
+                "type": "FicheLieu",
+                "lat": null,
+                "long": null,
+                "html_list": "\n\n\n<h3>\n<a href=\"departement44/education-et-colleges/college-pierre-et-marie-curie-rue/c_1235006\" class=\"\" data-jalios-id='c_1235006'>\n  Collège Pierre et Marie Curie ,rue\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>",
+                "html_marker": "\n\n\n<h3>\n<a href=\"departement44/education-et-colleges/college-pierre-et-marie-curie-rue/c_1235006\" class=\"\" data-jalios-id='c_1235006'>\n  Collège Pierre et Marie Curie ,rue\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>"
+            }
+        },
+        {
+            "id": "c_1234805",
+            "value": "Bailleur social - Espacil Habitat",
+            "metadata": {
+                "url": "http://localhost:8080/jcms/departement44/bailleur-social-espacil-habitat/c_1234805",
+                "type": "FicheLieu",
+                "lat": null,
+                "long": null,
+                "html_list": "\n\n\n<h3>\n<a href=\"departement44/bailleur-social-espacil-habitat/c_1234805\" class=\"\" data-jalios-id='c_1234805'>\n  Bailleur social - Espacil Habitat\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>",
+                "html_marker": "\n\n\n<h3>\n<a href=\"departement44/bailleur-social-espacil-habitat/c_1234805\" class=\"\" data-jalios-id='c_1234805'>\n  Bailleur social - Espacil Habitat\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>"
+            }
+        },
+        {
+            "id": "c_1234414",
+            "value": "Action Logement - Nord Département 44",
+            "metadata": {
+                "url": "http://localhost:8080/jcms/departement44/action-logement-nord-departement-44/c_1234414",
+                "type": "FicheLieu",
+                "lat": null,
+                "long": null,
+                "html_list": "\n\n\n<h3>\n<a href=\"departement44/action-logement-nord-departement-44/c_1234414\" class=\"\" data-jalios-id='c_1234414'>\n  Action Logement - Nord Département 44\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>",
+                "html_marker": "\n\n\n<h3>\n<a href=\"departement44/action-logement-nord-departement-44/c_1234414\" class=\"\" data-jalios-id='c_1234414'>\n  Action Logement - Nord Département 44\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>"
+            }
+        },
+        {
+            "id": "c_1234646",
+            "value": "Habitat 44",
+            "metadata": {
+                "url": "http://localhost:8080/jcms/departement44/habitat-logement/habitat-44/c_1234646",
+                "type": "FicheLieu",
+                "lat": null,
+                "long": null,
+                "html_list": "\n\n\n<h3>\n<a href=\"departement44/habitat-logement/habitat-44/c_1234646\" class=\"\" data-jalios-id='c_1234646'>\n  Habitat 44\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>",
+                "html_marker": "\n\n\n<h3>\n<a href=\"departement44/habitat-logement/habitat-44/c_1234646\" class=\"\" data-jalios-id='c_1234646'>\n  Habitat 44\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>"
+            }
+        },
+        {
+            "id": "c_1234403",
+            "value": "EIE - permanence de Rezé",
+            "metadata": {
+                "url": "http://localhost:8080/jcms/departement44/habitat-logement/eie-permanence-de-reze/c_1234403",
+                "type": "FicheLieu",
+                "lat": null,
+                "long": null,
+                "html_list": "\n\n\n<h3>\n<a href=\"departement44/habitat-logement/eie-permanence-de-reze/c_1234403\" class=\"\" data-jalios-id='c_1234403'>\n  EIE - permanence de Rezé\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>",
+                "html_marker": "\n\n\n<h3>\n<a href=\"departement44/habitat-logement/eie-permanence-de-reze/c_1234403\" class=\"\" data-jalios-id='c_1234403'>\n  EIE - permanence de Rezé\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>"
+            }
+        },
+        {
+            "id": "c_1234434",
+            "value": "CROUS - Centre Régional des Oeuvres Universitaires et Scolaires - Nantes",
+            "metadata": {
+                "url": "http://localhost:8080/jcms/departement44/crous-centre-regional-des-oeuvres-universitaires-et-scolaires-nantes/c_1234434",
+                "type": "FicheLieu",
+                "lat": null,
+                "long": null,
+                "html_list": "\n\n\n<h3>\n<a href=\"departement44/crous-centre-regional-des-oeuvres-universitaires-et-scolaires-nantes/c_1234434\" class=\"\" data-jalios-id='c_1234434'>\n  CROUS - Centre Régional des Oeuvres Universitaires et Scolaires - Nantes\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>",
+                "html_marker": "\n\n\n<h3>\n<a href=\"departement44/crous-centre-regional-des-oeuvres-universitaires-et-scolaires-nantes/c_1234434\" class=\"\" data-jalios-id='c_1234434'>\n  CROUS - Centre Régional des Oeuvres Universitaires et Scolaires - Nantes\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>"
+            }
+        },
+        {
+            "id": "c_1234696",
+            "value": "Mouvement du nid",
+            "metadata": {
+                "url": "http://localhost:8080/jcms/departement44/mouvement-du-nid/c_1234696",
+                "type": "FicheLieu",
+                "lat": null,
+                "long": null,
+                "html_list": "\n\n\n<h3>\n<a href=\"departement44/mouvement-du-nid/c_1234696\" class=\"\" data-jalios-id='c_1234696'>\n  Mouvement du nid\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>",
+                "html_marker": "\n\n\n<h3>\n<a href=\"departement44/mouvement-du-nid/c_1234696\" class=\"\" data-jalios-id='c_1234696'>\n  Mouvement du nid\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>"
+            }
+        },
+        {
+            "id": "c_1234450",
+            "value": "ADIL – permanence de La Chapelle-sur-Erdre",
+            "metadata": {
+                "url": "http://localhost:8080/jcms/departement44/adil-permanence-de-la-chapelle-sur-erdre/c_1234450",
+                "type": "FicheLieu",
+                "lat": null,
+                "long": null,
+                "html_list": "\n\n\n<h3>\n<a href=\"departement44/adil-permanence-de-la-chapelle-sur-erdre/c_1234450\" class=\"\" data-jalios-id='c_1234450'>\n  ADIL – permanence de La Chapelle-sur-Erdre\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>",
+                "html_marker": "\n\n\n<h3>\n<a href=\"departement44/adil-permanence-de-la-chapelle-sur-erdre/c_1234450\" class=\"\" data-jalios-id='c_1234450'>\n  ADIL – permanence de La Chapelle-sur-Erdre\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>"
+            }
+        },
+        {
+            "id": "c_1234981",
+            "value": "Foyer de Jeunes Travailleurs (FJT) Embarcadère",
+            "metadata": {
+                "url": "http://localhost:8080/jcms/departement44/jeunesse/foyer-de-jeunes-travailleurs-fjt-embarcadere/c_1234981",
+                "type": "FicheLieu",
+                "lat": null,
+                "long": null,
+                "html_list": "\n\n\n<h3>\n<a href=\"departement44/jeunesse/foyer-de-jeunes-travailleurs-fjt-embarcadere/c_1234981\" class=\"\" data-jalios-id='c_1234981'>\n  Foyer de Jeunes Travailleurs (FJT) Embarcadère\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>",
+                "html_marker": "\n\n\n<h3>\n<a href=\"departement44/jeunesse/foyer-de-jeunes-travailleurs-fjt-embarcadere/c_1234981\" class=\"\" data-jalios-id='c_1234981'>\n  Foyer de Jeunes Travailleurs (FJT) Embarcadère\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>"
+            }
+        },
+        {
+            "id": "c_1234768",
+            "value": "France Victimes 44",
+            "metadata": {
+                "url": "http://localhost:8080/jcms/departement44/france-victimes-44/c_1234768",
+                "type": "FicheLieu",
+                "lat": null,
+                "long": null,
+                "html_list": "\n\n\n<h3>\n<a href=\"departement44/france-victimes-44/c_1234768\" class=\"\" data-jalios-id='c_1234768'>\n  France Victimes 44\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>",
+                "html_marker": "\n\n\n<h3>\n<a href=\"departement44/france-victimes-44/c_1234768\" class=\"\" data-jalios-id='c_1234768'>\n  France Victimes 44\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>"
+            }
+        },
+        {
+            "id": "c_1234946",
+            "value": "Résidence Barbusse",
+            "metadata": {
+                "url": "http://localhost:8080/jcms/departement44/jeunesse/residence-barbusse/c_1234946",
+                "type": "FicheLieu",
+                "lat": null,
+                "long": null,
+                "html_list": "\n\n\n<h3>\n<a href=\"departement44/jeunesse/residence-barbusse/c_1234946\" class=\"\" data-jalios-id='c_1234946'>\n  Résidence Barbusse\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>",
+                "html_marker": "\n\n\n<h3>\n<a href=\"departement44/jeunesse/residence-barbusse/c_1234946\" class=\"\" data-jalios-id='c_1234946'>\n  Résidence Barbusse\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>"
+            }
+        },
+        {
+            "id": "c_1234943",
+            "value": "Résidence La Tour d'Auvergne",
+            "metadata": {
+                "url": "http://localhost:8080/jcms/departement44/jeunesse/residence-la-tour-d-auvergne/c_1234943",
+                "type": "FicheLieu",
+                "lat": null,
+                "long": null,
+                "html_list": "\n\n\n<h3>\n<a href=\"departement44/jeunesse/residence-la-tour-d-auvergne/c_1234943\" class=\"\" data-jalios-id='c_1234943'>\n  Résidence La Tour d'Auvergne\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>",
+                "html_marker": "\n\n\n<h3>\n<a href=\"departement44/jeunesse/residence-la-tour-d-auvergne/c_1234943\" class=\"\" data-jalios-id='c_1234943'>\n  Résidence La Tour d'Auvergne\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>"
+            }
+        },
+        {
+            "id": "c_1234944",
+            "value": "Résidence Chénaie",
+            "metadata": {
+                "url": "http://localhost:8080/jcms/departement44/jeunesse/residence-chenaie/c_1234944",
+                "type": "FicheLieu",
+                "lat": null,
+                "long": null,
+                "html_list": "\n\n\n<h3>\n<a href=\"departement44/jeunesse/residence-chenaie/c_1234944\" class=\"\" data-jalios-id='c_1234944'>\n  Résidence Chénaie\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>",
+                "html_marker": "\n\n\n<h3>\n<a href=\"departement44/jeunesse/residence-chenaie/c_1234944\" class=\"\" data-jalios-id='c_1234944'>\n  Résidence Chénaie\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>"
+            }
+        },
+        {
+            "id": "c_1234940",
+            "value": "Résidence Port Beaulieu-Les Forges",
+            "metadata": {
+                "url": "http://localhost:8080/jcms/departement44/jeunesse/residence-port-beaulieu-les-forges/c_1234940",
+                "type": "FicheLieu",
+                "lat": null,
+                "long": null,
+                "html_list": "\n\n\n<h3>\n<a href=\"departement44/jeunesse/residence-port-beaulieu-les-forges/c_1234940\" class=\"\" data-jalios-id='c_1234940'>\n  Résidence Port Beaulieu-Les Forges\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>",
+                "html_marker": "\n\n\n<h3>\n<a href=\"departement44/jeunesse/residence-port-beaulieu-les-forges/c_1234940\" class=\"\" data-jalios-id='c_1234940'>\n  Résidence Port Beaulieu-Les Forges\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>"
+            }
+        },
+        {
+            "id": "c_1234351",
+            "value": "ADELIS",
+            "metadata": {
+                "url": "http://localhost:8080/jcms/departement44/jeunesse/adelis/c_1234351",
+                "type": "FicheLieu",
+                "lat": null,
+                "long": null,
+                "html_list": "\n\n\n<h3>\n<a href=\"departement44/jeunesse/adelis/c_1234351\" class=\"\" data-jalios-id='c_1234351'>\n  ADELIS\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>",
+                "html_marker": "\n\n\n<h3>\n<a href=\"departement44/jeunesse/adelis/c_1234351\" class=\"\" data-jalios-id='c_1234351'>\n  ADELIS\n  \n</a>\n</h3>\n\n<div class=\"abstract\" >\n\t\n</div>"
+            }
+        }
+    ]
+}

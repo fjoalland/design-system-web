@@ -5,7 +5,7 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
             category
         );
 
-        this.errorMessage = 'Veuillez cocher au moins un élément';
+        this.errorMessage = 'FIELD_BOX_MANDATORY_ERROR_MESSAGE';
     }
 
     create (element) {
@@ -69,8 +69,8 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
         object.inputElements.forEach((inputElement) => {
             if (
                 data &&
-                data.values &&
-                data.values.includes(inputElement.value)
+                data.value &&
+                data.value.includes(inputElement.value)
             ) {
                 inputElement.checked = true;
             } else {
@@ -104,14 +104,9 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
     }
 
     removeInvalid (objectIndex) {
+        super.removeInvalid(objectIndex);
+
         const object = this.objects[objectIndex];
-
-        let errorElement = object.containerElement.querySelector(':scope > .ds44-errorMsg-container');
-        if (errorElement) {
-            errorElement.innerHTML = '';
-            errorElement.classList.add('hidden');
-        }
-
         object.inputElements.forEach((inputElement) => {
             const defaultAriaDescribedBy = inputElement.getAttribute('data-bkp-aria-describedby');
             if (!defaultAriaDescribedBy) {

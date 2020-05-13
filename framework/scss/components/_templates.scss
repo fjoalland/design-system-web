@@ -22,6 +22,28 @@
     position: relative;
 }
 
+.ds44-inner-container--mag {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: $ds44-max-inner-mag-size;
+    position: relative;
+}
+
+.ds44-video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+
+    .ds44-video-item {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
+}
+
 .ds44-homepage-container {
 
     .ds44-imgInsta {
@@ -107,6 +129,15 @@ main {
     margin: 0 auto $ds44-components-vmargin auto;
 }
 
+.ds44-contenuDossier {
+
+    .ds44-negativeOffset-1,
+    .ds44-negativeOffset-2 {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+}
+
 @media (max-width: $ds44-medium - .0625) {
 
     .ds44-container-relmob {
@@ -174,10 +205,15 @@ main {
             padding: 0;
         }
 
+        .ds44-imgCaption {
+            max-width: calc(100% - 55px);
+        }
+
     }
 }
 
-.swipper-carousel-wrap--homepage {
+.swipper-carousel-wrap--homepage,
+.ds44-titleContainer--home {
 
     .h1-like {
         padding: 10rem 3rem 5rem 3rem;
@@ -257,14 +293,30 @@ main {
 
         .ds44-js-results-container {
             position: relative;
+            overflow: hidden;
 
             .ds44-js-results-card {
-                background-color: #ffffff;
+                background-color: $ds44-background-base;
                 transition: left $ds44-timing-x2 $ds44-transition-std;
                 position: absolute;
                 width: 100%;
                 height: 100%;
                 left: 200%;
+                z-index: 2;
+
+                & main[role="main"] {
+                    padding: 0;
+                }
+            }
+
+            .ds44-js-results-list {
+                position: relative;
+                background-color: $ds44-background-base;
+                z-index: 1;
+
+                #ds44-results-new-search {
+                    display: none;
+                }
             }
 
             &.ds44-js-show-card .ds44-js-results-card {
@@ -274,6 +326,10 @@ main {
 
             &.ds44-js-show-card .ds44-js-results-list {
                 display: none;
+            }
+
+            .ds44-js-results-list > .h3-like[role="heading"]{
+                margin-left: $ds44-medium-vmargin ;
             }
         }
 
@@ -291,15 +347,25 @@ main {
                 flex-wrap: wrap;
                 padding-bottom: $ds44-padding-xlarge;
 
-                li {
+                > li {
                     display: grid;
                     margin: $ds44-medium-vmargin;
-                    margin-bottom: 0;
-                    flex-basis: 30%;
+                    width: calc(33.33% - 3rem);
+                    max-width: calc(33.33% - 3rem);
+
+                    @media (max-width: $ds44-large - .0625) {
+                        width: calc(50% - 3rem);
+                        max-width: calc(50% - 3rem);
+                    }
 
                     @media (max-width: $ds44-medium - .0625) {
-                        margin: 0;
-                        flex-basis: auto;
+                        width: 100%;
+                        max-width: 100%;
+                        margin: 0 0 $ds44-medium-vmargin 0;
+                    }
+
+                    .ds44-card {
+                        margin-bottom: 0;
                     }
                 }
             }
@@ -317,29 +383,45 @@ main {
         top: 10px;
         right: 10px;
         display: block;
+        z-index: 2;
 
         @media (max-width: $ds44-medium - .0625) {
-            display: none;
+            position: fixed;
+            top: auto;
+            bottom: 0;
+            right: auto;
+            left: 0;
+            width: 100%;
+        }
+    }
+
+    /* -------Resultats vide */
+
+    &--empty {
+        .ds44-btnStd-showMap {
+            @media (max-width: $ds44-medium - .0625) {
+                display: none;
+            }
         }
     }
 
     /* -------Resultats avec carte - tuiles en colonne gauche avec carte à droite */
 
     &--mapVisible {
-        height: 80vh;
         display: flex;
         overflow: hidden;
 
         @media (max-width: $ds44-medium - .0625) {
-            height: auto;
             display: block;
-            overflow: auto;
+            margin-top: $ds44-large-vmargin;
+        }
+
+        .ds44-btnStd-showMap {
+            display: none;
         }
 
         .ds44-listResults {
             width: 33.333333%;
-            overflow-x: hidden;
-            overflow-y: scroll;
 
             @media (max-width: $ds44-large - .0625) {
                 width: 50%;
@@ -347,20 +429,161 @@ main {
 
             @media (max-width: $ds44-medium - .0625) {
                 width: 100%;
-                display: none;
+                padding-top: 0;
+                padding-bottom: 0;
             }
 
             .ds44-textLegend {
                 padding-right: 0;
             }
 
+            .ds44-js-search-pager {
+                display: none;
+            }
+
             .ds44-list {
                 &--results {
                     flex-direction: column;
 
-                    li {
+                    @media (max-width: $ds44-medium - .0625) {
+                        display: none;
+                    }
+
+                    > li {
                         display: inherit;
-                        flex-basis: auto;
+                        width: calc(100% - 3rem);
+                        max-width: calc(100% - 3rem);
+
+                        > * {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+
+            .ds44-js-results-card {
+
+                & main[role="main"] {
+
+                    .ds44-container-large {
+                        padding: 0;
+                        margin: 0;
+
+                        & * {
+                            grid-template-columns: repeat(1, 1fr);
+                        }
+
+                        .h1-like {
+                            @include ds44-font-sizes(h2);
+                        }
+
+                        .ds44-grid12-offset-1,
+                        .ds44-grid12-offset-2 {
+                            padding-left: 8.333%;
+                            padding-right: 8.333%;
+                        }
+
+                        .ds44-innerBoxContainer {
+
+                            .ds44-grid12-offset-1,
+                            .ds44-grid12-offset-2{
+                                padding: 0;
+                            }
+                        }
+
+                        .ds44-negativeOffset-1,
+                        .ds44-negativeOffset-2 {
+                            padding: 0;
+                            margin:  0;
+                        }
+
+
+                        .col {
+                            padding: 0 !important;
+                            margin-top: 2em;
+
+                            &:first-child {
+                                margin-top: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        &--fullW {
+            height: 80vh;
+            display: block;
+            overflow: auto;
+
+            .ds44-mapResults {
+                display: block;
+                width: 100% !important;
+                height: 100%;
+
+                .ds44-js-map {
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    width: 100%;
+                    height: 100%;
+
+                    .ds44-btnStd {
+                        font-size: 1.4rem;
+                        font-family: Muli, Arial, Helvetica, sans-serif;
+                    }
+
+                    .mapboxgl-ctrl-group {
+                        background-color: transparent !important;
+                        box-shadow: none !important;
+                    }
+
+                    .mapboxgl-ctrl-toggle-view {
+                        white-space: nowrap;
+                        width: auto;
+                        padding: 0 1.5rem;
+
+                        @media (max-width: $ds44-medium - .0625) {
+                            display: none;
+                        }
+                    }
+
+                    .mapboxgl-ctrl-zoom-in,
+                    .mapboxgl-ctrl-zoom-out,
+                    .mapboxgl-ctrl-compass,
+                    .mapboxgl-ctrl-fullscreen,
+                    .mapboxgl-ctrl-shrink {
+                        color: #ffffff !important;
+                        background-color: #000000 !important;
+                        border-radius: 3px;
+                        border: 1px solid #000;
+                        height: 4.5rem;
+                        width: 4.5rem;
+                    }
+
+                    .mapboxgl-ctrl-zoom-in,
+                    .mapboxgl-ctrl-zoom-out {
+                        margin-bottom: 0.5rem;
+                    }
+
+                    .mapboxgl-ctrl-zoom-in .mapboxgl-ctrl-icon {
+                        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='20' height='20' viewBox='0 0 20 20'><rect width='20' height='20' fill='none'/><g transform='translate(18092.5 11479)'><line x2='14' transform='translate(-18089.5 -11469)' fill='none' stroke='white' stroke-linecap='round' stroke-width='1.5'/><line x2='14' transform='translate(-18082.5 -11476) rotate(90)' fill='none' stroke='white' stroke-linecap='round' stroke-width='1.5'/></g><rect width='20' height='20' fill='none'/></svg>");
+                    }
+
+                    .mapboxgl-ctrl-zoom-out .mapboxgl-ctrl-icon {
+                        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='20' height='20' viewBox='0 0 20 20'><rect width='20' height='20' fill='none'/><g transform='translate(18092.5 11479)'><line x2='14' transform='translate(-18089.5 -11469)' fill='none' stroke='white' stroke-linecap='round' stroke-width='1.5'/></g><rect width='20' height='20' fill='none'/></svg>");
+                    }
+
+                    .mapboxgl-ctrl-compass .mapboxgl-ctrl-icon {
+                        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='22' viewBox='0 0 20 22'><rect width='20' height='20' transform='translate(0 1)' fill='none'/><path d='M3.5,0,7,8H0Z' transform='translate(14 21) rotate(180)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/><path d='M3.5,0,7,8H0Z' transform='translate(7 1)' fill='white' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/><rect width='20' height='22' fill='none'/></svg>");
+                    }
+
+                    .mapboxgl-ctrl-fullscreen .mapboxgl-ctrl-icon {
+                        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='20' height='20' viewBox='0 0 20 20'><rect width='20' height='20' transform='translate(0 0.415)' fill='none'/><g transform='translate(18466.582 11443.715)'><g transform='translate(-18459.236 -11436.926) rotate(-45)'><path d='M1.414,1.414l2.91,2.91-2.91,2.91' transform='translate(5.277)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.56'/><line x1='6.734' transform='translate(2.341 4.324)' fill='none' stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.56'/></g><g transform='translate(-18460.445 -11433.465) rotate(-135)'><path d='M0,5.821,2.911,2.91,0,0' transform='translate(4.35)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.56'/><line x1='6.735' y2='0.001' transform='translate(0 2.91)' fill='none' stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.56'/></g><g transform='translate(-18452.465 -11433.715) rotate(45)'><path d='M0,5.821,2.91,2.91,0,0' transform='translate(4.35)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.56'/><line x1='6.735' transform='translate(0 2.91)' fill='none' stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.56'/></g><g transform='translate(-18456.33 -11429.598) rotate(135)'><path d='M0,0,2.91,2.911,0,5.821' transform='translate(4.351 0.001)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.56'/><line x1='6.736' y1='0.001' transform='translate(0 2.911)' fill='none' stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.56'/></g></g><rect width='20' height='20' fill='none'/></svg>");
+                    }
+
+                    .mapboxgl-ctrl-shrink .mapboxgl-ctrl-icon {
+                        background-image: url("data:image/svg+xml;charset=utf-8,<svg id='cd44-smallscreen-black' xmlns='http://www.w3.org/2000/svg' width='20.252' height='20.251' viewBox='0 0 20.252 20.251'><rect width='20' height='20' fill='none'/><g transform='translate(18466.582 11443.715)'><g transform='translate(-18446.33 -11439.599) rotate(135)'><path d='M0,0,2.91,2.91,0,5.821' transform='translate(4.35 0)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/><line x1='6.735' transform='translate(0 2.91)' fill='none' stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.5'/></g><g transform='translate(-18462.465 -11443.715) rotate(45)'><path d='M0,5.821,2.911,2.91,0,0' transform='translate(4.35 0)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/><line x1='6.735' y2='0.001' transform='translate(0 2.91)' fill='none' stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.5'/></g><g transform='translate(-18450.445 -11423.464) rotate(-135)'><path d='M0,5.821,2.91,2.91,0,0' transform='translate(4.35 0)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/><line x1='6.735' transform='translate(0 2.91)' fill='none' stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.5'/></g><g transform='translate(-18466.58 -11427.581) rotate(-45)'><path d='M0,0,2.911,2.911,0,5.821' transform='translate(4.35 0)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/><line x1='6.735' y1='0.001' transform='translate(0 2.91)' fill='none' stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.5'/></g></g></svg>");
                     }
                 }
             }
@@ -375,82 +598,93 @@ main {
             }
 
             @media (max-width: $ds44-medium - .0625) {
-                height: 50vh;
                 width: 100%;
             }
 
-            .ds44-js-map {
-                position: absolute;
-                top: 0;
-                bottom: 0;
+            .ds44-mapResults-container {
+                position: relative;
                 width: 100%;
-                height: 100%;
+                height: 80vh;
 
-                .ds44-btnStd {
-                    font-size: 1.4rem;
-                    font-family: Muli, Arial, Helvetica, sans-serif;
+                @media (max-width: $ds44-large - .0625) {
+                    height: auto;
                 }
 
-                .mapboxgl-ctrl-group {
-                    background-color: transparent !important;
-                    box-shadow: none !important;
+                @media (max-width: $ds44-medium - .0625) {
+                    height: 80vh;
                 }
 
-                .mapboxgl-ctrl-toggle-view {
-                    white-space: nowrap;
-                    width: auto;
-                    padding: 0 1.5rem;
+                .ds44-btnStd-showMap {
+                    display: block;
+                }
 
-                    @media (max-width: $ds44-medium - .0625) {
-                        display: none;
+                .ds44-js-map {
+                    width: 100%;
+                    height: 100%;
+
+                    .ds44-btnStd {
+                        font-size: 1.4rem;
+                        font-family: Muli, Arial, Helvetica, sans-serif;
+                    }
+
+                    .mapboxgl-ctrl-group {
+                        background-color: transparent !important;
+                        box-shadow: none !important;
+                    }
+
+                    .mapboxgl-ctrl-toggle-view {
+                        white-space: nowrap;
+                        width: auto;
+                        padding: 0 1.5rem;
+
+                        @media (max-width: $ds44-medium - .0625) {
+                            display: none;
+                        }
+                    }
+
+                    .mapboxgl-ctrl-zoom-in,
+                    .mapboxgl-ctrl-zoom-out,
+                    .mapboxgl-ctrl-compass,
+                    .mapboxgl-ctrl-fullscreen,
+                    .mapboxgl-ctrl-shrink {
+                        color: #ffffff !important;
+                        background-color: #000000 !important;
+                        border-radius: 3px;
+                        border: 1px solid #000;
+                        height: 4.5rem;
+                        width: 4.5rem;
+                    }
+
+                    .mapboxgl-ctrl-zoom-in,
+                    .mapboxgl-ctrl-zoom-out {
+                        margin-bottom: 0.5rem;
+                    }
+
+                    .mapboxgl-ctrl-zoom-in .mapboxgl-ctrl-icon {
+                        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='20' height='20' viewBox='0 0 20 20'><rect width='20' height='20' fill='none'/><g transform='translate(18092.5 11479)'><line x2='14' transform='translate(-18089.5 -11469)' fill='none' stroke='white' stroke-linecap='round' stroke-width='1.5'/><line x2='14' transform='translate(-18082.5 -11476) rotate(90)' fill='none' stroke='white' stroke-linecap='round' stroke-width='1.5'/></g><rect width='20' height='20' fill='none'/></svg>");
+                    }
+
+                    .mapboxgl-ctrl-zoom-out .mapboxgl-ctrl-icon {
+                        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='20' height='20' viewBox='0 0 20 20'><rect width='20' height='20' fill='none'/><g transform='translate(18092.5 11479)'><line x2='14' transform='translate(-18089.5 -11469)' fill='none' stroke='white' stroke-linecap='round' stroke-width='1.5'/></g><rect width='20' height='20' fill='none'/></svg>");
+                    }
+
+                    .mapboxgl-ctrl-compass .mapboxgl-ctrl-icon {
+                        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='22' viewBox='0 0 20 22'><rect width='20' height='20' transform='translate(0 1)' fill='none'/><path d='M3.5,0,7,8H0Z' transform='translate(14 21) rotate(180)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/><path d='M3.5,0,7,8H0Z' transform='translate(7 1)' fill='white' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/><rect width='20' height='22' fill='none'/></svg>");
+                    }
+
+                    .mapboxgl-ctrl-fullscreen .mapboxgl-ctrl-icon {
+                        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='20' height='20' viewBox='0 0 20 20'><rect width='20' height='20' transform='translate(0 0.415)' fill='none'/><g transform='translate(18466.582 11443.715)'><g transform='translate(-18459.236 -11436.926) rotate(-45)'><path d='M1.414,1.414l2.91,2.91-2.91,2.91' transform='translate(5.277)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.56'/><line x1='6.734' transform='translate(2.341 4.324)' fill='none' stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.56'/></g><g transform='translate(-18460.445 -11433.465) rotate(-135)'><path d='M0,5.821,2.911,2.91,0,0' transform='translate(4.35)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.56'/><line x1='6.735' y2='0.001' transform='translate(0 2.91)' fill='none' stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.56'/></g><g transform='translate(-18452.465 -11433.715) rotate(45)'><path d='M0,5.821,2.91,2.91,0,0' transform='translate(4.35)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.56'/><line x1='6.735' transform='translate(0 2.91)' fill='none' stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.56'/></g><g transform='translate(-18456.33 -11429.598) rotate(135)'><path d='M0,0,2.91,2.911,0,5.821' transform='translate(4.351 0.001)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.56'/><line x1='6.736' y1='0.001' transform='translate(0 2.911)' fill='none' stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.56'/></g></g><rect width='20' height='20' fill='none'/></svg>");
+                    }
+
+                    .mapboxgl-ctrl-shrink .mapboxgl-ctrl-icon {
+                        background-image: url("data:image/svg+xml;charset=utf-8,<svg id='cd44-smallscreen-black' xmlns='http://www.w3.org/2000/svg' width='20.252' height='20.251' viewBox='0 0 20.252 20.251'><rect width='20' height='20' fill='none'/><g transform='translate(18466.582 11443.715)'><g transform='translate(-18446.33 -11439.599) rotate(135)'><path d='M0,0,2.91,2.91,0,5.821' transform='translate(4.35 0)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/><line x1='6.735' transform='translate(0 2.91)' fill='none' stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.5'/></g><g transform='translate(-18462.465 -11443.715) rotate(45)'><path d='M0,5.821,2.911,2.91,0,0' transform='translate(4.35 0)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/><line x1='6.735' y2='0.001' transform='translate(0 2.91)' fill='none' stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.5'/></g><g transform='translate(-18450.445 -11423.464) rotate(-135)'><path d='M0,5.821,2.91,2.91,0,0' transform='translate(4.35 0)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/><line x1='6.735' transform='translate(0 2.91)' fill='none' stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.5'/></g><g transform='translate(-18466.58 -11427.581) rotate(-45)'><path d='M0,0,2.911,2.911,0,5.821' transform='translate(4.35 0)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/><line x1='6.735' y1='0.001' transform='translate(0 2.91)' fill='none' stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.5'/></g></g></svg>");
                     }
                 }
-
-                .mapboxgl-ctrl-zoom-in,
-                .mapboxgl-ctrl-zoom-out,
-                .mapboxgl-ctrl-compass,
-                .mapboxgl-ctrl-fullscreen,
-                .mapboxgl-ctrl-shrink {
-                    color: #ffffff !important;
-                    background-color: #000000 !important;
-                    border-radius: 3px;
-                    border: 1px solid #000;
-                    height: 4.5rem;
-                    width: 4.5rem;
-                }
-
-                .mapboxgl-ctrl-zoom-in,
-                .mapboxgl-ctrl-zoom-out {
-                    margin-bottom: 0.5rem;
-                }
-
-                .mapboxgl-ctrl-zoom-in .mapboxgl-ctrl-icon {
-                    background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='20' height='20' viewBox='0 0 20 20'><rect width='20' height='20' fill='none'/><g transform='translate(18092.5 11479)'><line x2='14' transform='translate(-18089.5 -11469)' fill='none' stroke='white' stroke-linecap='round' stroke-width='1.5'/><line x2='14' transform='translate(-18082.5 -11476) rotate(90)' fill='none' stroke='white' stroke-linecap='round' stroke-width='1.5'/></g><rect width='20' height='20' fill='none'/></svg>");
-                }
-
-                .mapboxgl-ctrl-zoom-out .mapboxgl-ctrl-icon {
-                    background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='20' height='20' viewBox='0 0 20 20'><rect width='20' height='20' fill='none'/><g transform='translate(18092.5 11479)'><line x2='14' transform='translate(-18089.5 -11469)' fill='none' stroke='white' stroke-linecap='round' stroke-width='1.5'/></g><rect width='20' height='20' fill='none'/></svg>");
-                }
-
-                .mapboxgl-ctrl-compass .mapboxgl-ctrl-icon {
-                    background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='22' viewBox='0 0 20 22'><rect width='20' height='20' transform='translate(0 1)' fill='none'/><path d='M3.5,0,7,8H0Z' transform='translate(14 21) rotate(180)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/><path d='M3.5,0,7,8H0Z' transform='translate(7 1)' fill='white' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/><rect width='20' height='22' fill='none'/></svg>");
-                }
-
-                .mapboxgl-ctrl-fullscreen .mapboxgl-ctrl-icon {
-                    background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='20' height='20' viewBox='0 0 20 20'><rect width='20' height='20' transform='translate(0 0.415)' fill='none'/><g transform='translate(18466.582 11443.715)'><g transform='translate(-18459.236 -11436.926) rotate(-45)'><path d='M1.414,1.414l2.91,2.91-2.91,2.91' transform='translate(5.277)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.56'/><line x1='6.734' transform='translate(2.341 4.324)' fill='none' stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.56'/></g><g transform='translate(-18460.445 -11433.465) rotate(-135)'><path d='M0,5.821,2.911,2.91,0,0' transform='translate(4.35)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.56'/><line x1='6.735' y2='0.001' transform='translate(0 2.91)' fill='none' stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.56'/></g><g transform='translate(-18452.465 -11433.715) rotate(45)'><path d='M0,5.821,2.91,2.91,0,0' transform='translate(4.35)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.56'/><line x1='6.735' transform='translate(0 2.91)' fill='none' stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.56'/></g><g transform='translate(-18456.33 -11429.598) rotate(135)'><path d='M0,0,2.91,2.911,0,5.821' transform='translate(4.351 0.001)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.56'/><line x1='6.736' y1='0.001' transform='translate(0 2.911)' fill='none' stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.56'/></g></g><rect width='20' height='20' fill='none'/></svg>");
-                }
-
-                .mapboxgl-ctrl-shrink .mapboxgl-ctrl-icon {
-                    background-image: url("data:image/svg+xml;charset=utf-8,<svg id='cd44-smallscreen-black' xmlns='http://www.w3.org/2000/svg' width='20.252' height='20.251' viewBox='0 0 20.252 20.251'><rect width='20' height='20' fill='none'/><g transform='translate(18466.582 11443.715)'><g transform='translate(-18446.33 -11439.599) rotate(135)'><path d='M0,0,2.91,2.91,0,5.821' transform='translate(4.35 0)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/><line x1='6.735' transform='translate(0 2.91)' fill='none' stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.5'/></g><g transform='translate(-18462.465 -11443.715) rotate(45)'><path d='M0,5.821,2.911,2.91,0,0' transform='translate(4.35 0)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/><line x1='6.735' y2='0.001' transform='translate(0 2.91)' fill='none' stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.5'/></g><g transform='translate(-18450.445 -11423.464) rotate(-135)'><path d='M0,5.821,2.91,2.91,0,0' transform='translate(4.35 0)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/><line x1='6.735' transform='translate(0 2.91)' fill='none' stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.5'/></g><g transform='translate(-18466.58 -11427.581) rotate(-45)'><path d='M0,0,2.911,2.911,0,5.821' transform='translate(4.35 0)' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/><line x1='6.735' y1='0.001' transform='translate(0 2.91)' fill='none' stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.5'/></g></g></svg>");
-                }
             }
-        }
-
-        .ds44-btnStd-showMap {
-            display: none;
         }
     }
 }
+
 .ds44-map-marker {
     background: url('../../../assets/images/cd44-marker-big-black.svg') no-repeat center center transparent;
     background-size: cover;
@@ -468,83 +702,17 @@ main {
 }
 
 
-/* Liste à puces avec ancres (page dossier actualités) */
-.ds44-list {
+/* Fiche lieu événements */
 
-    &--puces {
+.ds44-img50--event {
+    .ds44-theme {
+        flex-wrap: wrap;
 
-        > li {
-            list-style: none;
-            margin-top: $ds44-padding-box;
-            position: relative;
-            padding-left: $ds44-padding-large;
+        & .ds44-docListElem {
+            margin: .25em .5em;
 
-            > a {
-                text-decoration: none;
-                transition: all $ds44-timing-standard $ds44-transition-std;
-
-                &:hover {
-                    text-decoration: underline;
-                }
-
-                &:before {
-                    content: '';
-                    width: 7px;
-                    height: 7px;
-                    border: 1px solid $ds44-color-base;
-                    border-radius: 50%;
-                    display: block;
-                    position: absolute;
-                    left: 0;
-                    top: 7px;
-                }
-            }
-
-            > a.active {
-                &:hover {
-                    text-decoration: none;
-                }
-
-                &:before {
-                    content: '';
-                    width: 10px;
-                    height: 10px;
-                    background: $ds44-color-base;
-                    top: 7px;
-                }
-            }
-        }
-    }
-}
-
-
-/* Liste pour chapitrage vidéo */
-.ds44-list {
-
-    &--video {
-        margin-left: $ds44-padding-medium;
-        margin-bottom: $ds44-padding-large;
-
-        > li {
-            list-style: none;
-            position: relative;
-            padding-left: $ds44-padding-xlarge;
-
-            + li {
-                margin-top: $ds44-padding-large;
-            }
-
-            > a {
-                &:before {
-                    content: '';
-                    width: 20px;
-                    height: 20px;
-                    background-image: url(../../../assets/images/cd44-play-black.svg);
-                    display: block;
-                    position: absolute;
-                    left: 0;
-                    top: 2px;
-                }
+            &.h4-like {
+                line-height: 0.85em;
             }
         }
     }
@@ -634,6 +802,13 @@ main {
         }
     }
 
+    .ds44-homepage-noCarrousel {
+        .ds44-titleContainer--home .h1-like {
+            padding: 10rem 3rem 3rem 3rem;
+            margin: 0;
+        }
+    }
+
 }
 
 @media (min-width: $ds44-max-size) {
@@ -643,5 +818,197 @@ main {
         padding-left: $ds44-container-large-margin;
         padding-right: $ds44-container-large-margin;
     }
+
+}
+
+
+/* Media Queries Print / Impression */
+@media print {
+
+  body {
+    font-size: 1em;
+    width: auto!important;
+    margin: auto!important;
+    background-color: #fff!important;
+    color: #000!important;
+  }
+
+  p, .p-like, h1, .h1-like, h2, .h2-like, h3, .h3-like, h4, .h4-like, h5, .h5-like, h6, .h6-like, blockquote, label, ul, ol {
+      color: #000!important;
+      margin: 0;
+  }
+
+
+  p, blockquote {
+    orphans: 3; /* pas de ligne seule en bas */
+    widows: 3; /* pas de ligne seule en haut */
+  }
+  blockquote, ul, ol, table, tbody, .ds44-wsg-encadreContour {
+    break-inside: avoid; /* pas de coupure dans ces élements */
+  }
+  h1, .h1-like,
+  h2, .h2-like,
+  h3, .h3-like,
+  h4, .h4-like {
+    break-after: avoid; /* pas de saut après ces éléments */
+  }
+  h2, .h2-like {
+    padding:  0 !important;
+  }
+  a {
+    color: #000!important;
+    text-decoration: underline!important;
+  }
+
+
+  .ds44-container-large {
+    margin: 0;
+    padding: 0;
+    clear: both;
+    max-width: inherit;
+    display: block  !important;
+  }
+
+  .grid-2-small-1,
+  .grid-12-small-1 {
+    grid-template-columns : repeat(1, 1fr);
+    break-inside: auto !important;
+
+    & > * {
+      clear: both !important;
+      display: block ;
+      grid-column: inherit !important;
+      break-inside: auto !important;
+
+      & * {
+        break-inside: auto !important;
+      }
+    }
+  }
+
+  .ds44-grid12-offset-2,
+  .ds44-grid12-offset-1,
+  .ds44-negativeOffset-2,
+  .ds44-negativeOffset-1 {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .ds44-inner-container,
+  .ds44-inner-container--mag  {
+    max-width: inherit !important;
+  }
+
+
+
+    p, blockquote {
+        orphans: 3; /* pas de ligne seule en bas */
+        widows: 3; /* pas de ligne seule en haut */
+    }
+    blockquote, ul, ol {
+        page-break-inside: avoid; /* pas de coupure dans ces élements */
+    }
+    h1, .h1-like,
+    h2, .h2-like,
+    h3, .h3-like,
+    h4, .h4-like {
+        page-break-after: avoid; /* pas de saut après ces éléments */
+    }
+    a {
+        color: #000 !important;
+        text-decoration: underline !important;
+    }
+
+
+    .ds44-container-large {
+        margin: 0;
+        padding: 0;
+        clear: both;
+        max-width: inherit;
+        display: block !important;
+    }
+
+    .grid-2-small-1,
+    .grid-12-small-1 {
+        grid-template-columns: repeat(1, 1fr);
+        page-break-inside: auto !important;
+
+        & > * {
+            clear: both !important;
+            display: block !important;
+            grid-column: inherit !important;
+            page-break-inside: auto !important;
+        }
+    }
+
+    .ds44-grid12-offset-2,
+    .ds44-grid12-offset-1 {
+        padding: 0 !important;
+    }
+
+    .ds44-inner-container {
+        max-width: inherit !important;
+    }
+
+    .ds44-pageHeaderContainer {
+
+        .ds44-titleContainer {
+            min-height: auto;
+            justify-content: flex-start;
+
+            .ds44-alphaGradient {
+                padding: 0 !important
+            }
+
+            .ds44-text--colorInvert {
+                color: #000;
+            }
+        }
+
+        img {
+            display: none !important;
+        }
+    }
+
+    .grid-offset {
+        display: none !important;
+    }
+
+  .txtcenter,
+  .u-txt-center,
+  .center {
+      text-align: left;
+  }
+
+  .ds44-homepage-container > div {
+      height: auto !important;
+      min-height: auto !important;
+
+      .swipper-carousel-wrap--homepage .h1-like,
+      .ds44-titleContainer--home .h1-like {
+          position: relative;
+          padding: 0;
+          color: #000;
+
+          br {
+              display: none;
+          }
+      }
+
+      .ds44-titleContainer--home {
+          height: auto !important;
+          min-height: auto !important;
+      }
+  }
+
+  .ds44-component-chapo {
+      max-width: 100%;
+  }
+
+  tr:nth-child(odd),
+  thead + tbody > tr:nth-child(even) {
+    background-color: $ds44-lightgray !important;
+    border: 1px solid $ds44-lightgray;
+  }
 
 }

@@ -57,7 +57,6 @@
 }
 
 .ds44-tabs__content {
-    padding: $ds44-padding-xxlarge;
     opacity: 1;
     transition: all $ds44-timing-standard ease-in-out;
     position: relative;
@@ -100,10 +99,6 @@
 
     .ds44-navOnglets {
         width: 100%;
-    }
-
-    .ds44-tabs__content {
-        padding: $ds44-padding-xlarge $ds44-padding-base;
     }
 
     .ds44-tabs__list {
@@ -164,6 +159,25 @@
                 width: 100%;
             }
         }
+    }
+
+}
+
+
+
+/* Media Queries Print / Impression */
+@media print {
+
+    .ds44-tabs__content {
+        opacity: 1 !important;
+        display: block !important;
+        clear: both !important;
+        margin: 0;
+        height: inherit;
+    }
+
+    .ds44-blocBtnOnglets {
+        display: none !important;
     }
 
 }

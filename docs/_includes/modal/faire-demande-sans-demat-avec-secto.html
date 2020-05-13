@@ -8,7 +8,7 @@
             <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>
             <div class="ds44-mt3 grid-12-small-1">
                 <div class="col-6 ds44-modal-column">
-                    <h2 class="h4-like">Documents utiles :</h2>
+                    <h2 class="h4-like" id="titre2">Documents utiles :</h2>
                     <ul class="ds44-list">
                         <li class="mts">
                             <p class="ds44-docListElem">
@@ -22,8 +22,7 @@
                 <div class="col-6 ds44-modal-column">
                     <h2 class="h4-like" id="idAdresseDossier">Adresse d'envoi du dossier :</h2>
                     <form>
-                        {% capture ariaDescribedBy %}idAdresseDossier{% if ariaDescribedBy != '' %} {{ ariaDescribedBy }}{% endif %}{% endcapture %}
-                        {% include form/field/input/autocomplete.html label="Votre commune de résidence" required="true" attributes='data-url="/json/autocomplete-city.json"' data-mode="select-only" ariaDescribedBy=ariaDescribedBy %}
+                        {% include form/field/input/autocomplete.html label="Votre commune de résidence" required="true" type="city" url="/json/autocomplete-city.json" attributes='data-mode="select-only"' ariaDescribedBy="idAdresseDossier" %}
                         <button class="ds44-btnStd ds44-btn--invert" title="Valider votre commune de résidence">
                             <span class="ds44-btnInnerText">Valider</span><i class="icon icon-long-arrow-right" aria-hidden="true"></i>
                         </button>
