@@ -1,27 +1,17 @@
-<main role="main" id="mainResults" class="ds44-mainResults">
+<main role="main" id="mainResults__cantons" class="ds44-mainResults {% if include['no-padding'] == 'true' %} ds44-noPdg {% endif %}">
     <section class="ds44-container-large">
         {% assign formId = 'recherche-facette' %}
         {% capture ariaDescribedBy %}filter-by-{{ formId }}{% endcapture %}
         {% capture fields %}
         <div class="ds44-fieldContainer ds44-fg1">
-            {% include form/field/input/standard.html label="Champ standard" required="true" %}
+            {% include form/field/select/standard.html label="Nom du canton" class="ds44-inpLarge" title="Sélectionner un canton" required="false" ariaDescribedBy="idTitre1" %}
         </div>
-        <div class="ds44-fieldContainer ds44-fg1 ds44-fieldContainer--select">
-            {% include form/field/select/checkbox.html label="Select à cases" required="true" %}
-        </div>
-        <div class="ds44-fieldContainer ds44-fg1">
-            {% include form/field/input/autocomplete.html label="Champ texte libre" required="true" type="address" url="https://api-adresse.data.gouv.fr/search/?limit=5&citycode=44109" attributes='data-mode="free-text"' %}
+        <div class="ds44-fieldContainer ds44-fg1 ds44-champsLies ds44-js-linked-fields">
+            {% include form/field/input/autocomplete.html label="Commune" required="false" type="city" url="/json/autocomplete-city.json" attributes='data-mode="select-only"' class="ds44-inpLarge" title="Zone de saisie de votre recherche de commune" %}
+            {% include form/field/input/autocomplete.html label="Adresse" required="false" disabled="true" type="address" url="https://api-adresse.data.gouv.fr/search/?lon=-1.8157647&lat=47.2780468" attributes='data-mode="select-only"' class="ds44-inpLarge" %}
         </div>
         {% endcapture %}
-        {% capture subfields %}
-        <div class="ds44-fieldContainer ds44-fg1 ds44-fieldContainer--select">
-            {% include form/field/select/checkbox.html label="Choix multiple" containerAttributes='data-auto-submit="true"' ariaDescribedBy=ariaDescribedBy %}
-        </div>
-        <div class="ds44-fieldContainer  ds44-fg1 ds44-fieldContainer--select">
-            {% include form/field/select/radio.html label="Choix unique" containerAttributes='data-auto-submit="true"' ariaDescribedBy=ariaDescribedBy %}
-        </div>
-        {% endcapture %}
-        {% include form/layout/recherche-facettes.html id=formId fields=fields subfields=subfields url=include.url %}
+        {% include form/layout/recherche-facettes.html fields=fields fieldStyle="large" %}
     </section>
     <section class="ds44-container-large">
         <div class="ds44-flex-container ds44-results ds44-results--mapVisible ds44-results--empty">
