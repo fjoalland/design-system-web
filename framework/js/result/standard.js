@@ -197,7 +197,7 @@ class ResultStandard {
             titleElement = document.createElement('div');
             titleElement.className = 'h3-like mbs';
             titleElement.setAttribute('role', 'heading');
-            titleElement.setAttribute('aria-level', '2');
+            titleElement.setAttribute('aria-level', '1');
             listContainerElement.appendChild(titleElement);
         }
         if (!evt.detail.nbResults) {
@@ -213,9 +213,9 @@ class ResultStandard {
             } else {
                 titleElementHtml += ' ' + MiscTranslate._('RESULT');
             }
-            let accessibleSentence = titleElementHtml + ' ' + MiscTranslate._('NB_RESULTS_FOR_SEARCH:') + ' ' + evt.detail.searchText;
+            let accessibleSentence = MiscTranslate._('NB_RESULTS_FOR_SEARCH:') + ' ' + evt.detail.searchText;
             titleElement.innerHTML = titleElementHtml + '<p class="visually-hidden" tabindex="-1">' + accessibleSentence + '</p>';
-            document.title = accessibleSentence;
+            document.title = titleElementHtml + ' ' + accessibleSentence;
             titleElement.removeAttribute('tabindex');
             focusElement = titleElement.querySelector('.visually-hidden')
         }
