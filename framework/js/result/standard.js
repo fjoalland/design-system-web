@@ -7,6 +7,7 @@ class ResultStandard {
         MiscEvent.addListener('search:update', this.fillList.bind(this));
         MiscEvent.addListener('search:focus', this.resultFocus.bind(this));
         MiscEvent.addListener('search:blur', this.resultBlur.bind(this));
+        MiscEvent.addListener('search:select', this.resultSelect.bind(this));
         const listContainerElement = document.querySelector('.ds44-results .ds44-js-results-container .ds44-js-results-list');
         if (listContainerElement) {
             MiscEvent.addListener('click', this.showMore.bind(this), listContainerElement);
@@ -358,6 +359,21 @@ class ResultStandard {
         const resultElement = document.querySelector('#search-result-' + evt.detail.id + ' .ds44-card');
         if (resultElement) {
             resultElement.classList.remove('active');
+        }
+    }
+
+    resultSelect (evt) {
+        if(
+            !evt ||
+            !evt.detail ||
+            !evt.detail.id
+        ) {
+            return;
+        }
+
+        const resultElement = document.querySelector('#search-result-' + evt.detail.id);
+        if (resultElement) {
+            MiscEvent.dispatch('click', null, resultElement);
         }
     }
 }

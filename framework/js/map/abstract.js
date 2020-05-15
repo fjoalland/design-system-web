@@ -479,4 +479,11 @@ class MapAbstract {
     resultBlur (evt) {
         // Abstract method
     }
+
+    popupClick (resultId, evt) {
+        evt.stopPropagation();
+        evt.preventDefault();
+
+        MiscEvent.dispatch('search:select', { 'id': resultId });
+    }
 }

@@ -99,17 +99,17 @@ class MapMarker extends MapAbstract {
             markerElement.className = 'ds44-map-marker';
             MiscEvent.addListener('mouseenter', this.focus.bind(this), markerElement);
             MiscEvent.addListener('mouseleave', this.blur.bind(this), markerElement);
-            object.markers.push(
-                new window.mapboxgl
-                    .Marker(markerElement)
-                    .setLngLat(lngLat)
-                    .setPopup(
-                        new window.mapboxgl
-                            .Popup({ offset: 25 })
-                            .setHTML(result.metadata.html_marker)
-                    )
-                    .addTo(object.map)
-            );
+            const popup = new window.mapboxgl
+                .Popup({ offset: 25 })
+                .setHTML(result.metadata.html_marker);
+            object.markers.push(new window.mapboxgl
+                .Marker(markerElement)
+                .setLngLat(lngLat)
+                .setPopup(popup)
+                .addTo(object.map));
+            popup.on('open', ((resultId, evt) => {
+                MiscEvent.addListener('click', this.popupClick.bind(this, resultId), evt.target.getElement())
+            }).bind(this, result.id));
 
             if (boundingBox.longitude.min === null) {
                 boundingBox.longitude.min = result.metadata.long;

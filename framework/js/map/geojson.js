@@ -62,10 +62,11 @@ class MapGeojson extends MapAbstract {
             }
         }
 
-        new window.mapboxgl.Popup()
+        const popup = new window.mapboxgl.Popup()
             .setLngLat(evt.lngLat)
             .setHTML(popupContent)
             .addTo(object.map);
+        MiscEvent.addListener('click', this.popupClick.bind(this, evt.features[0].properties.name), popup.getElement());
     }
 
     show (objectIndex) {
