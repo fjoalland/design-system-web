@@ -13,6 +13,10 @@ footer {
     display: block;
     padding: 0 1rem;
     margin: 1rem 0 .5rem 0;
+
+    &:hover {
+        text-decoration: underline;
+    }
   }
 
 .ds44-rsFootLink {
@@ -20,12 +24,14 @@ footer {
     display: block;
     padding-left: $ds44-padding-large;
     padding-right: $ds44-padding-large;
+
+    :hover {
+        color : $ds44-hover-dark;
+    }
 }
 
 footer .ds44-logo {
     width: 122px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .ds44-icoLink--footer {
