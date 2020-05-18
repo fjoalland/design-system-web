@@ -252,6 +252,10 @@ a > .ds44-btn--contextual,
       padding: 0;
       height: 44px;
       width: 44px;
+
+      & .icon {
+          line-height: 1;
+      }
     }
 }
 
