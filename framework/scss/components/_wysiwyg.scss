@@ -7,7 +7,9 @@
 }
 
 .ds44-contenuArticle {
-    p + p {
+    p + p,
+    ul:not(.ds44-list):not(.ds44-collapser) + section,
+    ul:not(.ds44-list):not(.ds44-collapser) + p {
       margin-top: $ds44-medium-vmargin ;
     }
     p + .h3-like,
