@@ -220,7 +220,7 @@ class ResultStandard {
             } else {
                 titleElementHtml += ' ' + MiscTranslate._('RESULT');
             }
-            let accessibleSentence = MiscTranslate._('NB_RESULTS_FOR_SEARCH:') + ' ' + evt.detail.searchText;
+            let accessibleSentence = MiscTranslate._('NB_RESULTS_FOR_SEARCH:') + ' ' + (evt.detail.searchText === '' ? MiscTranslate._('EMPTY_SEARCH_CRITERIA') : evt.detail.searchText);
             titleElement.innerHTML = titleElementHtml + '<p class="visually-hidden" tabindex="-1">' + accessibleSentence + '</p>';
             document.title = titleElementHtml + ' ' + accessibleSentence;
             titleElement.removeAttribute('tabindex');
