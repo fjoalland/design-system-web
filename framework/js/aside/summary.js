@@ -16,7 +16,6 @@ class AsideSummary {
         this.scrollDirection = 'down';
 
         this.resize();
-        this.calculateChapter();
 
         MiscEvent.addListener('scroll', this.scroll.bind(this), window);
         MiscEvent.addListener('resize', this.resize.bind(this), window);
@@ -42,7 +41,6 @@ class AsideSummary {
     }
 
     scroll () {
-        let calculateChapter = false;
         const scrollTop = MiscUtils.getScrollTop();
         const top = this.getTop();
 
@@ -66,19 +64,15 @@ class AsideSummary {
             }
 
             this.summaryElement.style.top = top + 'px';
-            calculateChapter = true;
         } else if (this.isMoving) {
             this.isMoving = false;
 
             this.summaryElement.style.top = null;
             this.summaryElement.style.position = 'static';
             this.summaryElement.style.width = null;
-            calculateChapter = true;
         }
 
-        if (calculateChapter) {
-            this.calculateChapter();
-        }
+        this.calculateChapter();
     }
 
     calculateChapter () {
