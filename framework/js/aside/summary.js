@@ -145,10 +145,20 @@ class AsideSummary {
             const scrollTo = MiscUtils.getPositionY(sectionElement);
             if (MiscUtils.getScrollTop() > scrollTo) {
                 // Going up, the header will show
-                MiscUtils.scrollTo(scrollTo - MiscDom.getHeaderHeight(true));
+                MiscUtils.scrollTo(
+                    scrollTo - MiscDom.getHeaderHeight(true),
+                    null,
+                    null,
+                    this.afterGoTo.bind(this)
+                );
             } else {
                 // Going up, the header will hide
-                MiscUtils.scrollTo(scrollTo);
+                MiscUtils.scrollTo(
+                    scrollTo,
+                    null,
+                    null,
+                    this.afterGoTo.bind(this)
+                );
             }
 
             const titleElement = sectionElement.querySelector('h2');
@@ -156,6 +166,11 @@ class AsideSummary {
                 MiscAccessibility.setFocus(titleElement);
             }
         }
+    }
+
+    afterGoTo () {
+        this.scrollDirection = 'up';
+        this.calculateChapter();
     }
 
     showMenu () {

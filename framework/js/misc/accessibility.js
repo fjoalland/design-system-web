@@ -90,7 +90,10 @@ class MiscAccessibility {
             if (!isChild) {
                 element.removeAttribute('aria-hidden');
             }
-            if (element.closest(MiscAccessibility.getEnabledElementsSelector()) === element) {
+            if (
+                element.closest(MiscAccessibility.getEnabledElementsSelector()) === element &&
+                element.getAttribute('data-bkp-tabindex') !== '-1'
+            ) {
                 element.removeAttribute('tabindex');
             }
         }
