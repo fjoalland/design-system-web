@@ -147,16 +147,16 @@ class AsideSummary {
                 // Going up, the header will show
                 MiscUtils.scrollTo(
                     scrollTo - MiscDom.getHeaderHeight(true),
-                    null,
-                    null,
+                    400,
+                    'linear',
                     this.afterGoTo.bind(this)
                 );
             } else {
                 // Going up, the header will hide
                 MiscUtils.scrollTo(
                     scrollTo,
-                    null,
-                    null,
+                    400,
+                    'linear',
                     this.afterGoTo.bind(this)
                 );
             }
