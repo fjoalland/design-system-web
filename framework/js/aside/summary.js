@@ -12,7 +12,6 @@ class AsideSummary {
         this.menu = null;
         this.borderTop = 20;
         this.isMoving = false;
-        this.maximumTop = null;
         this.lastScrollTop = 0;
         this.scrollDirection = 'down';
 
@@ -100,7 +99,6 @@ class AsideSummary {
                 if (sectionElement) {
                     const sectionElementStyle = sectionElement.currentStyle || window.getComputedStyle(sectionElement);
                     const startTop = MiscUtils.getPositionY(sectionElement) + parseInt(sectionElementStyle.marginTop, 10);
-                    const stopTop = startTop + sectionElement.offsetHeight + parseInt(sectionElementStyle.marginBottom, 10);
                     if (cursorPosition >= startTop) {
                         activeAElement = aElement
                     }
@@ -116,7 +114,6 @@ class AsideSummary {
         if (this.isMoving) {
             this.summaryElement.style.width = this.containerElement.offsetWidth + 'px';
         }
-        this.maximumTop = MiscUtils.getPositionY(this.containerElement) + this.containerElement.offsetHeight - this.summaryElement.offsetHeight;
 
         this.scroll();
     }
@@ -126,7 +123,7 @@ class AsideSummary {
             return MiscUtils.getScrollTop() + MiscDom.getHeaderHeight(true);
         }
 
-        return MiscUtils.getScrollTop() + window.screen.height;
+        return MiscUtils.getScrollTop() + (window.innerHeight || document.documentElement.clientHeight);
     }
 
     getTop () {
@@ -138,7 +135,7 @@ class AsideSummary {
     }
 
     getMaximumTop () {
-        return this.maximumTop - (this.borderTop + MiscDom.getHeaderHeight());
+        return (MiscUtils.getPositionY(this.containerElement) + this.containerElement.offsetHeight - this.summaryElement.offsetHeight) - (this.borderTop + MiscDom.getHeaderHeight());
     }
 
     goTo (evt) {
