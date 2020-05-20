@@ -12,6 +12,7 @@ class AsideSummary {
         this.menu = null;
         this.borderTop = 20;
         this.isMoving = false;
+        this.isGoingTo = false;
         this.lastScrollTop = 0;
         this.scrollDirection = 'down';
 
@@ -72,7 +73,9 @@ class AsideSummary {
             this.summaryElement.style.width = null;
         }
 
-        this.calculateChapter();
+        if (!this.isGoingTo) {
+            this.calculateChapter();
+        }
     }
 
     calculateChapter () {
@@ -133,6 +136,8 @@ class AsideSummary {
     }
 
     goTo (evt) {
+        this.isGoingTo = true;
+
         evt.stopPropagation();
         evt.preventDefault();
 
@@ -171,6 +176,8 @@ class AsideSummary {
     afterGoTo () {
         this.scrollDirection = 'up';
         this.calculateChapter();
+
+        this.isGoingTo = false;
     }
 
     showMenu () {
