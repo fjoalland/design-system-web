@@ -181,7 +181,7 @@ class AsideSummary {
 
                 this.isGoingTo = false;
             },
-            500
+            100
         );
     }
 
