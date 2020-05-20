@@ -19,6 +19,7 @@ class FormFieldAbstract {
                 });
         }
         this.initialize();
+        this.fill();
     }
 
     create (element) {
@@ -29,6 +30,7 @@ class FormFieldAbstract {
             'isRequired': (element.getAttribute('required') !== null || element.getAttribute('data-required') === 'true'),
             'isEnabled': !(element.getAttribute('readonly') !== null || element.getAttribute('disabled') !== null || element.getAttribute('data-disabled') === 'true')
         };
+        object.position = this.getPosition(object.containerElement);
         element.removeAttribute('data-required');
         element.removeAttribute('data-disabled');
 
@@ -41,6 +43,21 @@ class FormFieldAbstract {
     }
 
     initialize () {
+        // Initialize each object
+        for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
+            const object = this.objects[objectIndex];
+
+            this.addBackupAttributes(objectIndex);
+
+            MiscEvent.addListener('field:enable', this.enable.bind(this, objectIndex), object.containerElement);
+            MiscEvent.addListener('field:disable', this.disable.bind(this, objectIndex), object.containerElement);
+            MiscEvent.addListener('field:' + object.name + ':set', this.set.bind(this, objectIndex));
+        }
+
+        MiscEvent.addListener('form:validate', this.validate.bind(this));
+    }
+
+    fill () {
         // Get data from url and session storage
         const fieldParameters = window.sessionStorage.getItem('fields');
         let externalParameters = Object.assign(
@@ -64,20 +81,14 @@ class FormFieldAbstract {
             }
         }
 
-        // Initialize each object
+        // Set each object
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
 
-            this.addBackupAttributes(objectIndex);
-
-            MiscEvent.addListener('field:enable', this.enable.bind(this, objectIndex), object.containerElement);
-            MiscEvent.addListener('field:disable', this.disable.bind(this, objectIndex), object.containerElement);
             if (externalParameters[object.name]) {
-                MiscEvent.addListener('load', this.set.bind(this, objectIndex, externalParameters[object.name]), window);
+                this.set(objectIndex, externalParameters[object.name]);
             }
         }
-
-        MiscEvent.addListener('form:validate', this.validate.bind(this));
     }
 
     addBackupAttributes (objectIndex) {
@@ -95,6 +106,17 @@ class FormFieldAbstract {
         }
     }
 
+    getPosition (currentContainerElement) {
+        const containerElements = document.querySelectorAll('[class*="ds44-form_"][class*="_container"]')
+        for (let i = 0; i < containerElements.length; i++) {
+            if (containerElements[i] === currentContainerElement) {
+                return i;
+            }
+        }
+
+        return 999;
+    }
+
     empty (objectIndex) {
         this.setData(objectIndex);
         this.showNotEmpty(objectIndex);
@@ -105,6 +127,10 @@ class FormFieldAbstract {
     }
 
     set (objectIndex, data) {
+        if (data instanceof Event) {
+            data = data.detail;
+        }
+
         this.setData(objectIndex, data);
         this.enter(objectIndex);
         this.showNotEmpty(objectIndex);
@@ -131,7 +157,8 @@ class FormFieldAbstract {
         }
         let data = {};
         data[object.name] = {
-            'value': dataValue
+            'value': dataValue,
+            'position': object.position
         };
 
         return data;

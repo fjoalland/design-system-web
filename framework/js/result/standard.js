@@ -2,8 +2,8 @@ class ResultStandard {
     constructor () {
         this.currentId = null;
         this.savedScrollTop = null;
+        this.hasSearched = false;
 
-        MiscEvent.addListener('search:initialize', this.initialize.bind(this));
         MiscEvent.addListener('search:update', this.fillList.bind(this));
         MiscEvent.addListener('search:focus', this.resultFocus.bind(this));
         MiscEvent.addListener('search:blur', this.resultBlur.bind(this));
@@ -12,13 +12,17 @@ class ResultStandard {
         if (listContainerElement) {
             MiscEvent.addListener('click', this.showMore.bind(this), listContainerElement);
         }
+
+        window.setTimeout(this.initialize.bind(this), 1000);
     }
 
     initialize () {
-        // Show initial message
-        let newSearchElement = document.querySelector('#ds44-results-new-search');
-        if (newSearchElement) {
-            newSearchElement.style.display = 'block';
+        if (!this.hasSearched) {
+            // Show initial message
+            let newSearchElement = document.querySelector('#ds44-results-new-search');
+            if (newSearchElement) {
+                newSearchElement.style.display = 'block';
+            }
         }
     }
 
@@ -156,6 +160,8 @@ class ResultStandard {
         if (!listContainerElement) {
             return;
         }
+
+        this.hasSearched = true;
 
         // Nb display results
         const nbDisplayedResults = (evt.detail.pageIndex + 1) * evt.detail.nbResultsPerPage;
@@ -333,7 +339,7 @@ class ResultStandard {
     }
 
     resultFocus (evt) {
-        if(
+        if (
             !evt ||
             !evt.detail ||
             !evt.detail.id
@@ -348,7 +354,7 @@ class ResultStandard {
     }
 
     resultBlur (evt) {
-        if(
+        if (
             !evt ||
             !evt.detail ||
             !evt.detail.id
@@ -363,7 +369,7 @@ class ResultStandard {
     }
 
     resultSelect (evt) {
-        if(
+        if (
             !evt ||
             !evt.detail ||
             !evt.detail.id

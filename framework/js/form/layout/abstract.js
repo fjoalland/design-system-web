@@ -1,12 +1,15 @@
-class FormLayoutGlobal {
-    constructor () {
+class FormLayoutAbstract {
+    constructor (selector) {
         this.objects = [];
 
         document
-            .querySelectorAll('form')
+            .querySelectorAll(selector)
             .forEach((formElement) => {
-                this.create(formElement);
+                if (formElement.getAttribute('data-is-initialized') !== 'true') {
+                    this.create(formElement);
+                }
             });
+        this.initialize();
     }
 
     create (formElement) {
@@ -17,37 +20,30 @@ class FormLayoutGlobal {
             'validationCategories': MiscForm.getValidationCategories(),
             'isAutoLoaded': false
         };
-        this.objects.push(object);
-        const objectIndex = (this.objects.length - 1);
-
-        // Bind events
-        MiscEvent.addListener('submit', this.submit.bind(this, objectIndex), formElement);
-        MiscEvent.addListener('form:validation', this.validation.bind(this, objectIndex), formElement);
-        MiscEvent.addListener('form:notification', this.notification.bind(this, objectIndex), formElement);
-        MiscEvent.addListener('load', this.autoLoad.bind(this, objectIndex), window);
-
-        // Init
         formElement.setAttribute('novalidate', 'true');
+        formElement.setAttribute('data-is-initialized', 'true');
+
+        this.objects.push(object);
     }
 
-    autoLoad (objectIndex) {
+    initialize () {
+        // Initialize each object
+        for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
+            const object = this.objects[objectIndex];
+
+            // Bind events
+            MiscEvent.addListener('submit', this.submit.bind(this, objectIndex), object.formElement);
+            MiscEvent.addListener('form:validation', this.validation.bind(this, objectIndex), object.formElement);
+
+            this.start(objectIndex);
+        }
+    }
+
+    start (objectIndex) {
         const object = this.objects[objectIndex];
 
-        if (
-            object.formElement.getAttribute('data-auto-load') === 'true' &&
-            object.isAutoLoaded == false
-        ) {
-            object.isAutoLoaded = true;
-
-            // Wait for the fields to be initialized
-            window.setTimeout(
-                ((objectIndex) => {
-                    const object = this.objects[objectIndex];
-                    MiscEvent.dispatch('search:initialize');
-                    MiscEvent.dispatch('submit', { 'dryRun': true }, object.formElement);
-                }).bind(this, objectIndex),
-                100
-            );
+        if (object.formElement.getAttribute('data-auto-load') === 'true') {
+            MiscEvent.dispatch('submit', { 'dryRun': true }, object.formElement);
         }
     }
 
@@ -129,6 +125,7 @@ class FormLayoutGlobal {
 
             // Organize data
             const formattedData = {};
+            const dataPositionByKey = {};
             for (let dataKey in formValidity.data) {
                 if (!formValidity.data.hasOwnProperty(dataKey)) {
                     continue;
@@ -140,6 +137,8 @@ class FormLayoutGlobal {
                     dataValue = JSON.parse(dataValue);
                 } catch (ex) {
                 }
+                dataPositionByKey[dataKey] = dataValue.position;
+                delete dataValue.position;
                 formattedData[dataKey] = dataValue;
             }
 
@@ -147,16 +146,28 @@ class FormLayoutGlobal {
             object.formElement
                 .querySelectorAll('input[type="hidden"][name][data-technical-field]')
                 .forEach((hiddenInputElement) => {
-                    formattedData[hiddenInputElement.getAttribute('name')] = {
+                    const hiddenInputName = hiddenInputElement.getAttribute('name');
+                    const hiddenInputData = {
                         'value': hiddenInputElement.value
                     };
+                    formattedData[hiddenInputName] = hiddenInputData;
+                    dataPositionByKey[hiddenInputName] = 999;
                 });
+
+            // Sort formatted data
+            const sortedKeys = Object.keys(dataPositionByKey).sort(function (a, b) {
+                return parseInt(dataPositionByKey[a], 10) - parseInt(dataPositionByKey[b], 10);
+            });
+            const sortedData = {};
+            for (let i = 0; i < sortedKeys.length; i++) {
+                sortedData[sortedKeys[i]] = formattedData[sortedKeys[i]];
+            }
 
             // Save city and adresse in local storage
             const fieldParameters = JSON.parse(window.sessionStorage.getItem('fields') || '{}');
             ['commune', 'adresse'].forEach((key) => {
-                if (formattedData[key]) {
-                    fieldParameters[key] = formattedData[key];
+                if (sortedData[key]) {
+                    fieldParameters[key] = sortedData[key];
                 }
             });
             window.sessionStorage.setItem('fields', JSON.stringify(fieldParameters));
@@ -167,19 +178,13 @@ class FormLayoutGlobal {
                     'statistic:gtag:event',
                     {
                         'statistic': JSON.parse(object.formElement.getAttribute('data-statistic')),
-                        'data': formattedData
+                        'data': sortedData
                     });
             }
 
             if (object.formElement.getAttribute('data-is-ajax') === 'true') {
                 // Ajax submission
-                MiscEvent.dispatch(
-                    'form:submit',
-                    {
-                        'parameters': formattedData
-                    },
-                    object.formElement
-                );
+                this.ajaxSubmit(objectIndex, sortedData);
 
                 return;
             }
@@ -205,7 +210,7 @@ class FormLayoutGlobal {
                 });
 
             // Regular submission
-            const formData = MiscForm.jsonToFormData(formattedData);
+            const formData = MiscForm.jsonToFormData(sortedData);
             for (var [key, value] of formData.entries()) {
                 let hiddenInputElement = document.createElement('input');
                 hiddenInputElement.setAttribute('type', 'hidden');
@@ -224,19 +229,12 @@ class FormLayoutGlobal {
         }
     }
 
-    notification (objectIndex, evt) {
-        if (
-            !evt ||
-            !evt.target ||
-            !evt.detail ||
-            !evt.detail.message
-        ) {
-            return;
-        }
+    ajaxSubmit (objectIndex, formData) {
+        // Abstract method
+    }
 
+    notification (objectIndex, messageId, messageText, notificationType = 'error') {
         const object = this.objects[objectIndex];
-        const notificationType = evt.detail.type || 'error';
-        const errorMessageId = evt.detail.id;
 
         let containerElement = object.formElement.querySelector('.ds44-message-container');
         if (containerElement) {
@@ -250,8 +248,8 @@ class FormLayoutGlobal {
         object.formElement.insertBefore(containerElement, object.formElement.firstChild);
 
         const textElement = document.createElement('p');
-        if (errorMessageId) {
-            textElement.setAttribute('id', errorMessageId);
+        if (messageId) {
+            textElement.setAttribute('id', messageId);
         }
         textElement.classList.add('ds44-message-text');
         textElement.classList.add(notificationType);
@@ -271,12 +269,9 @@ class FormLayoutGlobal {
 
         const spanElement = document.createElement('span');
         spanElement.classList.add('ds44-iconInnerText');
-        spanElement.innerText = evt.detail.message;
+        spanElement.innerText = messageText;
         textElement.appendChild(spanElement);
 
         MiscAccessibility.setFocus(textElement);
     }
 }
-
-// Singleton
-new FormLayoutGlobal();

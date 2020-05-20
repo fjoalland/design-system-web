@@ -1,48 +1,42 @@
-class FormLayoutUtileAbstract {
+class FormLayoutUtileAbstract extends FormLayoutAbstract {
     constructor (selector) {
-        this.url = '/plugins/ChartePlugin/types/PortletQueryForeach/displayResult.jsp';
-        this.formElement = null;
+        super(selector);
+
         this.submitSuccessText = MiscTranslate._('USEFUL_REQUEST_THANK_YOU');
-
-        const formElement = document.querySelector(selector);
-        if (formElement) {
-            this.formElement = formElement;
-
-            MiscEvent.addListener('form:submit', this.submit.bind(this), formElement);
-        }
     }
 
-    submit (evt) {
-        if (
-            !evt ||
-            !evt.detail ||
-            !evt.detail.parameters
-        ) {
-            return;
-        }
+    ajaxSubmit (objectIndex, formData) {
+        const object = this.objects[objectIndex];
 
         // Show loader
         MiscEvent.dispatch('loader:requestShow');
 
         // Add other details to parameters
-        evt.detail.parameters.url = document.location.href;
-        evt.detail.parameters.title = document.title;
-        evt.detail.parameters.date = (new Date()).toLocaleString('fr-FR', {
-            'timeZone': 'UTC',
-            'timeZoneName': 'short'
-        });
+        formData.url = { 'value': document.location.href };
+        formData.title = { 'value': document.title };
+        formData.date = {
+            'value': (new Date()).toLocaleString(
+                'fr-FR',
+                {
+                    'timeZone': 'UTC',
+                    'timeZoneName': 'short'
+                }
+            )
+        };
 
         // Get the results from the back office
         MiscRequest.send(
-            this.url,
-            this.submitSuccess.bind(this),
-            this.submitError.bind(this),
-            evt.detail.parameters
+            object.formElement.getAttribute('action'),
+            this.submitSuccess.bind(this, objectIndex),
+            this.submitError.bind(this, objectIndex),
+            formData
         );
     }
 
-    submitSuccess () {
-        const parentElement = this.formElement.closest('.ds44-inner-container');
+    submitSuccess (objectIndex) {
+        const object = this.objects[objectIndex];
+
+        const parentElement = object.formElement.closest('.ds44-inner-container');
         if (!parentElement) {
             MiscEvent.dispatch('loader:requestHide');
 
@@ -74,23 +68,17 @@ class FormLayoutUtileAbstract {
         MiscEvent.dispatch('loader:requestHide');
     }
 
-    submitError () {
+    submitError (objectIndex) {
+        const object = this.objects[objectIndex];
+
         // Show error notification in form
-        const errorMessageId = MiscUtils.generateId();
-        MiscEvent.dispatch(
-            'form:notification',
-            {
-                'id': errorMessageId,
-                'type': 'error',
-                'message': MiscTranslate._('FORM_GENERAL_ERROR')
-            },
-            this.formElement
-        );
+        const messageId = MiscUtils.generateId();
+        this.notification(objectIndex, messageId, MiscTranslate._('FORM_GENERAL_ERROR'));
 
         // Add aria described by to textarea
-        const textareaElement = this.formElement.querySelector('textarea');
+        const textareaElement = object.formElement.querySelector('textarea');
         if (textareaElement) {
-            textareaElement.setAttribute('aria-describedby', errorMessageId);
+            textareaElement.setAttribute('aria-describedby', messageId);
         }
 
         // Hide loader

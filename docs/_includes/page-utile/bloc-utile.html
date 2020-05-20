@@ -8,7 +8,7 @@
             <button class="ds44-btnStd js-tablist__link" type="button" aria-pressed="false" aria-label="Non, cette page ne m'a pas été utile" data-href="#ds44-choiceN" data-statistic='{"name": "declenche-evenement","category": "Avis page","action": "Non"}'><span class="ds44-btnInnerText">Non</span><i class="icon icon-dislike icon--sizeL" aria-hidden="true"></i></button>
         </div>
         <div id="ds44-choiceY" class="hidden">
-            <form data-is-ajax="true">
+            <form data-is-ajax="true" action="/">
                 <div class="grid-1-small-1 ds44-box">
                     <div>
                         <p id="form-bloc-utils-Y" tabindex="-1">Merci ! Si vous le souhaitez, vous pouvez nous laisser un commentaire :</p>
@@ -25,7 +25,7 @@
             <p class="ds44-keyboard-show"><a href="#ds44-choiceY">Revenir au bouton Oui</a></p>
         </div>
         <div id="ds44-choiceN" class="hidden">
-            <form data-is-ajax="true" data-statistic='{"name": "declenche-evenement","category": "Formulaire","action": "Avis page négatif","label": "$bloc-utile-informations-questions|text"}'>
+            <form data-is-ajax="true" action="/" data-statistic='{"name": "declenche-evenement","category": "Formulaire","action": "Avis page négatif","label": "$bloc-utile-informations-questions|text"}'>
                 <div class="grid-2-small-1 ds44-box">
                     {% assign savedAriaDescribedBy = ariaDescribedBy %}
                     <div class="col">

@@ -1,35 +1,9 @@
-class FormLayoutInline {
+class FormLayoutInline extends FormLayoutAbstract {
     constructor () {
-        this.objects = [];
-
-        document
-            .querySelectorAll('form[data-is-inline="true"]')
-            .forEach((formElement) => {
-                this.create(formElement);
-            });
+        super('form[data-is-inline="true"]');
     }
 
-    create (element) {
-        const object = {
-            'id': MiscUtils.generateId(),
-            'formElement': element
-        };
-        this.objects.push(object);
-        const objectIndex = (this.objects.length - 1);
-
-        // Bind events
-        MiscEvent.addListener('form:submit', this.submit.bind(this, objectIndex), object.formElement);
-    }
-
-    submit (objectIndex, evt) {
-        if (
-            !evt ||
-            !evt.detail ||
-            !evt.detail.parameters
-        ) {
-            return;
-        }
-
+    ajaxSubmit (objectIndex, formData) {
         const object = this.objects[objectIndex];
 
         // Show loader
@@ -40,7 +14,7 @@ class FormLayoutInline {
             object.formElement.getAttribute('action'),
             this.inlineSuccess.bind(this, objectIndex),
             this.inlineError.bind(this, objectIndex),
-            evt.detail.parameters
+            formData
         )
     }
 
@@ -50,17 +24,7 @@ class FormLayoutInline {
     }
 
     inlineError (objectIndex) {
-        const object = this.objects[objectIndex];
-
-        MiscEvent.dispatch(
-            'form:notification',
-            {
-                'id': MiscUtils.generateId(),
-                'type': 'error',
-                'message': MiscTranslate._('FORM_GENERAL_ERROR')
-            },
-            object.formElement
-        );
+        this.notification(objectIndex, null, MiscTranslate._('FORM_GENERAL_ERROR'));
         MiscEvent.dispatch('loader:requestHide');
     }
 
