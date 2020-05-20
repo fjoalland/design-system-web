@@ -174,10 +174,15 @@ class AsideSummary {
     }
 
     afterGoTo () {
-        this.scrollDirection = 'up';
-        this.calculateChapter();
+        window.setTimeout(
+            () => {
+                this.scrollDirection = 'up';
+                this.calculateChapter();
 
-        this.isGoingTo = false;
+                this.isGoingTo = false;
+            },
+            500
+        );
     }
 
     showMenu () {
