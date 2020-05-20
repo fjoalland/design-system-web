@@ -18,6 +18,9 @@ variations:
 - title: Template carrefour
   pattern: templates/template-entryMenu.html
 
+- title: Formulaire - Site Archives
+pattern: page/LA__formulaire_archives.html
+
 ---
 ## Utilisation
 
