@@ -146,6 +146,15 @@
         .ds44-docListElem {
             margin-top : 1rem !important;
         }
+
+        .ds44-card__dateContainer {
+            flex-direction: row;
+            min-height: 7rem;
+
+            > * {
+                margin: 0 .5rem;
+            }
+        }
     }
 
     & .mapboxgl-popup-close-button {
