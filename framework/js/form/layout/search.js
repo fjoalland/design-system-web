@@ -84,7 +84,7 @@ class FormLayoutSearch extends FormLayoutAbstract {
 
         // Get the search data from the back office
         MiscRequest.send(
-            object.formElement.getAttribute('action'),
+            object.formElement.getAttribute('data-search-url'),
             this.loadFromUrlSuccess.bind(this, objectIndex),
             () => {
             },
