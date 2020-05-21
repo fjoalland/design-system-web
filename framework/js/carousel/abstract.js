@@ -237,12 +237,21 @@ class CarouselAbstract {
         object.swiperElement
             .querySelectorAll('.swiper-slide')
             .forEach((slideElement) => {
+                const aElement = slideElement.querySelector('a');
                 if (slideElement.classList.contains('swiper-slide-visible')) {
                     // Show slide
                     MiscAccessibility.show(slideElement, true);
+
+                    if (!aElement) {
+                        slideElement.setAttribute('tabindex', '0');
+                    }
                 } else {
                     // Hide slide
                     MiscAccessibility.hide(slideElement, true);
+
+                    if (!aElement) {
+                        slideElement.removeAttribute('tabindex');
+                    }
                 }
             });
 
