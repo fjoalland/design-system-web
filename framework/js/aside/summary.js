@@ -143,7 +143,19 @@ class AsideSummary {
 
         this.hideMenu();
 
+        // Deselect all bullets
+        this.summaryElement
+            .querySelectorAll('.ds44-list--puces a')
+            .forEach((aElement) => {
+                aElement.classList.remove('active');
+                aElement.removeAttribute('aria-location');
+            });
+
+        // Select active bullets
         const aElement = evt.currentTarget;
+        aElement.classList.add('active');
+        aElement.setAttribute('aria-location', 'true');
+
         const sectionId = aElement.getAttribute('href').replace(/^#/, '');
         const sectionElement = document.querySelector('#' + sectionId);
         if (sectionElement) {
@@ -176,9 +188,6 @@ class AsideSummary {
     afterGoTo () {
         window.setTimeout(
             () => {
-                this.scrollDirection = 'up';
-                this.calculateChapter();
-
                 this.isGoingTo = false;
             },
             100
