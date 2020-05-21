@@ -36,8 +36,6 @@ class MenuHeader {
             .forEach((element) => {
                 MiscEvent.addListener('click', this.hideSubNavigationMenu.bind(this), element);
             });
-
-        MiscAccessibility.hide(document.querySelector('header .ds44-blocMenu'));
     }
 
     showMenu (evt) {
@@ -76,6 +74,7 @@ class MenuHeader {
         MiscEvent.dispatch('resize', null, window);
         mainMenu.classList.add('show');
         MiscAccessibility.show(this.menu);
+        MiscAccessibility.show(mainMenu);
         this.menu
             .querySelectorAll('section.ds44-overlay')
             .forEach((subMainMenu) => {
@@ -94,12 +93,12 @@ class MenuHeader {
 
     showNavigation (evt) {
         this.menuSelector = '.ds44-overlay--navNiv1';
-        this.showMenu(evt, );
+        this.showMenu(evt);
     }
 
     showSearch (evt) {
         this.menuSelector = '#menuRech .ds44-overlay';
-        this.showMenu(evt, );
+        this.showMenu(evt);
     }
 
     // Ferme tous les menus, et ajoute un focus sur le bouton qui a ouvert le dernier menu affiché
@@ -140,6 +139,7 @@ class MenuHeader {
             .forEach((subMainMenu) => {
                 subMainMenu.classList.remove('show');
             });
+        MiscAccessibility.hide(mainMenu);
         MiscAccessibility.hide(this.menu);
 
         if (this.triggerMenuElement) {

@@ -57,7 +57,7 @@ class TooltipStandard {
         bubble.setAttribute('id', this.TOOLTIP_SIMPLE_LABEL_ID + hashId);
         MiscDom.addClasses(bubble, [bubbleClassName, this.TOOLTIP_SIMPLE]);
         bubble.setAttribute(this.ATTR_ROLE, this.ROLE);
-        MiscAccessibility.hide(bubble, true);
+        MiscAccessibility.hide(bubble);
         bubble.setAttribute(this.DATA_HASH_ID, hashId);
         bubble.innerHTML = content;
 
@@ -92,7 +92,7 @@ class TooltipStandard {
 
         if (evt.type === showEventType) {
             // Show tooltip bubble
-            MiscAccessibility.show(tooltipBubble, true);
+            MiscAccessibility.show(tooltipBubble);
 
             // Remove positioning
             MiscDom.removeClasses(tooltipBubble, ['bottom', 'left']);
@@ -115,7 +115,7 @@ class TooltipStandard {
             }
         } else if (evt.type === hideEventType) {
             // Hide tooltip bubble
-            MiscAccessibility.hide(tooltipBubble, true);
+            MiscAccessibility.hide(tooltipBubble);
         }
     }
 
@@ -124,7 +124,7 @@ class TooltipStandard {
             .querySelectorAll('.' + this.TOOLTIP_SIMPLE + '.' + this.TOOLTIP_SIMPLE_RAW)
             .forEach((tooltipBubble) => {
                 // Hide tooltip bubble
-                MiscAccessibility.hide(tooltipBubble, true);
+                MiscAccessibility.hide(tooltipBubble);
             })
     }
 }

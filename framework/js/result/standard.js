@@ -269,6 +269,12 @@ class ResultStandard {
             }
             if (listContainerElement.getAttribute('data-display-mode') === 'inline') {
                 MiscEvent.addListener('click', this.fillCard.bind(this), listItemElement);
+
+                const aElement = listItemElement.querySelector('a');
+                if (aElement) {
+                    aElement.setAttribute('role', 'button');
+                    aElement.setAttribute('tabindex', '0');
+                }
             }
             listElement.appendChild(listItemElement);
 

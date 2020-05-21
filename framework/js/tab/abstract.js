@@ -93,14 +93,14 @@ class TabAbstract {
                 tabHandleElement.classList.remove('ds44-tabs__linkSelected');
                 tabHandleElement.removeAttribute('aria-disabled');
                 this.hideTab(tabHandleElement, tabPanel);
-                MiscAccessibility.hide(tabPanel, true);
+                MiscAccessibility.hide(tabPanel);
             });
 
         // Show selected tab
         tabHandleElement.classList.add('ds44-tabs__linkSelected');
         tabHandleElement.setAttribute('aria-disabled', 'true');
         this.showTab(tabHandleElement, tabPanel);
-        MiscAccessibility.show(tabPanel, true);
+        MiscAccessibility.show(tabPanel);
     }
 
     showTab (tabHandleElement, tabPanel) {

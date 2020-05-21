@@ -154,7 +154,7 @@ class MapMarker extends MapAbstract {
             );
         }
 
-        if(
+        if (
             object.isGeojsonLoaded &&
             object.mapElement.getAttribute('data-geojson-refine') === 'true'
         ) {
@@ -166,12 +166,12 @@ class MapMarker extends MapAbstract {
         const object = this.objects[objectIndex];
 
         object.isGeojsonLoaded = true;
-        if(object.mapElement.getAttribute('data-geojson-refine') === 'true') {
+        if (object.mapElement.getAttribute('data-geojson-refine') === 'true') {
             this.showGeojson(objectIndex);
         }
     }
 
-    getGeojsonIds(objectIndex) {
+    getGeojsonIds (objectIndex) {
         const object = this.objects[objectIndex];
 
         const geojsonIds = [];
@@ -191,7 +191,7 @@ class MapMarker extends MapAbstract {
             }
 
             // Get corresponding geojson
-            if(result.metadata.geojson_id) {
+            if (result.metadata.geojson_id) {
                 geojsonIds.push(result.metadata.geojson_id);
             }
         }
@@ -210,7 +210,7 @@ class MapMarker extends MapAbstract {
     }
 
     resultFocus (evt) {
-        if(
+        if (
             !evt ||
             !evt.detail ||
             !evt.detail.id
@@ -225,7 +225,7 @@ class MapMarker extends MapAbstract {
     }
 
     resultBlur (evt) {
-        if(
+        if (
             !evt ||
             !evt.detail ||
             !evt.detail.id

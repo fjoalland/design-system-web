@@ -55,7 +55,7 @@ class CollapserStandard {
         object.buttonElement.classList.add('show');
         object.buttonElement.setAttribute('aria-expanded', 'true');
         panel.style.maxHeight = (panel.style.maxHeight ? null : panel.scrollHeight + 60 + 'px');
-        MiscAccessibility.show(panel, true);
+        MiscAccessibility.show(panel);
         panel.style.visibility = 'visible';
     }
 
@@ -73,7 +73,7 @@ class CollapserStandard {
         object.buttonElement.classList.remove('show');
         object.buttonElement.setAttribute('aria-expanded', 'false');
         panel.style.maxHeight = null;
-        MiscAccessibility.hide(panel, true);
+        MiscAccessibility.hide(panel);
         panel.style.visibility = 'hidden';
     }
 

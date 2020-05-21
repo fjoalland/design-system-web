@@ -240,14 +240,14 @@ class CarouselAbstract {
                 const aElement = slideElement.querySelector('a');
                 if (slideElement.classList.contains('swiper-slide-visible')) {
                     // Show slide
-                    MiscAccessibility.show(slideElement, true);
+                    MiscAccessibility.show(slideElement);
 
                     if (!aElement) {
                         slideElement.setAttribute('tabindex', '0');
                     }
                 } else {
                     // Hide slide
-                    MiscAccessibility.hide(slideElement, true);
+                    MiscAccessibility.hide(slideElement);
 
                     if (!aElement) {
                         slideElement.removeAttribute('tabindex');

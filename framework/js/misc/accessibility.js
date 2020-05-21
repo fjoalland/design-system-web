@@ -4,7 +4,7 @@ class MiscAccessibility {
     }
 
     static getProtectedElementsSelector () {
-        return ['i', 'sup', 'svg'];
+        return ['i', 'sup', 'svg', 'hr'];
     }
 
     // Fonction qui va forcer le focus à faire une boucle sur un élément
@@ -72,96 +72,67 @@ class MiscAccessibility {
         }
     }
 
-    static show (element, force = false, bubble = true, isChild = false) {
+    static show (element, isChild = false) {
         if (!element) {
+            // No element
             return;
         }
 
         if (
-            MiscAccessibility.getProtectedElementsSelector().indexOf(element.tagName.toLowerCase()) === -1 &&
-            element.getAttribute('data-a11y-exclude') !== 'true'
+            MiscAccessibility.getProtectedElementsSelector().indexOf(element.tagName.toLowerCase()) !== -1 ||
+            element.getAttribute('data-a11y-exclude') === 'true'
         ) {
-            if (force !== true) {
-                MiscAccessibility.record(element, isChild);
-            } else {
-                MiscAccessibility.reinstate(element, isChild);
-            }
-
-            if (!isChild) {
-                element.removeAttribute('aria-hidden');
-            }
-            if (
-                element.closest(MiscAccessibility.getEnabledElementsSelector()) === element &&
-                element.getAttribute('data-bkp-tabindex') !== '-1'
-            ) {
-                element.removeAttribute('tabindex');
-            }
-        }
-
-        if (bubble) {
-            Array.from(element.children).map((childElement) => {
-                MiscAccessibility.show(childElement, force, bubble, true);
-            });
-        }
-    }
-
-    static hide (element, force = false, bubble = true, isChild = false) {
-        if (!element) {
+            // Protected element
             return;
         }
 
-        if (
-            MiscAccessibility.getProtectedElementsSelector().indexOf(element.tagName.toLowerCase()) === -1 &&
-            element.getAttribute('data-a11y-exclude') !== 'true'
-        ) {
-            if (force !== true) {
-                MiscAccessibility.record(element, isChild);
-            } else {
-                MiscAccessibility.reinstate(element, isChild);
-            }
-
-            if (!isChild) {
-                element.setAttribute('aria-hidden', true);
-            }
-            if (element.closest(MiscAccessibility.getEnabledElementsSelector()) === element) {
-                element.setAttribute('tabindex', '-1');
-            }
-        }
-
-        if (bubble) {
-            Array.from(element.children).map((childElement) => {
-                MiscAccessibility.hide(childElement, force, bubble, true);
-            });
-        }
-    }
-
-    static record (element, isChild) {
-        if (!element) {
+        if (!isChild) {
+            // Is parent element
+            element.removeAttribute('aria-hidden');
+        } else if (element.getAttribute('aria-hidden') === 'true') {
+            // Is child element, stop bubbling if the element is hidden
             return;
-        }
-
-        if (!isChild && !element.hasAttribute('data-bkp-aria-hidden')) {
-            element.setAttribute('data-bkp-aria-hidden', (element.getAttribute('aria-hidden') || ''));
         }
         if (
             element.closest(MiscAccessibility.getEnabledElementsSelector()) === element &&
-            !element.hasAttribute('data-bkp-tabindex')
+            element.getAttribute('tabindex') === '-1'
         ) {
-            element.setAttribute('data-bkp-tabindex', (element.getAttribute('tabindex') || ''));
+            element.removeAttribute('tabindex');
         }
+
+        Array.from(element.children).map((childElement) => {
+            MiscAccessibility.show(childElement, true);
+        });
     }
 
-    static reinstate (element, isChild) {
+    static hide (element, isChild = false) {
         if (!element) {
+            // No element
             return;
         }
 
-        if (!isChild && element.hasAttribute('data-bkp-aria-hidden')) {
-            element.removeAttribute('data-bkp-aria-hidden');
+        if (
+            MiscAccessibility.getProtectedElementsSelector().indexOf(element.tagName.toLowerCase()) !== -1 ||
+            element.getAttribute('data-a11y-exclude') === 'true'
+        ) {
+            // Protected element
+            return;
         }
-        if (element.hasAttribute('data-bkp-tabindex')) {
-            element.removeAttribute('data-bkp-tabindex');
+
+        if (!isChild) {
+            // Is parent element
+            element.setAttribute('aria-hidden', true);
+        } else if (element.getAttribute('aria-hidden') === 'true') {
+            // Is child element, stop bubbling if the element is hidden
+            return;
         }
+        if (element.closest(MiscAccessibility.getEnabledElementsSelector()) === element) {
+            element.setAttribute('tabindex', '-1');
+        }
+
+        Array.from(element.children).map((childElement) => {
+            MiscAccessibility.hide(childElement, true);
+        });
     }
 
     static flattenText (text) {

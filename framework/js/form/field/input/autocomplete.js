@@ -360,7 +360,7 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
         }
 
         object.autoCompleterElement.classList.remove('hidden');
-        MiscAccessibility.show(object.autoCompleterElement, true);
+        MiscAccessibility.show(object.autoCompleterElement);
         object.textElement.setAttribute('aria-expanded', 'true');
         object.isExpanded = true;
     }
@@ -382,7 +382,7 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
         }
 
         object.autoCompleterElement.classList.add('hidden');
-        MiscAccessibility.hide(object.autoCompleterElement, true);
+        MiscAccessibility.hide(object.autoCompleterElement);
         object.textElement.setAttribute('aria-expanded', 'false');
         object.isExpanded = false;
 
