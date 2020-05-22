@@ -343,17 +343,14 @@ class FormFieldAbstract {
                 continue;
             }
 
-            if (evt.detail.dryRun === true) {
-                isValid = this.isValid(objectIndex);
-            } else {
-                isValid = this.checkValidity(objectIndex);
-            }
             if (
-                isValid &&
-                (
-                    evt.detail.formElement.classList.contains('ds44-listSelect') ||
-                    !this.objects[objectIndex].containerElement.closest('.ds44-select-list_elem_child')
-                )
+                (evt.detail.dryRun === true && !this.isValid(objectIndex)) ||
+                (evt.detail.dryRun === false && !this.checkValidity(objectIndex))
+            ) {
+                isValid = false;
+            } else if (
+                evt.detail.formElement.classList.contains('ds44-listSelect') ||
+                !this.objects[objectIndex].containerElement.closest('.ds44-select-list_elem_child')
             ) {
                 // Don't take into consideration data from sub elements
                 // The data is already injected in the parent value
