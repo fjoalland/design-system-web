@@ -110,6 +110,10 @@ class MapMarker extends MapAbstract {
             popup.on('open', ((resultId, evt) => {
                 MiscEvent.addListener('click', this.popupClick.bind(this, resultId), evt.target.getElement())
             }).bind(this, result.id));
+            const mapboxMarkerElement = object.markers[object.markers.length - 1].getElement();
+            if (mapboxMarkerElement) {
+                mapboxMarkerElement.removeAttribute('tabindex');
+            }
 
             if (boundingBox.longitude.min === null) {
                 boundingBox.longitude.min = result.metadata.long;
