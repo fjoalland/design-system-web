@@ -1,11 +1,13 @@
 {% include form/_variables.html %}
 
+{% capture buttonAriaDescribedBy %}label-{{ id }}{% if include.buttonAriaDescribedBy and include.buttonAriaDescribedBy != '' %} {{ include.buttonAriaDescribedBy }}{% endif %}{% endcapture %}
+
 {% capture mainContent %}
     <div class="ds44-file__shape {{ mainClass }}">
         <input type="file" id="{{ id }}" name="{{ name }}" {{ title }} {{ attributes }} {{ inputAttributes }} {{ placeholder }} {% if ariaDescribedBy and ariaDescribedBy !='' %}aria-describedby="{{ ariaDescribedBy }}" {% endif %} />
         <div id="file-display-{{ id }}" class="ds44-fileDisplay"></div>
     </div>
-    {% include form/field/partial/reset.html %}
+    {% include form/field/partial/reset.html ariaDescribedBy=buttonAriaDescribedBy %}
     <span class="ds44-file" aria-hidden="true"><i class="icon icon-directory icon--medium" aria-hidden="true"></i></span>
 {% endcapture %}
 
