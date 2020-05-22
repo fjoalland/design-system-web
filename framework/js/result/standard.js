@@ -240,7 +240,7 @@ class ResultStandard {
         }
 
         // Add new results
-        let firstResultElement = null;
+        let isFirstResult = true;
         const results = (evt.detail.addUp ? evt.detail.newResults : evt.detail.results);
         for (let resultIndex in results) {
             if (!results.hasOwnProperty(resultIndex)) {
@@ -278,8 +278,14 @@ class ResultStandard {
             }
             listElement.appendChild(listItemElement);
 
-            if (!firstResultElement) {
-                firstResultElement = listItemElement;
+            if (evt.detail.addUp && isFirstResult) {
+                isFirstResult = false;
+
+                focusElement = listItemElement.querySelector('a');
+                if(!focusElement) {
+                    listItemElement.setAttribute('tabindex', '0');
+                    focusElement = listItemElement;
+                }
             }
         }
 
