@@ -97,7 +97,11 @@ class MiscAccessibility {
             element.closest(MiscAccessibility.getEnabledElementsSelector()) === element &&
             element.getAttribute('tabindex') === '-1'
         ) {
-            element.removeAttribute('tabindex');
+            if (element.hasAttribute('data-bkp-tabindex')) {
+                element.setAttribute('tabindex', element.getAttribute('data-bkp-tabindex'));
+            } else {
+                element.removeAttribute('tabindex');
+            }
         }
 
         Array.from(element.children).map((childElement) => {
@@ -127,6 +131,13 @@ class MiscAccessibility {
             return;
         }
         if (element.closest(MiscAccessibility.getEnabledElementsSelector()) === element) {
+            if (
+                element.hasAttribute('tabindex') &&
+                element.getAttribute('tabindex') !== '-1' &&
+                !element.hasAttribute('data-bkp-tabindex')
+            ) {
+                element.setAttribute('data-bkp-tabindex', element.getAttribute('tabindex'));
+            }
             element.setAttribute('tabindex', '-1');
         }
 
