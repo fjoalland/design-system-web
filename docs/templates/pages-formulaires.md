@@ -20,6 +20,9 @@ variations:
 
 - title: Template carrefour
   pattern: templates/template-entryMenu.html
+  
+- title: Formulaire avec recaptcha
+  pattern: page/LA__recaptcha.html
 
 ---
 ## Utilisation

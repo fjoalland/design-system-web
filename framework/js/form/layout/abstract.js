@@ -184,9 +184,12 @@ class FormLayoutAbstract {
 
             if (object.formElement.getAttribute('data-is-ajax') === 'true') {
                 // Ajax submission
-                this.ajaxSubmit(objectIndex, sortedData);
+                this.recaptchaSubmit(objectIndex, sortedData);
 
-                return;
+                evt.stopPropagation();
+                evt.preventDefault();
+
+                return false;
             }
 
             // Regular submission
@@ -218,7 +221,8 @@ class FormLayoutAbstract {
                 hiddenInputElement.value = value;
                 object.formElement.appendChild(hiddenInputElement);
             }
-            object.formElement.submit();
+
+            this.recaptchaSubmit(objectIndex, sortedData);
         } catch (ex) {
             console.log(ex);
 
@@ -226,6 +230,48 @@ class FormLayoutAbstract {
             evt.preventDefault();
 
             return false;
+        }
+    }
+
+    recaptchaSubmit (objectIndex, formData) {
+        if (window.grecaptcha) {
+            // Send using recaptcha
+            const recaptchaId = document.querySelector('#googleRecaptchaId').getAttribute('src').split('render=').pop().split('?').shift();
+            window.grecaptcha.ready((function (objectIndex, recaptchaId) {
+                window.grecaptcha
+                    .execute(recaptchaId, { action: 'submit' })
+                    .then((function (objectIndex, token) {
+                        const object = this.objects[objectIndex];
+
+                        if (object.formElement.getAttribute('data-is-ajax') === 'true') {
+                            // Ajax submission
+                            formData['recaptcha[value]'] = token;
+                        } else {
+                            let hiddenInputElement = document.createElement('input');
+                            hiddenInputElement.setAttribute('type', 'hidden');
+                            hiddenInputElement.setAttribute('name', 'recaptcha[value]');
+                            hiddenInputElement.value = token;
+                            object.formElement.appendChild(hiddenInputElement);
+                        }
+
+                        this.send(objectIndex, formData);
+                    }).bind(this, objectIndex))
+            }).bind(this, objectIndex, recaptchaId));
+
+            return;
+        }
+
+        this.send(objectIndex, formData);
+    }
+
+    send (objectIndex, formData) {
+        const object = this.objects[objectIndex];
+
+        if (object.formElement.getAttribute('data-is-ajax') === 'true') {
+            // Ajax submission
+            this.ajaxSubmit(objectIndex, formData);
+        } else {
+            object.formElement.submit();
         }
     }
 
