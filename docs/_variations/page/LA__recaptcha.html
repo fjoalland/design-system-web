@@ -2,70 +2,15 @@
 layout: pattern
 ---
 
-{% include header/inc-header.html %}
-
 <script id="googleRecaptchaId" src="https://www.google.com/recaptcha/api.js?render=6LcEBPwUAAAAAAFSZNZ3dPtCqvoI0xr3seaGiVhc"></script>
 
 <main role="main" id="content">
-
-    <div class="ds44-container-large">
-        {% include titres/main-title-noImage.html titrePage="Recaptcha" %}
-    </div>
-
-    <article class="ds44-container-large ds44-mt4">
-
-        <div class="ds44-inner-container">
-
-            <div class="grid-12-small-1">
-                <div class="col-7">
-                    <section class="ds44-contenuArticle" id="section1">
-                        <h2 class="h2-like">Comment nous contacter ?</h2>
-                        <h3 class="h3-like">Par courrier :</h3>
-                        <p class="ds44-docListElem mtm">
-                            <i class="icon icon-user ds44-docListIco icon--sizeL" aria-hidden="true"></i><strong>Département de Loire Atlantique</strong>
-                        </p>
-                        <p class="ds44-docListElem mtm">
-                            <i class="icon icon-marker ds44-docListIco" aria-hidden="true"></i>3 Quai Ceineray<br />BP 94109<br />44041 Nantes cedex 1
-                        </p>
-                        <p class="ds44-docListElem mts"><i class="icon icon-map ds44-docListIco" aria-hidden="true"></i><a href="#" title="Télécharger le plan d’accès : Département de Loire Atlantique - [poids] - [format] - nouvelle fenêtre" target="_blank">Télécharger le plan d’accès</a>
-                        </p>
-                        <h3 class="h3-like">Par téléphone :</h3>
-                        <p class="ds44-docListElem mts">
-                            <i class="icon icon-phone ds44-docListIco" aria-hidden="true"></i>02 40 99 10 00
-                        </p>
-                        <h3 class="h3-like">Par fax :</h3>
-                        <p class="ds44-docListElem mts">
-                            <i class="icon icon-fax ds44-docListIco" aria-hidden="true"></i>02 40 99 10 00
-                        </p>
-                    </section>
-
-                </div>
-
-                <div class="col-1 grid-offset ds44-hide-tiny-to-medium"></div>
-
-                <section class="col-4">
-                    <div class="ds44-box ds44-theme mbm">
-                        <div class="ds44-innerBoxContainer">
-                            <p class="ds44-box-heading ds44-mb-std" role="heading" aria-level="2">Formulaire avec recaptcha</p>
-                            <form>
-                                <p>Les champs suivis d’un * sont obligatoires.</p>
-                                <div class="ds44-mb3">
-                                    {% include form/field/input/standard.html type="last-name" label="Nom" required="true" %}
-                                </div>
-                                <button class="ds44-btnStd ds44-btn--invert ds44-bntFullw ds44-bntALeft" title="Valider l'envoi de votre demande">
-                                    <span class="ds44-btnInnerText">Valider</span><i class="icon icon-long-arrow-right" aria-hidden="true"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </section>
-
-            </div>
+    <form>
+        <div class="ds44-mb3">
+            {% include form/field/input/standard.html type="last-name" label="Nom" required="true" %}
         </div>
-    </article>
-
-    {% include partage/partage-interne.html %}
-
+        <button class="ds44-btnStd ds44-btn--invert ds44-bntFullw ds44-bntALeft" title="Valider l'envoi de votre demande">
+            <span class="ds44-btnInnerText">Valider</span><i class="icon icon-long-arrow-right" aria-hidden="true"></i>
+        </button>
+    </form>
 </main>
-
-{% include footer/footer-LA.html %}
