@@ -26,6 +26,16 @@
     }
 }
 
+.ds44-imgLoupe {
+
+    img {
+
+        &:hover {
+            cursor: url('../../../assets/icons/cd44-search-big-white.svg'), zoom-in;
+        }
+    }
+}
+
 .ds44-imgRatio {
     width: 100%;
     height: 100%;

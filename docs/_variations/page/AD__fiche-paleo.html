@@ -1,0 +1,76 @@
+---
+layout: pattern
+---
+
+{% include header/inc-header.html
+    logo='<picture class="ds44-logo"><img src="../../assets/images/logos/logo-cd44-archives-departementales.svg" alt="Retour à l&apos;accueil - Site internet des archives départementales de Loire-Atlantique" /></picture>'
+    variante1='
+        <button type="button" class="ds44-btnIcoText--maxi ds44--xl-padding ds44-hide-mobile"><span class="ds44-btnInnerText">Poser une question</span><i class="icon icon-discussion icon--large" aria-hidden="true"></i></button>
+        <a class="ds44-btnIcoText--maxi ds44--xl-padding" title="Venir aux archives départementales"><span class="ds44-btnInnerText">Venir</span><i class="icon icon-directions icon--large" aria-hidden="true"></i></a>'
+%}
+
+<main role="main" id="content">
+
+    <article class="ds44-container-large">
+
+        <div class="ds44-lightBG">
+            <div class="ds44-inner-container ds44--xl-padding-t ds44--m-padding-b ds44-mobile-reduced-pt">
+                <div class="ds44-grid12-offset-2">
+                    {% include breadcrumb/breadcrumb.html %}
+                    <h1 class="h1-like mbl mts ds44-mobile-reduced-mb ds44-mobile-reduced-mt" id="idTitre1">Prévôté de Nantes, dossier de police, plainte 13 août 1630</h1>
+                </div>
+            </div>
+        </div>
+        <div class="ds44-img50 ds44-img50--event">
+            <div class="ds44-inner-container">
+                <div class="ds44-grid12-offset-1">
+                    <figure class="ds44-legendeContainer ds44-imgLoupe" role="figure" aria-label="Légende associée © Copyright">
+                        <img src="../../assets/images/archives_doc.jpg" alt="Légende associée © Copyright" class="ds44-w100">
+                        <figcaption class="ds44-imgCaption">Légende associée © Copyright</figcaption>
+                    </figure>
+                    <div class="ds44-theme ds44-flex-valign-center ds44-flex-container ds44-fse ds44--l-padding ">
+                        <span class="ds44-docListElem"><i class="icon icon-tag ds44-docListIco" aria-hidden="true"></i>Débutant</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="ds44-contenuArticle" id="section1">
+            <div class="ds44-inner-container ds44-mtb3">
+                <div class="ds44-grid12-offset-2">
+                    <ul class="ds44-collapser">
+                        <li class="ds44-collapser_element">
+                            <button type="button" class="ds44-collapser_button">Afficher la transcription<i class="icon icon-down" aria-hidden="true"></i>
+                            </button>
+                            <div class="ds44-collapser_content">
+                                <ul class="ds44-list ds44-collapser_content--level2">
+                                    <li>
+                                        <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque at efficitur turpis, ut euismod elit. Nam turpis orci, suscipit et arcu id, rhoncus maximus augue. Cras bibendum congue odio, in bibendum ante euismod sed. Maecenas sodales ipsum at neque aliquet pharetra ac vitae eros. Donec malesuada, purus a tincidunt tristique, felis nisi dictum nulla, quis sagittis enim turpis sed eros. Cras auctor sodales orci ut accumsan. Nullam ut facilisis lacus, in porta elit. Nulla nec condimentum massa, in sollicitudin massa. Pellentesque in laoreet tellus. Curabitur pulvinar, elit in ornare sodales, mauris mauris tincidunt purus, eget tempor sem diam quis ante. Suspendisse porttitor dignissim aliquet. Vivamus volutpat massa at lacus efficitur, ac porta quam dignissim. Ut rhoncus, est et sagittis imperdiet, ex diam rutrum risus, vel tempus ex ligula sed libero. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam malesuada, est ut pharetra bibendum, libero ex convallis magna, nec aliquet justo risus quis nibh. Vivamus vehicula at diam at pretium.</p>
+
+                                        <p> Ut pellentesque tempus nisi quis hendrerit. Donec at iaculis enim, ac sodales orci. Donec sagittis sapien vitae turpis hendrerit aliquam. Mauris rutrum orci a laoreet bibendum. Vivamus vitae vulputate justo, quis sagittis risus. Suspendisse dictum ultricies turpis nec feugiat. Vestibulum in nunc non mauris congue finibus nec sed eros. Aenean id nisl nunc. Pellentesque faucibus quis est sit amet dapibus. Morbi et justo augue. Phasellus iaculis at ipsum ut luctus. Proin efficitur sed lacus a iaculis. </p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        {% include partage/partage-interne.html %}
+
+    </article>
+
+
+    <section class="ds44-container-fluid ds44-lightBG ds44-wave-white ds44--xl-padding-tb">
+        <header class="txtcenter ds44--xl-padding-tb">
+            <h2 class="h2-like" id="idTitre5">Sur le même thème</h2>
+        </header>
+        {% include carrousel/carrousel-x4--bgGrey.html %}
+    </section>
+
+
+</main>
+
+
+{% include footer/footer-LA.html %}
