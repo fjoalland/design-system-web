@@ -70,6 +70,21 @@
                 }
             }
         }
+
+        &.ds44-carousel-mosaiques {
+
+            .swiper-slide-active {
+                width: 50% !important;
+            }
+            .swiper-slide-next,
+            .swiper-slide-next + .swiper-slide {
+                width: 33% !important;
+                height: 50% ;
+            }
+            .swiper-slide:nth-of-type(4) {
+                width: 17% !important;
+            }
+        }
     }
 
     .swiper-pagination {
