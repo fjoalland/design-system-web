@@ -149,11 +149,16 @@
 
         .ds44-card__dateContainer {
             flex-direction: row;
-            min-height: 7rem;
+            min-height: 8rem;
+            font-size: 1.25em;
 
             > * {
                 margin: 0 .5rem;
             }
+        }
+
+        .ds44-cardDate, .ds44-cardLocalisation {
+            font-size: 1em;
         }
     }
 
