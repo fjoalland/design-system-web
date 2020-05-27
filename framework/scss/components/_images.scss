@@ -27,10 +27,18 @@
 }
 
 .ds44-imgLoupe {
+    background-position: 50% 50%;
+    position: relative;
+    overflow: hidden;
+    background-size: 200% 200%;
 
     img {
+        transition: opacity .5s;
+        display: block;
+        width: 100%;
 
         &:hover {
+            opacity: 0;
             cursor: url('../../../assets/icons/cd44-search-big-white.svg'), zoom-in;
         }
     }
@@ -323,8 +331,8 @@ figure {
     iframe {
         max-width: 300px !important;
         width: auto !important;
-	    max-height: 200px !important;
-	    height: 100% !important;
+        max-height: 200px !important;
+        height: 100% !important;
         overflow: hidden;
         position: relative !important;
     }
@@ -341,9 +349,9 @@ figure {
 
     .ds44-card__section--horizontal--img,
     .swiper-slide img,
-    .swiper-slide picture ,
+    .swiper-slide picture,
     .swiper-slide figure,
-    .ds44-container-imgRatio ,
+    .ds44-container-imgRatio,
     .ds44-hiddenPrint,
     .ds44-box__img,
     .ds44-mediaIndicator {
