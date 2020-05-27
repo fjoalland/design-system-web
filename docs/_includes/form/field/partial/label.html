@@ -2,7 +2,7 @@
     {% assign labelClass = labelClass | append: ' ds44-inputDisabled' %}
 {% endif %}
 
-{% capture labelContent %}<label id="label-{{ id }}" for="{{ id }}" class="{{ labelClass }}"><span class="{{ placeholderClass }}"><span>{{ label }}{{ requiredStar }}</span></span></label>{% endcapture %}
+{% capture labelContent %}<label for="{{ id }}" class="{{ labelClass }}"><span class="{{ placeholderClass }}"><span>{{ label }}{{ requiredStar }}</span></span></label>{% endcapture %}
 
 <div class="ds44-posRel">
     {{ labelContent }}

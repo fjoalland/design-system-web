@@ -3,11 +3,10 @@
 {% endif %}
 
 {% assign selectContainerClass = include.selectContainerClass | append: ' ds44-selectDisplay' %}
-{% capture buttonAriaDescribedBy %}label-{{ id }}{% if include.buttonAriaDescribedBy and include.buttonAriaDescribedBy != '' %} {{ include.buttonAriaDescribedBy }}{% endif %}{% endcapture %}
 
 <div class="ds44-select__shape {{ mainClass }}">
-    <p id="label-{{ id }}" class="ds44-selectLabel" aria-hidden="true">{{ label }}{{ requiredStar }}</p>
+    <p class="ds44-selectLabel" aria-hidden="true">{{ label }}{{ requiredStar }}</p>
     <div id="{{ id }}" data-name="{{ name }}" class="{{ selectContainerClass }}" {{ containerAttributes }}></div>
-    {% include form/field/partial/reset.html iconClass=iconClass ariaDescribedBy=buttonAriaDescribedBy %}
+    {% include form/field/partial/reset.html iconClass=iconClass %}
     <button type="button" id="button-{{ id }}" class="ds44-btnIco ds44-posAbs ds44-posRi ds44-btnOpen" aria-expanded="false" {{ title }} {{ buttonAttributes }} {% if ariaDescribedBy and ariaDescribedBy != '' %}aria-describedby="{{ ariaDescribedBy }}"{% endif %}><i class="icon icon-down {{ iconClass }}" aria-hidden="true"></i><span id="button-message-{{ id }}" class="visually-hidden">{{ label }}</span></button>
 </div>

@@ -19,7 +19,6 @@
                     <div class="ds44-select-list_elem_child hidden">
                         {% capture ariaDescribedBy1 %}label-radio-{{ id }}-{{ radioValue }} button-message-{{ savedId }}{% if savedAriaDescribedBy and savedAriaDescribedBy != '' %} {{ savedAriaDescribedBy }}{% endif %}{% endcapture %}
                         {% capture ariaDescribedBy2 %}label-radio-{{ id }}-{{ radioValue }} button-message-{{ savedId }}{% if savedAriaDescribedBy and savedAriaDescribedBy != '' %} {{ savedAriaDescribedBy }}{% endif %}{% endcapture %}
-                        {% capture ariaDescribedBy2 %}label-radio-{{ id }}-{{ radioValue }} button-message-{{ savedId }}{% if savedAriaDescribedBy and savedAriaDescribedBy != '' %} {{ savedAriaDescribedBy }}{% endif %}{% endcapture %}
                         {% capture buttonAriaDescribedBy %}label-radio-{{ id }}-{{ radioValue }}{% endcapture %}
 
                         {% include form/field/input/datepicker.html label="Le" title="le : jour / mois / année" explanation="Ex : 20/05/2020" required="true" inputAttributes=inputAttributes buttonAriaDescribedBy=buttonAriaDescribedBy ariaDescribedBy=ariaDescribedBy1 %}
