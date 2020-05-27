@@ -20,6 +20,9 @@ variations:
 - title: Page Fiche méthode (Archives)
   pattern: page/AD__fiche.html
 
+- title: Page Fiche Paléo (Archives)
+  pattern: page/AD__fiche-paleo.html
+
 - title: Template centré
   pattern: templates/template-generique-centre.html
 ---

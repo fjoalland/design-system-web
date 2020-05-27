@@ -5,6 +5,7 @@
         </button>
         <h1 class="h2-like">Recevoir nos infos</h1>
         <div class="ds44-modal-gab">
+            <p class="ds44-textLegend ds44-textLegend--mentions">Les champs marqués d’un astérisque * sont obligatoires</p>
             <form>
                 <div id="overlay-newsletter-buttons-archives" class="ds44-flex-container">
                     <button class="ds44-btnStd ds44-bgGray ds44-btnStd--plat ds44-fg1 ds44--l-padding" type="button" aria-describedby="titre-modale-newsletter">
@@ -37,7 +38,7 @@
                 </div>
                 <div class="mtm">
                     {% capture section4Id %}titre-{% increment my_counter %}{% endcapture %}
-                    <h2 class="h4-like" id="{{ section4Id }}">M’abonner aux flash infos par mail</h2>
+                    <h2 class="h4-like" id="{{ section4Id }}">M’abonner aux <span lang="en">flash</span> infos par mail</h2>
                     <div class="ds44-list grid-12-small-1 mtm">
                         <li class="ds44-select-list_elem col-12 ds44-noMrg">
                             {% include form/layout/checkboxes.html choices="3:Actus et événements" ariaDescribedBy=section4Id %}
@@ -47,7 +48,7 @@
                         </li>
                     </div>
                 </div>
-                <button class="ds44-btnStd ds44-btn--invert ds44-w100 ds44-bntALeft" title="M'abonner et recevoir l’actualité par email" aria-describedby="valid-form">
+                <button class="ds44-btnStd ds44-btn--invert ds44-w100 ds44-bntALeft" title="Je m'abonne pour recevoir l’actualité du CD44 par email" aria-describedby="valid-form">
                     <span class="ds44-btnInnerText">Je m'abonne</span>
                     <i class="icon icon-long-arrow-right" aria-hidden="true"></i>
                 </button>
