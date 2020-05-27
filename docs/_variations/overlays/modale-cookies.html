@@ -2,6 +2,59 @@
 layout: pattern
 ---
 
+<script>
+    window.GTM_UA = 'GTM-WHL52DJ';
+    window.orejimeConfig = {
+        privacyPolicy: '/',
+        logo: '../../assets/images/pictos/picto-cookies.svg',
+        translations: {
+            fr: {
+                purposes: {
+                    analytics: 'Analytics'
+                }
+            },
+            en: {
+                purposes: {
+                    analytics: 'Analytics'
+                }
+            },
+        },
+        apps: [
+            {
+                name: 'google-tag-manager',
+                title: 'Google Tag Manager',
+                cookies: [
+                    '_ga',
+                    '_gat',
+                    '_gid',
+                    '__utma',
+                    '__utmb',
+                    '__utmc',
+                    '__utmt',
+                    '__utmz',
+                    '_gat_gtag_' + GTM_UA,
+                    '_gat_' + GTM_UA
+                ],
+                purposes: ['analytics']
+            }
+        ],
+    };
+</script>
 
-<script type="text/javascript" src="https://tarteaucitron.io/load.js?domain=prep.loire-atlantique.fr&uuid=188c8196481d6dfc1ee0968041a9e38f28449a2b"></script>
+<!-- Google Tag Manager -->
+<script
+    type="opt-in"
+    data-type="application/javascript"
+    data-name="google-tag-manager"
+>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer',window.GTM_UA);
+</script>
+<!-- End Google Tag Manager -->
+
+<link rel="stylesheet" href="https://unpkg.com/orejime@latest/dist/orejime.css" />
+<script src="https://unpkg.com/orejime@latest/dist/orejime.js"></script>
 

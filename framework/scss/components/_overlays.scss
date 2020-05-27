@@ -139,12 +139,14 @@
         .ds44-cardTitle {
             font-size: 1.7rem;
         }
+
         &.ds44-cardIsFocus {
             background-color: #99E6D1 !important;
             border-color: #666;
         }
+
         .ds44-docListElem {
-            margin-top : 1rem !important;
+            margin-top: 1rem !important;
         }
 
         .ds44-card__dateContainer {
@@ -206,48 +208,49 @@
     }
 }
 
-/* Tarte au citron */
-#tarteaucitronRoot {
-    &:before {
-        background-color: rgba(0, 0, 0, .66) !important;
-        pointer-events: auto !important;
-        opacity: 1 !important;
+/* Orejime */
+#orejime {
+    .orejime-AppContainer {
+        .orejime-Notice {
+            @media (min-width: 990px) {
+                max-width: 42.6rem;
+            }
+
+            .orejime-Notice-logoContainer {
+                text-align: center;
+            }
+
+            .orejime-Notice-description {
+                color: $ds44-color-inverse;
+                font-family: $ds44-font-family-base;
+                font-size: 1.4rem;
+            }
+        }
     }
 
-    #tarteaucitronAlertBig {
-        background-color: $ds44-background-base !important;
-        box-shadow: none !important;
-        border-radius: 0 !important;
-        padding: 1.5rem 3rem !important;
+    .orejime-ModalPortal {
+        .orejime-Modal {
+            font-family: $ds44-font-family-base;
+        }
+    }
 
-        &:before {
-            content: url('../../assets/images/pictos/picto-cookies.svg') !important;
-            font-size: 0 !important;
-            display: block !important;
+    button {
+        @extend .ds44-btnStd;
+        @extend .ds44-mobile-reduced-mb;
+        color: $ds44-color-inverse;
+        font-family: $ds44-font-family-base;
+        font-size: 1.4rem;
+        min-height: 2.4rem;
+        cursor: pointer;
+
+        &.orejime-Modal-closeButton {
+            border: none;
+            box-shadow: none;
         }
 
-        #tarteaucitronDisclaimerAlert {
-            margin: 0 !important;
-            padding: 0 !important;
-            margin-bottom: 2.5rem !important;
-            display: block !important;
-            background-color: $ds44-background-base !important;
-            color: $ds44-color-base !important;
-            font-family: $ds44-font-family-base !important;
-            font-size: 1.6rem !important;
-        }
-
-        button {
-            @extend .ds44-btnStd;
-            @extend .ds44-mobile-reduced-mb;
-            color: $ds44-color-base !important;
-            font-family: $ds44-font-family-base !important;
-            font-size: 1.4rem !important;
-            min-height: 2.4rem !important;
-        }
-
-        #tarteaucitronPersonalize {
-            @extend .ds44-btn--contextual;
+        * {
+            cursor: pointer;
         }
     }
 }
+
