@@ -25,12 +25,10 @@ class TabAbstract {
                 }
 
                 MiscEvent.addListener('click', this.change.bind(this), tabHandleElement);
-                MiscEvent.addListener('keypress', this.move.bind(this), tabHandleElement);
 
                 const tabPanelExitElement = tabPanel.querySelector('.ds44-keyboard-show:last-child');
                 if (tabPanelExitElement) {
                     MiscEvent.addListener('click', this.back.bind(this), tabPanelExitElement);
-                    MiscEvent.addListener('keypress', this.move.bind(this), tabPanelExitElement);
                 }
             });
 
@@ -142,23 +140,6 @@ class TabAbstract {
 
         MiscAccessibility.setFocus(currentTabHandle);
         window.scrollTo(0, MiscUtils.getPositionY(currentTabHandle) - MiscDom.getHeaderHeight(true))
-    }
-
-    move (evt) {
-        evt.preventDefault();
-
-        const eventKey = (evt.key === ' ' ? 'spacebar' : evt.key).toLowerCase();
-        if (eventKey !== 'spacebar' && eventKey !== 'enter') {
-            return;
-        }
-
-        if (evt.currentTarget.classList.contains('js-tablist__link')) {
-            // Change
-            this.change(evt);
-        } else if (evt.currentTarget.closest('.ds44-keyboard-show')) {
-            // Back
-            this.back(evt);
-        }
     }
 
     getTabFromHref (href) {

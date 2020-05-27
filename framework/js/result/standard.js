@@ -282,7 +282,7 @@ class ResultStandard {
                 isFirstResult = false;
 
                 focusElement = listItemElement.querySelector('a');
-                if(!focusElement) {
+                if (!focusElement) {
                     listItemElement.setAttribute('tabindex', '0');
                     focusElement = listItemElement;
                 }

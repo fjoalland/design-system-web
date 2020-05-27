@@ -57,8 +57,6 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
 
             MiscEvent.addListener('keyDown:*', this.record.bind(this, objectIndex));
             MiscEvent.addListener('keyUp:escape', this.escape.bind(this, objectIndex));
-            MiscEvent.addListener('keyPress:spacebar', this.selectOption.bind(this, objectIndex));
-            MiscEvent.addListener('keyPress:enter', this.selectOption.bind(this, objectIndex));
             MiscEvent.addListener('keyUp:arrowup', this.previousOption.bind(this, objectIndex));
             MiscEvent.addListener('keyUp:arrowdown', this.nextOption.bind(this, objectIndex));
             MiscEvent.addListener('focusout', this.focusOut.bind(this, objectIndex), object.containerElement);
@@ -414,23 +412,6 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
         }
 
         return result.replace(new RegExp(search, 'gi'), str => `<strong>${str}</strong>`);
-    }
-
-    selectOption (objectIndex, evt) {
-        evt.preventDefault();
-
-        const object = this.objects[objectIndex];
-        if (!object.autoCompleterListElement) {
-            return;
-        }
-
-        if (
-            document.activeElement &&
-            document.activeElement.classList.contains('ds44-autocomp-list_elem') &&
-            object.autoCompleterListElement.contains(document.activeElement)
-        ) {
-            MiscEvent.dispatch('mousedown', null, document.activeElement);
-        }
     }
 
     nextOption (objectIndex, evt) {
