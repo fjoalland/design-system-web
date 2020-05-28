@@ -15,6 +15,7 @@ class ImageZoom {
 
         magnifyContainerElement.style.backgroundImage = `url('${imageElement.getAttribute('src')}')`;
         MiscEvent.addListener('mousemove', this.zoom.bind(this), magnifyContainerElement);
+        MiscEvent.addListener('touchmove', this.zoom.bind(this), magnifyContainerElement);
     }
 
     zoom (evt) {
