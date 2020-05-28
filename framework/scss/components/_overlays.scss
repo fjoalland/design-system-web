@@ -212,6 +212,8 @@
 #orejime {
     .orejime-AppContainer {
         .orejime-Notice {
+            background-color: $ds44-color-base;
+
             @media (min-width: 990px) {
                 max-width: 42.6rem;
             }
@@ -225,12 +227,33 @@
                 font-family: $ds44-font-family-base;
                 font-size: 1.4rem;
             }
+
+            .orejime-Notice-actions {
+                .orejime-Button {
+                    background-color: $ds44-color-base;
+                    border-color: $ds44-color-inverse;
+
+                    &.orejime-Button--save {
+                        background-color: #ffffff;
+                        color: $ds44-color-base;
+                    }
+                }
+            }
+
         }
     }
 
     .orejime-ModalPortal {
         .orejime-Modal {
             font-family: $ds44-font-family-base;
+            background-color: $ds44-color-base;
+
+            .orejime-AppToggles {
+                .orejime-AppToggles-disableAll {
+                    background-color: #ffffff;
+                    color: $ds44-color-base;
+                }
+            }
         }
     }
 
