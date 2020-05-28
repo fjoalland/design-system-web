@@ -10,9 +10,6 @@ class CarouselSlideshow extends CarouselAbstract {
         const object = this.objects[objectIndex];
         object.isPlaying = true;
 
-        MiscEvent.addListener('mouseenter', this.hoverStop.bind(this, objectIndex), object.wrapElement);
-        MiscEvent.addListener('mouseleave', this.hoverStart.bind(this, objectIndex), object.wrapElement);
-
         object.autoplayButtonElement = object.wrapElement.querySelector('button');
         if (object.autoplayButtonElement) {
             MiscEvent.addListener('click', this.startStop.bind(this, objectIndex), object.autoplayButtonElement);
@@ -29,30 +26,6 @@ class CarouselSlideshow extends CarouselAbstract {
         }
 
         return swiperParameters;
-    }
-
-    hoverStart (objectIndex, evt) {
-        evt.stopPropagation();
-        evt.preventDefault();
-
-        const object = this.objects[objectIndex];
-        if (!object.isPlaying) {
-            return;
-        }
-
-        this.start(objectIndex);
-    }
-
-    hoverStop (objectIndex, evt) {
-        evt.stopPropagation();
-        evt.preventDefault();
-
-        const object = this.objects[objectIndex];
-        if (!object.isPlaying) {
-            return;
-        }
-
-        this.stop(objectIndex);
     }
 
     startStop (objectIndex) {

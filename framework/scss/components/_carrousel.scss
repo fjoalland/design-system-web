@@ -120,16 +120,12 @@
         }
 
         &.ds44-not-edge-42 {
-            &::after {
-                font-size: 25px;
+            .icon::before {
+                font-size: 45px;
 
                 @media screen and (max-width: $ds44-medium - .0625) {
-                    font-size: 15px;
+                    font-size: 30px;
                 }
-            }
-
-            i::before {
-                content: none;
             }
         }
 
@@ -143,8 +139,8 @@
             top: auto;
         }
 
-        .icon {
-            display: block;
+        &::after {
+            content: none;
         }
     }
 
