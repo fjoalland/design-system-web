@@ -70,6 +70,7 @@
                 }
             }
         }
+
     }
 
     .swiper-pagination {
@@ -224,6 +225,31 @@
     @media screen and (max-width: $ds44-small - .0625) {
         font-size: 2.4rem;
     }
+}
+
+.ds44-tuiles-mosaiques {
+
+    // .swiper-slide-active {
+    //     width: 50% !important;
+    // }
+    // .swiper-slide-next,
+    // .swiper-slide-next + .swiper-slide {
+    //     width: 33% !important;
+    //     height: 50% ;
+    // }
+    // .swiper-slide:nth-of-type(4) {
+    //     width: 17% !important;
+    // }
+    .ds44-card {
+        margin: 0 !important;
+        overflow: hidden;
+
+        .ds44-card__section {
+            height: auto;
+            position: static;
+        }
+    }
+
 }
 
 
