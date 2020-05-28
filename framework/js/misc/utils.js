@@ -124,11 +124,24 @@ class MiscUtils {
     }
 
     static async digestMessage (message) {
-        const msgUint8 = new TextEncoder().encode(message);
-        const hashBuffer = await window.crypto.subtle.digest('SHA-256', msgUint8);
-        const hashArray = Array.from(new Uint8Array(hashBuffer));
-        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        if (window.crypto.subtle) {
+            const msgUint8 = new TextEncoder().encode(message);
+            const hashBuffer = await window.crypto.subtle.digest('SHA-256', msgUint8);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
 
-        return hashHex;
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        let hash = 0;
+        if (message.length == 0) {
+            return hash;
+        }
+        for (let i = 0; i < message.length; i++) {
+            const char = message.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash = hash & hash;
+        }
+
+        return hash;
     }
 }
