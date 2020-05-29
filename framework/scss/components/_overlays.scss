@@ -210,51 +210,177 @@
 
 /* Orejime */
 #orejime {
-    .orejime-AppContainer {
-        .orejime-Notice {
-            background-color: $ds44-color-base;
 
-            @media (min-width: 990px) {
-                max-width: 42.6rem;
-            }
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    transition: all $ds44-timing-standard ease-in;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+
+
+    .orejime-AppContainer {
+
+        .orejime-Notice {
+            background-color: $ds44-light;
+            box-shadow: 0px 13px 20px 0px rgba(0, 0, 0, 0.35);
+            width: 100%;
+            max-width: 64em;
+            padding: 1.5rem 3rem;
+            position: relative;
+            z-index: 10;
+            max-height: 90vh;
+            overflow-x: auto;
+            border-radius: 0;
+            bottom: 0;
+            right: 0;
+
 
             .orejime-Notice-logoContainer {
                 text-align: center;
             }
 
             .orejime-Notice-description {
-                color: $ds44-color-inverse;
+                color: $ds44-color-base;
                 font-family: $ds44-font-family-base;
                 font-size: 1.4rem;
             }
 
+            .orejime-Notice-purposes {
+                color: $ds44-color-base;
+            }
+
             .orejime-Notice-actions {
+                padding: 0;
+                text-align: center;
+
                 .orejime-Button {
-                    background-color: $ds44-color-base;
-                    border-color: $ds44-color-inverse;
+                    background-color: $ds44-light;
+                    border-color: $ds44-color-base;
+                    color: $ds44-color-base;
 
                     &.orejime-Button--save {
-                        background-color: #ffffff;
-                        color: $ds44-color-base;
+                        background-color: $ds44-contextual-color;
+                        border-color: $ds44-contextual-color;
                     }
                 }
+
+                .orejime-Notice-actionItem--decline {
+                    display: none;
+                    visibility: hidden;
+                }
+            }
+
+            .orejime-Notice-body {
+                padding-top: 0em;
             }
 
         }
     }
 
     .orejime-ModalPortal {
-        .orejime-Modal {
-            font-family: $ds44-font-family-base;
-            background-color: $ds44-color-base;
 
-            .orejime-AppToggles {
-                .orejime-AppToggles-disableAll {
-                    background-color: #ffffff;
+
+        .orejime-ModalOverlay {
+
+            background-color: rgba(0, 0, 0, .66);
+            padding: 3rem;
+
+            .orejime-ModalWrapper {
+                background-color: $ds44-light;
+                width: 100%;
+                max-width: 64em;
+                padding: 1.5rem 3rem;
+                position: relative;
+                z-index: 10;
+                max-height: 90vh;
+                overflow-x: auto;
+                border-radius: 0;
+                box-shadow: none;
+                bottom: 0;
+                right: 0;
+            }
+
+            .orejime-Modal {
+                font-family: $ds44-font-family-base;
+                background: $ds44-light;
+                color: $ds44-color-base;
+                border-radius: 0;
+                box-shadow: none;
+
+                .orejime-Modal-title {
+                    @include ds44-font-sizes(h2);
+                    @if variable_exists(ds44-font-family-headings) and $ds44-font-family-headings != $ds44-font-family-base{
+                      font-family: $ds44-font-family-headings;
+                    }
+                    font-weight: $weight-bold;
+                    padding: 0 1.5rem;
+                    line-height: 1.2;
+                    background: linear-gradient(to bottom, rgba(255,255,255,0) 55%,$ds44-contextual-color 55%);
+                    display: inline;
+                }
+
+                .orejime-Modal-description {
+                    margin-top: 2rem;
+                }
+
+                .orejime-Modal-body {
+                    padding: 2rem 2rem 3rem 2rem;
+                    border: 1px solid $ds44-contextual-color;
+
+                    .orejime-AppItem-input:checked + .orejime-AppItem-label .orejime-AppItem-slider {
+                        background-color: $ds44-color-base;
+                    }
+                    .orejime-Button[disabled] {
+                        background-color: $ds44-color-base;
+                        border-color: $ds44-color-base;
+                        opacity: 1;
+                        filter: none;
+                        color: $ds44-light;
+                    }
+                    .orejime-Button--info {
+                        background: $ds44-light;
+                        color: $ds44-color-base;
+                    }
+                }
+
+                .orejime-Modal-saveButton {
+                    background-color: $ds44-contextual-color;
+                    border-color: $ds44-contextual-color;
                     color: $ds44-color-base;
                 }
+
+                .orejime-Modal-header,
+                .orejime-Modal-footer {
+                    border: 0;
+                }
+
+                .orejime-AppToggles {
+                    .orejime-AppToggles-disableAll {
+                        background-color: #ffffff;
+                        color: $ds44-color-base;
+                    }
+                }
+
+                .orejime-Modal-poweredByLink {
+                    display: none;
+                    visibility: hidden;
+                }
+            }
+
+            .orejime-Modal-closeButton {
+                color: $ds44-color-base;
             }
         }
+
     }
 
     button {
@@ -276,4 +402,3 @@
         }
     }
 }
-
