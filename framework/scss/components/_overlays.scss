@@ -21,10 +21,20 @@
 .ds44-overlay--navNiv1 {
     left: 0;
     top: -2500px;
+    visibility: hidden;
+
+     * {
+        visibility: hidden;
+    }
 
     &.show {
         top: 0;
         opacity: 1;
+        visibility: visible;
+
+         * {
+            visibility: visible;
+        }
     }
 }
 
@@ -151,7 +161,7 @@
 
         .ds44-flex-container {
             flex-direction: column;
-        
+
             .ds44-card__dateContainer {
                 flex-direction: row;
                 min-height: 8rem;
