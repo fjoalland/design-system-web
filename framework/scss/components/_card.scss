@@ -212,6 +212,9 @@ a.ds44-card {
 
 .ds44-card__section--horizontal {
     padding: $ds44-padding-large $ds44-padding-xlarge;
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
 
     @media (max-width: $ds44-small - .0625) {
         padding-right: $ds44-padding-box;

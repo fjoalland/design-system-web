@@ -149,13 +149,18 @@
             margin-top: 1rem !important;
         }
 
-        .ds44-card__dateContainer {
-            flex-direction: row;
-            min-height: 8rem;
-            font-size: 1.25em;
+        .ds44-flex-container {
+            flex-direction: column;
+        
+            .ds44-card__dateContainer {
+                flex-direction: row;
+                min-height: 8rem;
+                font-size: 1.25em;
+                align-items: center;
 
-            > * {
-                margin: 0 .5rem;
+                > * {
+                    margin: 0 .5rem;
+                }
             }
         }
 
