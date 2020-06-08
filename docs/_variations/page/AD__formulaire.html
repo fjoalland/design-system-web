@@ -21,7 +21,7 @@ layout: pattern
             <p class="ds44-textLegend ds44-textLegend--mentions">Les champs marqués d’un astérisque * sont obligatoires</p>
             <form>
                 <div class="ds44-mb3">
-                    <h2 class="h3-like">Identification du demandeur</h2>
+                    <h2 class="h3-like">Vous êtes :</h2>
                     <ul class="ds44-list grid-12">
                         <li class="col-6 ds44-minTiny-margin-r">
                             {% include form/field/input/standard.html type="last-name" label="Nom" required="true" %}
@@ -29,11 +29,6 @@ layout: pattern
                         <li class="col-6 ds44-minTiny-margin-l">
                             {% include form/field/input/standard.html type="first-name" label="Prénom" required="true" %}
                         </li>
-                    </ul>
-                </div>
-                <div class="ds44-mb3">
-                    <h2 class="h3-like">Coordonnées</h2>
-                    <ul class="ds44-list grid-12">
                         <li class="col-12">
                             {% include form/field/input/standard.html type="street-address" label="Adresse" required="true" %}
                         </li>
@@ -46,9 +41,6 @@ layout: pattern
                         <li class="col-6 ds44-minTiny-margin-l">
                             {% include form/field/input/standard.html type="city" label="Ville" required="true" %}
                         </li>
-                        <li class="col-12">
-                            {% include form/field/input/textarea.html label="Mention texte fixe" required="true" %}
-                        </li>
                         <li class="col-6 ds44-minTiny-margin-r">
                             {% include form/field/input/standard.html type="phone" label="Téléphone" explanation="Exemple : 0202030405" required="true" %}
                         </li>
@@ -57,50 +49,11 @@ layout: pattern
                         </li>
                     </ul>
                 </div>
-                <div class="ds44-mb3">
-                    <h2 class="h3-like">Caractéristiques de la recherche</h2>
-                    <ul class="ds44-list grid-12">
-                        <li class="col-12">
-                            {% include form/field/input/standard.html label="Profession lors du contrat d'apprentissage recherché" %}
-                        </li>
-                        <li class="col-12">
-                            {% include form/field/input/standard.html label="Année de naissance de l'apprenti" explanation="Exemple : 1978" %}
-                        </li>
-                        <li class="col-12">
-                            <h3 class="p-like">Période de l'apprentissage</h3>
-                        </li>
-                        <li class="col-6 ds44-minTiny-margin-r">
-                            {% include form/field/input/datepicker.html label="Du" title="Du : jour / mois / année" explanation="Ex : 20/05/2020" %}
-                        </li>
-                        <li class="col-6 ds44-minTiny-margin-l">
-                            {% include form/field/input/datepicker.html label="Au" title="jusqu’au : jour / mois / année" explanation="Ex : 20/05/2020" %}
-                        </li>
-                        <li class="col-12">
-                            {% include form/field/select/standard.html label="Commune de domiciliation de l'époque" %}
-                        </li>
-                        <li class="col-12">
-                            {% include form/field/input/textarea.html label="Mention texte fixe" required="true" %}
-                        </li>
-                        <li class="col-12">
-                            {% include form/field/input/standard.html label="Complément d'adresse" %}
-                        </li>
-                    </ul>
-                    <div class="ds44-txtRight">
-                        <button class="ds44-btnStd ds44-btn--invert ds44-bntALeft" title="Valider l'envoi de votre demande de recherche d'un contrat">
-                            <span class="ds44-btnInnerText">Valider</span><i class="icon icon-long-arrow-right" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                </div>
+
+                {% include page-utile/AD_choix_form.html %}
             </form>
 
             {% include partage/partage-interne.html %}
-
-            <section class="ds44-innerBoxContainer ds44-borderContainer">
-                <h2 id="idTitre3-2" class="h2-like">Délai de réponse</h2>
-                <p>Les délais de réponse sont habituellement de l'ordre de 15 jours. Si, passé ce délai, vous n'avez rien reçu, il se peut que votre demande ne soit pas bien parvenue aux Archives départementales. Dans ce cas, vous pouvez contacter le secréteriat des Archives départementales au </p>
-                <p class="ds44-docListElem mtm"><i class="icon icon-phone ds44-docListIco" aria-hidden="true"></i><span class="visually-hidden">Téléphone : </span>02 51 72 93 20</p>
-                <p class="ds44-docListElem mts"><i class="icon icon-mail ds44-docListIco" aria-hidden="true"></i><span class="visually-hidden">Mail : </span><a href="#mailto:archives@loire-atlantique.fr" title="Contacter le secréteriat des Archives départementales par mail : archives@loire-atlantique.fr">archives@loire-atlantique.fr</a></p>
-            </section>
 
         </div>
     </article>
