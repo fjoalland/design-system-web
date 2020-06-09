@@ -30,7 +30,7 @@ layout: pattern
                             {% include form/field/input/standard.html type="first-name" label="Prénom" required="true" %}
                         </li>
                         <li class="col-12">
-                            {% include form/field/input/standard.html type="street-address" label="Adresse" required="true" %}
+                            {% include form/field/input/standard.html type="address-line1" label="Adresse" required="true" %}
                         </li>
                         <li class="col-12">
                             {% include form/field/input/standard.html label="Complément d'adresse" %}
@@ -39,10 +39,10 @@ layout: pattern
                             {% include form/field/input/standard.html type="postcode" label="Code postal" explanation="Exemple : 44000" required="true" %}
                         </li>
                         <li class="col-6 ds44-minTiny-margin-l">
-                            {% include form/field/input/standard.html type="city" label="Ville" required="true" %}
+                            {% include form/field/input/standard.html type="address-level2" label="Ville" required="true" %}
                         </li>
                         <li class="col-6 ds44-minTiny-margin-r">
-                            {% include form/field/input/standard.html type="phone" label="Téléphone" explanation="Exemple : 0202030405" required="true" %}
+                            {% include form/field/input/standard.html type="tel-national" label="Téléphone" explanation="Exemple : 0202030405" required="true" %}
                         </li>
                         <li class="col-6 ds44-minTiny-margin-l">
                             {% include form/field/input/standard.html type="email" label="Courriel" explanation="Exemple : monadresse@mail.com" required="true" %}
