@@ -89,9 +89,6 @@ class MiscAccessibility {
         if (!isChild) {
             // Is parent element
             element.removeAttribute('aria-hidden');
-        } else if (element.getAttribute('aria-hidden') === 'true') {
-            // Is child element, stop bubbling if the element is hidden
-            return;
         }
         if (
             element.closest(MiscAccessibility.getEnabledElementsSelector()) === element &&
@@ -126,9 +123,6 @@ class MiscAccessibility {
         if (!isChild) {
             // Is parent element
             element.setAttribute('aria-hidden', true);
-        } else if (element.getAttribute('aria-hidden') === 'true') {
-            // Is child element, stop bubbling if the element is hidden
-            return;
         }
         if (element.closest(MiscAccessibility.getEnabledElementsSelector()) === element) {
             if (
