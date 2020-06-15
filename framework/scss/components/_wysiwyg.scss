@@ -81,6 +81,32 @@ blockquote {
     margin: 1.5rem 0 1rem 0;
 }
 
+/* Tables */
+
+table.ds44-tableau_1col,
+table.ds44-tableau_2col,
+table.ds44-tableau_3col,
+table.ds44-tableau_4col,
+table.ds44-tableau_5col {
+    width: 100%;
+}
+
+table.ds44-tableau_1col tr {
+    width: 100%;
+}
+table.ds44-tableau_2col tr {
+    width: 50%;
+}
+table.ds44-tableau_3col tr {
+    width: 33%;
+}
+table.ds44-tableau_4col tr {
+    width: 25%;
+}
+table.ds44-tableau_5col tr {
+    width: 20%;
+}
+
 @media (max-width: 64em) {
   .col.mrl ,
   .col.mll {
