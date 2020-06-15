@@ -229,6 +229,15 @@
     }
 }
 
+// Grands projets
+
+.grid-12-small-1 .colFocusProjets{
+  align-self: flex-start;
+}
+.grid-12-small-1 .colFocusProjets:first-of-type{
+  align-self: auto;
+}
+
 
 /* =======
   MEDIA QUERIES
