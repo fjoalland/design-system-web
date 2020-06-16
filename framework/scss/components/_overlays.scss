@@ -229,12 +229,8 @@
 
 /* Orejime */
 #orejime {
-    width: 100%;
-    height: 100vh;
     position: fixed;
-    top: 0;
     bottom: 0;
-    left: 0;
     right: 0;
     z-index: 1000;
     transition: all $ds44-timing-standard ease-in;
@@ -242,7 +238,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 3rem;
 
     .orejime-AppContainer {
         .orejime-Notice {
@@ -256,8 +251,8 @@
             max-height: 90vh;
             overflow-x: auto;
             border-radius: 0;
-            bottom: 0;
-            right: 0;
+            bottom: 3rem;
+            right: 3rem;
 
             .orejime-Notice-logoContainer {
                 text-align: center;
