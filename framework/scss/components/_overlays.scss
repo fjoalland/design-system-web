@@ -229,7 +229,6 @@
 
 /* Orejime */
 #orejime {
-
     width: 100%;
     height: 100vh;
     position: fixed;
@@ -245,18 +244,7 @@
     align-items: center;
     padding: 3rem;
 
-
     .orejime-AppContainer {
-        &:after {
-            content: " ";
-            background-color: rgba(0, 0, 0, 0.66);
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
         .orejime-Notice {
             background-color: $ds44-light;
             box-shadow: 0px 13px 20px 0px rgba(0, 0, 0, 0.35);
@@ -270,7 +258,6 @@
             border-radius: 0;
             bottom: 0;
             right: 0;
-
 
             .orejime-Notice-logoContainer {
                 text-align: center;
@@ -310,13 +297,12 @@
             .orejime-Notice-body {
                 padding-top: 0em;
             }
-
         }
     }
 
     .orejime-ModalPortal {
         .orejime-ModalOverlay {
-            background-color: transparent;
+            background-color: rgba(0, 0, 0, .66);
             padding: 3rem;
 
             .orejime-ModalWrapper {
@@ -407,7 +393,6 @@
                 color: $ds44-color-base;
             }
         }
-
     }
 
     button {
