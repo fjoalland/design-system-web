@@ -23,7 +23,7 @@
     top: -2500px;
     visibility: hidden;
 
-     * {
+    * {
         visibility: hidden;
     }
 
@@ -32,7 +32,7 @@
         opacity: 1;
         visibility: visible;
 
-         * {
+        * {
             visibility: visible;
         }
     }
@@ -171,6 +171,7 @@
                 > * {
                     margin: 0 .5rem;
                 }
+
                 .icon-down {
                     transform: rotate(-90deg);
                 }
@@ -246,6 +247,15 @@
 
 
     .orejime-AppContainer {
+        &:after {
+            content: " ";
+            background-color: rgba(0, 0, 0, 0.66);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
 
         .orejime-Notice {
             background-color: $ds44-light;
@@ -305,11 +315,8 @@
     }
 
     .orejime-ModalPortal {
-
-
         .orejime-ModalOverlay {
-
-            background-color: rgba(0, 0, 0, .66);
+            background-color: transparent;
             padding: 3rem;
 
             .orejime-ModalWrapper {
@@ -336,13 +343,13 @@
 
                 .orejime-Modal-title {
                     @include ds44-font-sizes(h2);
-                    @if variable_exists(ds44-font-family-headings) and $ds44-font-family-headings != $ds44-font-family-base{
-                      font-family: $ds44-font-family-headings;
+                    @if variable_exists(ds44-font-family-headings) and $ds44-font-family-headings != $ds44-font-family-base {
+                        font-family: $ds44-font-family-headings;
                     }
                     font-weight: $weight-bold;
                     padding: 0 1.5rem;
                     line-height: 1.2;
-                    background: linear-gradient(to bottom, rgba(255,255,255,0) 55%,$ds44-contextual-color 55%);
+                    background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 55%, $ds44-contextual-color 55%);
                     display: inline;
                 }
 
@@ -357,6 +364,7 @@
                     .orejime-AppItem-input:checked + .orejime-AppItem-label .orejime-AppItem-slider {
                         background-color: $ds44-color-base;
                     }
+
                     .orejime-Button[disabled] {
                         background-color: $ds44-color-base;
                         border-color: $ds44-color-base;
@@ -364,6 +372,7 @@
                         filter: none;
                         color: $ds44-light;
                     }
+
                     .orejime-Button--info {
                         background: $ds44-light;
                         color: $ds44-color-base;
