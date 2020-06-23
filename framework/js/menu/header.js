@@ -36,6 +36,8 @@ class MenuHeader {
             .forEach((element) => {
                 MiscEvent.addListener('click', this.hideSubNavigationMenu.bind(this), element);
             });
+
+        MiscAccessibility.hide(document.querySelector('header .ds44-blocMenu'));
     }
 
     showMenu (evt) {
@@ -82,7 +84,7 @@ class MenuHeader {
             });
 
         // Set focus in menu
-        MiscAccessibility.setFocus(closeButton);
+        window.setTimeout(MiscAccessibility.setFocus.bind(this, closeButton), 500);
         MiscAccessibility.addFocusLoop(mainMenu);
         MiscEvent.dispatch('menu:show', { 'element': mainMenu });
 
