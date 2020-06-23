@@ -232,7 +232,8 @@ class FormFieldAbstract {
             object.parentValue = null;
         }
 
-        this.empty(objectIndex);
+        this.enter(objectIndex);
+        this.showNotEmpty(objectIndex);
         this.enableElements(objectIndex, evt);
     }
 
