@@ -1,5 +1,5 @@
 class FormLayoutAbstract {
-    constructor (selector) {
+    constructor(selector) {
         this.objects = [];
 
         document
@@ -12,7 +12,7 @@ class FormLayoutAbstract {
         this.initialize();
     }
 
-    create (formElement) {
+    create(formElement) {
         const object = {
             'id': MiscUtils.generateId(),
             'formElement': formElement,
@@ -26,7 +26,7 @@ class FormLayoutAbstract {
         this.objects.push(object);
     }
 
-    initialize () {
+    initialize() {
         // Initialize each object
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
@@ -39,15 +39,15 @@ class FormLayoutAbstract {
         }
     }
 
-    start (objectIndex) {
+    start(objectIndex) {
         const object = this.objects[objectIndex];
 
         if (object.formElement.getAttribute('data-auto-load') === 'true') {
-            MiscEvent.dispatch('submit', { 'dryRun': true }, object.formElement);
+            MiscEvent.dispatch('submit', {'dryRun': true}, object.formElement);
         }
     }
 
-    validation (objectIndex, evt) {
+    validation(objectIndex, evt) {
         // This function will be fired by each component category so they can tell if they are valid or not
         const object = this.objects[objectIndex];
         object.hasBeenChecked = true;
@@ -84,7 +84,7 @@ class FormLayoutAbstract {
         }
     }
 
-    submit (objectIndex, evt) {
+    submit(objectIndex, evt) {
         const object = this.objects[objectIndex];
 
         // Submission is in two steps :
@@ -100,7 +100,7 @@ class FormLayoutAbstract {
 
                 MiscEvent.dispatch('form:validate', {
                     'formElement': object.formElement,
-                    'dryRun': ((evt.detail || { 'dryRun': false }).dryRun || false)
+                    'dryRun': ((evt.detail || {'dryRun': false}).dryRun || false)
                 });
 
                 return false;
@@ -168,6 +168,8 @@ class FormLayoutAbstract {
             ['commune', 'adresse'].forEach((key) => {
                 if (sortedData[key]) {
                     fieldParameters[key] = sortedData[key];
+                } else if (fieldParameters[key]) {
+                    delete fieldParameters[key];
                 }
             });
             window.sessionStorage.setItem('fields', JSON.stringify(fieldParameters));
@@ -233,13 +235,13 @@ class FormLayoutAbstract {
         }
     }
 
-    recaptchaSubmit (objectIndex, formData) {
+    recaptchaSubmit(objectIndex, formData) {
         if (window.grecaptcha) {
             // Send using recaptcha
             const recaptchaId = document.querySelector('#googleRecaptchaId').getAttribute('src').split('render=').pop().split('?').shift();
             window.grecaptcha.ready((function (objectIndex, recaptchaId) {
                 window.grecaptcha
-                    .execute(recaptchaId, { action: 'submit' })
+                    .execute(recaptchaId, {action: 'submit'})
                     .then((function (objectIndex, token) {
                         const object = this.objects[objectIndex];
 
@@ -264,7 +266,7 @@ class FormLayoutAbstract {
         this.send(objectIndex, formData);
     }
 
-    send (objectIndex, formData) {
+    send(objectIndex, formData) {
         const object = this.objects[objectIndex];
 
         if (object.formElement.getAttribute('data-is-ajax') === 'true') {
@@ -275,11 +277,11 @@ class FormLayoutAbstract {
         }
     }
 
-    ajaxSubmit (objectIndex, formData) {
+    ajaxSubmit(objectIndex, formData) {
         // Abstract method
     }
 
-    notification (objectIndex, messageId, messageText, notificationType = 'error') {
+    notification(objectIndex, messageId, messageText, notificationType = 'error') {
         const object = this.objects[objectIndex];
 
         let containerElement = object.formElement.querySelector('.ds44-message-container');
