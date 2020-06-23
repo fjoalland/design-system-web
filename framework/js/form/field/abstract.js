@@ -232,7 +232,11 @@ class FormFieldAbstract {
             object.parentValue = null;
         }
 
-        this.enter(objectIndex);
+        if (!this.getData(objectIndex)) {
+            this.empty(objectIndex);
+        } else {
+            this.enter(objectIndex);
+        }
         this.showNotEmpty(objectIndex);
         this.enableElements(objectIndex, evt);
     }
