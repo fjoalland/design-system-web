@@ -368,6 +368,9 @@ main {
                     .ds44-card {
                         margin-bottom: 0;
                     }
+                    .ds44-card--horizontal .ds44-flex-container{
+                        height: 100%;
+                    }
                 }
             }
         }
