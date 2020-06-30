@@ -77,6 +77,20 @@ class ResultStandard {
         MiscEvent.dispatch('loader:requestHide');
     }
 
+    redirectCard (evt) {
+        evt.currentTarget
+            .querySelectorAll('a')
+            .forEach((aElement) => {
+                let url = aElement.getAttribute('href');
+                if (!url) {
+                    return;
+                }
+
+                url += (url.indexOf('?') !== -1 ? '&' : '?') + 'previousPage=' + encodeURIComponent(window.location.href);
+                aElement.setAttribute('href', url);
+            });
+    }
+
     showCard () {
         const containerElement = document.querySelector('.ds44-results .ds44-js-results-container');
         if (!containerElement) {
@@ -275,6 +289,8 @@ class ResultStandard {
                     aElement.setAttribute('role', 'button');
                     aElement.setAttribute('tabindex', '0');
                 }
+            } else {
+                MiscEvent.addListener('click', this.redirectCard.bind(this), listItemElement);
             }
             listElement.appendChild(listItemElement);
 
