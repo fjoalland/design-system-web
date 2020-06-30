@@ -28,7 +28,7 @@ class ButtonSticky {
     }
 
     scroll () {
-        const minimumTop = window.innerHeight / 2;
+        const minimumTop = (window.innerHeight / 2);
         const maximumTop = document.body.offsetHeight - window.innerHeight - this.footerElement.offsetHeight;
         const scrollTop = MiscUtils.getScrollTop();
         for (let i = 0; i < this.buttons.length; i++) {
