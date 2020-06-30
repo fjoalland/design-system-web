@@ -9,13 +9,21 @@
             </ul>
             <div class="ds44-flex-container ds44-flex-valign-center">
                 <div class="ds44-colLeft">
-                    <a href="#" class="ds44-logoContainer">
+                    {% if include.rawLogo %}
+                        <p class="ds44-logoContainer">
+                    {% else %}
+                        <a href="/" class="ds44-logoContainer">
+                    {% endif %}
                         {% if include.logo %}
                             {{ include.logo }}
                         {% else %}
-                            <picture class="ds44-logo"><img src="../../assets/images/logo-loire-atlantique.svg" alt="Retour à l&apos;accueil du site loire-atlantique.fr"></picture>
+                            <picture class="ds44-logo"><img src="../../assets/images/logo-loire-atlantique.svg" alt="{% if include.logoAlt %}{{ include.logoAlt }}{% else %}Retour à l&apos;accueil du site loire-atlantique.fr{% endif %}"></picture>
                         {% endif %}
-                    </a>
+                    {% if include.rawLogo %}
+                        </p>
+                    {% else %}
+                        </a>
+                    {% endif %}
                 </div>
                 <div class="ds44-colRight">
                     {% if include.variante1 %}
