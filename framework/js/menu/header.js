@@ -160,6 +160,11 @@ class MenuHeader {
             return;
         }
 
+        // Don't do anything if it is a link
+        if (evt.currentTarget.getAttribute('href')) {
+            return;
+        }
+
         // Get menu navigation section
         const navigationMenu = this.menu.querySelector('.ds44-overlay--navNiv1');
         if (!navigationMenu) {
