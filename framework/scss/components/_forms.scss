@@ -888,7 +888,7 @@ input[type=radio],
         color: $ds44-color-dark-text;
     }
 
-    &.success {
+    &.information {
         background-color: $ds44-valid-bg;
 
         .icon {
@@ -904,35 +904,11 @@ input[type=radio],
         }
     }
 
-    .ds44-iconInnerText {
-        vertical-align: middle;
-    }
-}
+    &.warning {
+        background-color: $ds44-warning-bg;
 
-
-
-.ds44-message-container {
-    @include ds44-font-sizes(errMsg);
-
-    .ds44-message-text {
-        margin: $ds44-paragraph-margin-bottom 0;
-        color: $ds44-color-dark-text;
-        padding: $ds44-padding-box;
-
-        &.success {
-            background-color: $ds44-valid-bg;
-
-            .icon {
-                color: $ds44-valid;
-            }
-        }
-
-        &.error {
-            background-color: $ds44-error-bg;
-
-            .icon {
-                color: $ds44-error;
-            }
+        .icon {
+            color: $ds44-warning;
         }
     }
 

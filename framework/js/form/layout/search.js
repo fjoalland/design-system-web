@@ -164,12 +164,19 @@ class FormLayoutSearch extends FormLayoutAbstract {
         MiscRequest.send(
             object.formElement.getAttribute('action'),
             this.searchSuccess.bind(this, objectIndex, options),
-            this.searchError.bind(this, objectIndex, options),
+            this.searchError.bind(this, objectIndex),
             object.parameters
         )
     }
 
     searchSuccess (objectIndex, options, response) {
+        if (
+            response &&
+            response.message
+        ) {
+            this.notification(objectIndex, null, response.message, response.status);
+        }
+
         const object = this.objects[objectIndex];
 
         // Save search data
@@ -187,7 +194,13 @@ class FormLayoutSearch extends FormLayoutAbstract {
         MiscEvent.dispatch('loader:requestHide');
     }
 
-    searchError (objectIndex, options) {
+    searchError (objectIndex, response) {
+        if (
+            response &&
+            response.message
+        ) {
+            this.notification(objectIndex, null, response.message, response.status);
+        }
         MiscEvent.dispatch('loader:requestHide');
     }
 

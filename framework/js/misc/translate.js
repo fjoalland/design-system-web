@@ -25,9 +25,6 @@ class MiscTranslate {
                 'FIELD_VALID_PHONE_MESSAGE': 'Numéro de téléphone invalide. Merci de respecter le format d’un numéro de téléphone',
                 'FIELD_VALID_POSTCODE_MESSAGE': 'Code postal invalide. Merci de respecter le format d’un code postal',
                 'NO_RESULTS_FOUND': 'Aucun résultat trouvé',
-                'USEFUL_REQUEST_THANK_YOU': 'Merci pour votre aide',
-                'USEFUL_REQUEST_YES': 'Content que cette page vous ait été utile ! Merci.',
-                'USEFUL_REQUEST_NO': 'Désolé que cette page ne vous ait pas été utile !\nNous faisons de notre mieux pour améliorer le contenu de ce site.',
                 'LOADING': 'Chargement en cours',
                 'SHOW': 'Afficher',
                 'HIDE': 'Masquer',
@@ -56,7 +53,6 @@ class MiscTranslate {
                 'NB_RESULTS_FOR_SEARCH:': 'pour la recherche sur :',
                 'EMPTY_SEARCH_CRITERIA': 'aucun critère',
                 'RESULTS_MAX_RESULTS': 'Il y a un trop grand nombre de résultats correspondant à votre recherche. Vous trouverez ci-dessous les {maxNbResults} plus pertinents. N’hésitez pas à affiner vos critères de recherche.',
-                'FORM_GENERAL_ERROR': 'Une erreur est survenue suite à l\'envoi de votre formulaire',
                 'NEW_WINDOW': 'nouvelle fenêtre',
                 'TOS_OF': 'Conditions d’utilisation de'
             },
@@ -72,9 +68,6 @@ class MiscTranslate {
                 'FIELD_VALID_PHONE_MESSAGE': 'Invalid phone number format. Please enter a phone number with a valid format',
                 'FIELD_VALID_POSTCODE_MESSAGE': 'Invalid postcode format. Please enter a postcode with a valid format',
                 'NO_RESULTS_FOUND': 'No results found',
-                'USEFUL_REQUEST_THANK_YOU': 'Thank you for your help',
-                'USEFUL_REQUEST_YES': 'Glad you found this page useful! Thank you.',
-                'USEFUL_REQUEST_NO': 'Sorry that this page was not useful to you!\nWe are doing our best to improve the content of this site.',
                 'LOADING': 'Loading',
                 'SHOW': 'Show',
                 'HIDE': 'Hide',
@@ -103,7 +96,6 @@ class MiscTranslate {
                 'NB_RESULTS_FOR_SEARCH:': 'for the search on:',
                 'EMPTY_SEARCH_CRITERIA': 'no criteria',
                 'RESULTS_MAX_RESULTS': 'There are too many results matching your search. Below are the {maxNbResults} most relevant. Do not hesitate to refine your search criteria.',
-                'FORM_GENERAL_ERROR': 'An error occurred following the submission of your form',
                 'NEW_WINDOW': 'new window',
                 'TOS_OF': 'Terms of service of'
             }

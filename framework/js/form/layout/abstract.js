@@ -43,7 +43,7 @@ class FormLayoutAbstract {
         const object = this.objects[objectIndex];
 
         if (object.formElement.getAttribute('data-auto-load') === 'true') {
-            MiscEvent.dispatch('submit', {'dryRun': true}, object.formElement);
+            MiscEvent.dispatch('submit', { 'dryRun': true }, object.formElement);
         }
     }
 
@@ -100,7 +100,7 @@ class FormLayoutAbstract {
 
                 MiscEvent.dispatch('form:validate', {
                     'formElement': object.formElement,
-                    'dryRun': ((evt.detail || {'dryRun': false}).dryRun || false)
+                    'dryRun': ((evt.detail || { 'dryRun': false }).dryRun || false)
                 });
 
                 return false;
@@ -241,7 +241,7 @@ class FormLayoutAbstract {
             const recaptchaId = document.querySelector('#googleRecaptchaId').getAttribute('src').split('render=').pop().split('?').shift();
             window.grecaptcha.ready((function (objectIndex, recaptchaId) {
                 window.grecaptcha
-                    .execute(recaptchaId, {action: 'submit'})
+                    .execute(recaptchaId, { action: 'submit' })
                     .then((function (objectIndex, token) {
                         const object = this.objects[objectIndex];
 
@@ -284,15 +284,16 @@ class FormLayoutAbstract {
     notification (objectIndex, messageId, messageText, notificationType = 'error') {
         const object = this.objects[objectIndex];
 
-        let containerElement = object.formElement.querySelector('.ds44-message-container');
+        let containerElement = object.formElement.querySelector('.ds44-msg-container');
         if (containerElement) {
             containerElement.remove();
         }
 
         // Show message
         containerElement = document.createElement('div');
-        containerElement.classList.add('ds44-message-container');
-        containerElement.classList.add('ds44-mb-std');
+        containerElement.classList.add('ds44-msg-container');
+        containerElement.classList.add(notificationType);
+        containerElement.setAttribute('aria-live', 'polite');
         object.formElement.insertBefore(containerElement, object.formElement.firstChild);
 
         const textElement = document.createElement('p');
@@ -300,18 +301,19 @@ class FormLayoutAbstract {
             textElement.setAttribute('id', messageId);
         }
         textElement.classList.add('ds44-message-text');
-        textElement.classList.add(notificationType);
         textElement.setAttribute('tabindex', '-1');
         containerElement.appendChild(textElement);
 
         const iconElement = document.createElement('i');
         iconElement.classList.add('icon');
-        if (notificationType === 'success') {
+        if (notificationType === 'information') {
             iconElement.classList.add('icon-check');
+        } else if (notificationType === 'warning') {
+            iconElement.classList.add('icon-help');
         } else {
             iconElement.classList.add('icon-attention');
         }
-        iconElement.classList.add('icon--sizeM');
+        iconElement.classList.add('icon--sizeL');
         iconElement.setAttribute('aria-hidden', 'true');
         textElement.appendChild(iconElement);
 

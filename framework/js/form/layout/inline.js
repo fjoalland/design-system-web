@@ -20,11 +20,22 @@ class FormLayoutInline extends FormLayoutAbstract {
 
     inlineSuccess (objectIndex, response) {
         this.showInlineData(objectIndex, response);
+        if (
+            response &&
+            response.message
+        ) {
+            this.notification(objectIndex, null, response.message, response.status);
+        }
         MiscEvent.dispatch('loader:requestHide');
     }
 
-    inlineError (objectIndex) {
-        this.notification(objectIndex, null, MiscTranslate._('FORM_GENERAL_ERROR'));
+    inlineError (objectIndex, response) {
+        if (
+            response &&
+            response.message
+        ) {
+            this.notification(objectIndex, null, response.message, response.status);
+        }
         MiscEvent.dispatch('loader:requestHide');
     }
 

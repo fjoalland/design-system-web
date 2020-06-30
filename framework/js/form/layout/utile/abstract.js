@@ -1,10 +1,4 @@
 class FormLayoutUtileAbstract extends FormLayoutAbstract {
-    constructor (selector) {
-        super(selector);
-
-        this.submitSuccessText = MiscTranslate._('USEFUL_REQUEST_THANK_YOU');
-    }
-
     ajaxSubmit (objectIndex, formData) {
         const object = this.objects[objectIndex];
 
@@ -33,52 +27,47 @@ class FormLayoutUtileAbstract extends FormLayoutAbstract {
         );
     }
 
-    submitSuccess (objectIndex) {
-        const object = this.objects[objectIndex];
-
-        const parentElement = object.formElement.closest('.ds44-inner-container');
-        if (!parentElement) {
-            MiscEvent.dispatch('loader:requestHide');
-
-            return;
+    submitSuccess (objectIndex, response) {
+        if (
+            response &&
+            response.message
+        ) {
+            this.notification(objectIndex, null, response.message, response.status);
         }
 
-        // Empty parent
-        parentElement.innerHTML = '';
+        const object = this.objects[objectIndex];
 
-        // Show message
-        const gridElement = document.createElement('div');
-        gridElement.classList.add('grid-1-small-1');
-        gridElement.classList.add('ds44-grid12-offset-1');
-        gridElement.classList.add('s44-box');
-        parentElement.appendChild(gridElement);
-
-        const centerElement = document.createElement('div');
-        centerElement.classList.add('col');
-        centerElement.classList.add('txtcenter');
-        gridElement.appendChild(centerElement);
-
-        const textElement = document.createElement('div');
-        textElement.classList.add('h4-like');
-        textElement.setAttribute('aria-live', 'polite');
-        textElement.innerHTML = this.submitSuccessText;
-        centerElement.appendChild(textElement);
+        // Add aria described by to textarea
+        const textareaElement = object.formElement.querySelector('textarea');
+        if (textareaElement) {
+            const defaultAriaDescribedBy = textareaElement.getAttribute('data-bkp-aria-describedby');
+            if (!defaultAriaDescribedBy) {
+                textareaElement.removeAttribute('aria-describedby');
+            } else {
+                textareaElement.setAttribute('aria-describedby', defaultAriaDescribedBy);
+            }
+        }
 
         // Hide loader
         MiscEvent.dispatch('loader:requestHide');
     }
 
-    submitError (objectIndex) {
-        const object = this.objects[objectIndex];
-
-        // Show error notification in form
+    submitError (objectIndex, response) {
         const messageId = MiscUtils.generateId();
-        this.notification(objectIndex, messageId, MiscTranslate._('FORM_GENERAL_ERROR'));
+        if (
+            response &&
+            response.message
+        ) {
+            this.notification(objectIndex, messageId, response.message, response.status);
+        }
+
+        const object = this.objects[objectIndex];
 
         // Add aria described by to textarea
         const textareaElement = object.formElement.querySelector('textarea');
         if (textareaElement) {
-            textareaElement.setAttribute('aria-describedby', messageId);
+            const defaultAriaDescribedBy = textareaElement.getAttribute('data-bkp-aria-describedby');
+            textareaElement.setAttribute('aria-describedby', messageId + (defaultAriaDescribedBy ? ' ' + defaultAriaDescribedBy : ''));
         }
 
         // Hide loader
