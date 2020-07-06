@@ -403,6 +403,9 @@ input[type=radio],
             &.ds44-theme {
                 .ds44-fieldContainer {
 
+                    flex: none;
+                    width: 20%;
+
                     .ds44-select__shape {
                         background: $ds44-contextual-color;
                         border-color: $ds44-dark;
@@ -414,8 +417,6 @@ input[type=radio],
                     }
 
                     &--select {
-                        flex: none;
-                        width: 20%;
 
                         .ds44-select-container {
                             width: 200%;
