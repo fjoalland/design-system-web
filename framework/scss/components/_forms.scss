@@ -1037,6 +1037,20 @@ input[type=radio],
         background: $ds44-lightgray;
         cursor: default;
     }
+
+    &.ds44-fieldContainer {
+
+        &--select {
+            .ds44-select-container {
+                width: 200%;
+                max-width: 100vw;
+
+                @media (max-width: $ds44-small - .0625) {
+                    width: 100%;
+                }
+            }
+        }
+    }
 }
 
 
