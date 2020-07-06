@@ -4,7 +4,7 @@ type: detail
 title: Couleurs
 group: styles
 permalink: /styles/color.html
-description: Les couleurs forment la racine vertébrale de la charte graphique. Elles expriment le ton du site. 
+description: Les couleurs forment la racine vertébrale de la charte graphique. Elles expriment le ton du site.
 
 ---
 
@@ -104,10 +104,10 @@ Les informations essentielles de type "alerte" sont de couleur rouge
 {% include color-preview.html name="Eglise du Vieux-Bourg" hexcode="#fcde6e" %}
 {% include color-preview.html name="Musée Dobrée" hexcode="#ffbed2" %}
 {% include color-preview.html name="Laboratoire Arc’Antique" hexcode="#1496dc" %}
-{% include color-preview.html name="Pôle Archéologie de Loire-Atlantique" hexcode="#d23c5a" %}
-{% include color-preview.html name="Jardins des Folies Siffait" hexcode="#289682" %}
+{% include color-preview.html name="Pôle Archéologie de Loire-Atlantique" hexcode="#FF646E" %}
+{% include color-preview.html name="Jardins des Folies Siffait" hexcode="#5AE682" %}
 {% include color-preview.html name="Château de Chateaubriant" hexcode="#f07850" %}
-{% include color-preview.html name="Domaine de la Garenne Lemot" hexcode="#5ae682" %}
+{% include color-preview.html name="Domaine de la Garenne Lemot" hexcode="#3CC8B4" %}
 {% include color-preview.html name="Abbaye de blanche Couronne" hexcode="#965a6e" %}
 
 #### Couleurs complémentaires
