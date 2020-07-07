@@ -1038,16 +1038,16 @@ input[type=radio],
         cursor: default;
     }
 
-    &.ds44-fieldContainer {
+}
 
-        &--select {
-            .ds44-select-container {
-                width: 200%;
-                max-width: 100vw;
+.ds44-fieldContainer--select {
+    .ds44-champsLies.ds44-fieldContainer {
+        .ds44-select-container {
+            width: 200%;
+            max-width: 100vw;
 
-                @media (max-width: $ds44-small - .0625) {
-                    width: 100%;
-                }
+            @media (max-width: $ds44-small - .0625) {
+                width: 100%;
             }
         }
     }
