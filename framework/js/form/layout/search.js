@@ -65,6 +65,12 @@ class FormLayoutSearch extends FormLayoutAbstract {
     loadFromUrl (objectIndex) {
         const object = this.objects[objectIndex];
 
+        if (object.formElement.getAttribute('data-legacy-url') === 'true') {
+            this.loadFromUrlSuccess(objectIndex, MiscUrl.getHashParameters());
+
+            return true;
+        }
+
         const searchId = MiscUrl.getSeoHashParameters().pop();
         if (!searchId) {
             return false;
@@ -267,7 +273,11 @@ class FormLayoutSearch extends FormLayoutAbstract {
             return;
         }
 
-        MiscUrl.setSeoHashParameters(object.parameters, searchId);
+        if (object.formElement.getAttribute('data-legacy-url') === 'true') {
+            MiscUrl.setHashParameters(object.parameters);
+        } else {
+            MiscUrl.setSeoHashParameters(object.parameters, searchId);
+        }
     }
 }
 
