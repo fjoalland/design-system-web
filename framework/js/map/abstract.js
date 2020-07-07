@@ -9,6 +9,7 @@ class MapAbstract {
         this.isMapLanguageLoaded = false;
         this.isMapLoaded = false;
         this.isGeojsonLoaded = false;
+        this.geojson = null;
         this.geojsonSourceId = 'geojson-source';
         this.geojsonFillsId = 'geojson-fills';
         this.geojsonLinesId = 'geojson-lines';
@@ -32,7 +33,8 @@ class MapAbstract {
             'addUp': false,
             'isVisible': true,
             'isMoving': false,
-            'maximumTop': null
+            'maximumTop': null,
+            'geojson': null
         };
         object.mapElement.setAttribute('id', object.id);
         this.objects.push(object);
@@ -151,7 +153,11 @@ class MapAbstract {
     loadGeojson (objectIndex, geojson) {
         if (geojson) {
             const object = this.objects[objectIndex];
+            if(object.geojson) {
+                return;
+            }
 
+            object.geojson = geojson;
             object.map.addSource(this.geojsonSourceId, {
                 'type': 'geojson',
                 'data': geojson,
@@ -194,7 +200,7 @@ class MapAbstract {
         // Abstract method
     }
 
-    showGeojson (objectIndex,) {
+    showGeojson (objectIndex) {
         const object = this.objects[objectIndex];
 
         if (!object.isGeojsonLoaded) {
@@ -224,6 +230,42 @@ class MapAbstract {
 
         object.map.setFilter(this.geojsonFillsId, filterParameters);
         object.map.setFilter(this.geojsonLinesId, filterParameters);
+
+        // Zoom the map
+        if (object.zoom && geojsonIds.length !== 0) {
+            let hasBoundingBox = false;
+            let boundingBox = null;
+
+            const features = object.geojson.features;
+            for (let i = 0; i < features.length; i++) {
+                if(geojsonIds.includes(features[i].properties.name)) {
+                    hasBoundingBox = true;
+
+                    for (let j = 0; j < features[i].geometry.coordinates.length; j++) {
+                        const subCoordinates = features[i].geometry.coordinates[j];
+
+                        for (let k = 0; k < subCoordinates.length; k++) {
+                            if(!boundingBox) {
+                                boundingBox = new window.mapboxgl.LngLatBounds(subCoordinates[k], subCoordinates[k]);
+                            } else {
+                                boundingBox = boundingBox.extend(new window.mapboxgl.LngLatBounds(subCoordinates[k], subCoordinates[k]));
+                            }
+                        }
+                    }
+                }
+            }
+
+            object.zoom = false;
+            if (hasBoundingBox) {
+                object.map.fitBounds(
+                    boundingBox,
+                    {
+                        padding: 50,
+                        maxZoom: 15
+                    }
+                );
+            }
+        }
     }
 
     translateMap (objectIndex) {
