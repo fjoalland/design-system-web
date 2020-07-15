@@ -307,6 +307,10 @@ main {
 
                 & main[role="main"] {
                     padding: 0;
+
+                    .ds44-btnStd {
+                        margin-bottom: 0 !important;
+                    }
                 }
             }
 
