@@ -1,0 +1,134 @@
+---
+layout: pattern
+---
+
+{% include header/inc-header.html %}
+
+<main role="main" id="content" tabindex="-1">
+
+    <div class="ds44-container-large">
+        {% include titres/main-title-noImage.html titrePage="Espace presse" %}
+    </div>
+
+    <article class="ds44-container-large ds44-mt4">
+
+        <div class="ds44-inner-container">
+
+            <div class="grid-12-small-1">
+                <div class="col-7">
+                    <section class="ds44-contenuArticle" id="section1">
+                        <h2 class="h3-like">Cet espace est réservé aux médias et aux journalistes. Il leur permet d'accéder :</h2>
+                        <ul>
+                            <li>à l'agenda des conférences de presse du Département</li>
+                            <li>à tous les communiqués ou dossiers de presse parus depuis 1 an</li>
+                            <li>à des ressources réutilisables dans leurs médias : logos, photos...</li>
+                        </ul>
+                        <p>Pour y accéder, merci de vous authentifier ou de créer un compte via les formulaires ci-contre.</p>
+                    </section>
+                    <section class="ds44-contenuArticle ds44-innerBoxContainer ds44-borderContainer">
+                        <h2 id="idTitre3-2" class="h2-like">Contacter le service presse :</h2>
+                        <p class="ds44-docListElem mts"><i class="icon icon-phone ds44-docListIco" aria-hidden="true"></i>02 40 99 10 00</p>
+                        <p class="ds44-docListElem mts"><i class="icon icon-mail ds44-docListIco" aria-hidden="true"></i><a href="#mailto:service.presse@loire-atlantique.fr " aria-label="Contacter le service presse par mail : service.presse@loire-atlantique.fr ">service.presse@loire-atlantique.fr </a>
+                    </section>
+                    <section class="ds44-contenuArticle" id="section2">
+                        <h2 class="h3-like">Suivre l'actualité du Département</h2>
+                        <ul>
+                            <li><a href="#" target="_blank" title="S'abonner aux flash infos du Département de Loire-Atlantique - nouvelle fenêtre">S'abonner aux flash infos dans notre espace actualité</a></li>
+                            <li>Sur Twitter : <a href="#" target="_blank" title="Retrouver sur Twitter : L'actualité du Département de Loire-Atlantique - nouvelle fenêtre">#Loireatlantique</a></li>
+                            <li><a href="#" target="_blank" title="Retrouver sur Facebook : L'actualité du Département de Loire-Atlantique - nouvelle fenêtre">Sur Facebook</a></li>
+                            <li><a href="#" target="_blank" title="Retrouver sur Youtube : L'actualité du Département de Loire-Atlantique - nouvelle fenêtre">Sur Youtube</a></li>
+                            <li><a href="#" target="_blank" title="Retrouver sur Scoop it : L'actualité du Département de Loire-Atlantique - nouvelle fenêtre">Sur Scoop it</a></li>
+                            <li><a href="#" target="_blank" title="Retrouver via nos flux RSS : L'actualité du Département de Loire-Atlantique - nouvelle fenêtre">Via nos flux RSS</a></li>
+                            <li><a href="#" target="_blank" title="S'abonner à l'e-mag du Département de Loire-Atlantique - nouvelle fenêtre">S'abonner à l'e-mag</a></li>
+                        </ul>
+                    </section>
+
+                </div>
+
+                <div class="col-1 grid-offset ds44-hide-tiny-to-medium"></div>
+
+                <section class="col-4">
+                    <div class="ds44-box ds44-theme mbm">
+                        <div class="ds44-innerBoxContainer">
+                            <p class="ds44-box-heading ds44-mb-std" role="heading" aria-level="2">Vous avez déjà un compte, connectez-vous</p>
+                            <form>
+                                <p>Les champs suivis d’un * sont obligatoires.</p>
+                                <div class="ds44-mb3">
+                                    {% include form/field/input/standard.html type="email" label="Courriel" explanation="Exemple : monadresse@mail.com" required="true" %}
+                                </div>
+                                <div class="ds44-mb3">
+                                    {% include form/field/input/standard.html type="password" label="Mot de passe" required="true" %}
+                                </div>
+                                <div>
+                                    {% include form/layout/checkboxes.html choices="connect:Rester connecté" %}
+                                </div>
+                                <button class="ds44-btnStd ds44-btn--invert ds44-bntFullw ds44-bntALeft ds44-mtb1" title="Valider l'envoi de votre candidature">
+                                    <span class="ds44-btnInnerText">Valider</span><i class="icon icon-long-arrow-right" aria-hidden="true"></i>
+                                </button>
+                                <a href="#">Mot de passe oublié ?</a>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="ds44-box ds44-theme mbm">
+                        <div class="ds44-innerBoxContainer">
+                            <p class="ds44-box-heading ds44-mb-std" role="heading" aria-level="2">Créer un compte</p>
+                            <form>
+                                <p>Les champs suivis d’un * sont obligatoires.</p>
+                                <div class="ds44-mb3">
+                                    {% include form/field/input/standard.html type="last-name" label="Nom" required="true" %}
+                                </div>
+                                <div class="ds44-mb3">
+                                    {% include form/field/input/standard.html type="first-name" label="Prénom" required="true" %}
+                                </div>
+                                <div class="ds44-mb3">
+                                    {% include form/field/input/standard.html type="email" label="Courriel" explanation="Exemple : monadresse@mail.com" required="true" %}
+                                </div>
+                                <div class="ds44-mb3">
+                                    {% include form/field/input/standard.html type="tel-national" label="Téléphone" explanation="Exemple : 0202030405" required="true" %}
+                                </div>
+                                <div class="ds44-mb3">
+                                    {% include form/field/input/standard.html type="email" label="Média" explanation="Exemple : Nom journal, radio, ..." %}
+                                </div>
+                                <button class="ds44-btnStd ds44-btn--invert ds44-bntFullw ds44-bntALeft ds44-mb1" title="Valider l'envoi de votre candidature">
+                                    <span class="ds44-btnInnerText">Valider</span><i class="icon icon-long-arrow-right" aria-hidden="true"></i>
+                                </button>
+                                <p class="ds44-wsg-smallText ds44-mt3">La connexion au site loire-atlantique.fr permet d'accéder à l'espace presse dédié aux journalistes et médias, ou aux contributeurs du site de publier des informations. <br/>Les informations personnelles vous concernant sont collectées et traitées par le Département de Loire-Atlantique aux fins d’instruction et de réponse aux demandes reçues. <a href="#">En savoir plus sur la protection des données personnelles</a>.</p>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </article>
+
+    {% include partage/partage-interne.html %}
+
+    <section class="ds44-container-fluid ds44--l-padding">
+        <div class="ds44-box ds44-theme ds44-bgTriangle-left">
+            <div class="ds44-flex-container ds44-flex-container--colMed ds44-flex-container--colMed--colRev">
+                <picture class="ds44-boxPushPic ds44-boxPushPic--horizontal">
+                    <img src="../../assets/images/push/desktop/encart-youtube-horizontale.png" alt="" />
+                </picture>
+                <div class="ds44-boxPushContent ds44-boxPushContent--fluid">
+                    <div class="ds44-titlePushH">
+                        <p role="heading" aria-level="2" class="ds44-pushTitle">Suivez aussi l’actualité en vidéo</p>
+                    </div>
+                    <div class="ds44-contentPushH">
+                        <p class="txtcenter">Abonnez-vous à la chaîne officielle du département de Loire-Atlantique.</p>
+                    </div>
+                    <div class="ds44-contentPushH">
+                        <p>
+                            <button class="ds44-btnStd" type="button" title="Visitez la chaîne officielle du département de Loire-Atlantique">
+                                <span class="ds44-btnInnerText">Visitez la chaîne</span><i class="icon icon-long-arrow-right" aria-hidden="true"></i>
+                            </button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+{% include footer/footer-LA.html %}
