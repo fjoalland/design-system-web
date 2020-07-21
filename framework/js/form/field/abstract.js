@@ -19,10 +19,7 @@ class FormFieldAbstract {
                 });
         }
         this.initialize();
-
-        // Allow some time between the initialization and the filling so events are initialized thorough
-        // all the components and dependancies (hidden / masked fields) can be setup properly
-        window.setTimeout(this.fill.bind(this), 500);
+        this.fill();
     }
 
     create (element) {
@@ -51,6 +48,22 @@ class FormFieldAbstract {
             const object = this.objects[objectIndex];
 
             this.addBackupAttributes(objectIndex);
+
+            if (object.containerElement.getAttribute('data-field-enabled')) {
+                this.enable(
+                    objectIndex,
+                    {
+                        'detail': JSON.parse(object.containerElement.getAttribute('data-field-enabled'))
+                    }
+                );
+            } else if (object.containerElement.getAttribute('data-field-disabled')) {
+                this.disable(
+                    objectIndex,
+                    {
+                        'detail': JSON.parse(object.containerElement.getAttribute('data-field-disabled'))
+                    }
+                );
+            }
 
             MiscEvent.addListener('field:enable', this.enable.bind(this, objectIndex), object.containerElement);
             MiscEvent.addListener('field:disable', this.disable.bind(this, objectIndex), object.containerElement);
@@ -202,6 +215,12 @@ class FormFieldAbstract {
                 },
                 secondLinkedFieldElement
             );
+            secondLinkedFieldElement.setAttribute(
+                'data-field-disabled',
+                JSON.stringify({
+                    'areMaskedLinkedFields': areMaskedLinkedFields
+                })
+            );
         } else {
             // Enabled linked field
             MiscEvent.dispatch(
@@ -211,6 +230,13 @@ class FormFieldAbstract {
                     'areMaskedLinkedFields': areMaskedLinkedFields
                 },
                 secondLinkedFieldElement
+            );
+            secondLinkedFieldElement.setAttribute(
+                'data-field-enabled',
+                JSON.stringify({
+                    'data': data,
+                    'areMaskedLinkedFields': areMaskedLinkedFields
+                })
             );
         }
     }
@@ -225,6 +251,7 @@ class FormFieldAbstract {
         const object = this.objects[objectIndex];
 
         object.isEnabled = true;
+        object.containerElement.removeAttribute('data-field-enabled');
         if (
             evt &&
             evt.detail &&
@@ -259,6 +286,7 @@ class FormFieldAbstract {
         const object = this.objects[objectIndex];
         object.isEnabled = false;
         object.parentValue = null;
+        object.containerElement.removeAttribute('data-field-disabled');
 
         this.empty(objectIndex);
         this.removeInvalid(objectIndex);
