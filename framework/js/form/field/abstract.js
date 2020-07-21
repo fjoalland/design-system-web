@@ -19,7 +19,10 @@ class FormFieldAbstract {
                 });
         }
         this.initialize();
-        this.fill();
+
+        // Allow some time between the initialization and the filling so events are initialized thorough
+        // all the components and dependancies (hidden / masked fields) can be setup properly
+        window.setTimeout(this.fill.bind(this), 500);
     }
 
     create (element) {
@@ -134,7 +137,6 @@ class FormFieldAbstract {
         this.setData(objectIndex, data);
         this.enter(objectIndex);
         this.showNotEmpty(objectIndex);
-        this.enable(objectIndex, { detail: { data: data } });
     }
 
     setData (objectIndex, data = null) {
