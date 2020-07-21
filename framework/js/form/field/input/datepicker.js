@@ -266,6 +266,14 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
             return false;
         }
 
+        if (!this.checkPastDates(objectIndex)) {
+            return false;
+        }
+
+        if (!this.checkNextYearDates(objectIndex)) {
+            return false;
+        }
+
         return true;
     }
 
@@ -288,6 +296,53 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
             previousDateValueElement &&
             (new Date(data[object.name].value) < new Date(previousDateValueElement.value))
         ) {
+            return false;
+        }
+
+        return true;
+    }
+
+    getDateText (date) {
+        if (!date) {
+            date = new Date();
+        }
+        return date.getFullYear() + '-' + ((date.getMonth() + 1) + '').padStart(2, '0') + '-' + (date.getDate() + '').padStart(2, '0');
+    }
+
+    checkPastDates (objectIndex) {
+        const object = this.objects[objectIndex];
+        const data = this.getData(objectIndex);
+
+        if (
+            !data ||
+            object.textElement.getAttribute('data-past-dates') !== 'false'
+        ) {
+            return true;
+        }
+
+        const nowText = this.getDateText();
+        if (new Date(data[object.name].value).getTime() <= (new Date(nowText).getTime() - 1)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    checkNextYearDates (objectIndex) {
+        const object = this.objects[objectIndex];
+        const data = this.getData(objectIndex);
+
+        if (
+            !data ||
+            object.textElement.getAttribute('data-next-year-dates') !== 'false'
+        ) {
+            return true;
+        }
+
+        const oneYearFromNow = new Date();
+        oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
+        const oneYearFromNowText = this.getDateText(oneYearFromNow);
+        if (new Date(data[object.name].value).getTime() >= (new Date(oneYearFromNowText).getTime() + 1)) {
             return false;
         }
 
@@ -359,6 +414,14 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
     getErrorMessage (objectIndex) {
         if (!this.checkChronology(objectIndex)) {
             return this.formatErrorMessage(objectIndex, 'FIELD_VALID_CHRONOLOGY_ERROR_MESSAGE');
+        }
+
+        if (!this.checkPastDates(objectIndex)) {
+            return this.formatErrorMessage(objectIndex, 'FIELD_PAST_DATE_ERROR_MESSAGE');
+        }
+
+        if (!this.checkNextYearDates(objectIndex)) {
+            return this.formatErrorMessage(objectIndex, 'FIELD_NEXT_YEAR_DATE_ERROR_MESSAGE');
         }
 
         if (this.getText(objectIndex)) {
