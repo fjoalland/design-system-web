@@ -134,6 +134,7 @@ class FormFieldAbstract {
         this.setData(objectIndex, data);
         this.enter(objectIndex);
         this.showNotEmpty(objectIndex);
+        this.enable(objectIndex, { detail: { data: data } });
     }
 
     setData (objectIndex, data = null) {
