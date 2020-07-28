@@ -72,7 +72,7 @@ class MiscAccessibility {
         }
     }
 
-    static show (element, isChild = false) {
+    static show (element, bubble = true, isChild = false) {
         if (!element) {
             // No element
             return;
@@ -101,12 +101,14 @@ class MiscAccessibility {
             }
         }
 
-        Array.from(element.children).map((childElement) => {
-            MiscAccessibility.show(childElement, true);
-        });
+        if (bubble) {
+            Array.from(element.children).map((childElement) => {
+                MiscAccessibility.show(childElement, true, true);
+            });
+        }
     }
 
-    static hide (element, isChild = false) {
+    static hide (element, bubble = true, isChild = false) {
         if (!element) {
             // No element
             return;
@@ -135,9 +137,11 @@ class MiscAccessibility {
             element.setAttribute('tabindex', '-1');
         }
 
-        Array.from(element.children).map((childElement) => {
-            MiscAccessibility.hide(childElement, true);
-        });
+        if (bubble) {
+            Array.from(element.children).map((childElement) => {
+                MiscAccessibility.hide(childElement, true, true);
+            });
+        }
     }
 
     static flattenText (text) {

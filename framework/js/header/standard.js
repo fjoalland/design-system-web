@@ -56,8 +56,8 @@ class HeaderStandard {
             const currentScroll = window.pageYOffset;
             if (currentScroll === 0) {
                 headerElement.classList.remove('collapsed');
-                MiscAccessibility.show(document.querySelector('header'));
-                MiscAccessibility.show(document.querySelector('header .ds44-header'));
+                MiscAccessibility.show(document.querySelector('header'), false);
+                MiscAccessibility.show(document.querySelector('header .ds44-header'), false);
                 MiscAccessibility.show(document.querySelector('header .ds44-header .ds44-container-large'));
                 if (document.activeElement === document.querySelector('html')) {
                     MiscAccessibility.setFocus(document.querySelector('header .ds44-btn--menu'));
@@ -74,16 +74,16 @@ class HeaderStandard {
                 // en dessous de la hauteur du header
                 headerElement.classList.add('collapsed');
                 MiscAccessibility.hide(document.querySelector('header .ds44-header .ds44-container-large'));
-                MiscAccessibility.hide(document.querySelector('header .ds44-header'));
-                MiscAccessibility.hide(document.querySelector('header'));
+                MiscAccessibility.hide(document.querySelector('header .ds44-header'), false);
+                MiscAccessibility.hide(document.querySelector('header'), false);
             } else if (
                 currentScroll < this.lastScroll &&
                 headerElement.classList.contains('collapsed')
             ) {
                 // up
                 headerElement.classList.remove('collapsed');
-                MiscAccessibility.show(document.querySelector('header'));
-                MiscAccessibility.show(document.querySelector('header .ds44-header'));
+                MiscAccessibility.show(document.querySelector('header'), false);
+                MiscAccessibility.show(document.querySelector('header .ds44-header'), false);
                 MiscAccessibility.show(document.querySelector('header .ds44-header .ds44-container-large'));
             }
 
@@ -93,7 +93,7 @@ class HeaderStandard {
 
     overlayShow () {
         if (this.headerVisibilityCounter === 0) {
-            MiscAccessibility.hide(document.querySelector('header'));
+            MiscAccessibility.hide(document.querySelector('header'), false);
         }
         this.headerVisibilityCounter--;
     }
@@ -101,7 +101,7 @@ class HeaderStandard {
     overlayHide () {
         this.headerVisibilityCounter = Math.min(0, (this.headerVisibilityCounter + 1));
         if (this.headerVisibilityCounter === 0) {
-            MiscAccessibility.show(document.querySelector('header'));
+            MiscAccessibility.show(document.querySelector('header'), false);
         }
     }
 
