@@ -178,7 +178,7 @@ class ResultStandard {
         this.hasSearched = true;
 
         // Nb display results
-        const nbDisplayedResults = (evt.detail.pageIndex + 1) * evt.detail.nbResultsPerPage;
+        const nbDisplayedResults = evt.detail.pageIndex * evt.detail.nbResultsPerPage;
 
         // Show hide empty results
         const parentElement = document.querySelector('.ds44-results');
