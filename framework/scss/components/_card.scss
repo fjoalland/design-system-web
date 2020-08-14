@@ -246,7 +246,7 @@ a.ds44-card {
     background-color: $ds44-contextual-color;
     text-align: center;
     min-height: 14rem;
-    min-width: 14rem;
+    min-width: 25%;
     flex-direction: column;
 
     @media (max-width: $ds44-small - .0625) {
