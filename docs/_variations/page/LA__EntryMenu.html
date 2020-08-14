@@ -434,6 +434,14 @@ layout: pattern
                     sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore.</p>
             </header>
         </div>
+        <div class="ds44-container-large ds44-mb2">
+            {% capture fields %}
+                <div class="ds44-fieldContainer ds44-fg1">
+                    {% include form/field/input/standard.html label="Votre recherche" required="false" class="ds44-inpLarge" title="Zone de saisie de votre recherche" ariaDescribedBy="idTitre1" %}
+                </div>
+            {% endcapture %}
+            {% include form/layout/recherche-facettes.html fields=fields fieldStyle="large" %}
+        </div>
         {% include carrousel/carrousel-x3--date.html %}
     </section>
 
