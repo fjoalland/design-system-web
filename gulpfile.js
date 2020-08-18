@@ -21,8 +21,10 @@ var jekyllDir = "docs/",
     scssFileAos = 'node_modules/aos/dist/aos.css',
     cssDest = 'dist/css',
     jsMiscFiles = 'framework/js/misc/*.js',
-    jsFieldFile = 'framework/js/**/field/abstract.js',
     jsAbstractFiles = 'framework/js/**/abstract.js',
+    jsFieldAbstractFile = 'framework/js/form/field/abstract.js',
+    jsFieldFiles = 'framework/js/form/field/**/*.js',
+    jsFormFiles = 'framework/js/form/layout/**/!(standard)*.js',
     jsComponentFiles = 'framework/js/**/*.js',
     jsFileSwiper = 'node_modules/swiper/js/swiper.min.js',
     jsFileAos = 'node_modules/aos/dist/aos.js',
@@ -70,7 +72,7 @@ gulp.task('build:css:cd44:prod', function () {
 });
 
 gulp.task('build:js', function () {
-    return gulp.src([jsFileSwiper, jsFileAos, jsMiscFiles, jsFieldFile, jsAbstractFiles, jsComponentFiles])
+    return gulp.src([jsFileSwiper, jsFileAos, jsMiscFiles, jsFieldAbstractFile, jsAbstractFiles, jsFieldFiles, jsFormFiles, jsComponentFiles])
         .pipe(concat('cd44.js'))
         .pipe(gulp.dest(jsDest));
 });
@@ -109,7 +111,7 @@ gulp.task('build:glyphicons', function () {
         .pipe(gulp.dest(distDest));
 });
 
-gulp.task('build:demoicons', function() {
+gulp.task('build:demoicons', function () {
     return gulp.src("framework/glyphicons/**/*")
         .pipe(iconfont({
             fontName: 'iconfont',
@@ -126,9 +128,9 @@ gulp.task('build:demoicons', function() {
                     glyphs: glyphs,
                     fontName: options.fontName
                 }))
-            .pipe(gulp.dest('docs/_variations/icons/'));
+                .pipe(gulp.dest('docs/_variations/icons/'));
         })
-    .pipe(gulp.dest('framework/fonts/'));
+        .pipe(gulp.dest('framework/fonts/'));
 });
 
 // cd .docker && docker-compose exec site gulp createComponent --name button
@@ -147,7 +149,7 @@ gulp.task('build:ds', gulp.parallel(
     'build:demoicons',
     'build:js',
     function () {
-        return gulp.src(assetsFolders, {base: 'framework'})
+        return gulp.src(assetsFolders, { base: 'framework' })
             .pipe(gulp.dest('dist'));
     })
 );
@@ -169,16 +171,16 @@ gulp.task('serve', gulp.series('build', function () {
         open: false       // do not open the browser (annoying)
     });
 
-    gulp.watch('docs/**/*', {interval: 500, usePolling: true}, gulp.series('build:jekyll:fast', function (done) {
+    gulp.watch('docs/**/*', { interval: 500, usePolling: true }, gulp.series('build:jekyll:fast', function (done) {
         browserSync.reload();
         done();
     }));
 
     // Watch framework .scss files
-    gulp.watch(['framework/scss/**/*.scss'], {interval: 500, usePolling: true}, gulp.series('build:css:cd44:dev'));
+    gulp.watch(['framework/scss/**/*.scss'], { interval: 500, usePolling: true }, gulp.series('build:css:cd44:dev'));
 
     // Watch framework .js files
-    gulp.watch('framework/js/**/*.js', {interval: 500, usePolling: true}, gulp.series('build:js', function (done) {
+    gulp.watch('framework/js/**/*.js', { interval: 500, usePolling: true }, gulp.series('build:js', function (done) {
         browserSync.reload();
         done();
     }));

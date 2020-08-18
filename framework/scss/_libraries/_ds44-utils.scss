@@ -562,6 +562,10 @@
 
 }
 
+.ds44-txtRight {
+    text-align: right;
+}
+
 /* === BORDERS === */
 
 %ds44-separating-border {
@@ -891,7 +895,15 @@ h6.visually-hidden + * {
 @media (min-width: $ds44-tiny) {
 
   .ds44-minTiny-margin {
-    margin: 0 1rem !important;
+    margin-left: 0 1rem ;
+  }
+
+  .ds44-minTiny-margin-l {
+    margin: 0 0 0 .5rem !important;
+  }
+
+  .ds44-minTiny-margin-r {
+    margin:  0 .5rem 0 0 !important;
   }
 
 }

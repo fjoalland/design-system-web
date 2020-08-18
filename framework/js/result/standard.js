@@ -2,22 +2,27 @@ class ResultStandard {
     constructor () {
         this.currentId = null;
         this.savedScrollTop = null;
+        this.hasSearched = false;
 
-        MiscEvent.addListener('search:initialize', this.initialize.bind(this));
         MiscEvent.addListener('search:update', this.fillList.bind(this));
         MiscEvent.addListener('search:focus', this.resultFocus.bind(this));
         MiscEvent.addListener('search:blur', this.resultBlur.bind(this));
+        MiscEvent.addListener('search:select', this.resultSelect.bind(this));
         const listContainerElement = document.querySelector('.ds44-results .ds44-js-results-container .ds44-js-results-list');
         if (listContainerElement) {
             MiscEvent.addListener('click', this.showMore.bind(this), listContainerElement);
         }
+
+        window.setTimeout(this.initialize.bind(this), 1000);
     }
 
     initialize () {
-        // Show initial message
-        let newSearchElement = document.querySelector('#ds44-results-new-search');
-        if (newSearchElement) {
-            newSearchElement.style.display = 'block';
+        if (!this.hasSearched) {
+            // Show initial message
+            let newSearchElement = document.querySelector('#ds44-results-new-search');
+            if (newSearchElement) {
+                newSearchElement.style.display = 'block';
+            }
         }
     }
 
@@ -70,6 +75,20 @@ class ResultStandard {
         // TODO: Show error notification
 
         MiscEvent.dispatch('loader:requestHide');
+    }
+
+    redirectCard (evt) {
+        evt.currentTarget
+            .querySelectorAll('a')
+            .forEach((aElement) => {
+                let url = aElement.getAttribute('href');
+                if (!url) {
+                    return;
+                }
+
+                url += (url.indexOf('?') !== -1 ? '&' : '?') + 'previousPage=' + encodeURIComponent(window.location.href);
+                aElement.setAttribute('href', url);
+            });
     }
 
     showCard () {
@@ -156,8 +175,10 @@ class ResultStandard {
             return;
         }
 
+        this.hasSearched = true;
+
         // Nb display results
-        const nbDisplayedResults = (evt.detail.pageIndex + 1) * evt.detail.nbResultsPerPage;
+        const nbDisplayedResults = evt.detail.pageIndex * evt.detail.nbResultsPerPage;
 
         // Show hide empty results
         const parentElement = document.querySelector('.ds44-results');
@@ -197,7 +218,7 @@ class ResultStandard {
             titleElement = document.createElement('div');
             titleElement.className = 'h3-like mbs';
             titleElement.setAttribute('role', 'heading');
-            titleElement.setAttribute('aria-level', '2');
+            titleElement.setAttribute('aria-level', '1');
             listContainerElement.appendChild(titleElement);
         }
         if (!evt.detail.nbResults) {
@@ -213,9 +234,9 @@ class ResultStandard {
             } else {
                 titleElementHtml += ' ' + MiscTranslate._('RESULT');
             }
-            let accessibleSentence = titleElementHtml + ' ' + MiscTranslate._('NB_RESULTS_FOR_SEARCH:') + ' ' + evt.detail.searchText;
+            let accessibleSentence = MiscTranslate._('NB_RESULTS_FOR_SEARCH:') + ' ' + (evt.detail.searchText === '' ? MiscTranslate._('EMPTY_SEARCH_CRITERIA') : evt.detail.searchText);
             titleElement.innerHTML = titleElementHtml + '<p class="visually-hidden" tabindex="-1">' + accessibleSentence + '</p>';
-            document.title = accessibleSentence;
+            document.title = titleElementHtml + ' ' + accessibleSentence;
             titleElement.removeAttribute('tabindex');
             focusElement = titleElement.querySelector('.visually-hidden')
         }
@@ -233,7 +254,7 @@ class ResultStandard {
         }
 
         // Add new results
-        let firstResultElement = null;
+        let isFirstResult = true;
         const results = (evt.detail.addUp ? evt.detail.newResults : evt.detail.results);
         for (let resultIndex in results) {
             if (!results.hasOwnProperty(resultIndex)) {
@@ -262,11 +283,25 @@ class ResultStandard {
             }
             if (listContainerElement.getAttribute('data-display-mode') === 'inline') {
                 MiscEvent.addListener('click', this.fillCard.bind(this), listItemElement);
+
+                const aElement = listItemElement.querySelector('a');
+                if (aElement) {
+                    aElement.setAttribute('role', 'button');
+                    aElement.setAttribute('tabindex', '0');
+                }
+            } else {
+                MiscEvent.addListener('click', this.redirectCard.bind(this), listItemElement);
             }
             listElement.appendChild(listItemElement);
 
-            if (!firstResultElement) {
-                firstResultElement = listItemElement;
+            if (evt.detail.addUp && isFirstResult) {
+                isFirstResult = false;
+
+                focusElement = listItemElement.querySelector('a');
+                if (!focusElement) {
+                    listItemElement.setAttribute('tabindex', '0');
+                    focusElement = listItemElement;
+                }
             }
         }
 
@@ -332,7 +367,7 @@ class ResultStandard {
     }
 
     resultFocus (evt) {
-        if(
+        if (
             !evt ||
             !evt.detail ||
             !evt.detail.id
@@ -347,7 +382,7 @@ class ResultStandard {
     }
 
     resultBlur (evt) {
-        if(
+        if (
             !evt ||
             !evt.detail ||
             !evt.detail.id
@@ -358,6 +393,21 @@ class ResultStandard {
         const resultElement = document.querySelector('#search-result-' + evt.detail.id + ' .ds44-card');
         if (resultElement) {
             resultElement.classList.remove('active');
+        }
+    }
+
+    resultSelect (evt) {
+        if (
+            !evt ||
+            !evt.detail ||
+            !evt.detail.id
+        ) {
+            return;
+        }
+
+        const resultElement = document.querySelector('#search-result-' + evt.detail.id);
+        if (resultElement) {
+            MiscEvent.dispatch('click', null, resultElement);
         }
     }
 }

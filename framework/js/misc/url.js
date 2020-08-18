@@ -13,14 +13,25 @@ class MiscUrl {
         document.location.href = document.location.href.split('#')[0] + '#' + MiscUrl.jsonToUrl(parameters);
     }
 
-    static jsonToUrl (parameters) {
-        const sortedParameters = {};
-        Object.keys(parameters).sort().forEach(function (key) {
-            sortedParameters[key] = parameters[key];
-        });
+    static getSeoHashParameters () {
+        return (window.location.href.split('#')[1] || '').split('/');
+    }
 
+    static setSeoHashParameters (parameters = {}, parametersHash) {
+        const urlParameters = [];
+        const rawUrlParameters = MiscUrl.jsonToUrl(parameters);
+        for (const [key, value] of rawUrlParameters.entries()) {
+            if (key.match(/\[text\]$/)) {
+                urlParameters.push(value.trim().replace(/, /gi, ','));
+            }
+        }
+        urlParameters.push(parametersHash);
+        document.location.href = document.location.href.split('#')[0] + '#' + urlParameters.join('/').replace(/ /gi, '-');
+    }
+
+    static jsonToUrl (parameters) {
         const urlParameters = new URLSearchParams();
-        MiscUrl.buildUrlParameters(urlParameters, sortedParameters);
+        MiscUrl.buildUrlParameters(urlParameters, parameters);
         return urlParameters;
     }
 

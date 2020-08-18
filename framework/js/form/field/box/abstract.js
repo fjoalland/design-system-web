@@ -97,7 +97,8 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
         let data = {};
         data[object.name] = {
             'value': inputElementValues,
-            'text': inputElementTexts.join(', ')
+            'text': inputElementTexts.join(', '),
+            'position': object.position
         };
 
         return data;

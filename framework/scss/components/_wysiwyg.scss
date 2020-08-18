@@ -7,7 +7,9 @@
 }
 
 .ds44-contenuArticle {
-    p + p {
+    p + p,
+    ul:not(.ds44-list):not(.ds44-collapser) + section,
+    ul:not(.ds44-list):not(.ds44-collapser) + p {
       margin-top: $ds44-medium-vmargin ;
     }
     p + .h3-like,
@@ -27,7 +29,7 @@ blockquote {
 
     border-left: 1px solid $ds44-contextual-color;
     padding: 0 $ds44-padding-xxlarge;
-    margin-bottom: $ds44-medium-vmargin;
+    margin: $ds44-medium-vmargin 0;
 
     &::after, &::before {
         @include ds44-font-sizes(quotes);
@@ -55,6 +57,7 @@ blockquote {
 .ds44-wsg-encadreContour {
     padding: $ds44-padding-xlarge;
     border: 1px solid $ds44-contextual-color;
+    margin: 2rem 0 !important;
 }
 
 .ds44-wsg-encadreApplat {
@@ -77,6 +80,32 @@ blockquote {
     padding: .5rem 1rem;
     display: inline-block;
     margin: 1.5rem 0 1rem 0;
+}
+
+/* Tables */
+
+table.ds44-tableau_1col,
+table.ds44-tableau_2col,
+table.ds44-tableau_3col,
+table.ds44-tableau_4col,
+table.ds44-tableau_5col {
+    width: 100%;
+}
+
+table.ds44-tableau_1col tr {
+    width: 100%;
+}
+table.ds44-tableau_2col tr {
+    width: 50%;
+}
+table.ds44-tableau_3col tr {
+    width: 33%;
+}
+table.ds44-tableau_4col tr {
+    width: 25%;
+}
+table.ds44-tableau_5col tr {
+    width: 20%;
 }
 
 @media (max-width: 64em) {

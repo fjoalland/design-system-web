@@ -233,6 +233,7 @@ main {
     width: 100%;
     top: 0;
     left: 0;
+    background: $ds44-background-dark;
 }
 
 .ds44-pageHeaderContainer--deuxCol .ds44-bgGray {
@@ -306,6 +307,11 @@ main {
 
                 & main[role="main"] {
                     padding: 0;
+
+                    .ds44-btnStd {
+                        margin-bottom: 0 !important;
+                        margin-top: 0 !important;
+                    }
                 }
             }
 
@@ -367,6 +373,9 @@ main {
                     .ds44-card {
                         margin-bottom: 0;
                     }
+                    .ds44-card--horizontal .ds44-flex-container{
+                        height: 100%;
+                    }
                 }
             }
         }
@@ -383,7 +392,7 @@ main {
         top: 10px;
         right: 10px;
         display: block;
-        z-index: 2;
+        z-index: 5;
 
         @media (max-width: $ds44-medium - .0625) {
             position: fixed;

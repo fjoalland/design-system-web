@@ -1,0 +1,59 @@
+<section class="ds44-modal-container" id="overlay-newsletter-archives" aria-hidden="true" role="dialog">
+    <div class="ds44-modal-box">
+        <button class="ds44-btnOverlay--modale ds44-btnOverlay--closeOverlay" type="button" title="Fermer la boîte de dialogue : recevoir nos infos par email" data-js="ds44-modal-action-close">
+            <i class="icon icon-cross icon--xlarge" aria-hidden="true"></i><span class="ds44-btnInnerText--bottom">Fermer</span>
+        </button>
+        <h1 class="h2-like">Recevoir nos infos</h1>
+        <div class="ds44-modal-gab">
+            <p class="ds44-textLegend ds44-textLegend--mentions">Les champs marqués d’un astérisque * sont obligatoires</p>
+            <form>
+                <div id="overlay-newsletter-buttons-archives" class="ds44-flex-container">
+                    <button class="ds44-btnStd ds44-bgGray ds44-btnStd--plat ds44-fg1 ds44--l-padding" type="button" aria-describedby="titre-modale-newsletter">
+                        <span class="ds44-btnInnerText">Tout cocher</span><i class="icon icon-check icon--medium" aria-hidden="true"></i>
+                    </button>
+                    <button class="ds44-btnStd ds44-bgGray ds44-btnStd--plat ds44-fg1 ds44-border-left--light ds44--l-padding" type="button" aria-describedby="titre-modale-newsletter">
+                        <span class="ds44-btnInnerText">Tout décocher</span><i class="icon icon-cross icon--medium" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="mtm">
+                    {% capture section3Id %}titre-{% increment my_counter %}{% endcapture %}
+                    <h2 class="h4-like" id="{{ section3Id }}">Recevoir nos publications par courrier postal</h2>
+                    <ul class="ds44-list grid-12 mtm">
+                        <li class="ds44-select-list_elem col-6 ds44-noMrg">
+                            {% include form/layout/checkboxes.html choices="1:Les Rendez-vous aux Archives (programme culturel)" ariaDescribedBy=section3Id %}
+                        </li>
+                        <li class="ds44-select-list_elem col-6 ds44-noMrg">
+                            {% include form/layout/checkboxes.html choices="2:Les Liens d'Archives (Journal d'information des Archives départementales)" ariaDescribedBy=section3Id %}
+                        </li>
+                        <li class="col-6 ds44-minTiny-margin-r">
+                            {% include form/field/input/standard.html type="last-name" label="Nom" required="true" %}
+                        </li>
+                        <li class="col-6 ds44-minTiny-margin-l">
+                            {% include form/field/input/standard.html type="first-name" label="Prénom" required="true" %}
+                        </li>
+                        <li class="col-12">
+                            {% include form/field/input/standard.html type="adress" label="Adresse" required="true" %}
+                        </li>
+                    </ul>
+                </div>
+                <div class="mtm">
+                    {% capture section4Id %}titre-{% increment my_counter %}{% endcapture %}
+                    <h2 class="h4-like" id="{{ section4Id }}">M’abonner aux <span lang="en">flash</span> infos par mail</h2>
+                    <div class="ds44-list grid-12-small-1 mtm">
+                        <li class="ds44-select-list_elem col-12 ds44-noMrg">
+                            {% include form/layout/checkboxes.html choices="3:Actus et événements" ariaDescribedBy=section4Id %}
+                        </li>
+                        <li class="col-12">
+                            {% include form/field/input/standard.html type="email" label="Votre email" explanation="Exemple : monadresse@mail.com"  required="true" containerClass="ds44-form__container ds44-mb-std" ariaDescribedBy=section4Id %}
+                        </li>
+                    </div>
+                </div>
+                <button class="ds44-btnStd ds44-btn--invert ds44-w100 ds44-bntALeft" title="Je m'abonne pour recevoir l’actualité du CD44 par email" aria-describedby="valid-form">
+                    <span class="ds44-btnInnerText">Je m'abonne</span>
+                    <i class="icon icon-long-arrow-right" aria-hidden="true"></i>
+                </button>
+            </form>
+            <p class="ds44-textLegend--mentions mtm" id="valid-form">Vous affirmez avoir pris connaissance de notre <a href="#">Politique de confidentialité</a>. Vous pouvez vous désinscrire à tout moment à l’aide des liens de désinscription ou en nous contactant à l’adresse <a href="mailto:contact@loire-atlantique.fr" title="Contacter par email : désinscription à la newsletter - xxxx@loire-atlantique.fr">xxxx@loire-atlantique.fr</a></p>
+        </div>
+    </div>
+</section>

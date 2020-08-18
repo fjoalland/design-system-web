@@ -99,17 +99,21 @@ class MapMarker extends MapAbstract {
             markerElement.className = 'ds44-map-marker';
             MiscEvent.addListener('mouseenter', this.focus.bind(this), markerElement);
             MiscEvent.addListener('mouseleave', this.blur.bind(this), markerElement);
-            object.markers.push(
-                new window.mapboxgl
-                    .Marker(markerElement)
-                    .setLngLat(lngLat)
-                    .setPopup(
-                        new window.mapboxgl
-                            .Popup({ offset: 25 })
-                            .setHTML(result.metadata.html_marker)
-                    )
-                    .addTo(object.map)
-            );
+            const popup = new window.mapboxgl
+                .Popup({ offset: 25 })
+                .setHTML(result.metadata.html_marker);
+            object.markers.push(new window.mapboxgl
+                .Marker(markerElement)
+                .setLngLat(lngLat)
+                .setPopup(popup)
+                .addTo(object.map));
+            popup.on('open', ((resultId, evt) => {
+                MiscEvent.addListener('click', this.popupClick.bind(this, resultId), evt.target.getElement())
+            }).bind(this, result.id));
+            const mapboxMarkerElement = object.markers[object.markers.length - 1].getElement();
+            if (mapboxMarkerElement) {
+                mapboxMarkerElement.removeAttribute('tabindex');
+            }
 
             if (boundingBox.longitude.min === null) {
                 boundingBox.longitude.min = result.metadata.long;
@@ -154,7 +158,7 @@ class MapMarker extends MapAbstract {
             );
         }
 
-        if(
+        if (
             object.isGeojsonLoaded &&
             object.mapElement.getAttribute('data-geojson-refine') === 'true'
         ) {
@@ -166,12 +170,12 @@ class MapMarker extends MapAbstract {
         const object = this.objects[objectIndex];
 
         object.isGeojsonLoaded = true;
-        if(object.mapElement.getAttribute('data-geojson-refine') === 'true') {
+        if (object.mapElement.getAttribute('data-geojson-refine') === 'true') {
             this.showGeojson(objectIndex);
         }
     }
 
-    getGeojsonIds(objectIndex) {
+    getGeojsonIds (objectIndex) {
         const object = this.objects[objectIndex];
 
         const geojsonIds = [];
@@ -191,7 +195,7 @@ class MapMarker extends MapAbstract {
             }
 
             // Get corresponding geojson
-            if(result.metadata.geojson_id) {
+            if (result.metadata.geojson_id) {
                 geojsonIds.push(result.metadata.geojson_id);
             }
         }
@@ -210,7 +214,7 @@ class MapMarker extends MapAbstract {
     }
 
     resultFocus (evt) {
-        if(
+        if (
             !evt ||
             !evt.detail ||
             !evt.detail.id
@@ -225,7 +229,7 @@ class MapMarker extends MapAbstract {
     }
 
     resultBlur (evt) {
-        if(
+        if (
             !evt ||
             !evt.detail ||
             !evt.detail.id

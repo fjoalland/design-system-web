@@ -21,10 +21,20 @@
 .ds44-overlay--navNiv1 {
     left: 0;
     top: -2500px;
+    visibility: hidden;
+
+    * {
+        visibility: hidden;
+    }
 
     &.show {
         top: 0;
         opacity: 1;
+        visibility: visible;
+
+        * {
+            visibility: visible;
+        }
     }
 }
 
@@ -139,12 +149,37 @@
         .ds44-cardTitle {
             font-size: 1.7rem;
         }
+
         &.ds44-cardIsFocus {
             background-color: #99E6D1 !important;
             border-color: #666;
         }
+
         .ds44-docListElem {
-            margin-top : 1rem !important;
+            margin-top: 1rem !important;
+        }
+
+        .ds44-flex-container {
+            flex-direction: column;
+
+            .ds44-card__dateContainer {
+                flex-direction: row;
+                min-height: 8rem;
+                font-size: 1.25em;
+                align-items: center;
+
+                > * {
+                    margin: 0 .5rem;
+                }
+
+                .icon-down {
+                    transform: rotate(-90deg);
+                }
+            }
+        }
+
+        .ds44-cardDate, .ds44-cardLocalisation {
+            font-size: 1em;
         }
     }
 
@@ -192,48 +227,185 @@
     }
 }
 
-/* Tarte au citron */
-#tarteaucitronRoot {
-    &:before {
-        background-color: rgba(0, 0, 0, .66) !important;
-        pointer-events: auto !important;
-        opacity: 1 !important;
+/* Orejime */
+#orejime {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 1000;
+    transition: all $ds44-timing-standard ease-in;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .orejime-AppContainer {
+        .orejime-Notice {
+            background-color: $ds44-light;
+            box-shadow: 0px 13px 20px 0px rgba(0, 0, 0, 0.35);
+            width: 100%;
+            max-width: 64em;
+            padding: 1.5rem 3rem;
+            position: relative;
+            z-index: 10;
+            max-height: 90vh;
+            overflow-x: auto;
+            border-radius: 0;
+            bottom: 3rem;
+            right: 3rem;
+
+            .orejime-Notice-logoContainer {
+                text-align: center;
+            }
+
+            .orejime-Notice-description {
+                color: $ds44-color-base;
+                font-family: $ds44-font-family-base;
+                font-size: 1.4rem;
+            }
+
+            .orejime-Notice-purposes {
+                color: $ds44-color-base;
+            }
+
+            .orejime-Notice-actions {
+                padding: 0;
+                text-align: center;
+
+                .orejime-Button {
+                    background-color: $ds44-light;
+                    border-color: $ds44-color-base;
+                    color: $ds44-color-base;
+
+                    &.orejime-Button--save {
+                        background-color: $ds44-contextual-color;
+                        border-color: $ds44-contextual-color;
+                    }
+                }
+
+                .orejime-Notice-actionItem--decline {
+                    display: none;
+                    visibility: hidden;
+                }
+            }
+
+            .orejime-Notice-body {
+                padding-top: 0em;
+            }
+        }
     }
 
-    #tarteaucitronAlertBig {
-        background-color: $ds44-background-base !important;
-        box-shadow: none !important;
-        border-radius: 0 !important;
-        padding: 1.5rem 3rem !important;
+    .orejime-ModalPortal {
+        .orejime-ModalOverlay {
+            background-color: rgba(0, 0, 0, .66);
+            padding: 3rem;
 
-        &:before {
-            content: url('../../assets/images/pictos/picto-cookies.svg') !important;
-            font-size: 0 !important;
-            display: block !important;
+            .orejime-ModalWrapper {
+                background-color: $ds44-light;
+                width: 100%;
+                max-width: 64em;
+                padding: 1.5rem 3rem;
+                position: relative;
+                z-index: 10;
+                max-height: 90vh;
+                overflow-x: auto;
+                border-radius: 0;
+                box-shadow: none;
+                bottom: 0;
+                right: 0;
+            }
+
+            .orejime-Modal {
+                font-family: $ds44-font-family-base;
+                background: $ds44-light;
+                color: $ds44-color-base;
+                border-radius: 0;
+                box-shadow: none;
+
+                .orejime-Modal-title {
+                    @include ds44-font-sizes(h2);
+                    @if variable_exists(ds44-font-family-headings) and $ds44-font-family-headings != $ds44-font-family-base {
+                        font-family: $ds44-font-family-headings;
+                    }
+                    font-weight: $weight-bold;
+                    padding: 0 1.5rem;
+                    line-height: 1.2;
+                    background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 55%, $ds44-contextual-color 55%);
+                    display: inline;
+                }
+
+                .orejime-Modal-description {
+                    margin-top: 2rem;
+                }
+
+                .orejime-Modal-body {
+                    padding: 2rem 2rem 3rem 2rem;
+                    border: 1px solid $ds44-contextual-color;
+
+                    .orejime-AppItem-input:checked + .orejime-AppItem-label .orejime-AppItem-slider {
+                        background-color: $ds44-color-base;
+                    }
+
+                    .orejime-Button[disabled] {
+                        background-color: $ds44-color-base;
+                        border-color: $ds44-color-base;
+                        opacity: 1;
+                        filter: none;
+                        color: $ds44-light;
+                    }
+
+                    .orejime-Button--info {
+                        background: $ds44-light;
+                        color: $ds44-color-base;
+                    }
+                }
+
+                .orejime-Modal-saveButton {
+                    background-color: $ds44-contextual-color;
+                    border-color: $ds44-contextual-color;
+                    color: $ds44-color-base;
+                }
+
+                .orejime-Modal-header,
+                .orejime-Modal-footer {
+                    border: 0;
+                }
+
+                .orejime-AppToggles {
+                    .orejime-AppToggles-disableAll {
+                        background-color: #ffffff;
+                        color: $ds44-color-base;
+                    }
+                }
+
+                .orejime-Modal-poweredByLink {
+                    display: none;
+                    visibility: hidden;
+                }
+            }
+
+            .orejime-Modal-closeButton {
+                color: $ds44-color-base;
+            }
+        }
+    }
+
+    button {
+        @extend .ds44-btnStd;
+        @extend .ds44-mobile-reduced-mb;
+        color: $ds44-color-inverse;
+        font-family: $ds44-font-family-base;
+        font-size: 1.4rem;
+        min-height: 2.4rem;
+        cursor: pointer;
+
+        &.orejime-Modal-closeButton {
+            border: none;
+            box-shadow: none;
         }
 
-        #tarteaucitronDisclaimerAlert {
-            margin: 0 !important;
-            padding: 0 !important;
-            margin-bottom: 2.5rem !important;
-            display: block !important;
-            background-color: $ds44-background-base !important;
-            color: $ds44-color-base !important;
-            font-family: $ds44-font-family-base !important;
-            font-size: 1.6rem !important;
-        }
-
-        button {
-            @extend .ds44-btnStd;
-            @extend .ds44-mobile-reduced-mb;
-            color: $ds44-color-base !important;
-            font-family: $ds44-font-family-base !important;
-            font-size: 1.4rem !important;
-            min-height: 2.4rem !important;
-        }
-
-        #tarteaucitronPersonalize {
-            @extend .ds44-btn--contextual;
+        * {
+            cursor: pointer;
         }
     }
 }

@@ -15,8 +15,17 @@ variations:
 - title: Formulaire de contact
   pattern: page/LA__contact.html
 
+- title: Formulaire espace presse
+  pattern: page/LA__formPress.html
+
+- title: Formulaire Site Archives
+  pattern: page/AD__formulaire.html
+
 - title: Template carrefour
   pattern: templates/template-entryMenu.html
+
+- title: Formulaire avec recaptcha
+  pattern: page/LA__recaptcha.html
 
 ---
 ## Utilisation

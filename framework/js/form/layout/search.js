@@ -1,66 +1,50 @@
-class FormLayoutSearch {
+class FormLayoutSearch extends FormLayoutAbstract {
     constructor () {
-        this.objects = [];
-
-        document
-            .querySelectorAll('.ds44-facette form')
-            .forEach((element) => {
-                this.create(element);
-            });
+        super('.ds44-facette form');
     }
 
-    create (element) {
-        const object = {
-            'id': MiscUtils.generateId(),
-            'containerElement': element.closest('.ds44-facette'),
-            'formElement': element,
-            'parameters': {},
-            'searchData': {},
-            'hasSearched': false
-        };
-        this.objects.push(object);
+    create (formElement) {
+        super.create(formElement);
+
         const objectIndex = (this.objects.length - 1);
-
-        // Bind events
-        MiscEvent.addListener('form:submit', this.submit.bind(this, objectIndex), object.formElement);
-        MiscEvent.addListener('search:refresh', this.search.bind(this, objectIndex));
-        MiscEvent.addListener('load', this.autoLoad.bind(this, objectIndex), window);
-        object.containerElement
-            .querySelectorAll('.ds44-js-toggle-search-view')
-            .forEach((searchToggleViewElement) => {
-                MiscEvent.addListener('click', this.toggleSearchView.bind(this, objectIndex), searchToggleViewElement);
-            });
-
-        // Initialization
-        this.loadFromDom(objectIndex);
-    }
-
-    autoLoad (objectIndex) {
         const object = this.objects[objectIndex];
 
-        if (object.formElement.getAttribute('data-auto-load') !== 'true') {
-            MiscEvent.dispatch('search:initialize');
-        }
+        object.containerElement = formElement.closest('.ds44-facette');
+        object.parameters = {};
+        object.searchData = {};
+        object.hasSearched = false;
     }
 
-    submit (objectIndex, evt) {
-        if (!evt) {
-            evt = {};
-        }
-        if (!evt.detail) {
-            evt.detail = {};
-        }
-        evt.detail.reset = true;
+    initialize () {
+        // Initialize each object
+        for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
+            const object = this.objects[objectIndex];
 
-        const object = this.objects[objectIndex];
-        object.hasSearched = true;
-        this.search(objectIndex, evt);
+            // Bind events
+            MiscEvent.addListener('search:refresh', this.search.bind(this, objectIndex));
+            object.containerElement
+                .querySelectorAll('.ds44-js-toggle-search-view')
+                .forEach((searchToggleViewElement) => {
+                    MiscEvent.addListener('click', this.toggleSearchView.bind(this, objectIndex), searchToggleViewElement);
+                });
+        }
+
+        super.initialize();
+    }
+
+    start (objectIndex) {
+        if (
+            !this.loadFromDom(objectIndex) &&
+            !this.loadFromUrl(objectIndex)
+        ) {
+            super.start(objectIndex);
+        }
     }
 
     loadFromDom (objectIndex) {
         // Get the data from the dom
         if (!window.searchData) {
-            return;
+            return false;
         }
 
         const object = this.objects[objectIndex];
@@ -74,6 +58,73 @@ class FormLayoutSearch {
         // Show search data straight away, without starting a search
         object.hasSearched = true;
         this.showSearchData(objectIndex);
+
+        return true;
+    }
+
+    loadFromUrl (objectIndex) {
+        const object = this.objects[objectIndex];
+
+        if (object.formElement.getAttribute('data-legacy-url') === 'true') {
+            this.loadFromUrlSuccess(objectIndex, MiscUrl.getHashParameters());
+
+            return true;
+        }
+
+        const searchId = MiscUrl.getSeoHashParameters().pop();
+        if (!searchId) {
+            return false;
+        }
+
+        if (MiscUtils.isInDevMode) {
+            // Get the search data from the local storage
+            const searchData = window.sessionStorage.getItem('search_' + searchId);
+            if (!searchData) {
+                return false;
+            }
+
+            this.loadFromUrlSuccess(objectIndex, JSON.parse(searchData));
+
+            return true;
+        }
+
+        // Get the search data from the back office
+        MiscRequest.send(
+            object.formElement.getAttribute('data-search-url'),
+            this.loadFromUrlSuccess.bind(this, objectIndex),
+            () => {
+            },
+            {
+                'id': searchId
+            }
+        );
+
+        return true;
+    }
+
+    loadFromUrlSuccess (objectIndex, response) {
+        for (const objectName in response) {
+            if (!response.hasOwnProperty(objectName)) {
+                continue;
+            }
+
+            MiscEvent.dispatch('field:' + objectName + ':set', response[objectName]);
+        }
+
+        super.start(objectIndex);
+    }
+
+    ajaxSubmit (objectIndex, formData) {
+        const evt = {
+            detail: {
+                parameters: formData || {},
+                reset: true
+            }
+        };
+
+        const object = this.objects[objectIndex];
+        object.hasSearched = true;
+        this.search(objectIndex, evt);
     }
 
     search (objectIndex, evt) {
@@ -115,19 +166,23 @@ class FormLayoutSearch {
             }
         }
 
-        // Set url with the search parameters
-        MiscUrl.setHashParameters(object.parameters);
-
         // Get the search data from the back office
         MiscRequest.send(
             object.formElement.getAttribute('action'),
             this.searchSuccess.bind(this, objectIndex, options),
-            this.searchError.bind(this, objectIndex, options),
+            this.searchError.bind(this, objectIndex),
             object.parameters
         )
     }
 
     searchSuccess (objectIndex, options, response) {
+        if (
+            response &&
+            response.message
+        ) {
+            this.notification(objectIndex, null, response.message, response.status);
+        }
+
         const object = this.objects[objectIndex];
 
         // Save search data
@@ -137,12 +192,21 @@ class FormLayoutSearch {
             (options.addUp ? object.searchData.results : null)
         );
 
+        // Set url with the search parameters
+        this.setSearchHash(objectIndex, response.id);
+
         object.containerElement.classList.remove('ds44-facette-mobile-expanded');
         this.showSearchData(objectIndex, options);
         MiscEvent.dispatch('loader:requestHide');
     }
 
-    searchError (objectIndex, options) {
+    searchError (objectIndex, response) {
+        if (
+            response &&
+            response.message
+        ) {
+            this.notification(objectIndex, null, response.message, response.status);
+        }
         MiscEvent.dispatch('loader:requestHide');
     }
 
@@ -193,6 +257,26 @@ class FormLayoutSearch {
             object.containerElement.classList.remove('ds44-facette-mobile-expanded')
         } else {
             object.containerElement.classList.add('ds44-facette-mobile-expanded')
+        }
+    }
+
+    async setSearchHash (objectIndex, searchId) {
+        const object = this.objects[objectIndex];
+
+        if (MiscUtils.isInDevMode) {
+            // In dev mode, generate the search id and use the local storage to store the search data
+            // as there is no back end
+            const parameters = JSON.stringify(object.parameters);
+            searchId = await MiscUtils.digestMessage(parameters);
+            window.sessionStorage.setItem('search_' + searchId, parameters);
+        } else if (!searchId) {
+            return;
+        }
+
+        if (object.formElement.getAttribute('data-legacy-url') === 'true') {
+            MiscUrl.setHashParameters(object.parameters);
+        } else {
+            MiscUrl.setSeoHashParameters(object.parameters, searchId);
         }
     }
 }

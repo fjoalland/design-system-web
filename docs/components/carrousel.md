@@ -17,6 +17,9 @@ variations:
 - title: Slider dates trois tuiles
   pattern: carrousel/carrousel-x3--date.html
 
+- title: Slider six tuiles
+  pattern: carrousel/carrousel-x6.html
+
 - title: Slider homepage
   pattern: carrousel/carrousel-home.html
 

@@ -5,10 +5,11 @@ class CalendarStandard {
             selector: null,
             datesFilter: false,
             pastDates: true,
+            nextYearDates: true,
             availableWeekDays: [],
             availableDates: [],
             date: new Date(),
-            todayDates: new Date(),
+            todayDate: new Date(),
             previousButtonElement: null,
             nextButtonElement: null,
             month: null,
@@ -41,6 +42,12 @@ class CalendarStandard {
         this.options.nextButtonElement = this.calendarElement.querySelector('[data-calendar-toggle=next]');
         this.options.monthElement = this.calendarElement.querySelector('[data-calendar-area=month]');
         this.options.monthLabelElement = this.calendarElement.querySelector('[data-calendar-label=month]');
+        if (this.calendarElement.getAttribute('data-calendar-past-dates') === 'false') {
+            this.options.pastDates = false;
+        }
+        if (this.calendarElement.getAttribute('data-calendar-next-year-dates') === 'false') {
+            this.options.nextYearDates = false;
+        }
 
         this.options.date.setDate(1);
         this.createMonth();
@@ -100,7 +107,17 @@ class CalendarStandard {
         if (this.options.date.getDate() === 1) {
             newDayElement.style.marginLeft = ((this.options.date.getDay()) * 14.28) + '%';
         }
-        if (this.options.date.getTime() <= this.options.todayDates.getTime() - 1 && !this.options.pastDates) {
+        const oneYearFromNow = new Date();
+        oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
+        if (
+            this.options.date.getTime() <= this.options.todayDate.getTime() - 1 &&
+            !this.options.pastDates
+        ) {
+            newDayElement.classList.add('vanilla-calendar-date--disabled');
+        } else if (
+            this.options.date.getTime() >= oneYearFromNow.getTime() + 1 &&
+            !this.options.nextYearDates
+        ) {
             newDayElement.classList.add('vanilla-calendar-date--disabled');
         } else {
             if (this.options.datesFilter) {
@@ -120,7 +137,7 @@ class CalendarStandard {
                 newDayElement.setAttribute('data-calendar-status', 'active');
             }
         }
-        if (this.options.date.toString() === this.options.todayDates.toString()) {
+        if (this.options.date.toString() === this.options.todayDate.toString()) {
             newDayElement.classList.add('vanilla-calendar-date--today');
         }
 

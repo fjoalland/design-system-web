@@ -45,7 +45,7 @@ class MapGeojson extends MapAbstract {
             <section class="ds44-card ds44-js-card ds44-card--contact ds44-box ds44-bgGray">
                 <div class="ds44-card__section">
                     <div class="ds44-innerBoxContainer">
-                        <h4 class="h4-like ds44-cardTitle mts">${evt.features[0].properties.description}</h4>
+                        <p role="heading" aria-level="3" class="h4-like ds44-cardTitle mts">${evt.features[0].properties.description}</p>
                     </div>
                 </div>
             </section>
@@ -62,10 +62,11 @@ class MapGeojson extends MapAbstract {
             }
         }
 
-        new window.mapboxgl.Popup()
+        const popup = new window.mapboxgl.Popup()
             .setLngLat(evt.lngLat)
             .setHTML(popupContent)
             .addTo(object.map);
+        MiscEvent.addListener('click', this.popupClick.bind(this, evt.features[0].properties.name), popup.getElement());
     }
 
     show (objectIndex) {

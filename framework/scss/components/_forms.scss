@@ -95,6 +95,8 @@ input[type="file"] {
 
     &.ds44-moveLabel .ds44-labelTypePlaceholder,
     &.ds44-moveLabel .ds44-labelTypePlaceholderLarge {
+        height: auto;
+
         span {
             font-size: 1.3rem; // 13px instead of 14px
             color: $ds44-color-dark-text;
@@ -401,6 +403,9 @@ input[type=radio],
             &.ds44-theme {
                 .ds44-fieldContainer {
 
+                    flex: none;
+                    width: 20%;
+
                     .ds44-select__shape {
                         background: $ds44-contextual-color;
                         border-color: $ds44-dark;
@@ -412,8 +417,6 @@ input[type=radio],
                     }
 
                     &--select {
-                        flex: none;
-                        width: 20%;
 
                         .ds44-select-container {
                             width: 200%;
@@ -806,38 +809,16 @@ input[type=radio],
     }
 }
 
-
 /**
-* Error messages
-*/
+ * Input basics
+ */
 
+ fieldset {
+     margin: 0;
+     padding: 0;
+     border: 0 !important;
+ }
 
-.ds44-error {
-    border-color: $ds44-error;
-}
-
-.ds44-errorMsg-container {
-    @include ds44-font-sizes(errMsg);
-    background-color: $ds44-error-bg;
-    padding: $ds44-padding-box;
-
-    .ds44-msgErrorText {
-        margin: $ds44-paragraph-margin-bottom 0;
-        color: $ds44-color-dark-text;
-    }
-
-    .icon {
-        color: $ds44-error;
-    }
-
-    .ds44-iconInnerText {
-        vertical-align: middle;
-    }
-}
-
-.ds44-errorLabel {
-    font-size: 1.6rem;
-}
 
 
 /**
@@ -884,8 +865,9 @@ input[type=radio],
     }
 }
 
+
 /**
-* Valid messages
+* Valid et Error messages
 */
 
 
@@ -893,28 +875,41 @@ input[type=radio],
     border-color: $ds44-valid;
 }
 
-.ds44-message-container {
-    @include ds44-font-sizes(errMsg);
+.ds44-error {
+    border-color: $ds44-error;
+}
+
+
+.ds44-msg-container {
+    @include ds44-font-sizes(bodySize);
+    padding: $ds44-padding-box;
 
     .ds44-message-text {
         margin: $ds44-paragraph-margin-bottom 0;
         color: $ds44-color-dark-text;
-        padding: $ds44-padding-box;
+    }
 
-        &.success {
-            background-color: $ds44-valid-bg;
+    &.information {
+        background-color: $ds44-valid-bg;
 
-            .icon {
-                color: $ds44-valid;
-            }
+        .icon {
+            color: $ds44-valid;
         }
+    }
 
-        &.error {
-            background-color: $ds44-error-bg;
+    &.error {
+        background-color: $ds44-error-bg;
 
-            .icon {
-                color: $ds44-error;
-            }
+        .icon {
+            color: $ds44-error;
+        }
+    }
+
+    &.warning {
+        background-color: $ds44-warning-bg;
+
+        .icon {
+            color: $ds44-warning;
         }
     }
 
@@ -1041,6 +1036,20 @@ input[type=radio],
     .ds44-inputDisabled ~ label {
         background: $ds44-lightgray;
         cursor: default;
+    }
+
+}
+
+.ds44-fieldContainer--select {
+    .ds44-champsLies.ds44-fieldContainer {
+        .ds44-select-container {
+            width: 200%;
+            max-width: 100vw;
+
+            @media (max-width: $ds44-small - .0625) {
+                width: 100%;
+            }
+        }
     }
 }
 

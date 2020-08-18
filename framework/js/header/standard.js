@@ -1,7 +1,8 @@
 class HeaderStandard {
     constructor () {
         this.lastScroll = 0;
-        this.isOverlayed = false;
+        this.headerVisibilityCounter = 0;
+        this.menuVisibilityCounter = 0;
 
         // Bind events
         MiscEvent.addListener('scroll', this.scroll.bind(this), window);
@@ -12,13 +13,14 @@ class HeaderStandard {
         MiscEvent.addListener('loader:show', this.overlayShow.bind(this));
         MiscEvent.addListener('loader:hide', this.overlayHide.bind(this));
         MiscEvent.addListener('keyUp:tab', this.checkFocusPosition.bind(this));
-
-        this.menuHide();
     }
 
     // Sur le focus au clavier d'un élément caché sous le header, effectuer un scroll vers le haut pour que l'élément soit affiché
     checkFocusPosition () {
-        if (!this.isOverlayed) {
+        if (
+            this.headerVisibilityCounter === 0 &&
+            this.menuVisibilityCounter === 0
+        ) {
             const headerElement = document.querySelector('header .ds44-header');
             const activeElement = document.activeElement;
             if (
@@ -42,7 +44,10 @@ class HeaderStandard {
 
     // Gérer le comportement du header en fonction des scrolls
     scroll () {
-        if (!this.isOverlayed) {
+        if (
+            this.headerVisibilityCounter === 0 &&
+            this.menuVisibilityCounter === 0
+        ) {
             const headerElement = document.querySelector('header .ds44-header');
             if (!headerElement) {
                 return;
@@ -51,8 +56,8 @@ class HeaderStandard {
             const currentScroll = window.pageYOffset;
             if (currentScroll === 0) {
                 headerElement.classList.remove('collapsed');
-                MiscAccessibility.show(document.querySelector('header'), false, false);
-                MiscAccessibility.show(document.querySelector('header .ds44-header'), false, false);
+                MiscAccessibility.show(document.querySelector('header'), false);
+                MiscAccessibility.show(document.querySelector('header .ds44-header'), false);
                 MiscAccessibility.show(document.querySelector('header .ds44-header .ds44-container-large'));
                 if (document.activeElement === document.querySelector('html')) {
                     MiscAccessibility.setFocus(document.querySelector('header .ds44-btn--menu'));
@@ -68,17 +73,17 @@ class HeaderStandard {
                 // Scroll vers le bas, uniquement si le haut de page est
                 // en dessous de la hauteur du header
                 headerElement.classList.add('collapsed');
-                MiscAccessibility.hide(document.querySelector('header'), false, false);
-                MiscAccessibility.hide(document.querySelector('header .ds44-header'), false, false);
                 MiscAccessibility.hide(document.querySelector('header .ds44-header .ds44-container-large'));
+                MiscAccessibility.hide(document.querySelector('header .ds44-header'), false);
+                MiscAccessibility.hide(document.querySelector('header'), false);
             } else if (
                 currentScroll < this.lastScroll &&
                 headerElement.classList.contains('collapsed')
             ) {
                 // up
                 headerElement.classList.remove('collapsed');
-                MiscAccessibility.show(document.querySelector('header'), false, false);
-                MiscAccessibility.show(document.querySelector('header .ds44-header'), false, false);
+                MiscAccessibility.show(document.querySelector('header'), false);
+                MiscAccessibility.show(document.querySelector('header .ds44-header'), false);
                 MiscAccessibility.show(document.querySelector('header .ds44-header .ds44-container-large'));
             }
 
@@ -87,27 +92,31 @@ class HeaderStandard {
     }
 
     overlayShow () {
-        this.isOverlayed = true;
-
-        MiscAccessibility.hide(document.querySelector('header'));
+        if (this.headerVisibilityCounter === 0) {
+            MiscAccessibility.hide(document.querySelector('header'), false);
+        }
+        this.headerVisibilityCounter--;
     }
 
     overlayHide () {
-        this.isOverlayed = false;
-
-        MiscAccessibility.show(document.querySelector('header'));
+        this.headerVisibilityCounter = Math.min(0, (this.headerVisibilityCounter + 1));
+        if (this.headerVisibilityCounter === 0) {
+            MiscAccessibility.show(document.querySelector('header'), false);
+        }
     }
 
     menuShow () {
-        this.isOverlayed = true;
-
-        MiscAccessibility.hide(document.querySelector('header .ds44-header .ds44-container-large'));
+        if (this.menuVisibilityCounter === 0) {
+            MiscAccessibility.hide(document.querySelector('header .ds44-header .ds44-container-large'));
+        }
+        this.menuVisibilityCounter--;
     }
 
     menuHide () {
-        this.isOverlayed = false;
-
-        MiscAccessibility.show(document.querySelector('header .ds44-header .ds44-container-large'));
+        this.menuVisibilityCounter = Math.min(0, (this.menuVisibilityCounter + 1));
+        if (this.menuVisibilityCounter === 0) {
+            MiscAccessibility.show(document.querySelector('header .ds44-header .ds44-container-large'));
+        }
     }
 }
 

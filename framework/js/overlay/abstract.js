@@ -2,6 +2,7 @@ class OverlayAbstract {
     constructor (selector) {
         this.triggerElement = null;
         this.modal = null;
+        this.visibilityCounter = 0;
 
         this.hideListener = this.hide.bind(this);
         this.focusOutListener = this.focusOut.bind(this);
@@ -152,7 +153,10 @@ class OverlayAbstract {
             return;
         }
 
-        MiscAccessibility.hide(this.modal);
+        if (this.visibilityCounter === 0) {
+            MiscAccessibility.hide(this.modal);
+        }
+        this.visibilityCounter--;
     }
 
     hideLoader () {
@@ -160,6 +164,9 @@ class OverlayAbstract {
             return;
         }
 
-        MiscAccessibility.show(this.modal);
+        this.visibilityCounter = Math.min(0, (this.visibilityCounter + 1));
+        if (this.visibilityCounter === 0) {
+            MiscAccessibility.show(this.modal);
+        }
     }
 }

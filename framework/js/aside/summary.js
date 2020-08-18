@@ -12,12 +12,11 @@ class AsideSummary {
         this.menu = null;
         this.borderTop = 20;
         this.isMoving = false;
-        this.maximumTop = null;
+        this.isGoingTo = false;
         this.lastScrollTop = 0;
         this.scrollDirection = 'down';
 
         this.resize();
-        this.calculateChapter();
 
         MiscEvent.addListener('scroll', this.scroll.bind(this), window);
         MiscEvent.addListener('resize', this.resize.bind(this), window);
@@ -43,7 +42,6 @@ class AsideSummary {
     }
 
     scroll () {
-        let calculateChapter = false;
         const scrollTop = MiscUtils.getScrollTop();
         const top = this.getTop();
 
@@ -67,17 +65,15 @@ class AsideSummary {
             }
 
             this.summaryElement.style.top = top + 'px';
-            calculateChapter = true;
         } else if (this.isMoving) {
             this.isMoving = false;
 
             this.summaryElement.style.top = null;
             this.summaryElement.style.position = 'static';
             this.summaryElement.style.width = null;
-            calculateChapter = true;
         }
 
-        if (calculateChapter) {
+        if (!this.isGoingTo) {
             this.calculateChapter();
         }
     }
@@ -100,7 +96,6 @@ class AsideSummary {
                 if (sectionElement) {
                     const sectionElementStyle = sectionElement.currentStyle || window.getComputedStyle(sectionElement);
                     const startTop = MiscUtils.getPositionY(sectionElement) + parseInt(sectionElementStyle.marginTop, 10);
-                    const stopTop = startTop + sectionElement.offsetHeight + parseInt(sectionElementStyle.marginBottom, 10);
                     if (cursorPosition >= startTop) {
                         activeAElement = aElement
                     }
@@ -116,7 +111,6 @@ class AsideSummary {
         if (this.isMoving) {
             this.summaryElement.style.width = this.containerElement.offsetWidth + 'px';
         }
-        this.maximumTop = MiscUtils.getPositionY(this.containerElement) + this.containerElement.offsetHeight - this.summaryElement.offsetHeight;
 
         this.scroll();
     }
@@ -126,7 +120,7 @@ class AsideSummary {
             return MiscUtils.getScrollTop() + MiscDom.getHeaderHeight(true);
         }
 
-        return MiscUtils.getScrollTop() + window.screen.height;
+        return MiscUtils.getScrollTop() + (window.innerHeight || document.documentElement.clientHeight);
     }
 
     getTop () {
@@ -138,26 +132,50 @@ class AsideSummary {
     }
 
     getMaximumTop () {
-        return this.maximumTop - (this.borderTop + MiscDom.getHeaderHeight());
+        return (MiscUtils.getPositionY(this.containerElement) + this.containerElement.offsetHeight - this.summaryElement.offsetHeight) - (this.borderTop + MiscDom.getHeaderHeight());
     }
 
     goTo (evt) {
+        this.isGoingTo = true;
+
         evt.stopPropagation();
         evt.preventDefault();
 
         this.hideMenu();
 
+        // Deselect all bullets
+        this.summaryElement
+            .querySelectorAll('.ds44-list--puces a')
+            .forEach((aElement) => {
+                aElement.classList.remove('active');
+                aElement.removeAttribute('aria-location');
+            });
+
+        // Select active bullets
         const aElement = evt.currentTarget;
+        aElement.classList.add('active');
+        aElement.setAttribute('aria-location', 'true');
+
         const sectionId = aElement.getAttribute('href').replace(/^#/, '');
         const sectionElement = document.querySelector('#' + sectionId);
         if (sectionElement) {
             const scrollTo = MiscUtils.getPositionY(sectionElement);
             if (MiscUtils.getScrollTop() > scrollTo) {
                 // Going up, the header will show
-                MiscUtils.scrollTo(scrollTo - MiscDom.getHeaderHeight(true));
+                MiscUtils.scrollTo(
+                    scrollTo - MiscDom.getHeaderHeight(true),
+                    400,
+                    'linear',
+                    this.afterGoTo.bind(this)
+                );
             } else {
                 // Going up, the header will hide
-                MiscUtils.scrollTo(scrollTo);
+                MiscUtils.scrollTo(
+                    scrollTo,
+                    400,
+                    'linear',
+                    this.afterGoTo.bind(this)
+                );
             }
 
             const titleElement = sectionElement.querySelector('h2');
@@ -165,6 +183,15 @@ class AsideSummary {
                 MiscAccessibility.setFocus(titleElement);
             }
         }
+    }
+
+    afterGoTo () {
+        window.setTimeout(
+            () => {
+                this.isGoingTo = false;
+            },
+            100
+        );
     }
 
     showMenu () {

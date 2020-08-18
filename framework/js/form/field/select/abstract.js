@@ -587,7 +587,7 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
                             let labelText = value[additionalDataKey].text;
                             const additionalLabelElement = MiscDom.getPreviousSibling(additionalElement, 'label');
-                            if(additionalLabelElement) {
+                            if (additionalLabelElement) {
                                 labelText = additionalLabelElement.innerText.replace(/\*$/, '')
                             }
                             if (text.length > 0) {

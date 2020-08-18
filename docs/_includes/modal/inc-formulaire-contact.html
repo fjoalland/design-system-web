@@ -1,30 +1,30 @@
-<section class="ds44-modal-container" id="overlay-formulaire-contact" aria-hidden="true" role="dialog" aria-labelledby="titre-modale-formulaire-contact">
+<section class="ds44-modal-container" id="overlay-formulaire-contact" aria-hidden="true" role="dialog">
     <div class="ds44-modal-box">
         <button class="ds44-btnOverlay--modale ds44-btnOverlay--closeOverlay" type="button" title="Fermer la boite de dialogue : qui contacter" data-js="ds44-modal-action-close"><i class="icon icon-cross icon--xlarge" aria-hidden="true"></i><span class="ds44-btnInnerText--bottom">Fermer</span></button>
-        <h1 class="h2-like" id="titre-modale-qui-contacter">Envoyer un mail à [nom de la structure ou du contact]</h1>
+        <h1 class="h2-like">Envoyer un mail à [nom de la structure ou du contact]</h1>
         <div class="ds44-modal-gab ds44-minSmall-margin">
             <form>
                 <p>Les champs suivis d’un * sont obligatoires.</p>
                 <ul class="ds44-list grid-12">
-                    <li class="ds44-mb3 col-6 ds44-minTiny-margin">
+                    <li class="col-6 ds44-minTiny-margin-r">
                         {% include form/field/input/standard.html type="last-name" label="Nom" required="true" %}
                     </li>
-                    <li class="ds44-mb3 col-6 ds44-minTiny-margin">
+                    <li class="col-6 ds44-minTiny-margin-l">
                         {% include form/field/input/standard.html type="first-name" label="Prénom" required="true" %}
                     </li>
-                    <li class="ds44-mb3 col-12 ds44-minTiny-margin">
+                    <li class="col-12">
                         {% include form/field/input/standard.html type="email" label="Courriel" explanation="Exemple : monadresse@mail.com" required="true" %}
                     </li>
-                    <li class="ds44-mb3 col-6 ds44-minTiny-margin">
+                    <li class="col-6 ds44-minTiny-margin-r">
                         {% include form/field/input/standard.html type="postcode" label="Code postal" explanation="Exemple : 44000" required="true" %}
                     </li>
-                    <li class="ds44-mb3 col-6 ds44-minTiny-margin">
-                        {% include form/field/input/standard.html type="phone" label="Téléphone" explanation="Exemple : 0202030405" required="true" %}
+                    <li class="col-6 ds44-minTiny-margin-l">
+                        {% include form/field/input/standard.html type="tel-national" label="Téléphone" explanation="Exemple : 0202030405" required="true" %}
                     </li>
-                    <li class="ds44-mb3 col-12 ds44-minTiny-margin">
+                    <li class="col-12">
                         {% include form/field/select/standard.html label="Sujet" required="true" %}
                     </li>
-                    <li class="ds44-mb3 col-12 ds44-minTiny-margin">
+                    <li class="col-12">
                         {% include form/field/input/textarea.html label="Votre message" required="true" %}
                     </li>
                 </ul>

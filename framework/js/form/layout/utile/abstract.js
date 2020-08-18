@@ -1,96 +1,73 @@
-class FormLayoutUtileAbstract {
-    constructor (selector) {
-        this.url = '/plugins/ChartePlugin/types/PortletQueryForeach/displayResult.jsp';
-        this.formElement = null;
-        this.submitSuccessText = MiscTranslate._('USEFUL_REQUEST_THANK_YOU');
-
-        const formElement = document.querySelector(selector);
-        if (formElement) {
-            this.formElement = formElement;
-
-            MiscEvent.addListener('form:submit', this.submit.bind(this), formElement);
-        }
-    }
-
-    submit (evt) {
-        if (
-            !evt ||
-            !evt.detail ||
-            !evt.detail.parameters
-        ) {
-            return;
-        }
+class FormLayoutUtileAbstract extends FormLayoutAbstract {
+    ajaxSubmit (objectIndex, formData) {
+        const object = this.objects[objectIndex];
 
         // Show loader
         MiscEvent.dispatch('loader:requestShow');
 
         // Add other details to parameters
-        evt.detail.parameters.url = document.location.href;
-        evt.detail.parameters.title = document.title;
-        evt.detail.parameters.date = (new Date()).toLocaleString('fr-FR', {
-            'timeZone': 'UTC',
-            'timeZoneName': 'short'
-        });
+        formData.url = { 'value': document.location.href };
+        formData.title = { 'value': document.title };
+        formData.date = {
+            'value': (new Date()).toLocaleString(
+                'fr-FR',
+                {
+                    'timeZone': 'UTC',
+                    'timeZoneName': 'short'
+                }
+            )
+        };
 
         // Get the results from the back office
         MiscRequest.send(
-            this.url,
-            this.submitSuccess.bind(this),
-            this.submitError.bind(this),
-            evt.detail.parameters
+            object.formElement.getAttribute('action'),
+            this.submitSuccess.bind(this, objectIndex),
+            this.submitError.bind(this, objectIndex),
+            formData
         );
     }
 
-    submitSuccess () {
-        const parentElement = this.formElement.closest('.ds44-inner-container');
-        if (!parentElement) {
-            MiscEvent.dispatch('loader:requestHide');
-
-            return;
+    submitSuccess (objectIndex, response) {
+        if (
+            response &&
+            response.message
+        ) {
+            this.notification(objectIndex, null, response.message, response.status);
         }
 
-        // Empty parent
-        parentElement.innerHTML = '';
+        const object = this.objects[objectIndex];
 
-        // Show message
-        const gridElement = document.createElement('div');
-        gridElement.classList.add('grid-1-small-1');
-        gridElement.classList.add('ds44-grid12-offset-1');
-        gridElement.classList.add('s44-box');
-        parentElement.appendChild(gridElement);
-
-        const centerElement = document.createElement('div');
-        centerElement.classList.add('col');
-        centerElement.classList.add('txtcenter');
-        gridElement.appendChild(centerElement);
-
-        const textElement = document.createElement('div');
-        textElement.classList.add('h4-like');
-        textElement.setAttribute('aria-live', 'polite');
-        textElement.innerHTML = this.submitSuccessText;
-        centerElement.appendChild(textElement);
+        // Add aria described by to textarea
+        const textareaElement = object.formElement.querySelector('textarea');
+        if (textareaElement) {
+            const defaultAriaDescribedBy = textareaElement.getAttribute('data-bkp-aria-describedby');
+            if (!defaultAriaDescribedBy) {
+                textareaElement.removeAttribute('aria-describedby');
+            } else {
+                textareaElement.setAttribute('aria-describedby', defaultAriaDescribedBy);
+            }
+        }
 
         // Hide loader
         MiscEvent.dispatch('loader:requestHide');
     }
 
-    submitError () {
-        // Show error notification in form
-        const errorMessageId = MiscUtils.generateId();
-        MiscEvent.dispatch(
-            'form:notification',
-            {
-                'id': errorMessageId,
-                'type': 'error',
-                'message': MiscTranslate._('FORM_GENERAL_ERROR')
-            },
-            this.formElement
-        );
+    submitError (objectIndex, response) {
+        const messageId = MiscUtils.generateId();
+        if (
+            response &&
+            response.message
+        ) {
+            this.notification(objectIndex, messageId, response.message, response.status);
+        }
+
+        const object = this.objects[objectIndex];
 
         // Add aria described by to textarea
-        const textareaElement = this.formElement.querySelector('textarea');
+        const textareaElement = object.formElement.querySelector('textarea');
         if (textareaElement) {
-            textareaElement.setAttribute('aria-describedby', errorMessageId);
+            const defaultAriaDescribedBy = textareaElement.getAttribute('data-bkp-aria-describedby');
+            textareaElement.setAttribute('aria-describedby', messageId + (defaultAriaDescribedBy ? ' ' + defaultAriaDescribedBy : ''));
         }
 
         // Hide loader

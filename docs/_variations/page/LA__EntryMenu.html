@@ -4,7 +4,7 @@ layout: pattern
 
 {% include header/inc-header.html %}
 
-<main role="main" id="content">
+<main role="main" id="content" tabindex="-1">
 
     <section class="ds44-container-large">
 
@@ -434,6 +434,14 @@ layout: pattern
                     sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore.</p>
             </header>
         </div>
+        <div class="ds44-container-large ds44-mb-std">
+            {% capture fields %}
+                <div class="ds44-fieldContainer ds44-fg1">
+                    {% include form/field/input/standard.html label="Votre recherche" required="false" class="ds44-inpLarge" title="Zone de saisie de votre recherche" ariaDescribedBy="idTitre1" %}
+                </div>
+            {% endcapture %}
+            {% include form/layout/recherche-facettes.html fields=fields fieldStyle="large" %}
+        </div>
         {% include carrousel/carrousel-x3--date.html %}
     </section>
 
@@ -441,9 +449,3 @@ layout: pattern
 
 
 {% include footer/footer-LA.html %}
-
-<button class="ds44-btnStd ds44-btn--invert ds44-btn-fixed ds44-btnQuestion ds44-js-button-question" id="btnFAQ" type="button" data-target="#navFAQ" data-js="ds44-modal">
-    <span class="ds44-btnInnerText">Posez une question</span><i class="icon icon-discussion icon--sizeL" aria-hidden="true"></i>
-</button>
-
-{% include modal/poser-question.html %}

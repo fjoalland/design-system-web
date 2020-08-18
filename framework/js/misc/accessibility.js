@@ -4,7 +4,7 @@ class MiscAccessibility {
     }
 
     static getProtectedElementsSelector () {
-        return ['i', 'sup', 'svg'];
+        return ['i', 'sup', 'svg', 'hr'];
     }
 
     // Fonction qui va forcer le focus à faire une boucle sur un élément
@@ -72,92 +72,75 @@ class MiscAccessibility {
         }
     }
 
-    static show (element, force = false, bubble = true, isChild = false) {
+    static show (element, bubble = true, isChild = false) {
         if (!element) {
+            // No element
             return;
         }
 
         if (
-            MiscAccessibility.getProtectedElementsSelector().indexOf(element.tagName.toLowerCase()) === -1 &&
-            element.getAttribute('data-a11y-exclude') !== 'true'
+            MiscAccessibility.getProtectedElementsSelector().indexOf(element.tagName.toLowerCase()) !== -1 ||
+            element.getAttribute('data-a11y-exclude') === 'true'
         ) {
-            if (force !== true) {
-                MiscAccessibility.record(element, isChild);
-            } else {
-                MiscAccessibility.reinstate(element, isChild);
-            }
+            // Protected element
+            return;
+        }
 
-            if (!isChild) {
-                element.removeAttribute('aria-hidden');
-            }
-            if (element.closest(MiscAccessibility.getEnabledElementsSelector()) === element) {
+        if (!isChild) {
+            // Is parent element
+            element.removeAttribute('aria-hidden');
+        }
+        if (
+            element.closest(MiscAccessibility.getEnabledElementsSelector()) === element &&
+            element.getAttribute('tabindex') === '-1'
+        ) {
+            if (element.hasAttribute('data-bkp-tabindex')) {
+                element.setAttribute('tabindex', element.getAttribute('data-bkp-tabindex'));
+            } else {
                 element.removeAttribute('tabindex');
             }
         }
 
         if (bubble) {
             Array.from(element.children).map((childElement) => {
-                MiscAccessibility.show(childElement, force, bubble, true);
+                MiscAccessibility.show(childElement, true, true);
             });
         }
     }
 
-    static hide (element, force = false, bubble = true, isChild = false) {
+    static hide (element, bubble = true, isChild = false) {
         if (!element) {
+            // No element
             return;
         }
 
         if (
-            MiscAccessibility.getProtectedElementsSelector().indexOf(element.tagName.toLowerCase()) === -1 &&
-            element.getAttribute('data-a11y-exclude') !== 'true'
+            MiscAccessibility.getProtectedElementsSelector().indexOf(element.tagName.toLowerCase()) !== -1 ||
+            element.getAttribute('data-a11y-exclude') === 'true'
         ) {
-            if (force !== true) {
-                MiscAccessibility.record(element, isChild);
-            } else {
-                MiscAccessibility.reinstate(element, isChild);
-            }
+            // Protected element
+            return;
+        }
 
-            if (!isChild) {
-                element.setAttribute('aria-hidden', true);
+        if (!isChild) {
+            // Is parent element
+            element.setAttribute('aria-hidden', true);
+        }
+        if (element.closest(MiscAccessibility.getEnabledElementsSelector()) === element) {
+            if (
+                element.hasAttribute('tabindex') &&
+                element.getAttribute('tabindex') !== '-1' &&
+                !element.hasAttribute('data-bkp-tabindex')
+            ) {
+                element.setAttribute('data-bkp-tabindex', element.getAttribute('tabindex'));
             }
-            if (element.closest(MiscAccessibility.getEnabledElementsSelector()) === element) {
-                element.setAttribute('tabindex', '-1');
-            }
+            element.setAttribute('tabindex', '-1');
         }
 
         if (bubble) {
             Array.from(element.children).map((childElement) => {
-                MiscAccessibility.hide(childElement, force, bubble, true);
+                MiscAccessibility.hide(childElement, true, true);
             });
-        }
-    }
-
-    static record (element, isChild) {
-        if (!element) {
-            return;
-        }
-
-        if (!isChild && !element.hasAttribute('data-bkp-aria-hidden')) {
-            element.setAttribute('data-bkp-aria-hidden', (element.getAttribute('aria-hidden') || ''));
-        }
-        if (
-            element.closest(MiscAccessibility.getEnabledElementsSelector()) === element &&
-            !element.hasAttribute('data-bkp-tabindex')
-        ) {
-            element.setAttribute('data-bkp-tabindex', (element.getAttribute('tabindex') || ''));
-        }
-    }
-
-    static reinstate (element, isChild) {
-        if (!element) {
-            return;
-        }
-
-        if (!isChild && element.hasAttribute('data-bkp-aria-hidden')) {
-            element.removeAttribute('data-bkp-aria-hidden');
-        }
-        if (element.hasAttribute('data-bkp-tabindex')) {
-            element.removeAttribute('data-bkp-tabindex');
         }
     }
 

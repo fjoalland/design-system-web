@@ -10,10 +10,19 @@ status: A valider
 variations:
 - title: Page type "Actualité"
   pattern: page/LA__actu.html
+
 - title: Page type "Evénement"
   pattern: page/LA__evenement.html
+
 - title: Page type "Evénement" sans photo
   pattern: page/LA__evenement-sansPhoto.html
+
+- title: Page Fiche méthode (Archives)
+  pattern: page/AD__fiche.html
+
+- title: Page Fiche Paléo (Archives)
+  pattern: page/AD__fiche-paleo.html
+
 - title: Template centré
   pattern: templates/template-generique-centre.html
 ---

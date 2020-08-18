@@ -57,8 +57,6 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
 
             MiscEvent.addListener('keyDown:*', this.record.bind(this, objectIndex));
             MiscEvent.addListener('keyUp:escape', this.escape.bind(this, objectIndex));
-            MiscEvent.addListener('keyPress:spacebar', this.selectOption.bind(this, objectIndex));
-            MiscEvent.addListener('keyPress:enter', this.selectOption.bind(this, objectIndex));
             MiscEvent.addListener('keyUp:arrowup', this.previousOption.bind(this, objectIndex));
             MiscEvent.addListener('keyUp:arrowdown', this.nextOption.bind(this, objectIndex));
             MiscEvent.addListener('focusout', this.focusOut.bind(this, objectIndex), object.containerElement);
@@ -257,6 +255,7 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
                 elementAutoCompleterListItem.classList.add('ds44-autocomp-list_elem');
                 elementAutoCompleterListItem.setAttribute('role', 'option');
                 elementAutoCompleterListItem.setAttribute('data-text', results[key].value);
+                elementAutoCompleterListItem.setAttribute('title', results[key].value);
                 if (object.mode === this.FREE_TEXT_MODE) {
                     elementAutoCompleterListItem.setAttribute('data-value', results[key].value);
                 } else {
@@ -340,16 +339,6 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
             return;
         }
 
-        if (
-            object.mode === this.SELECT_ONLY_MODE &&
-            !this.getData(objectIndex)
-        ) {
-            object.textElement.value = null;
-            object.currentElementValue = null;
-            object.textElement.removeAttribute('value');
-            this.blur(objectIndex);
-        }
-
         this.hide(objectIndex);
     }
 
@@ -369,7 +358,7 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
         }
 
         object.autoCompleterElement.classList.remove('hidden');
-        MiscAccessibility.show(object.autoCompleterElement, true);
+        MiscAccessibility.show(object.autoCompleterElement);
         object.textElement.setAttribute('aria-expanded', 'true');
         object.isExpanded = true;
     }
@@ -391,7 +380,7 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
         }
 
         object.autoCompleterElement.classList.add('hidden');
-        MiscAccessibility.hide(object.autoCompleterElement, true);
+        MiscAccessibility.hide(object.autoCompleterElement);
         object.textElement.setAttribute('aria-expanded', 'false');
         object.isExpanded = false;
 
@@ -423,23 +412,6 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
         }
 
         return result.replace(new RegExp(search, 'gi'), str => `<strong>${str}</strong>`);
-    }
-
-    selectOption (objectIndex, evt) {
-        evt.preventDefault();
-
-        const object = this.objects[objectIndex];
-        if (!object.autoCompleterListElement) {
-            return;
-        }
-
-        if (
-            document.activeElement &&
-            document.activeElement.classList.contains('ds44-autocomp-list_elem') &&
-            object.autoCompleterListElement.contains(document.activeElement)
-        ) {
-            MiscEvent.dispatch('mousedown', null, document.activeElement);
-        }
     }
 
     nextOption (objectIndex, evt) {
@@ -518,18 +490,9 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
         if (selectedListItem) {
             selectedListItem.classList.remove('selected_option');
             selectedListItem.removeAttribute('id');
-            selectedListItem.removeAttribute('aria-selected');
-            selectedListItem.removeAttribute('aria-pressed');
         }
         currentItem.classList.add('selected_option');
         currentItem.setAttribute('id', 'selected_option_' + object.id);
-        currentItem.setAttribute('aria-selected', 'true');
-        if (
-            evt &&
-            evt.currentTarget.tagName.toLowerCase() === 'button'
-        ) {
-            currentItem.setAttribute('aria-pressed', 'true');
-        }
         object.textElement.setAttribute('aria-activedescendant', 'selected_option_' + object.id);
 
         if (this[currentItem.getAttribute('data-value')]) {

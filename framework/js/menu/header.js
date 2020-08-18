@@ -76,6 +76,7 @@ class MenuHeader {
         MiscEvent.dispatch('resize', null, window);
         mainMenu.classList.add('show');
         MiscAccessibility.show(this.menu);
+        MiscAccessibility.show(mainMenu);
         this.menu
             .querySelectorAll('section.ds44-overlay')
             .forEach((subMainMenu) => {
@@ -83,7 +84,7 @@ class MenuHeader {
             });
 
         // Set focus in menu
-        MiscAccessibility.setFocus(closeButton);
+        window.setTimeout(MiscAccessibility.setFocus.bind(this, closeButton), 500);
         MiscAccessibility.addFocusLoop(mainMenu);
         MiscEvent.dispatch('menu:show', { 'element': mainMenu });
 
@@ -94,12 +95,12 @@ class MenuHeader {
 
     showNavigation (evt) {
         this.menuSelector = '.ds44-overlay--navNiv1';
-        this.showMenu(evt, );
+        this.showMenu(evt);
     }
 
     showSearch (evt) {
         this.menuSelector = '#menuRech .ds44-overlay';
-        this.showMenu(evt, );
+        this.showMenu(evt);
     }
 
     // Ferme tous les menus, et ajoute un focus sur le bouton qui a ouvert le dernier menu affiché
@@ -140,6 +141,7 @@ class MenuHeader {
             .forEach((subMainMenu) => {
                 subMainMenu.classList.remove('show');
             });
+        MiscAccessibility.hide(mainMenu);
         MiscAccessibility.hide(this.menu);
 
         if (this.triggerMenuElement) {
@@ -155,6 +157,11 @@ class MenuHeader {
     showSubNavigationMenu (evt) {
         // Get current menu
         if (!this.menu) {
+            return;
+        }
+
+        // Don't do anything if it is a link
+        if (evt.currentTarget.getAttribute('href')) {
             return;
         }
 

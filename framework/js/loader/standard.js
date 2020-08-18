@@ -20,7 +20,7 @@ class LoaderStandard {
 
         this.counter++;
         loaderElement.classList.remove('hidden');
-        MiscAccessibility.show(loaderElement, true);
+        MiscAccessibility.show(loaderElement);
         loaderTextElement.innerHTML = '<p>' + MiscTranslate._('LOADING') + '</p>';
         MiscAccessibility.setFocus(loaderTextElement);
         MiscEvent.dispatch('loader:show');
@@ -36,7 +36,7 @@ class LoaderStandard {
         this.counter = Math.max(0, (this.counter - 1));
         if (this.counter === 0) {
             loaderElement.classList.add('hidden');
-            MiscAccessibility.hide(loaderElement, true);
+            MiscAccessibility.hide(loaderElement);
             loaderTextElement.innerHTML = '';
             MiscEvent.dispatch('loader:hide');
 

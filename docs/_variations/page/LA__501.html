@@ -3,12 +3,12 @@ layout: pattern
 ---
 {% include header/inc-header-simple.html %}
 
-<main role="main" id="content">
+<main role="main" id="content" tabindex="-1">
 
-    <section class="ds44-container-large">      
+    <section class="ds44-container-large">
 
         <div class="ds44-inner-container">
-            
+
             <div class="ds44-pageHeaderContainer">
                 <picture class="ds44-pageHeaderContainer__pictureContainer">
                     <img src="../../assets/images/501.jpg" alt="" class="ds44-headerImg" />
@@ -41,7 +41,7 @@ layout: pattern
 </main>
 
 <footer role="contentinfo">
-	<section class="ds44-container-large ds44--xl-padding-tb">
+    <section class="ds44-container-large ds44--xl-padding-tb">
         <div class="grid-12-small-1 has-gutter-l">
             <div class="col-2-small-1">
                 <picture class="ds44-logo ds44-mb3 ds44-mobile-reduced-mt ds44-mobile-reduced-pt">
@@ -54,7 +54,7 @@ layout: pattern
         </div>
     </section>
 
-	<section class="ds44-container-fluid ds44-bgGray ds44--l-padding-tb">
+    <section class="ds44-container-fluid ds44-bgGray ds44--l-padding-tb">
         <ul class="ds44-list ds44-flex-container ds44-footerList">
             <li><a href="#" class="ds44-footerLink">Nous écrire</a></li>
             <li><a href="#" class="ds44-footerLink">Mentions légales</a></li>
@@ -66,10 +66,8 @@ layout: pattern
             <li><a href="#" class="ds44-footerLink">Enquêtes publiques</a></li>
             <li><a href="#" class="ds44-footerLink">Espace contributeurs</a></li>
         </ul>
-	</section>
+    </section>
 
-    <p id="backToTop" class="ds44-posAbs ds44-posTop ds44-posRi ds44-hide-mobile">
-        <a class="ds44-icoLink ds44-icoLink--footer" href="#top"><i class="icon icon-arrow-up icon--sizeXL" aria-hidden="true"></i><span class="ds44-icoTxtWrapper">Haut de page</span></a>
-    </p>
+    {% include boutons/haut-de-page.html %}
 
 </footer>

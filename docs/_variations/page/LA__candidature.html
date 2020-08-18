@@ -4,7 +4,7 @@ layout: pattern
 
 {% include header/inc-header.html %}
 
-<main role="main" id="content">
+<main role="main" id="content" tabindex="-1">
 
     <div class="ds44-container-large">
         {% include titres/main-title-noImage.html titrePage="Envoi d’une candidature spontanée" %}
@@ -55,7 +55,7 @@ layout: pattern
                                         {% include form/field/input/standard.html type="email" label="Courriel" explanation="Exemple : monadresse@mail.com" required="true" %}
                                     </li>
                                     <li class="ds44-mb3">
-                                        {% include form/field/input/standard.html type="phone" label="Téléphone" explanation="Exemple : 0202030405" required="true" %}
+                                        {% include form/field/input/standard.html type="tel-national" label="Téléphone" explanation="Exemple : 0202030405" required="true" %}
                                     </li>
                                     <li class="ds44-mb3">
                                         {% include form/field/input/standard.html type="postcode" label="Code postal" explanation="Exemple : 44000" required="true" %}

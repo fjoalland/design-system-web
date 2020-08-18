@@ -9,10 +9,16 @@
     {% elsif include.type == 'email' %}
         {% assign type = 'email' %}
         {% assign attributes = attributes | append : ' autocomplete="email"' %}
-    {% elsif include.type == 'phone' %}
-        {% assign attributes = attributes | append : ' autocomplete="tel"' %}
+    {% elsif include.type == 'tel-national' %}
+        {% assign attributes = attributes | append : ' autocomplete="tel-national"' %}
     {% elsif include.type == 'postcode' %}
         {% assign attributes = attributes | append : ' autocomplete="postal-code"' %}
+    {% elsif include.type == 'civilite' %}
+        {% assign attributes = attributes | append : ' autocomplete="honorific-prefix"' %}
+    {% elsif include.type == 'address-line1' %}
+        {% assign attributes = attributes | append : ' autocomplete="address-line1"' %}
+    {% elsif include.type == 'address-level2' %}
+        {% assign attributes = attributes | append : ' autocomplete="address-level2"' %}
     {% endif %}
 {% endif %}
 

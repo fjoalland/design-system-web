@@ -1,35 +1,9 @@
-class FormLayoutInline {
+class FormLayoutInline extends FormLayoutAbstract {
     constructor () {
-        this.objects = [];
-
-        document
-            .querySelectorAll('form[data-is-inline="true"]')
-            .forEach((formElement) => {
-                this.create(formElement);
-            });
+        super('form[data-is-inline="true"]');
     }
 
-    create (element) {
-        const object = {
-            'id': MiscUtils.generateId(),
-            'formElement': element
-        };
-        this.objects.push(object);
-        const objectIndex = (this.objects.length - 1);
-
-        // Bind events
-        MiscEvent.addListener('form:submit', this.submit.bind(this, objectIndex), object.formElement);
-    }
-
-    submit (objectIndex, evt) {
-        if (
-            !evt ||
-            !evt.detail ||
-            !evt.detail.parameters
-        ) {
-            return;
-        }
-
+    ajaxSubmit (objectIndex, formData) {
         const object = this.objects[objectIndex];
 
         // Show loader
@@ -40,27 +14,28 @@ class FormLayoutInline {
             object.formElement.getAttribute('action'),
             this.inlineSuccess.bind(this, objectIndex),
             this.inlineError.bind(this, objectIndex),
-            evt.detail.parameters
+            formData
         )
     }
 
     inlineSuccess (objectIndex, response) {
         this.showInlineData(objectIndex, response);
+        if (
+            response &&
+            response.message
+        ) {
+            this.notification(objectIndex, null, response.message, response.status);
+        }
         MiscEvent.dispatch('loader:requestHide');
     }
 
-    inlineError (objectIndex) {
-        const object = this.objects[objectIndex];
-
-        MiscEvent.dispatch(
-            'form:notification',
-            {
-                'id': MiscUtils.generateId(),
-                'type': 'error',
-                'message': MiscTranslate._('FORM_GENERAL_ERROR')
-            },
-            object.formElement
-        );
+    inlineError (objectIndex, response) {
+        if (
+            response &&
+            response.message
+        ) {
+            this.notification(objectIndex, null, response.message, response.status);
+        }
         MiscEvent.dispatch('loader:requestHide');
     }
 

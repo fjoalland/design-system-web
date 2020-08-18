@@ -1,0 +1,68 @@
+<script>
+    window.GTM_UA = 'GTM-WHL52DJ';
+    window.orejimeConfig = {
+        privacyPolicy: '/',
+        logo: '../../assets/images/pictos/picto-cookies.svg',
+        translations: {
+            fr: {
+                consentModal: {
+                    title: "Gestion de vos préférences sur les cookies",
+                    description: "Les fonctionnalités de ce site listées ci-dessous s’appuient sur des services proposés par des tiers (statistiques Google Analytics, vidéo YouTube, etc.). \n" +
+                        "Si vous donnez votre accord (consentement), ces tiers déposeront des cookies qui vous permettront de visualiser directement sur loire-atlantique.fr du contenu hébergé par ces tiers ou de partager nos contenus. Via ces cookies, ces tiers collecteront et utiliseront vos données de navigation pour des finalités qui leur sont propres, conformément à leur politique de confidentialité (lien ci-dessous). \n" +
+                        "Cette page vous permet de donner ou de retirer votre consentement, soit globalement soit finalité par finalité.\n" +
+                        "Pour exercer vos droits sur les données collectées par les tiers ou pour toute question sur ces traitements vous pouvez nous contacter directement à cette adresse : dpd@loire-atlantique.fr."
+                },
+                consentNotice: {
+                    description: "Les cookies nous permettent de personnaliser notre contenu et nos annonces, d'offrir des fonctionnalités relatives aux médias sociaux et d'analyser notre trafic. Nous partageons implicitement des informations sur l'utilisation de notre site avec nos partenaires de médias sociaux, de publicité et d'analyse, qui peuvent combiner celles-ci avec d'autres informations que vous leur avez fournies ou qu'ils ont collectées lors de votre utilisation de leurs services. Vous devez spécifier vos préférences pour continuer la navigation :\n",
+                    learnMore: "Je paramètre"
+                },
+                accept: "J’accepte",
+                acceptAll: "J’accepte tout",
+                decline: "Je refuse",
+                declineAll: "Je refuse tout"
+            },
+            en: {
+                purposes: {
+                    analytics: 'Analytics'
+                }
+            },
+        },
+        apps: [
+            {
+                name: 'google-tag-manager',
+                title: 'Google Tag Manager',
+                cookies: [
+                    '_ga',
+                    '_gat',
+                    '_gid',
+                    '__utma',
+                    '__utmb',
+                    '__utmc',
+                    '__utmt',
+                    '__utmz',
+                    '_gat_gtag_' + GTM_UA,
+                    '_gat_' + GTM_UA
+                ],
+                purposes: ['analytics']
+            }
+        ],
+    };
+</script>
+
+<!-- Google Tag Manager -->
+<script
+        type="opt-in"
+        data-type="application/javascript"
+        data-name="google-tag-manager"
+>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer',window.GTM_UA);
+
+</script>
+<!-- End Google Tag Manager -->
+
+<link rel="stylesheet" href="https://unpkg.com/orejime@latest/dist/orejime.css"/>
+<script src="https://unpkg.com/orejime@latest/dist/orejime.js"></script>

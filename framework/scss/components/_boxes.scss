@@ -223,6 +223,19 @@
     background-color: #000;
     z-index: 10;
     color: #FFF;
+
+    & .icon {
+        line-height: 1;
+    }
+}
+
+// Grands projets
+
+.grid-12-small-1 .colFocusProjets{
+  align-self: flex-start;
+}
+.grid-12-small-1 .colFocusProjets:first-of-type{
+  align-self: auto;
 }
 
 
