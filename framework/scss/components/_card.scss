@@ -169,6 +169,10 @@ a.ds44-card {
     position: relative;
 }
 
+.ds44-container-imgRatio + .ds44-card__section {
+    height: auto;
+}
+
 .ds44-card__globalLink {
     text-decoration: none;
     color: #000000;
