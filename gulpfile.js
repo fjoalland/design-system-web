@@ -17,7 +17,6 @@ var fs = require('fs');
 
 var jekyllDir = "docs/",
     scssFile = 'framework/scss/cd44.scss',
-    scssAppFile = 'framework/scss/cd44-apps.scss',
     scssFileSwiper = 'node_modules/swiper/css/swiper.min.css',
     scssFileAos = 'node_modules/aos/dist/aos.css',
     cssDest = 'dist/css',
@@ -53,7 +52,7 @@ var postCssPluginsProd = [
 ];
 
 gulp.task('build:css:cd44:dev', function () {
-    return gulp.src([scssFileSwiper, scssFileAos, scssFile, scssAppsFile])
+    return gulp.src([scssFileSwiper, scssFileAos, scssFile])
         .pipe(sass({
             // CSS non minifiée plus lisible ('}' à la ligne)
             outputStyle: 'expanded'
@@ -66,11 +65,10 @@ gulp.task('build:css:cd44:dev', function () {
 });
 
 gulp.task('build:css:cd44:prod', function () {
-    return gulp.src([scssFileSwiper, scssFileAos, scssFile, scssAppsFile])
+    return gulp.src([scssFileSwiper, scssFileAos, scssFile])
         .pipe(sass())
         .pipe(postcss(postCssPluginsProd))
         .pipe(concat('cd44.min.css'))
-        .pipe(concat('cd44-apps.min.css'))
         .pipe(gulp.dest(cssDest));
 });
 
