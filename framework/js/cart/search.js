@@ -89,9 +89,13 @@ class CartSearch {
         return 'bookmarks_' + urlParameters.pop();
     }
 
-    refreshTotal() {
-        const bookmarks = this.getBookmarks();
+    refreshTotal () {
         const buttonElement = document.querySelector('#bookmarks-search');
+        if (!buttonElement) {
+            return;
+        }
+
+        const bookmarks = this.getBookmarks();
         buttonElement.innerHTML = buttonElement.innerHTML.replace(/ ?\([0-9]+\)/, '') + ' (' + bookmarks.length + ')';
     }
 }
