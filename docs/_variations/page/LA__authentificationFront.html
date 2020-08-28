@@ -1,0 +1,69 @@
+---
+layout: pattern
+---
+<div class="ds44-littleMain">
+
+  {% include header/inc-header.html %}
+
+  <main role="main" id="content" tabindex="-1">
+
+  	<section class="ds44-container-large">
+      <div class="ds44-wave-grey ds44-bg-pdr ds44--2xl-padding-t ds44--3xl-padding-b">
+
+          <div class="ds44-inner-container">
+              <div class="grid-12-small-1">
+                <div class="col-12 ds44-mb-std">
+                  <h1 class="h2-like" id="titre404">Cette page est en accès réservé.</h1>
+                </div>
+              </div>
+
+              <div class="grid-12-small-1 ds44-grid-valign-center ds44-w98 ds44-mt3">
+
+                  <div class="col-5-small-1">
+                      <form>
+                          <fieldset>
+                              <legend class="h4-like ds44-mb-std">Si vous avez déjà un compte, connectez-vous</legend>
+                              <p>Les champs suivis d’un * sont obligatoires.</p>
+                              <div class="ds44-mb3">
+                                  {% include form/field/input/standard.html type="email" label="Courriel" explanation="Exemple : monadresse@mail.com" required="true" %}
+                              </div>
+                              <div class="ds44-mb3">
+                                  {% include form/field/input/standard.html type="password" label="Mot de passe" required="true" %}
+                              </div>
+                              <div>
+                                  {% include form/layout/checkboxes.html choices="connect:Rester connecté" %}
+                              </div>
+                              <button class="ds44-btnStd ds44-btn--invert ds44-bntALeft ds44-mtb1" title="Valider l'accès à votre compte">
+                                  <span class="ds44-btnInnerText">Valider</span><i class="icon icon-long-arrow-right" aria-hidden="true"></i>
+                              </button>
+                              <p class="ds44-noMrg"><a href="#">Mot de passe oublié ?</a></p>
+                          </fieldset>
+                      </form>
+                  </div>
+
+                  <div class="col-2-small-1 txtcenter ds44-h100">
+                      <div class="ds44-separator ds44-flex-valign-center ds44-flex-align-center ds44-flex-container">
+                          <p class="ds44-txtBulle ds44-theme">Ou</p>
+                      </div>
+                  </div>
+
+                  <div class="col-5-small-1">
+                      <h3 class="h4-like ds44-mb-std" id="titreCreerCompte">Créer un compte</h3>
+                      <p class="ds44-mb-std">La connexion au site loire-atlantique.fr permet d'accéder à l'espace presse dédié aux journalistes et médias, ou aux contributeurs du site de publier des informations. Si vous êtes journaliste et que vous n'avez pas encore de compte :</p>
+                      <button class="ds44-btnStd ds44-btn--invert ds44-bntALeft ds44-mb1" title="Accéder à la page de demande de création de compte">
+                          <span class="ds44-btnInnerText">Cliquez ici</span><i class="icon icon-long-arrow-right" aria-hidden="true"></i>
+                      </button>
+                  </div>
+
+              </div>
+          </div>
+
+      </div>
+  	</section>
+
+  </main>
+
+
+  {% include footer/footer-LA.html %}
+
+</div>

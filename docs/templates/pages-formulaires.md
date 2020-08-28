@@ -18,6 +18,9 @@ variations:
 - title: Formulaire espace presse
   pattern: page/LA__formPress.html
 
+- title: Authentification front office
+  pattern: page/LA__authentificationFront.html
+
 - title: Formulaire Site Archives
   pattern: page/AD__formulaire.html
 
