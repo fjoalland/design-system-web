@@ -59,7 +59,6 @@ gulp.task('build:css:cd44:dev', function () {
         }))
         .pipe(postcss(postCssPluginsDev))
         .pipe(concat('cd44.css'))
-        .pipe(concat('cd44-apps.css'))
         .pipe(browserSync.stream())
         .pipe(gulp.dest(cssDest));
 });

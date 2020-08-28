@@ -1,0 +1,25 @@
+
+
+<div id="debug">
+	Mode : <select onchange="ChangeBodyState()" id="SelectPontMode">
+		<option>m000</option><option>m012</option><option>mu012</option><option>m102</option><option>me102a</option><option>me102ab</option><option>me102b</option><option>me102bc</option><option>me102c</option><option>me102cd</option><option>me102d</option><option>me102de</option><option>me102e</option><option>mu102n</option><option>mu102s</option><option selected>m112</option><option>me112a</option><option>me112ab</option><option>me112b</option><option>me112bc</option><option>me112c</option><option>me112cd</option><option>me112d</option><option>me112de</option><option>me112e</option><option>m120</option><option>mu120</option><option>m122</option><option>me122a</option><option>me122ab</option><option>me122b</option><option>me122bc</option><option>me122c</option><option>me122cd</option><option>me122d</option><option>me122de</option><option>me122e</option>
+	</select>
+	Trafic Nord : <select onchange="ChangeBodyState()" id="SelectTraficNord">
+		<option>vert</option><option>orange</option><option>rouge</option>
+	</select>
+	Trafic Sud : <select onchange="ChangeBodyState()" id="SelectTraficSud">
+		<option>vert</option><option>orange</option><option>rouge</option>
+	</select>
+	<script>
+		function ChangeBodyState(){
+			var Element = document.getElementById("ds44-map-wrapper");
+			var ModeCirculation = document.getElementById("SelectPontMode").value;
+			var traficNord = document.getElementById("SelectTraficNord").value;
+			var traficSud = document.getElementById("SelectTraficSud").value;
+
+			Element.setAttribute("data-mode-circulation", ModeCirculation); 
+			Element.setAttribute("data-trafic-nord", traficNord); 
+			Element.setAttribute("data-trafic-sud", traficSud); 
+		}
+	</script>
+</div>

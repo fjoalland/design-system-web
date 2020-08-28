@@ -53,7 +53,7 @@
 //@import "components/boxes.scss";
 //@import "components/list.scss";
 //@import "components/forms.scss";
-//@import "components/buttons.scss";
+@import "components/buttons.scss";
 //@import "components/header.scss";
 //@import "components/breadcrumb.scss";
 //@import "components/footer.scss";
@@ -67,3 +67,5 @@
 //@import "components/timeline.scss";
 //@import "tooltip/abstract.scss";
 //@import "aside/summary.scss";
+
+@import "apps/pont.scss";

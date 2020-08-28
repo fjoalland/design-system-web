@@ -1,0 +1,20 @@
+
+<section class="ds44-app-tuile">
+
+    {% if include['titre'] %}
+    <h3 class="h3-like">{{ include.titre }}</h3>
+    {% endif %}
+    <div class="ds44-lightBG ds44-flex-container ds44-flex-valign-center">
+        {% if include['type'] == "picto" %}
+        <div class="ds44-w33">
+            <img src="../../assets/images/apps/ponts/icones/svg/{{ include.code }}.svg" alt="" class="">
+        </div>
+        {% endif %}
+        <div class="ds44--m-padding ds44-stl-center ds44-fg1">
+            <p class="ds44-pont-horaire">12h30</p>
+            <p>2 voies</p>
+            <p>St Brevin / St Nazaire</p>
+        </div>
+    </div>
+    
+</section>

@@ -1,5 +1,200 @@
-/* ------------------------------------ */
-/* Pont de St Nazaire et Bacs de Loire  */
-/* ------------------------------------ */
+/* --------------------------------------------------- */
+/* Applis mobiles Pont de St Nazaire et Bacs de Loire  */
+/* --------------------------------------------------- */
+
+.ds44-w33 {
+    width: calc(100% / 3);
+}
+
+/* Textes des tuiles */
+
+.ds44-app-tuile {
+    @include ds44-font-sizes(smallText);
+    line-height: 1.2;
+}
+
+.ds44-pont-horaire {
+    @include ds44-font-sizes(bigText);
+    font-weight: bold;
+}
+
+/*  -----------------
+    Gestion de la map 
+    -----------------
+*/
 
 
+#ds44-debug {
+	position: absolute;
+	z-index: 5;
+}
+
+#ds44-map-container {
+    position: fixed;
+    z-index: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    top: 0;
+    background-color: #f5f5f5;
+}
+
+#ds44-map-container svg {
+    height: 100%;
+    width: auto;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background-color: #f5f5f5;
+}
+
+/* masquage par defaut */
+#ds44-map-container svg {
+    #voie1, #voie1-seule, #voie1-travaux,
+	#voie2n, #voie2n-seule, #voie2s, #voie2s-seule, #voie2-travaux,
+	#voie3, #voie3-seule, #voie3-travaux,
+	#pointilles1, #pointilles2,
+	#echangeur-sud-voie1-fleche, #echangeur-sud-voie1-croix,
+	#echangeur-sud-voie2-fleche, #echangeur-sud-voie2-croix,
+	#echangeur-sud-voie3-fleche, #echangeur-sud-voie3-croix,
+	#echangeur-nord-voie1-fleche, #echangeur-nord-voie1-croix,
+	#echangeur-nord-voie2-fleche, #echangeur-nord-voie2-croix,
+	#echangeur-nord-voie3-fleche, #echangeur-nord-voie3-croix
+    {
+        display: none;
+    }
+}
+  
+/* Mode de circulation : Affichage des voies */
+$ModesCirculation012: 'm012', 'mu012';
+$ModesCirculation102: 'm102', 'me102a', 'me102ab', 'me102b', 'me102bc', 'me102c', 'me102cd', 'me102d', 'me102de', 'me102e','mu102n','mu102s';
+$ModesCirculation112: 'm112', 'me112a', 'me112ab', 'me112b', 'me112bc', 'me112c', 'me112cd', 'me112d', 'me112de', 'me112e','mu112n','mu112s';
+$ModesCirculation120: 'm120', 'mu120';
+$ModesCirculation122: 'm122', 'me122a', 'me122ab', 'me122b', 'me122bc', 'me122c', 'me122cd', 'me122d', 'me122de', 'me122e'; 
+#ds44-map-wrapper[data-mode-circulation='m000'] {
+	#ds44-map-container svg {
+		#voie1-travaux, #voie2-travaux, #voie3-travaux,
+		#echangeur-nord-voie1-croix,#echangeur-nord-voie2-croix,#echangeur-nord-voie3-croix,
+		#echangeur-sud-voie1-croix,#echangeur-sud-voie2-croix,#echangeur-sud-voie3-croix {
+		  display:block;
+		}
+	}
+}
+@each $i in $ModesCirculation012 {
+  #ds44-map-wrapper[data-mode-circulation=#{$i}] {
+    #voie1-travaux, #voie2n-seule, #voie3-seule,
+	#echangeur-nord-voie1-croix,#echangeur-nord-voie2-fleche,#echangeur-nord-voie3-croix,
+	#echangeur-sud-voie1-croix,#echangeur-sud-voie2-croix,#echangeur-sud-voie3-fleche,
+	#pointilles1, #pointilles2 {
+	  display:block;
+	}
+  }
+}
+@each $i in $ModesCirculation102 {
+  #ds44-map-wrapper[data-mode-circulation=#{$i}] {
+    #voie1-seule, #voie2-travaux, #voie3-seule,
+	#echangeur-nord-voie1-fleche,#echangeur-nord-voie2-croix,#echangeur-nord-voie3-croix,
+	#echangeur-sud-voie1-croix,#echangeur-sud-voie2-croix,#echangeur-sud-voie3-fleche,
+	#pointilles1,#pointilles2 {
+	  display:block;
+	}
+  }
+} 
+@each $i in $ModesCirculation112 {
+  #ds44-map-wrapper[data-mode-circulation=#{$i}] {
+    #voie1, #voie2n, #voie3-seule,
+	#echangeur-nord-voie1-fleche,#echangeur-nord-voie2-fleche,#echangeur-nord-voie3-croix,
+	#echangeur-sud-voie1-croix,#echangeur-sud-voie2-croix,#echangeur-sud-voie3-fleche,
+	#pointilles2 {
+	  display:block;
+	}
+  }
+}
+@each $i in $ModesCirculation120 {
+  #ds44-map-wrapper[data-mode-circulation=#{$i}] {
+    #voie1-seule, #voie2s-seule, #voie3-travaux,
+	#echangeur-nord-voie1-fleche,#echangeur-nord-voie2-croix,#echangeur-nord-voie3-croix,
+	#echangeur-sud-voie1-croix,#echangeur-sud-voie2-fleche,#echangeur-sud-voie3-croix,
+	#pointilles1,#pointilles2 {
+	  display:block;
+	}
+  }
+}
+@each $i in $ModesCirculation122 {
+  #ds44-map-wrapper[data-mode-circulation=#{$i}] {
+    #voie1-seule, #voie2s, #voie3,
+	#echangeur-nord-voie1-fleche,#echangeur-nord-voie2-croix,#echangeur-nord-voie3-croix,
+	#echangeur-sud-voie1-croix,#echangeur-sud-voie2-fleche,#echangeur-sud-voie3-fleche,
+	#pointilles1 {
+	  display:block;
+	}
+  }
+}
+
+/* Qualité du Trafic */
+$TraficNord: 'vert', 'orange', 'rouge';
+@each $i in $TraficNord {
+  #ds44-map-wrapper[data-trafic-nord=#{$i}] {
+    #voie1, #voie1, #voie1,
+	#voie1-seule, #voie1-seule, #voie1-seule,
+	#voie2n, #voie2n, #voie2n,
+	  #voie2n-seule, #voie2n-seule, #voie2n-seule{
+		  path[id*=voie-couleur]{
+			  @if $i == 'vert' {
+				  fill:#99e6d1;
+			  }
+			  @if $i == 'orange' {
+				  fill:#ffc134;
+			  }
+			  @if $i == 'rouge' {
+				  fill:#dc3545;
+			  }
+		  }
+		  path[id*=fleche-couleur]{
+			  @if $i == 'vert' {
+				  fill:#000;
+			  }
+			  @if $i == 'orange' {
+				  fill:#000;
+			  }
+			  @if $i == 'rouge' {
+				  fill:#fff;
+			  }
+		  }
+	}	  
+  }
+}
+$TraficSud: 'vert', 'orange', 'rouge';
+@each $i in $TraficSud {
+  #ds44-map-wrapper[data-trafic-sud=#{$i}] {
+	#voie2s, #voie2s, #voie2s,
+	#voie2s-seule, #voie2s-seule, #voie2s-seule,
+	#voie3, #voie3, #voie3,
+	#voie3-seule, #voie3-seule, #voie3-seule{
+		  path[id*=voie-couleur]{
+			  @if $i == 'vert' {
+				  fill:#99e6d1;
+			  }
+			  @if $i == 'orange' {
+				  fill:#ffc134;
+			  }
+			  @if $i == 'rouge' {
+				  fill:#dc3545;
+			  }
+		  }
+		  path[id*=fleche-couleur]{
+			  @if $i == 'vert' {
+				  fill:#000;
+			  }
+			  @if $i == 'orange' {
+				  fill:#000;
+			  }
+			  @if $i == 'rouge' {
+				  fill:#fff;
+			  }
+		  }
+			
+	}	  
+  }
+}
