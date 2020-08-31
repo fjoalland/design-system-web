@@ -8,8 +8,25 @@
 
 /* Menu burger */
 
+.ds44-logoContainer-app img {
+    height: 50px;
+    max-width: none;
+}
+
 .ds44-menu-app {
 	height: 100vh;
+}
+
+.ds44-linkMenuApp {
+	@include ds44-font-sizes(menuHeaders);
+	@if variable_exists(ds44-font-family-headings) and $ds44-font-family-headings != $ds44-font-family-base {
+		font-family: $ds44-font-family-headings;
+	  }
+	text-decoration: none;
+	font-weight: $weight-medium;
+	display: block;
+	padding: 1rem 1rem 0 0;
+	position: relative;
 }
 
 /* Textes des tuiles */
