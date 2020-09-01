@@ -78,17 +78,18 @@ class ResultStandard {
     }
 
     redirectCard (evt) {
-        evt.currentTarget
-            .querySelectorAll('a')
-            .forEach((aElement) => {
-                let url = aElement.getAttribute('href');
-                if (!url) {
-                    return;
-                }
+        const aElement = evt.currentTarget.querySelector('a');
+        if (!aElement) {
+            return;
+        }
 
-                url += (url.indexOf('?') !== -1 ? '&' : '?') + 'previousPage=' + encodeURIComponent(window.location.href);
-                aElement.setAttribute('href', url);
-            });
+        let url = aElement.getAttribute('href');
+        if (!url) {
+            return;
+        }
+
+        url += (url.indexOf('?') !== -1 ? '&' : '?') + 'previousPage=' + encodeURIComponent(window.location.href);
+        document.location.href = url;
     }
 
     showCard () {
