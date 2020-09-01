@@ -281,7 +281,7 @@ class FormLayoutAbstract {
         // Abstract method
     }
 
-    notification (objectIndex, messageId, messageText, notificationType = 'error') {
+    notification (objectIndex, messageId, messageText, messageList, notificationType = 'error') {
         const object = this.objects[objectIndex];
 
         let containerElement = object.formElement.querySelector('.ds44-msg-container');
@@ -321,6 +321,18 @@ class FormLayoutAbstract {
         spanElement.classList.add('ds44-iconInnerText');
         spanElement.innerText = messageText;
         textElement.appendChild(spanElement);
+
+        if (messageList) {
+            const listElement = document.createElement('ul');
+            listElement.classList.add('ds44-errorList');
+            textElement.appendChild(listElement);
+
+            for (let i = 0; i < messageList.length; i++) {
+                const listItemElement = document.createElement('li');
+                listItemElement.innerText = messageList[i];
+                listElement.appendChild(listItemElement);
+            }
+        }
 
         MiscAccessibility.setFocus(textElement);
     }

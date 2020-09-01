@@ -32,7 +32,7 @@ class FormLayoutUtileAbstract extends FormLayoutAbstract {
             response &&
             response.message
         ) {
-            this.notification(objectIndex, null, response.message, response.status);
+            this.notification(objectIndex, null, response.message, response.message_list, response.status);
         }
 
         const object = this.objects[objectIndex];
@@ -58,7 +58,7 @@ class FormLayoutUtileAbstract extends FormLayoutAbstract {
             response &&
             response.message
         ) {
-            this.notification(objectIndex, messageId, response.message, response.status);
+            this.notification(objectIndex, messageId, response.message, response.message_list, response.status);
         }
 
         const object = this.objects[objectIndex];

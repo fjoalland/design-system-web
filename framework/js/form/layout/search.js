@@ -180,7 +180,7 @@ class FormLayoutSearch extends FormLayoutAbstract {
             response &&
             response.message
         ) {
-            this.notification(objectIndex, null, response.message, response.status);
+            this.notification(objectIndex, null, response.message, response.message_list, response.status);
         }
 
         const object = this.objects[objectIndex];
@@ -205,7 +205,7 @@ class FormLayoutSearch extends FormLayoutAbstract {
             response &&
             response.message
         ) {
-            this.notification(objectIndex, null, response.message, response.status);
+            this.notification(objectIndex, null, response.message, response.message_list, response.status);
         }
         MiscEvent.dispatch('loader:requestHide');
     }
