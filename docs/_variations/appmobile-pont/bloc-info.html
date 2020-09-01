@@ -1,0 +1,60 @@
+---
+layout: pattern
+---
+
+<section class="ds44-map-infos">
+
+    <div class="ds44--l-padding-lr ds44--l-padding-b">
+
+      <button class="ds44-appBtn-slideUp"><i class="icon icon-up icon--medium" aria-hidden="true"></i><span class="visually-hidden">Afficher les informations</span></button>
+
+      <div class="ds44--xl-padding-b">
+        <h2 class="h2-like">Sens de circulation</h2>
+      </div>
+
+      {% 
+        include apps/inc-tuile.html
+        code="m012"
+        type="picto"
+        titre="En cours"
+        trafic="0"
+        bgTuile = "ds44-lightBG"
+      %}
+      {% 
+        include apps/inc-tuile.html
+        code="m112"
+        type="picto"
+        titre="A venir"
+        trafic="0"
+        bgTuile = "ds44-lightBG"
+      %}
+      {% 
+        include apps/inc-tuile.html
+        code="m112"
+        type="picto"
+        trafic="0"
+        bgTuile = "ds44-lightBG"
+      %}
+  
+  </div>
+
+  <div class="ds44--l-padding ds44-lightBG">
+    
+    <h2 class="h2-like">Événements</h2>
+    {% 
+      include apps/inc-tuile.html
+      code="travaux"
+      type="picto"
+      titre="En cours"
+      trafic="0"
+      bgTuile = "ds44-whiteBG"
+      contenu = '<div class="ds44--m-padding ds44-fg1">
+        <p class="ds44-titre-alerte">Travaux</p>
+        <div class="ds44-inlineBlock ds44-valignTop"><i class="icon icon-date icon--medium" aria-hidden="true"></i></div>
+        <div class="ds44-inlineBlock"><p>Du 17/02/2020<br />au 13/03/2020</p></div>
+        </div>'
+    %}
+
+  </div>
+
+</section>

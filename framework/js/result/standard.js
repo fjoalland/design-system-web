@@ -246,6 +246,8 @@ class ResultStandard {
         if (listElement && !evt.detail.addUp) {
             listElement.remove();
             listElement = null;
+
+            MiscEvent.dispatch('result:destroyed');
         }
         if (!listElement) {
             listElement = document.createElement('ul');
@@ -346,6 +348,8 @@ class ResultStandard {
             MiscEvent.dispatch('loader:setFocus', { 'focusedElement': focusElement });
             MiscAccessibility.setFocus(focusElement);
         }
+
+        MiscEvent.dispatch('result:created');
     }
 
     focus (evt = null) {

@@ -1,4 +1,8 @@
 class MiscUrl {
+    static getUrlParameters () {
+        return window.location.href.split('#')[0].split('?')[0].split('/');
+    }
+
     static getHashParameters () {
         const urlParameters = window.location.href.split('#')[1];
         return MiscUrl.urlToJson(urlParameters);

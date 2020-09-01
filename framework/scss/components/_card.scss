@@ -169,6 +169,12 @@ a.ds44-card {
     position: relative;
 }
 
+.ds44-container-imgRatio + .ds44-card__section ,
+figure[role=figure]  + .ds44-card__section {
+    height: auto;
+    position: initial;
+}
+
 .ds44-card__globalLink {
     text-decoration: none;
     color: #000000;

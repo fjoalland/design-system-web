@@ -24,7 +24,7 @@ class FormLayoutInline extends FormLayoutAbstract {
             response &&
             response.message
         ) {
-            this.notification(objectIndex, null, response.message, response.status);
+            this.notification(objectIndex, null, response.message, 'information');
         }
         MiscEvent.dispatch('loader:requestHide');
     }
@@ -34,7 +34,7 @@ class FormLayoutInline extends FormLayoutAbstract {
             response &&
             response.message
         ) {
-            this.notification(objectIndex, null, response.message, response.status);
+            this.notification(objectIndex, null, response.message, 'error');
         }
         MiscEvent.dispatch('loader:requestHide');
     }
@@ -43,7 +43,7 @@ class FormLayoutInline extends FormLayoutAbstract {
         const object = this.objects[objectIndex];
 
         const destinationElement = document.querySelector(object.formElement.getAttribute('data-result-destination'));
-        if (!destinationElement) {
+        if (!inlineData.content_html || !destinationElement) {
             return;
         }
 

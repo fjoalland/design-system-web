@@ -17,6 +17,9 @@
   
 - title: Gabarits de pages
   group: templates
+  
+- title: Applis mobiles
+  group: appmobile
 
 # Category removed following RS-840 ticket
 #- title: Historique

@@ -1,0 +1,39 @@
+---
+layout: pattern
+---
+
+{% 
+  include apps/inc-map.html
+%}
+<section class="ds44-map-infos ds44--l-padding-lr">
+
+  <button class="ds44-appBtn-slideUp"><i class="icon icon-up icon--medium" aria-hidden="true"></i><span class="visually-hidden">Afficher les informations</span></button>
+
+  <div class="ds44--xl-padding-b">
+    <h2 class="h2-like">Sens de circulation</h2>
+  </div>
+
+  {% 
+    include apps/inc-tuile.html
+    code="m012"
+    type="picto"
+    titre="En cours"
+    trafic="0"
+    bgTuile = "ds44-lightBG"
+  %}
+  {% 
+    include apps/inc-tuile.html
+    code="m112"
+    type="picto"
+    titre="A venir"
+    trafic="0"
+    bgTuile = "ds44-lightBG"
+  %}
+  {% 
+    include apps/inc-tuile.html
+    code="m112"
+    type="picto"
+    trafic="0"
+    bgTuile = "ds44-lightBG"
+  %}
+</section>

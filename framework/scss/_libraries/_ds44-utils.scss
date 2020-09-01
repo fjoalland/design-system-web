@@ -8,6 +8,9 @@
   margin-left: auto;
   margin-right: auto;
 }
+.ds44-center {
+  text-align: center;
+}
 .ds44-posAbs {
   position: absolute;
   z-index: 1;
@@ -29,6 +32,9 @@
 }
 .ds44-posLe {
   left: 0;
+}
+.ds44-valignTop {
+  vertical-align: top;
 }
 
 
@@ -145,6 +151,9 @@
 
 .ds44-noMrg {
   margin: 0 !important ;
+}
+.ds44-hmt {
+  margin-top: $ds44-margin-base/2 !important;
 }
 .ds44-mlr1 {
   margin-left: $ds44-margin-base;
@@ -652,6 +661,12 @@
 
 .ds44-wave-grey {
   background-image: url(../../../assets/images/backgrounds/bkgd-wave-light-grey.png);
+  background-position-y: bottom;
+  background-repeat: repeat-x;
+}
+
+.ds44-wave-grey-app {
+  background-image: url(../../../assets/images/backgrounds/bkgd-wave-light-grey-app.png);
   background-position-y: bottom;
   background-repeat: repeat-x;
 }

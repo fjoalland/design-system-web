@@ -5,7 +5,7 @@ permalink:
 
 title: Page Accueil
 description: Modèle de page agenda basée sur le template "home".
-status: A valider
+status: Validé
 
 variations:
 - title: Page type "Accueil"
