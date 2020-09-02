@@ -34,7 +34,7 @@
   left: 0;
 }
 .ds44-valignTop {
-  vertical-align: top;
+  vertical-align: top !important;
 }
 
 
@@ -50,11 +50,11 @@
   padding: 0 !important ;
 }
 .ds44--m-padding {
-  padding          : $ds44-padding-medium; // 1rem
+  padding          : $ds44-padding-medium !important; // 1rem
 }
 .ds44--m-padding-lr {
-  padding-left     : $ds44-padding-medium;
-  padding-right    : $ds44-padding-medium;
+  padding-left     : $ds44-padding-medium !important;
+  padding-right    : $ds44-padding-medium !important;
 }
 .ds44--m-padding-tb {
   padding-top      : $ds44-padding-medium; // 1rem

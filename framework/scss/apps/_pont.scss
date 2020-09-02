@@ -2,6 +2,22 @@
 /* Applis mobiles Pont de St Nazaire et Bacs de Loire  */
 /* --------------------------------------------------- */
 
+/* TITRES */
+
+.h2-app-like {
+	display: block;
+	@include ds44-font-sizes(h2);
+	@if variable_exists(ds44-font-family-headings) and $ds44-font-family-headings != $ds44-font-family-base{
+		font-family: $ds44-font-family-headings;
+	}
+	font-weight: $weight-bold;
+	padding: 0 1.5rem;
+	line-height: 1.2;
+	display: block;
+	background: transparent;
+}
+
+
 .ds44-w33 {
     width: calc(100% / 3);
 }
@@ -69,6 +85,15 @@
 .ds44-appBtn-slideUp {
 	width: 100%;
 	padding: $ds44-medium-vmargin 0;
+}
+
+/* OVERLAYS */
+
+.ds44-app-pictoOverlay {
+	width: 50px;
+	height: 50px;
+	border-radius: 25px;
+	vertical-align: top;
 }
 
 /* -----
