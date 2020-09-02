@@ -155,6 +155,9 @@
 .ds44-hmt {
   margin-top: $ds44-margin-base/2 !important;
 }
+.ds44-m1 {
+  margin: $ds44-margin-base;                        // 1rem
+}
 .ds44-mlr1 {
   margin-left: $ds44-margin-base;
   margin-right: $ds44-margin-base;
@@ -354,6 +357,12 @@
 }
 .ds44-fas {
   align-self: flex-end;
+}
+.ds44-fasb {
+  align-self: baseline!important;
+}
+.ds44-fasc {
+  align-self: center!important;
 }
 
 @media (max-width: $ds44-large - .0625) {
