@@ -200,6 +200,9 @@
 .ds44-mr2 {
   margin-right: $ds44-large-vmargin!important;     // 2rem
 }
+.ds44-ml2 {
+  margin-left: $ds44-large-vmargin!important;     // 2rem
+}
 .ds44-mb3 {
   margin-bottom: $ds44-components-vmargin;          // 3rem
 }
@@ -215,6 +218,9 @@
 }
 .ds44-m3 {
   margin: $ds44-components-vmargin;                // 3rem
+}
+.ds44-ml3 {
+  margin-left: $ds44-components-vmargin;           // 3rem
 }
 .ds44-mlr3 {
   margin-left: $ds44-components-vmargin;           // 3rem
@@ -605,6 +611,10 @@
   border-color: $ds44-contextual-color;
 }
 
+.ds44-gray-border {
+  border: 1px solid $ds44-lightgray;
+}
+
 /* === Backgrounds === */
 
 // Thematic color
@@ -677,6 +687,12 @@
 .ds44-wave-grey-app {
   background-image: url(../../../assets/images/backgrounds/bkgd-wave-light-grey-app.png);
   background-position-y: bottom;
+  background-repeat: repeat-x;
+}
+
+.ds44-bg-bacs-app {
+  background-image: url(../../../assets/images/backgrounds/bkgd-file-attente-app.png);
+  background-position: bottom right;
   background-repeat: repeat-x;
 }
 

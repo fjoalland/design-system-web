@@ -14,7 +14,7 @@ variations:
   pattern: appmobile-pont/carte-bacs.html
 
 - title: Onglets
-  pattern: appmobile-pont/onglets-bacs.html
+  pattern: appmobile-pont/app-onglets.html
 
 ---
 
