@@ -23,7 +23,6 @@
     {% elsif include.type == 'current-password' %}
         {% assign type = 'current-password' %}
         {% assign attributes = attributes | append : ' autocomplete="current-password"' %}
-    {% endif %}
 {% endif %}
 
 {% capture mainContent %}
