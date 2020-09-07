@@ -19,7 +19,6 @@
         {% assign attributes = attributes | append : ' autocomplete="address-line1"' %}
     {% elsif include.type == 'address-level2' %}
         {% assign attributes = attributes | append : ' autocomplete="address-level2"' %}
-    {% endif %}
     {% elsif include.type == 'current-password' %}
         {% assign type = 'current-password' %}
         {% assign attributes = attributes | append : ' autocomplete="current-password"' %}
