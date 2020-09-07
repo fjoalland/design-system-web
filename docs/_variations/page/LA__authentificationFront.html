@@ -21,23 +21,21 @@ layout: pattern
 
                   <div class="col-5-small-1">
                       <form>
-                          <fieldset>
-                              <legend class="h4-like ds44-mb-std">Si vous avez déjà un compte, connectez-vous</legend>
-                              <p>Les champs suivis d’un * sont obligatoires.</p>
-                              <div class="ds44-mb3">
-                                  {% include form/field/input/standard.html type="email" label="Courriel" explanation="Exemple : monadresse@mail.com" required="true" %}
-                              </div>
-                              <div class="ds44-mb3">
-                                  {% include form/field/input/standard.html type="password" label="Mot de passe" required="true" %}
-                              </div>
-                              <div>
-                                  {% include form/layout/checkboxes.html choices="connect:Rester connecté" %}
-                              </div>
-                              <button class="ds44-btnStd ds44-btn--invert ds44-bntALeft ds44-mtb1" title="Valider l'accès à votre compte">
-                                  <span class="ds44-btnInnerText">Valider</span><i class="icon icon-long-arrow-right" aria-hidden="true"></i>
-                              </button>
-                              <p class="ds44-noMrg"><a href="#">Mot de passe oublié ?</a></p>
-                          </fieldset>
+                          <h2 class="h4-like ds44-mb-std">Si vous avez déjà un compte, connectez-vous</h2>
+                          <p>Les champs suivis d’un * sont obligatoires.</p>
+                          <div class="ds44-mb3">
+                              {% include form/field/input/standard.html type="email" label="Courriel" explanation="Exemple : monadresse@mail.com" required="true" %}
+                          </div>
+                          <div class="ds44-mb3">
+                              {% include form/field/input/standard.html type="password" label="Mot de passe" required="true" %}
+                          </div>
+                          <div>
+                              {% include form/layout/checkboxes.html choices="connect:Rester connecté" %}
+                          </div>
+                          <button class="ds44-btnStd ds44-btn--invert ds44-bntALeft ds44-mtb1" title="Valider l'accès à votre compte">
+                              <span class="ds44-btnInnerText">Valider</span><i class="icon icon-long-arrow-right" aria-hidden="true"></i>
+                          </button>
+                          <p class="ds44-noMrg"><a href="#">Mot de passe oublié ?</a></p>
                       </form>
                   </div>
 
@@ -48,11 +46,11 @@ layout: pattern
                   </div>
 
                   <div class="col-5-small-1">
-                      <h3 class="h4-like ds44-mb-std" id="titreCreerCompte">Créer un compte</h3>
+                      <h2 class="h4-like ds44-mb-std" id="titreCreerCompte">Créer un compte</h2>
                       <p class="ds44-mb-std">La connexion au site loire-atlantique.fr permet d'accéder à l'espace presse dédié aux journalistes et médias, ou aux contributeurs du site de publier des informations. Si vous êtes journaliste et que vous n'avez pas encore de compte :</p>
-                      <button class="ds44-btnStd ds44-btn--invert ds44-bntALeft ds44-mb1" title="Accéder à la page de demande de création de compte">
-                          <span class="ds44-btnInnerText">Cliquez ici</span><i class="icon icon-long-arrow-right" aria-hidden="true"></i>
-                      </button>
+                      <a class="ds44-btnStd ds44-btn--invert ds44-bntALeft ds44-mb1" title="Valider votre accès à la page de création de compte">
+                          <span class="ds44-btnInnerText">Valider</span><i class="icon icon-long-arrow-right" aria-hidden="true"></i>
+                      </a>
                   </div>
 
               </div>
