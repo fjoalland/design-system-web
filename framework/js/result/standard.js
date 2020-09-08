@@ -289,6 +289,7 @@ class ResultStandard {
                 continue;
             }
 
+            let hasRedirectDisplayMode = false;
             const listItemElement = document.createElement('li');
             listItemElement.setAttribute('id', 'search-result-' + result.id);
             listItemElement.setAttribute('data-id', result.id);
@@ -296,6 +297,7 @@ class ResultStandard {
                 result.redirectUrl === true &&
                 result.metadata.url
             ) {
+                hasRedirectDisplayMode = true;
                 listItemElement.setAttribute('data-redirect-url', result.metadata.url);
                 if (result.target) {
                     listItemElement.setAttribute('data-redirect-target', result.target);
@@ -310,7 +312,10 @@ class ResultStandard {
                 MiscEvent.addListener('focus', this.focus.bind(this), listLinkItemElement);
                 MiscEvent.addListener('blur', this.blur.bind(this), listLinkItemElement);
             }
-            if (listContainerElement.getAttribute('data-display-mode') === 'inline') {
+            if (
+                hasRedirectDisplayMode === false &&
+                listContainerElement.getAttribute('data-display-mode') === 'inline'
+            ) {
                 MiscEvent.addListener('click', this.fillCard.bind(this), listItemElement);
 
                 const aElement = listItemElement.querySelector('a');
