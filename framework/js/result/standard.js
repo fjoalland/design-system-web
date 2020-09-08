@@ -91,7 +91,7 @@ class ResultStandard {
             return;
         }
 
-        url += (url.indexOf('?') !== -1 ? '&' : '?') + 'previousPage=' + encodeURIComponent(window.location.href);
+        // url += (url.indexOf('?') !== -1 ? '&' : '?') + 'previousPage=' + encodeURIComponent(window.location.href);
         document.location.href = url;
     }
 
