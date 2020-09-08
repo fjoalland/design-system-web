@@ -9,13 +9,15 @@ footer {
 
 .ds44-footerLink {
     @include ds44-font-sizes(smallText);
-    text-decoration: none;
     display: block;
     padding: 0 1rem;
     margin: 1rem 0 .5rem 0;
 
-    &:hover {
-        text-decoration: underline;
+    a {
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
     }
   }
 
