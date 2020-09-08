@@ -81,17 +81,31 @@ class ResultStandard {
         evt.stopPropagation();
         evt.preventDefault();
 
-        const aElement = evt.currentTarget.querySelector('a');
+        const listItemElement = evt.currentTarget;
+        const aElement = listItemElement.querySelector('a');
         if (!aElement) {
             return;
         }
 
-        let url = aElement.getAttribute('href');
+        let url = (
+            listItemElement.getAttribute('data-redirect-url') ||
+            aElement.getAttribute('href')
+        );
         if (!url) {
             return;
         }
 
+        const isInNewTab = (
+            listItemElement.getAttribute('data-redirect-target') === '_blank' ||
+            aElement.getAttribute('target') === '_blank'
+        );
+
         // url += (url.indexOf('?') !== -1 ? '&' : '?') + 'previousPage=' + encodeURIComponent(window.location.href);
+        if (isInNewTab === true) {
+            window.open(url);
+            return;
+        }
+
         document.location.href = url;
     }
 
@@ -278,6 +292,15 @@ class ResultStandard {
             const listItemElement = document.createElement('li');
             listItemElement.setAttribute('id', 'search-result-' + result.id);
             listItemElement.setAttribute('data-id', result.id);
+            if (
+                result.redirectUrl === true &&
+                result.metadata.url
+            ) {
+                listItemElement.setAttribute('data-redirect-url', result.metadata.url);
+                if (result.target) {
+                    listItemElement.setAttribute('data-redirect-target', result.target);
+                }
+            }
             listItemElement.className = 'ds44-fg1 ds44-js-results-item';
             listItemElement.innerHTML = result.metadata.html_list;
             MiscEvent.addListener('mouseenter', this.focus.bind(this), listItemElement);
