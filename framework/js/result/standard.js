@@ -317,6 +317,7 @@ class ResultStandard {
             pagerElement &&
             (
                 !evt.detail.addUp ||
+                evt.detail.maxNbResults ||
                 nbDisplayedResults >= evt.detail.nbResults
             )
         ) {
@@ -324,7 +325,10 @@ class ResultStandard {
             pagerElement = null;
         }
 
-        if (nbDisplayedResults < evt.detail.nbResults) {
+        if (
+            !evt.detail.maxNbResults &&
+            nbDisplayedResults < evt.detail.nbResults
+        ) {
             if (!pagerElement) {
                 pagerElement = document.createElement('div');
                 pagerElement.className = 'txtcenter center ds44--xl-padding-b ds44-js-search-pager';
