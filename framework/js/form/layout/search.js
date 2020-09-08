@@ -240,7 +240,7 @@ class FormLayoutSearch extends FormLayoutAbstract {
         }
 
         return {
-            'pageIndex': response['page-index'] || 0,
+            'pageIndex': response['page-index'] || 1,
             'nbResultsPerPage': response['nb-result-per-page'] || response['max-result'],
             'nbResults': response['nb-result'],
             'maxNbResults': response['max-result'],
