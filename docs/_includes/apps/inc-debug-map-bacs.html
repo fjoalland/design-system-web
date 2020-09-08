@@ -1,0 +1,60 @@
+
+<div id="debug">
+	
+	Perturbation Coueron / LePellerin :
+	<input type="checkbox" id="CheckboxPerturbationCLP" onchange="CheckDebugVars()" style="position: relative; left: 0;" />
+	<br/>Perturbation Basse-Indre / Indret :
+	<input type="checkbox" id="CheckboxPerturbationBII" onchange="CheckDebugVars()" style="position: relative; left: 0;" />
+</div>
+	
+<script>
+	/* Fonctions debug uniquement */
+	
+	function CheckDebugVars(){
+		//champs vérifiés
+		var PerturbationCLP = document.getElementById("CheckboxPerturbationCLP").checked;
+		var PerturbationBII = document.getElementById("CheckboxPerturbationBII").checked;
+		console.log("PerturbationCLP:"+PerturbationCLP+" - PerturbationBII:"+PerturbationBII);
+		HideAllPerturbations();//masquage des perturbations affichées
+		if(PerturbationCLP){
+		   ShowPerturbation("bi-i");
+		}
+		if(PerturbationBII){
+		   ShowPerturbation("c-lp");
+		}
+	}
+		
+	/* Elements cliquables */
+	document.getElementById("indret").onclick = OnClickCallBack;
+	document.getElementById("basse-indre").onclick = OnClickCallBack;
+	document.getElementById("coueron").onclick = OnClickCallBack;
+	document.getElementById("le-pellerin").onclick = OnClickCallBack;
+	document.getElementById("perturbation-bi-i").onclick = OnClickCallBack;
+	document.getElementById("perturbation-c-lp").onclick = OnClickCallBack;
+	
+	function OnClickCallBack(e){
+		alert('Click sur "'+this.id+'"');
+	}
+	
+	
+	/* Fonctions d'affichage des elements de la carte (utilisable en prod) */
+	
+	//affichage d'une ou plusieurs bulles perturbation sur la carte
+	function ShowPerturbation(PerturbationZone){
+		document.getElementById("perturbation-"+PerturbationZone).classList.add('pertubation-visible');
+		console.log("ShowPerturbation (perturbation-"+PerturbationZone+")");
+	}
+	
+	
+	//masquage de toutes les perturbations
+	function HideAllPerturbations(){
+		document.querySelectorAll('.pertubation-visible').forEach(el => el.classList.remove('pertubation-visible'));
+		console.log("HideAllPerturbations()");
+	}
+	
+	//exemples à l'init de l'application
+	HideAllPerturbations();
+	//ShowPerturbation("bi-i");
+	//ShowPerturbation("c-lp");
+		
+	</script>

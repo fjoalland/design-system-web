@@ -154,7 +154,7 @@
 }
 
 /* -----
-	Gestion de la carte SVG
+	Gestion de la carte SVG PONT DE ST NAZAIRE
 	---
 */
 
@@ -343,4 +343,50 @@ $TraficSud: 'vert', 'orange', 'rouge';
 		display: block;
 	}
   }
+}
+
+
+/* -----
+	Gestion de la carte SVG BACS DE LOIRE
+	---
+*/
+
+#map-container.map-container--bacs svg {
+	width: 100%;
+}
+
+@media (min-width: $ds44-small - .0625) {
+
+	#map-container.map-container--bacs svg {
+		width: 75%;
+	}
+  
+}
+
+@media (min-width: $ds44-medium - .0625) {
+
+	#map-container.map-container--bacs svg {
+		width: 55%;
+	}
+  
+}
+
+@media (min-width: $ds44-large - .0625) {
+
+	#map-container.map-container--bacs svg {
+		width: 40%;
+	}
+  
+}
+
+
+/* masquage par defaut */
+#map-container svg {
+	#perturbation-bi-i, #perturbation-c-lp {
+		display: none;
+	}
+}
+
+.pertubation-visible {
+	display: block!important;
 }
