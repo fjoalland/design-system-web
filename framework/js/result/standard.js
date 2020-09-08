@@ -78,6 +78,9 @@ class ResultStandard {
     }
 
     redirectCard (evt) {
+        evt.stopPropagation();
+        evt.preventDefault();
+
         const aElement = evt.currentTarget.querySelector('a');
         if (!aElement) {
             return;
