@@ -381,7 +381,7 @@ class FormFieldAbstract {
 
             if (
                 (evt.detail.dryRun === true && !this.isValid(objectIndex)) ||
-                (evt.detail.dryRun === false && !this.checkValidity(objectIndex))
+                (evt.detail.dryRun !== true && !this.checkValidity(objectIndex))
             ) {
                 isValid = false;
             } else if (
