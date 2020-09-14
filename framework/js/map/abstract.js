@@ -61,9 +61,9 @@ class MapAbstract {
             }
         }
 
-        if (!document.querySelector('link[href="https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css"]')) {
+        if (!document.querySelector('link[href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css"]')) {
             let linkElement = document.createElement('link');
-            linkElement.setAttribute('href', 'https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css');
+            linkElement.setAttribute('href', 'https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css');
             linkElement.setAttribute('rel', 'stylesheet');
             document.head.appendChild(linkElement);
         }
@@ -78,9 +78,9 @@ class MapAbstract {
             this.mapLanguageScriptLoaded();
         }
 
-        if (!document.querySelector('script[src="https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.js"]')) {
+        if (!document.querySelector('script[src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"]')) {
             let scriptElement = document.createElement('script');
-            scriptElement.setAttribute('src', 'https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.js');
+            scriptElement.setAttribute('src', 'https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js');
             scriptElement.setAttribute('type', 'text/javascript');
             document.head.appendChild(scriptElement);
             MiscEvent.addListener('load', this.mapScriptLoaded.bind(this), scriptElement);

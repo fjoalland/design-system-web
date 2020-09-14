@@ -346,6 +346,10 @@
                         background-color: $ds44-color-base;
                     }
 
+                    .orejime-AppItem-input[disabled] ~ label {
+                        filter: none;
+                    }
+
                     .orejime-Button[disabled] {
                         background-color: $ds44-color-base;
                         border-color: $ds44-color-base;

@@ -9,6 +9,9 @@
     {% elsif include.type == 'email' %}
         {% assign type = 'email' %}
         {% assign attributes = attributes | append : ' autocomplete="email"' %}
+    {% elsif include.type == 'current-password' %}
+        {% assign type = 'current-password' %}
+        {% assign attributes = attributes | append : ' autocomplete="current-password"' %}
     {% elsif include.type == 'tel-national' %}
         {% assign attributes = attributes | append : ' autocomplete="tel-national"' %}
     {% elsif include.type == 'postcode' %}

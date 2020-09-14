@@ -78,17 +78,35 @@ class ResultStandard {
     }
 
     redirectCard (evt) {
-        evt.currentTarget
-            .querySelectorAll('a')
-            .forEach((aElement) => {
-                let url = aElement.getAttribute('href');
-                if (!url) {
-                    return;
-                }
+        evt.stopPropagation();
+        evt.preventDefault();
 
-                url += (url.indexOf('?') !== -1 ? '&' : '?') + 'previousPage=' + encodeURIComponent(window.location.href);
-                aElement.setAttribute('href', url);
-            });
+        const listItemElement = evt.currentTarget;
+        const aElement = listItemElement.querySelector('a');
+        if (!aElement) {
+            return;
+        }
+
+        let url = (
+            listItemElement.getAttribute('data-redirect-url') ||
+            aElement.getAttribute('href')
+        );
+        if (!url) {
+            return;
+        }
+
+        const isInNewTab = (
+            listItemElement.getAttribute('data-redirect-target') === '_blank' ||
+            aElement.getAttribute('target') === '_blank'
+        );
+
+        // url += (url.indexOf('?') !== -1 ? '&' : '?') + 'previousPage=' + encodeURIComponent(window.location.href);
+        if (isInNewTab === true) {
+            window.open(url);
+            return;
+        }
+
+        document.location.href = url;
     }
 
     showCard () {
@@ -271,9 +289,20 @@ class ResultStandard {
                 continue;
             }
 
+            let hasRedirectDisplayMode = false;
             const listItemElement = document.createElement('li');
             listItemElement.setAttribute('id', 'search-result-' + result.id);
             listItemElement.setAttribute('data-id', result.id);
+            if (
+                result.redirectUrl === true &&
+                result.metadata.url
+            ) {
+                hasRedirectDisplayMode = true;
+                listItemElement.setAttribute('data-redirect-url', result.metadata.url);
+                if (result.target) {
+                    listItemElement.setAttribute('data-redirect-target', result.target);
+                }
+            }
             listItemElement.className = 'ds44-fg1 ds44-js-results-item';
             listItemElement.innerHTML = result.metadata.html_list;
             MiscEvent.addListener('mouseenter', this.focus.bind(this), listItemElement);
@@ -283,7 +312,10 @@ class ResultStandard {
                 MiscEvent.addListener('focus', this.focus.bind(this), listLinkItemElement);
                 MiscEvent.addListener('blur', this.blur.bind(this), listLinkItemElement);
             }
-            if (listContainerElement.getAttribute('data-display-mode') === 'inline') {
+            if (
+                hasRedirectDisplayMode === false &&
+                listContainerElement.getAttribute('data-display-mode') === 'inline'
+            ) {
                 MiscEvent.addListener('click', this.fillCard.bind(this), listItemElement);
 
                 const aElement = listItemElement.querySelector('a');
@@ -313,6 +345,7 @@ class ResultStandard {
             pagerElement &&
             (
                 !evt.detail.addUp ||
+                evt.detail.maxNbResults ||
                 nbDisplayedResults >= evt.detail.nbResults
             )
         ) {
@@ -320,7 +353,10 @@ class ResultStandard {
             pagerElement = null;
         }
 
-        if (nbDisplayedResults < evt.detail.nbResults) {
+        if (
+            !evt.detail.maxNbResults &&
+            nbDisplayedResults < evt.detail.nbResults
+        ) {
             if (!pagerElement) {
                 pagerElement = document.createElement('div');
                 pagerElement.className = 'txtcenter center ds44--xl-padding-b ds44-js-search-pager';

@@ -24,7 +24,7 @@ class FormLayoutInline extends FormLayoutAbstract {
             response &&
             response.message
         ) {
-            this.notification(objectIndex, null, response.message, 'information');
+            this.notification(objectIndex, null, response.message, response.message_list, response.status || 'information');
         }
         MiscEvent.dispatch('loader:requestHide');
     }
@@ -34,7 +34,7 @@ class FormLayoutInline extends FormLayoutAbstract {
             response &&
             response.message
         ) {
-            this.notification(objectIndex, null, response.message, 'error');
+            this.notification(objectIndex, null, response.message, response.message_list, 'error');
         }
         MiscEvent.dispatch('loader:requestHide');
     }

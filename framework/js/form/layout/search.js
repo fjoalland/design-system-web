@@ -65,7 +65,7 @@ class FormLayoutSearch extends FormLayoutAbstract {
     loadFromUrl (objectIndex) {
         const object = this.objects[objectIndex];
 
-        if (object.formElement.getAttribute('data-legacy-url') === 'true') {
+        if (object.formElement.getAttribute('data-seo-url') !== 'true') {
             this.loadFromUrlSuccess(objectIndex, MiscUrl.getHashParameters());
 
             return true;
@@ -180,7 +180,7 @@ class FormLayoutSearch extends FormLayoutAbstract {
             response &&
             response.message
         ) {
-            this.notification(objectIndex, null, response.message, response.status);
+            this.notification(objectIndex, null, response.message, response.message_list, response.status);
         }
 
         const object = this.objects[objectIndex];
@@ -205,7 +205,7 @@ class FormLayoutSearch extends FormLayoutAbstract {
             response &&
             response.message
         ) {
-            this.notification(objectIndex, null, response.message, response.status);
+            this.notification(objectIndex, null, response.message, response.message_list, response.status);
         }
         MiscEvent.dispatch('loader:requestHide');
     }
@@ -240,7 +240,7 @@ class FormLayoutSearch extends FormLayoutAbstract {
         }
 
         return {
-            'pageIndex': response['page-index'] || 0,
+            'pageIndex': response['page-index'] || 1,
             'nbResultsPerPage': response['nb-result-per-page'] || response['max-result'],
             'nbResults': response['nb-result'],
             'maxNbResults': response['max-result'],
@@ -273,7 +273,7 @@ class FormLayoutSearch extends FormLayoutAbstract {
             return;
         }
 
-        if (object.formElement.getAttribute('data-legacy-url') === 'true') {
+        if (object.formElement.getAttribute('data-seo-url') !== 'true') {
             MiscUrl.setHashParameters(object.parameters);
         } else {
             MiscUrl.setSeoHashParameters(object.parameters, searchId);

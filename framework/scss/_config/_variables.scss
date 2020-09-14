@@ -82,6 +82,10 @@ $ds44-font-sizes: (
     mobile  : 1.5em,    // 24px
     desktop : 1.5em     // 24px
   ),
+  xxlText: (
+    mobile  : 2.6875em, // 43px
+    desktop : 3.5em     // 56px
+  ),
   chapoStyle: (
     mobile  : 1.0625em, // 17px
     desktop : 1.1875em  // 19px
@@ -194,6 +198,7 @@ $ds44-warning-bg        : #FFFFF2             !default;
 $ds44-error             : #DC3545             !default;
 $ds44-error-bg          : #FEF4F5             !default;
 $ds44-flat-overlay      : rgba(0, 0, 0, 0.4)  !default;
+$ds44-app-color         : #F8B323             !default;
 
 // Semantic colors
 $ds44-color-base        : $ds44-dark      !default;

@@ -1,0 +1,148 @@
+<section class="ds44-ongletsContainer">
+    <div class="js-tabs ds44-tabs" data-existing-hx="h2" data-tabs-prefix-class="ds44" id="onglets">
+        <nav role="navigation" aria-label="xxx" id="yyy" class="ds44-flex-container ds44-fg1 ds44-navOnglets ds44-theme ds44-hiddenPrint">
+            <ul class="ds44-tabs__list ds44-fg1 ds44-flex-container ds44-list js-tabs" id="tabs">
+                <li class="ds44-tabs__item ds44-fg1" id="tabs__1">
+                    <a id="label_id_first" href="#id_first" class="js-tablist__link ds44-tabs__link" aria-current="true">{{ include.titleOngletUn }}</a>
+                </li>
+                <li class="ds44-tabs__item ds44-fg1" id="tabs__2">
+                    <a id="label_id_second" href="#id_second" class="js-tablist__link ds44-tabs__link">{{ include.titleOngletDeux }}</a>
+                </li>
+                <li class="ds44-tabs__item ds44-fg1" id="tabs__3">
+                    <a id="label_id_third" href="#id_third" class="js-tablist__link ds44-tabs__link">{{ include.titleOngletTrois }}</a>
+                </li>
+                <li class="ds44-tabs__item ds44-fg1" id="tabs__4">
+                    <a id="label_id_fourth" href="#id_fourth" class="js-tablist__link ds44-tabs__link">{{ include.titleOngletQuatre }}</a>
+                </li>
+                <li class="ds44-tabs__item ds44-fg1" id="tabs__5">
+                    <a id="label_id_fifth" href="#id_fifth" class="js-tablist__link ds44-tabs__link">{{ include.titleOngletCinq }}</a>
+                </li>
+            </ul>
+        </nav>
+        <div id="id_first" class="js-tabcontent ds44-tabs__content ds44-inner-container ds44-xl-margin-tb" style='display:none'>
+            <a name="onglet-1" id="onglet-1"></a>
+            <h2 class="visually-hidden">1er onglet</h2>
+            <div class="ds44--l-padding-lr ds44--l-padding-b">
+                {% include apps/inc-tuile.html
+                    code="maree"
+                    type="picto"
+                    titre="Perturbations en cours"
+                    contenu='<div class="ds44--m-padding ds44-fg1">
+                        <p class="ds44-bacs-alerte">Risque d’arrêt cause Marée haute</p>
+                        <p>Le 13/02/2020 de 06h00 à 09h15</p>
+                    </div>'
+                    bgTuile = "ds44-lightBG"
+                %}    
+                {% include apps/inc-tuile.html
+                    code="vent-fort"
+                    type="picto"
+                    titre="Perturbations à venir"
+                    contenu='<div class="ds44--m-padding ds44-fg1">
+                        <p class="ds44-bacs-alerte">Traversée difficile cause vent fort</p>
+                        <p>Le 13/02/2020 de 06h00 à 09h15</p>
+                    </div>'
+                    bgTuile = "ds44-lightBG"
+                %}
+                {% include apps/inc-tuile.html
+                    code="travaux"
+                    type="picto"
+                    contenu='<div class="ds44--m-padding ds44-fg1">
+                        <p class="ds44-bacs-alerte">Risque d’arrêt cause travaux</p>
+                        <p>Le 13/02/2020 de 06h00 à 09h15</p>
+                    </div>'
+                    bgTuile = "ds44-lightBG"
+                %}
+              </div>
+            <p class="ds44-keyboard-show"><a href="#label_id_first">Revenir au premier onglet</a></p>
+        </div>
+
+        <div id="id_second" class="js-tabcontent ds44-tabs__content ds44-inner-container ds44-xl-margin-tb" style='display:none'>
+            <a name="onglet-2" id="onglet-2"></a>
+            <h2 class="visually-hidden">2e onglet</h2>    
+            <div class="ds44--l-padding-lr ds44--l-padding-b">
+                {% include apps/inc-tuile-bacs.html
+                    titre="Premier départ"
+                    contenu='<div class="ds44-bacs-horaires-container"><p class="ds44-bacs-horaire ds44-center">6h30</p></div>'
+                    bgTuile = "ds44-lightBG"
+                %}                
+                {% include apps/inc-tuile-bacs.html
+                    titre="Ensuite"
+                    contenu='
+                        <div class="ds44-bacs-horaires-container"><p class="ds44-bacs-horaire ds44-center"><span class="ds44-bacs-horaire--small">Toutes les </span>20 min</p></div>
+                        <div class="ds44-whiteBG ds44-gray-border ds44-bg-bacs-app ds44--m-padding ds44--xxl-padding-b ds44-center">
+                            <p>Votre temps d’attente dépend de votre emplacement dans la file d’attente :</p>
+                            <p>60 min <i class="icon icon-arrow-right" aria-hidden="true"></i> 40 min <i class="icon icon-arrow-right" aria-hidden="true"></i> 20 min <i class="icon icon-arrow-right" aria-hidden="true"></i> Départ</p>
+                        </div>
+                    '
+                    bgTuile = "ds44-lightBG"
+                %}               
+                {% include apps/inc-tuile-bacs.html
+                    titre="Dernier départ"
+                    contenu='
+                        <div class="ds44-bacs-horaires-container"><p class="ds44-bacs-horaire ds44-center">20h30</p></div>
+                        <div class="ds44-whiteBG ds44-gray-border ds44--m-padding ds44-center">
+                            <p>Ou 21h20 les dimanches et jours fériés du 15 juin au 15 septembre.</p>
+                        </div>
+                    '
+                    bgTuile = "ds44-lightBG"
+                %}   
+            </div>
+            <p class="ds44-keyboard-show"><a href="#label_id_second">Revenir au deuxième onglet</a></p>
+        </div>
+
+        <div id="id_third" class="js-tabcontent ds44-tabs__content ds44-inner-container ds44-xl-margin-tb" style='display:none'>
+            <a name="onglet-3" id="onglet-3"></a>
+            <div class="ds44--l-padding-lr ds44--l-padding-b">
+                <h2 class="visually-hidden">3e onglet</h2>
+                <h3 class="h3-like">Webcams</h3>
+                <p class="ds44-mt2 ds44-smallText"><i class="icon icon-date ds44-valignTop" aria-hidden="true"></i> 02/12/19 <i class="icon icon-time ds44-valignTop ds44--xl-padding-l" aria-hidden="true"></i> 14h32</p>
+                <h4 class="h4-app-bacs">Couëron</h4>
+            </div>
+            <p class="ds44-keyboard-show"><a href="#label_id_third">Revenir au troisième onglet</a></p>
+        </div>
+
+        <div id="id_fourth" class="js-tabcontent ds44-tabs__content ds44-inner-container ds44-xl-margin-tb" style='display:none'>
+            <a name="onglet-4" id="onglet-4"></a>
+            <h2 class="visually-hidden">4e onglet</h2>
+            <div class="ds44--l-padding-lr ds44--l-padding-b">
+                <h3 class="h3-like">Localisation</h3>
+                <p class="ds44-mt2 ds44-smallText"><i class="icon icon-marker ds44-valignTop" aria-hidden="true"></i> Quai du bac Couëron <span class="ds44-block ds44-ml2">44640 Le Pellerin</span></p>
+                <p class="ds44-mt2 ds44-smallText"><i class="icon icon-directions ds44-valignTop" aria-hidden="true"></i> <a href="#">S’y rendre</a></p>
+            </div>
+            <p class="ds44-keyboard-show"><a href="#label_id_fourth">Revenir au quatrième onglet</a></p>
+        </div>
+
+        <div id="id_fifth" class="js-tabcontent ds44-tabs__content ds44-inner-container ds44-xl-margin-tb" style='display:none'>
+            <a name="onglet-5" id="onglet-5"></a>
+            <h2 class="visually-hidden">5e onglet</h2>
+            <div class="ds44--l-padding-lr ds44--l-padding-b">
+                {% include apps/inc-tuile.html
+                    titre="Bus"
+                    type="bus"
+                    numBus="78"
+                    contenu='<div class="ds44--m-padding ds44-fg1 ds44-center">
+                        <p>Bac du Pellerin</p>
+                        <p><i class="icon icon-arrow-down" aria-hidden="true"></i></p>
+                        <p>Neustrie</p>
+                    </div>'
+                    bgTuile = "ds44-lightBG"
+                %}                
+                {% include apps/inc-tuile-bacs.html
+                    titre="Prochains départs"
+                    contenu='<div class="ds44-bacs-horaires-container"><p class="ds44-bacs-horaire ds44-bacs-horaire--actif ds44-center">12 min</p></div>'
+                    bgTuile = "ds44-theme"
+                %}                
+                {% include apps/inc-tuile-bacs.html
+                    contenu='<div class="ds44-bacs-horaires-container"><p class="ds44-bacs-horaire ds44-center">32 min</p></div>'
+                    bgTuile = "ds44-lightBG"
+                %}             
+                {% include apps/inc-tuile-bacs.html
+                    contenu='<div class="ds44-bacs-horaires-container"><p class="ds44-bacs-horaire ds44-center">52 min</p></div>'
+                    bgTuile = "ds44-lightBG"
+                %}
+            </div>
+            <p class="ds44-keyboard-show"><a href="#label_id_fifth">Revenir au cinquième onglet</a></p>
+        </div>
+
+    </div>
+</section>

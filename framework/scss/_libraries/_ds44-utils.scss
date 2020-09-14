@@ -34,7 +34,7 @@
   left: 0;
 }
 .ds44-valignTop {
-  vertical-align: top;
+  vertical-align: top !important;
 }
 
 
@@ -50,11 +50,11 @@
   padding: 0 !important ;
 }
 .ds44--m-padding {
-  padding          : $ds44-padding-medium; // 1rem
+  padding          : $ds44-padding-medium !important; // 1rem
 }
 .ds44--m-padding-lr {
-  padding-left     : $ds44-padding-medium;
-  padding-right    : $ds44-padding-medium;
+  padding-left     : $ds44-padding-medium !important;
+  padding-right    : $ds44-padding-medium !important;
 }
 .ds44--m-padding-tb {
   padding-top      : $ds44-padding-medium; // 1rem
@@ -155,6 +155,9 @@
 .ds44-hmt {
   margin-top: $ds44-margin-base/2 !important;
 }
+.ds44-m1 {
+  margin: $ds44-margin-base;                        // 1rem
+}
 .ds44-mlr1 {
   margin-left: $ds44-margin-base;
   margin-right: $ds44-margin-base;
@@ -197,6 +200,9 @@
 .ds44-mr2 {
   margin-right: $ds44-large-vmargin!important;     // 2rem
 }
+.ds44-ml2 {
+  margin-left: $ds44-large-vmargin!important;     // 2rem
+}
 .ds44-mb3 {
   margin-bottom: $ds44-components-vmargin;          // 3rem
 }
@@ -212,6 +218,9 @@
 }
 .ds44-m3 {
   margin: $ds44-components-vmargin;                // 3rem
+}
+.ds44-ml3 {
+  margin-left: $ds44-components-vmargin;           // 3rem
 }
 .ds44-mlr3 {
   margin-left: $ds44-components-vmargin;           // 3rem
@@ -354,6 +363,12 @@
 }
 .ds44-fas {
   align-self: flex-end;
+}
+.ds44-fasb {
+  align-self: baseline!important;
+}
+.ds44-fasc {
+  align-self: center!important;
 }
 
 @media (max-width: $ds44-large - .0625) {
@@ -596,6 +611,10 @@
   border-color: $ds44-contextual-color;
 }
 
+.ds44-gray-border {
+  border: 1px solid $ds44-lightgray;
+}
+
 /* === Backgrounds === */
 
 // Thematic color
@@ -668,6 +687,12 @@
 .ds44-wave-grey-app {
   background-image: url(../../../assets/images/backgrounds/bkgd-wave-light-grey-app.png);
   background-position-y: bottom;
+  background-repeat: repeat-x;
+}
+
+.ds44-bg-bacs-app {
+  background-image: url(../../../assets/images/backgrounds/bkgd-file-attente-app.png);
+  background-position: bottom right;
   background-repeat: repeat-x;
 }
 
@@ -833,6 +858,9 @@
 }
 .ds44-inlineBlock {
   display: inline-block !important;
+}
+.ds44-none {
+  display: none !important;
 }
 
 

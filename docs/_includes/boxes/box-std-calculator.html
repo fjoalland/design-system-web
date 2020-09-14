@@ -1,0 +1,25 @@
+<section class="ds44-box ds44-theme ds44-mb3">
+    <div class="ds44-innerBoxContainer">
+        <p role="heading" aria-level="2" class="ds44-box-heading">Evaluez le montant de l'obligation alimentaire</p>
+        <p class="ds44-textLegend ds44-textLegend--mentions ds44-mb2">Les champs marqués d’un astérisque * sont obligatoires</p>
+        <form>
+            <div class="ds44-blocObligeAlim">
+                <p role="heading" aria-level="3" class="h5-like">Obligé alimentaire n° 1</p>
+                 {% include form/field/input/standard.html type="revenuBrut" label="Revenu brut annuel du foyer" explanation="Ce montant se trouve en page 2 de votre avis d'imposition - ligne 'Revenu brut global'" required="true" %}
+                 {% include form/field/select/standard.html label="Nombre de parts fiscales du foyer" explanation="Cette information se trouve en page 2 de votre avis d'imposition, sous le libellé 'Nombre de parts'" required="true" %}
+            </div>
+            <div class="ds44-blocObligeAlim ds44-none">
+                <p role="heading" aria-level="3" class="h5-like">Obligé alimentaire n° 2</p>
+                 {% include form/field/input/standard.html type="revenuBrut" label="Revenu brut annuel du foyer" explanation="Ce montant se trouve en page 2 de votre avis d'imposition - ligne 'Revenu brut global'" required="true" %}
+                 {% include form/field/select/standard.html label="Nombre de parts fiscales du foyer" explanation="Cette information se trouve en page 2 de votre avis d'imposition, sous le libellé 'Nombre de parts'" required="true" %}
+            </div>
+            <div class="ds44-blocObligeAlim ds44--l-padding-tb">
+                <a href="#" class="ds44-addObligeAlim ds44-mtb1 ds44-block"><i class="icon icon-plus icon--sizeS" aria-hidden="true"></i><span class="ds44-iconInnerText">Ajouter un obligé alimentaire ?</span></a>
+                <a href="#" class="ds44-removeObligeAlim ds44-mtb1 ds44-none"><i class="icon icon-minus icon--sizeS" aria-hidden="true"></i><span class="ds44-iconInnerText">Supprimer le dernier obligé alimentaire</span></a>
+            </div>
+            <button class="ds44-btnStd ds44-btn--invert" type="submit" title="Calculer le montant de l'obligation alimentaire">
+                <span class="ds44-btnInnerText">Calculer</span><i class="icon icon-long-arrow-right" aria-hidden="true"></i>
+            </button>
+        </form>
+    </div>
+</section>

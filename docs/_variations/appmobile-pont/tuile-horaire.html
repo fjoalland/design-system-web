@@ -1,0 +1,17 @@
+---
+layout: pattern
+---
+
+<p class="h4-like ds44-mb3">Tuile active :</p>
+               
+{% include apps/inc-tuile-bacs.html
+  titre="Prochains départs"
+  contenu='<div class="ds44-bacs-horaires-container"><p class="ds44-bacs-horaire ds44-bacs-horaire--actif ds44-center">12 min</p></div>'
+  bgTuile = "ds44-theme"
+%}                
+
+<p class="h4-like ds44-mb3 ds44-mt3">Tuile suivante :</p>
+{% include apps/inc-tuile-bacs.html
+  contenu='<div class="ds44-bacs-horaires-container"><p class="ds44-bacs-horaire ds44-center">32 min</p></div>'
+  bgTuile = "ds44-lightBG"
+%}          
