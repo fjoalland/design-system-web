@@ -10,6 +10,11 @@
             <img src="../../assets/images/apps/ponts/icones/svg/{{ include.code }}.svg" alt="">
         </div>
         {% endif %}
+        {% if include['type'] == "bus" %}
+        <div class="ds44-pictoTuile-app ds44-pictoTuile-app--bus">
+            <p class="ds44-numBus">{{ include.numBus }}</p>
+        </div>
+        {% endif %}
 
         {% if include['contenu'] %}
         {{ include.contenu }}
