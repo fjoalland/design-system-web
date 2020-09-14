@@ -12,6 +12,9 @@ variations:
 
 - title: Bacs de Loire
   pattern: appmobile-pont/tuile-bac.html
+
+- title: Horaires
+  pattern: appmobile-pont/tuile-horaire.html
 ---
 
 

@@ -95,13 +95,38 @@
 .ds44-pictoTuile-app {
 	width: 35%;
 	min-width: 105px;
+
+	&--bus {
+		background-color: $ds44-app-color;
+		min-height: 110px;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+	.ds44-numBus {
+		font-size: 2.375em; // 38px
+		margin-bottom: 0;
+	}
+}
+.ds44-numBus {
+	@if variable_exists(ds44-font-family-headings) and $ds44-font-family-headings != $ds44-font-family-base{
+		font-family: $ds44-font-family-headings;
+	  }
+	text-align: center;
+    font-size: 2.375em; // 38px
+    font-weight: bold;
+
 }
 .ds44-pont-horaire {
     @include ds44-font-sizes(bigText);
     font-weight: bold;
 }
 .ds44-bacs-horaire, p.ds44-bacs-horaire {
-    @include ds44-font-sizes(xxlText);
+	@include ds44-font-sizes(xxlText);
+	@if variable_exists(ds44-font-family-headings) and $ds44-font-family-headings != $ds44-font-family-base{
+		font-family: $ds44-font-family-headings;
+	  }
 	font-weight: bold;
 	margin: 0;
 	display: block;
@@ -112,7 +137,21 @@
 		display: block;
 		font-weight: normal;
 	}
+
+	&--actif {
+		font-size: 3.0625em;
+	}
 }
+
+@media (min-width: $ds44-medium - .0625) {
+
+	.ds44-bacs-horaire, p.ds44-bacs-horaire {
+		&--actif {
+			font-size: 4em;
+		}
+	}
+}
+
 .ds44-bacs-alerte {
 	font-weight: bold;
 }
