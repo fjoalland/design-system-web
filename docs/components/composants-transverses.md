@@ -32,6 +32,10 @@ variations:
   description: Les tooltips sont utilisés pour apporter une information supplémentaire.
   pattern: composants-transverses/tooltips.html
 
+- title: Simulateur obligation alimentaire
+  description: Le simulateur d'obligation alimentaire permet de calculer l'obligation alimentaire d'un foyer en fonction de sa constitution.
+  pattern: composants-transverses/simulateur-obligation-alimentaire.html
+
 
 ---
 

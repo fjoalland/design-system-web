@@ -91,6 +91,10 @@ class FormFieldInputFile extends FormFieldInputAbstract {
 
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
+            if (object.isSubSubInitialized) {
+                continue;
+            }
+            object.isSubSubInitialized = true;
 
             object.inputElements.forEach((inputElement) => {
                 MiscEvent.addListener('change', this.fileUploaded.bind(this, objectIndex), inputElement);

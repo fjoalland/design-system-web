@@ -17,6 +17,10 @@ class FormFieldInputAbstract extends FormFieldAbstract {
 
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
+            if (object.isSubInitialized) {
+                continue;
+            }
+            object.isSubInitialized = true;
 
             MiscEvent.addListener('focus', this.focus.bind(this, objectIndex), object.textElement);
             MiscEvent.addListener('blur', this.blur.bind(this, objectIndex), object.textElement);

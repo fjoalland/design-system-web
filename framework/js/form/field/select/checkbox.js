@@ -20,6 +20,10 @@ class FormFieldSelectCheckbox extends FormFieldSelectAbstract {
 
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
+            if (object.isSubSubInitialized) {
+                continue;
+            }
+            object.isSubSubInitialized = true;
 
             const flexContainerElement = object.containerElement.querySelector('.ds44-flex-container');
             const checkAllElement = flexContainerElement.querySelector('button:first-child');

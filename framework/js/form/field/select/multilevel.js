@@ -11,6 +11,10 @@ class FormFieldSelectMultilevel extends FormFieldSelectCheckbox {
 
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
+            if (object.isSubSubInitialized) {
+                continue;
+            }
+            object.isSubSubInitialized = true;
 
             if (object.selectListElement) {
                 object.selectListElement

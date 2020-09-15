@@ -47,6 +47,10 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
 
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
+            if (object.isSubSubInitialized) {
+                continue;
+            }
+            object.isSubSubInitialized = true;
 
             object.textElement.setAttribute('aria-owns', 'owned_listbox_' + object.id);
             if (object.autoCompleterListElement) {

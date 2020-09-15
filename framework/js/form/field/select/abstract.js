@@ -36,6 +36,10 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
+            if (object.isSubInitialized) {
+                continue;
+            }
+            object.isSubInitialized = true;
 
             MiscEvent.addListener('keyUp:escape', this.escape.bind(this, objectIndex));
             MiscEvent.addListener('keyUp:arrowup', this.previousOption.bind(this, objectIndex));
@@ -277,6 +281,9 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
     focusOut (objectIndex, evt) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         if (
             !evt ||

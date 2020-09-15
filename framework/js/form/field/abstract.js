@@ -20,13 +20,21 @@ class FormFieldAbstract {
         }
         this.initialize();
         this.fill();
+
+        MiscEvent.addListener('field:add', this.add.bind(this));
+        MiscEvent.addListener('field:destroy', this.destroy.bind(this));
+        MiscEvent.addListener('form:validate', this.validate.bind(this));
     }
 
     create (element) {
         const object = {
             'id': MiscUtils.generateId(),
-            'name': (element.getAttribute('name') || element.getAttribute('data-name')),
+            'name': this.getName(element),
             'containerElement': (element.closest('.ds44-form__container') || element),
+            'isInitialized': false,
+            'isSubInitialized': false,
+            'isSubSubInitialized': false,
+            'isFilled': false,
             'isRequired': (element.getAttribute('required') !== null || element.getAttribute('data-required') === 'true'),
             'isEnabled': !(element.getAttribute('readonly') !== null || element.getAttribute('disabled') !== null || element.getAttribute('data-disabled') === 'true')
         };
@@ -46,6 +54,10 @@ class FormFieldAbstract {
         // Initialize each object
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
+            if (object.isInitialized) {
+                continue;
+            }
+            object.isInitialized = true;
 
             this.addBackupAttributes(objectIndex);
 
@@ -69,8 +81,55 @@ class FormFieldAbstract {
             MiscEvent.addListener('field:disable', this.disable.bind(this, objectIndex), object.containerElement);
             MiscEvent.addListener('field:' + object.name + ':set', this.set.bind(this, objectIndex));
         }
+    }
 
-        MiscEvent.addListener('form:validate', this.validate.bind(this));
+    add (evt) {
+        if (
+            !evt ||
+            !evt.detail ||
+            !evt.detail.selector ||
+            !evt.detail.category ||
+            evt.detail.category !== this.category
+        ) {
+            return;
+        }
+
+        document
+            .querySelectorAll(evt.detail.selector)
+            .forEach((element) => {
+                this.create(element);
+            });
+        this.initialize();
+        this.fill();
+    }
+
+    destroy (evt) {
+        if (
+            !evt ||
+            !evt.detail ||
+            !evt.detail.selector ||
+            !evt.detail.category ||
+            evt.detail.category !== this.category
+        ) {
+            return;
+        }
+
+        document
+            .querySelectorAll(evt.detail.selector)
+            .forEach((element) => {
+                for (let objectIndex = this.objects.length - 1; objectIndex >= 0; objectIndex--) {
+                    const object = this.objects[objectIndex];
+                    if (object.name !== this.getName(element)) {
+                        continue;
+                    }
+
+                    this.objects.splice(objectIndex, 1);
+                }
+            });
+    }
+
+    getName (element) {
+        return (element.getAttribute('name') || element.getAttribute('data-name'));
     }
 
     fill () {
@@ -100,6 +159,10 @@ class FormFieldAbstract {
         // Set each object
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
+            if (object.isFilled) {
+                continue;
+            }
+            object.isFilled = true;
 
             if (externalParameters[object.name]) {
                 this.set(objectIndex, externalParameters[object.name]);

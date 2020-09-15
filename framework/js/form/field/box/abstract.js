@@ -22,6 +22,10 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
 
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
+            if (object.isSubInitialized) {
+                continue;
+            }
+            object.isSubInitialized = true;
 
             object.inputElements.forEach((inputElement) => {
                 MiscEvent.addListener('click', this.toggleCheck.bind(this, objectIndex), inputElement);
