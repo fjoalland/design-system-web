@@ -1,5 +1,5 @@
 /**
- * Swiper 5.4.5
+ * Swiper 5.3.1
  * Most modern mobile touch slider and framework with hardware accelerated transitions
  * http://swiperjs.com
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: June 16, 2020
+ * Released on: February 8, 2020
  */
 @font-face {
   font-family: swiper-icons;
@@ -169,7 +169,6 @@
   letter-spacing: 0;
   text-transform: none;
   font-variant: initial;
-  line-height: 1;
 }
 
 .swiper-button-prev, .swiper-container-rtl .swiper-button-next {
@@ -1952,8 +1951,7 @@ button.swiper-pagination-bullet {
 }
 
 /* simple blocks alignment */
-.left,
-.u-left {
+.left .u-left {
   margin-right: auto;
 }
 

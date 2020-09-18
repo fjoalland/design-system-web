@@ -1,11 +1,11 @@
 @font-face {
 	font-family: "ds44-icons";
-	src: url('../fonts/ds44-icons.eot');
-	src: url('../fonts/ds44-icons.eot?#iefix') format('eot'),
-		url('../fonts/ds44-icons.woff2') format('woff2'),
-		url('../fonts/ds44-icons.woff') format('woff'),
-		url('../fonts/ds44-icons.ttf') format('truetype'),
-		url('../fonts/ds44-icons.svg#ds44-icons') format('svg');
+	src: url('/fonts/ds44-icons.eot');
+	src: url('/fonts/ds44-icons.eot?#iefix') format('eot'),
+		url('/fonts/ds44-icons.woff2') format('woff2'),
+		url('/fonts/ds44-icons.woff') format('woff'),
+		url('/fonts/ds44-icons.ttf') format('truetype'),
+		url('/fonts/ds44-icons.svg#ds44-icons') format('svg');
 }
 
 .icon:before {
