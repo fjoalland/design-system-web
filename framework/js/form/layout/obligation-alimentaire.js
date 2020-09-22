@@ -88,6 +88,9 @@ class FormLayoutObligationAlimentaire extends FormLayoutAbstract {
 
     ajaxSubmit (objectIndex, formData) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         console.log(formData)
     }

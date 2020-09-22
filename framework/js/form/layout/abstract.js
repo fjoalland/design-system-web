@@ -41,6 +41,9 @@ class FormLayoutAbstract {
 
     start (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         if (object.formElement.getAttribute('data-auto-load') === 'true') {
             MiscEvent.dispatch('submit', { 'dryRun': true }, object.formElement);
@@ -50,6 +53,10 @@ class FormLayoutAbstract {
     validation (objectIndex, evt) {
         // This function will be fired by each component category so they can tell if they are valid or not
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         object.hasBeenChecked = true;
 
         if (
@@ -86,6 +93,9 @@ class FormLayoutAbstract {
 
     submit (objectIndex, evt) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return false;
+        }
 
         // Submission is in two steps :
         //  - First we ask the form components if they are valid through event dispatching
@@ -244,6 +254,9 @@ class FormLayoutAbstract {
                     .execute(recaptchaId, { action: 'submit' })
                     .then((function (objectIndex, token) {
                         const object = this.objects[objectIndex];
+                        if (!object) {
+                            return;
+                        }
 
                         if (object.formElement.getAttribute('data-is-ajax') === 'true') {
                             // Ajax submission
@@ -268,6 +281,9 @@ class FormLayoutAbstract {
 
     send (objectIndex, formData) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         if (object.formElement.getAttribute('data-is-ajax') === 'true') {
             // Ajax submission
@@ -283,6 +299,9 @@ class FormLayoutAbstract {
 
     notification (objectIndex, messageId, messageText, messageList, notificationType = 'error') {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         let containerElement = object.formElement.querySelector('.ds44-msg-container');
         if (containerElement) {

@@ -25,7 +25,10 @@ class FormFieldSelectStandard extends FormFieldSelectAbstract {
         evt.preventDefault();
 
         const object = this.objects[objectIndex];
-        if (!object.selectListElement) {
+        if (
+            !object ||
+            !object.selectListElement
+        ) {
             return;
         }
 
@@ -59,10 +62,11 @@ class FormFieldSelectStandard extends FormFieldSelectAbstract {
         evt.preventDefault();
 
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.selectListElement) {
+        if (
+            !object ||
+            !object.textElement ||
+            !object.selectListElement
+        ) {
             return;
         }
 
@@ -86,6 +90,10 @@ class FormFieldSelectStandard extends FormFieldSelectAbstract {
         }
 
         const object = this.objects[objectIndex];
+        if(!object) {
+            return;
+        }
+
         const data = this.getData(objectIndex);
         let values = [];
         if (data && data[object.name].value) {
@@ -121,7 +129,7 @@ class FormFieldSelectStandard extends FormFieldSelectAbstract {
 
     getOptionElements (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.selectListElement) {
+        if (!object || !object.selectListElement) {
             return null;
         }
 

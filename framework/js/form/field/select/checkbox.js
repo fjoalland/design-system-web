@@ -100,10 +100,11 @@ class FormFieldSelectCheckbox extends FormFieldSelectAbstract {
         evt.preventDefault();
 
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.selectListElement) {
+        if (
+            !object ||
+            !object.textElement ||
+            !object.selectListElement
+        ) {
             return;
         }
 
@@ -156,6 +157,10 @@ class FormFieldSelectCheckbox extends FormFieldSelectAbstract {
         }
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         const data = this.getData(objectIndex);
         let values = [];
         if (data && data[object.name].value) {
@@ -217,7 +222,7 @@ class FormFieldSelectCheckbox extends FormFieldSelectAbstract {
 
     getCheckboxElements (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.selectListElement) {
+        if (!object || !object.selectListElement) {
             return null;
         }
 
@@ -226,7 +231,7 @@ class FormFieldSelectCheckbox extends FormFieldSelectAbstract {
 
     getValueCheckboxElements (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.selectListElement) {
+        if (!object || !object.selectListElement) {
             return null;
         }
 

@@ -22,10 +22,11 @@ class FormFieldSelectRadio extends FormFieldSelectAbstract {
         }
 
         const object = this.objects[objectIndex];
-        if (!object.selectListElement) {
-            return;
-        }
-        if (!object.isExpanded) {
+        if (
+            !object ||
+            !object.selectListElement ||
+            !object.isExpanded
+        ) {
             return;
         }
 
@@ -43,10 +44,11 @@ class FormFieldSelectRadio extends FormFieldSelectAbstract {
         }
 
         const object = this.objects[objectIndex];
-        if (!object.selectListElement) {
-            return;
-        }
-        if (!object.isExpanded) {
+        if (
+            !object ||
+            !object.selectListElement ||
+            !object.isExpanded
+        ) {
             return;
         }
 
@@ -112,10 +114,11 @@ class FormFieldSelectRadio extends FormFieldSelectAbstract {
         evt.preventDefault();
 
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.selectListElement) {
+        if (
+            !object ||
+            !object.textElement ||
+            !object.selectListElement
+        ) {
             return;
         }
 
@@ -168,6 +171,10 @@ class FormFieldSelectRadio extends FormFieldSelectAbstract {
         }
 
         const object = this.objects[objectIndex];
+        if(!object) {
+            return;
+        }
+
         const data = this.getData(objectIndex);
         let values = [];
         if (data && data[object.name].value) {
@@ -205,7 +212,7 @@ class FormFieldSelectRadio extends FormFieldSelectAbstract {
 
     getRadioElements (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.selectListElement) {
+        if (!object || !object.selectListElement) {
             return null;
         }
 

@@ -1,6 +1,9 @@
 class FormLayoutUtileAbstract extends FormLayoutAbstract {
     ajaxSubmit (objectIndex, formData) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         // Show loader
         MiscEvent.dispatch('loader:requestShow');
@@ -36,6 +39,9 @@ class FormLayoutUtileAbstract extends FormLayoutAbstract {
         }
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         // Add aria described by to textarea
         const textareaElement = object.formElement.querySelector('textarea');
@@ -62,6 +68,9 @@ class FormLayoutUtileAbstract extends FormLayoutAbstract {
         }
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         // Add aria described by to textarea
         const textareaElement = object.formElement.querySelector('textarea');

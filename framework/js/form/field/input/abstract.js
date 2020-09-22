@@ -4,6 +4,9 @@ class FormFieldInputAbstract extends FormFieldAbstract {
 
         const objectIndex = (this.objects.length - 1);
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.textElement = element;
         object.valueElement = element;
@@ -38,10 +41,11 @@ class FormFieldInputAbstract extends FormFieldAbstract {
 
     write (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (object.textElement !== document.activeElement) {
+        if (
+            !object ||
+            !object.textElement ||
+            object.textElement !== document.activeElement
+        ) {
             return;
         }
 
@@ -64,6 +68,9 @@ class FormFieldInputAbstract extends FormFieldAbstract {
         super.enableElements(objectIndex, evt);
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.inputElements.forEach((inputElement) => {
             inputElement.removeAttribute('readonly');
@@ -78,6 +85,9 @@ class FormFieldInputAbstract extends FormFieldAbstract {
         super.disableElements(objectIndex, evt);
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.inputElements.forEach((inputElement) => {
             inputElement.setAttribute('readonly', 'true');
@@ -93,7 +103,7 @@ class FormFieldInputAbstract extends FormFieldAbstract {
 
     showHideResetButton (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.resetButtonElement) {
+        if (!object || !object.resetButtonElement) {
             return;
         }
 
@@ -108,7 +118,7 @@ class FormFieldInputAbstract extends FormFieldAbstract {
 
     setData (objectIndex, data = null) {
         const object = this.objects[objectIndex];
-        if (!object.valueElement) {
+        if (!object || !object.valueElement) {
             return;
         }
 
@@ -129,6 +139,10 @@ class FormFieldInputAbstract extends FormFieldAbstract {
         }
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return null;
+        }
+
         const extendedData = {};
         extendedData[object.name] = {
             'text': object.valueElement.value
@@ -140,6 +154,7 @@ class FormFieldInputAbstract extends FormFieldAbstract {
     getText (objectIndex) {
         const object = this.objects[objectIndex];
         if (
+            !object ||
             !object.textElement ||
             !object.textElement.value
         ) {
@@ -151,6 +166,9 @@ class FormFieldInputAbstract extends FormFieldAbstract {
 
     isEmpty (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return true;
+        }
 
         let isEmpty = !this.getText(objectIndex);
         if (isEmpty) {
@@ -181,14 +199,16 @@ class FormFieldInputAbstract extends FormFieldAbstract {
 
     focusOnTextElement (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         MiscAccessibility.setFocus(object.inputElements[0]);
     }
 
     focus (objectIndex) {
         const object = this.objects[objectIndex];
-
-        if (!object.isEnabled) {
+        if (!object || !object.isEnabled) {
             return;
         }
 
@@ -205,7 +225,7 @@ class FormFieldInputAbstract extends FormFieldAbstract {
 
     getErrorMessage (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
+        if (!object || !object.textElement) {
             return this.formatErrorMessage(objectIndex);
         }
 
@@ -239,7 +259,7 @@ class FormFieldInputAbstract extends FormFieldAbstract {
 
     checkFormat (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
+        if (!object || !object.textElement) {
             return true;
         }
 
@@ -275,6 +295,10 @@ class FormFieldInputAbstract extends FormFieldAbstract {
         super.removeInvalid(objectIndex);
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         if (object.textElement) {
             object.textElement.classList.remove('ds44-error');
         }
@@ -292,7 +316,7 @@ class FormFieldInputAbstract extends FormFieldAbstract {
 
     invalid (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
+        if (!object || !object.textElement) {
             return;
         }
 

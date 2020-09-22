@@ -100,7 +100,7 @@ class FormFieldSelectMultilevel extends FormFieldSelectCheckbox {
 
     getCheckboxElements (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.selectListElement) {
+        if (!object || !object.selectListElement) {
             return null;
         }
 

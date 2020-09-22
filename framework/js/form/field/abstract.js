@@ -174,6 +174,9 @@ class FormFieldAbstract {
 
     addBackupAttributes (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         if (object.inputElements) {
             object.inputElements.forEach((inputElement) => {
@@ -223,7 +226,7 @@ class FormFieldAbstract {
 
     getData (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.valueElement) {
+        if (!object || !object.valueElement) {
             return null;
         }
 
@@ -247,6 +250,9 @@ class FormFieldAbstract {
 
     enableDisableLinkedField (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         const linkedFieldsContainerElement = object.containerElement.closest('.ds44-js-linked-fields');
         if (!linkedFieldsContainerElement) {
@@ -314,6 +320,9 @@ class FormFieldAbstract {
         }
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.isEnabled = true;
         object.containerElement.removeAttribute('data-field-enabled');
@@ -337,18 +346,26 @@ class FormFieldAbstract {
     }
 
     enableElements (objectIndex, evt) {
+        const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         if (
             evt &&
             evt.detail &&
             evt.detail.areMaskedLinkedFields
         ) {
-            const object = this.objects[objectIndex];
             object.containerElement.classList.remove('hidden');
         }
     }
 
     disable (objectIndex, evt) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         object.isEnabled = false;
         object.parentValue = null;
         object.containerElement.removeAttribute('data-field-disabled');
@@ -359,19 +376,23 @@ class FormFieldAbstract {
     }
 
     disableElements (objectIndex, evt) {
+        const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         if (
             evt &&
             evt.detail &&
             evt.detail.areMaskedLinkedFields
         ) {
-            const object = this.objects[objectIndex];
             object.containerElement.classList.add('hidden');
         }
     }
 
     isEnableAllowed (objectIndex, evt) {
         const object = this.objects[objectIndex];
-        if (!object.valuesAllowed) {
+        if (!object || !object.valuesAllowed) {
             return true;
         }
 
@@ -402,11 +423,11 @@ class FormFieldAbstract {
 
     enter (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.labelElement) {
-            return;
-        }
-
-        if (!object.isEnabled) {
+        if (
+            !object ||
+            !object.labelElement ||
+            !object.isEnabled
+        ) {
             return;
         }
 
@@ -415,7 +436,7 @@ class FormFieldAbstract {
 
     quit (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.labelElement) {
+        if (!object || !object.labelElement) {
             return;
         }
 
@@ -434,13 +455,15 @@ class FormFieldAbstract {
         let isValid = true;
         let data = {};
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
+            const object = this.objects[objectIndex];
+
             // Is the field in the form that is being validated
-            if (!evt.detail.formElement.contains(this.objects[objectIndex].containerElement)) {
+            if (!evt.detail.formElement.contains(object.containerElement)) {
                 continue;
             }
 
             // Don't validate a hidden field
-            if (this.objects[objectIndex].containerElement.closest('.ds44-select-list_elem_child.hidden')) {
+            if (object.containerElement.closest('.ds44-select-list_elem_child.hidden')) {
                 continue;
             }
 
@@ -451,7 +474,7 @@ class FormFieldAbstract {
                 isValid = false;
             } else if (
                 evt.detail.formElement.classList.contains('ds44-listSelect') ||
-                !this.objects[objectIndex].containerElement.closest('.ds44-select-list_elem_child')
+                !object.containerElement.closest('.ds44-select-list_elem_child')
             ) {
                 // Don't take into consideration data from sub elements
                 // The data is already injected in the parent value
@@ -475,6 +498,9 @@ class FormFieldAbstract {
 
     removeInvalid (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         const informationElement = object.containerElement.querySelector(':scope > .ds44-field-information');
         if (!informationElement) {
@@ -499,6 +525,7 @@ class FormFieldAbstract {
     isValid (objectIndex) {
         const object = this.objects[objectIndex];
         if (
+            !object ||
             (
                 object.isRequired &&
                 object.isEnabled &&
@@ -530,6 +557,9 @@ class FormFieldAbstract {
 
     showErrorMessage (objectIndex, errorMessageElementId = null) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         // Recreate information structure
         let informationElement = object.containerElement.querySelector(':scope > .ds44-field-information');
@@ -582,7 +612,7 @@ class FormFieldAbstract {
 
     formatErrorMessage (objectIndex, errorMessage = this.errorMessage, patterns) {
         const object = this.objects[objectIndex];
-        if (!object.labelElement) {
+        if (!object || !object.labelElement) {
             return MiscTranslate._(errorMessage, patterns);
         }
 

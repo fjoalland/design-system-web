@@ -8,6 +8,9 @@ class MapMarker extends MapAbstract {
 
         const objectIndex = (this.objects.length - 1);
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.markers = [];
     }
@@ -16,6 +19,9 @@ class MapMarker extends MapAbstract {
         super.afterLoad(objectIndex);
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.isMapReady = true;
         object.map.on('moveend', this.move.bind(this, objectIndex));
@@ -30,7 +36,7 @@ class MapMarker extends MapAbstract {
         }
 
         const object = this.objects[objectIndex];
-        if (!object.isVisible) {
+        if (!object || !object.isVisible) {
             return;
         }
 
@@ -51,6 +57,9 @@ class MapMarker extends MapAbstract {
 
     show (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         // Remove existing markers
         if (!object.addUp) {
@@ -168,6 +177,9 @@ class MapMarker extends MapAbstract {
 
     afterLoadGeojson (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.isGeojsonLoaded = true;
         if (object.mapElement.getAttribute('data-geojson-refine') === 'true') {
@@ -177,6 +189,9 @@ class MapMarker extends MapAbstract {
 
     getGeojsonIds (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return [];
+        }
 
         const geojsonIds = [];
         for (let resultIndex in object.newResults) {

@@ -78,7 +78,7 @@ class CarouselAbstract {
 
     createSwipper (objectIndex) {
         const object = this.objects[objectIndex];
-        if (object.swiper) {
+        if (!object || object.swiper) {
             return;
         }
 
@@ -115,7 +115,7 @@ class CarouselAbstract {
 
     destroySwipper (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.swiper) {
+        if (!object || !object.swiper) {
             return;
         }
 
@@ -190,7 +190,7 @@ class CarouselAbstract {
 
     updatePreviousAndNextSlideMessage (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.previousElement || !object.nextElement) {
+        if (!object || !object.previousElement || !object.nextElement) {
             return;
         }
 
@@ -233,6 +233,9 @@ class CarouselAbstract {
     // Met a jour la visibilite des tuiles en fonction du placement et du nombre de tuile visible
     updateCardAccessibility (objectIndex, direction) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.swiperElement
             .querySelectorAll('.swiper-slide')
@@ -271,6 +274,9 @@ class CarouselAbstract {
 
     slide (objectIndex, direction) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         if (object.previousElement && object.nextElement) {
             this.updatePreviousAndNextSlideMessage(objectIndex);
@@ -285,7 +291,7 @@ class CarouselAbstract {
             }
 
             const object = this.objects[objectIndex];
-            if (object.swiper && object.previousElement && object.nextElement) {
+            if (object && object.swiper && object.previousElement && object.nextElement) {
                 this.updatePreviousAndNextSlideMessage(objectIndex);
             }
         }
