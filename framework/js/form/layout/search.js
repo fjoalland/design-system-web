@@ -19,6 +19,10 @@ class FormLayoutSearch extends FormLayoutAbstract {
         // Initialize each object
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
+            if (object.isSubInitialized) {
+                continue;
+            }
+            object.isSubInitialized = true;
 
             // Bind events
             MiscEvent.addListener('search:refresh', this.search.bind(this, objectIndex));

@@ -13,6 +13,11 @@ layout: pattern
 </form>
 <hr />
 <form>
+    {% include form/field/input/standard.html type="password" label="Mot de passe" required="true" %}
+    <div><input type="submit" class="ds44-btnStd" value="Tester le champ" /></div>
+</form>
+<hr />
+<form>
     {% include form/layout/checkboxes.html choices="m:Homme,f:Femme" required="true" %}
     <div><input type="submit" class="ds44-btnStd" value="Tester les cases" /></div>
 </form>
