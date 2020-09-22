@@ -1,7 +1,9 @@
-class SimulatorObligationAlimentaire {
+class FormLayoutObligationAlimentaire extends FormLayoutAbstract {
     constructor () {
-        this.templateElement = document.querySelector('#ds44-js-simulateur-obligation-alimentaire-template');
-        this.containerElement = document.querySelector('#ds44-js-simulateur-obligation-alimentaire-container');
+        super('#ds44-js-soa-form');
+
+        this.templateElement = document.querySelector('#ds44-js-soa-template');
+        this.containerElement = document.querySelector('#ds44-js-soa-container');
         if (
             !this.templateElement ||
             !this.containerElement
@@ -11,23 +13,19 @@ class SimulatorObligationAlimentaire {
 
         this.add();
 
-        const addElement = document.querySelector('#ds44-js-simulateur-obligation-alimentaire-add');
+        const addElement = document.querySelector('#ds44-js-soa-add');
         if (addElement) {
             MiscEvent.addListener('click', this.add.bind(this), addElement);
         }
-        const deleteElement = document.querySelector('#ds44-js-simulateur-obligation-alimentaire-delete');
+        const deleteElement = document.querySelector('#ds44-js-soa-delete');
         if (deleteElement) {
             MiscEvent.addListener('click', this.delete.bind(this), deleteElement);
-        }
-        const calculateElement = document.querySelector('#ds44-js-simulateur-obligation-alimentaire-calculate');
-        if (calculateElement) {
-            MiscEvent.addListener('click', this.calculate.bind(this), calculateElement);
         }
     }
 
     add () {
-        const number = this.containerElement.querySelectorAll('.ds44-js-soa-item').length;
-        const idNumber = number * 2;
+        const itemNumber = this.containerElement.querySelectorAll('.ds44-js-soa-item').length;
+        const idNumber = itemNumber * 2;
 
         const cloneElement = document.importNode(this.templateElement.content, true);
         cloneElement.childNodes.forEach((childElement) => {
@@ -37,18 +35,16 @@ class SimulatorObligationAlimentaire {
 
             childElement.innerHTML = childElement.innerHTML
                 .replace(/ds44-js-soa-template-field-1/gi, 'ds44-js-soa-field-' + idNumber)
-                .replace(/ds44-js-soa-template-field-2/gi, 'ds44-js-soa-field-' + (idNumber + 1))
-                .replace(/ds44-js-soa-template-tooltip-1/gi, 'ds44-js-soa-tooltip-' + idNumber)
-                .replace(/ds44-js-soa-template-tooltip-2/gi, 'ds44-js-soa-tooltip-' + (idNumber + 1));
+                .replace(/ds44-js-soa-template-field-2/gi, 'ds44-js-soa-field-' + (idNumber + 1));
             if (childElement.classList.contains('ds44-js-soa-item')) {
-                childElement.setAttribute('id', 'ds44-js-soa-item-' + number)
+                childElement.setAttribute('id', 'ds44-js-soa-item-' + itemNumber)
             }
         });
-        cloneElement.querySelector('.ds44-js-soa-number').innerText = number + 1;
+        cloneElement.querySelector('.ds44-js-soa-number').innerText = itemNumber + 1;
 
         this.containerElement.append(cloneElement);
 
-        const selectorPrefix = '#ds44-js-simulateur-obligation-alimentaire-container #ds44-js-soa-item-' + number;
+        const selectorPrefix = '#ds44-js-soa-container #ds44-js-soa-item-' + itemNumber;
         MiscEvent.dispatch('field:add', {
             'selector': selectorPrefix + ' input[type="text"]:not([aria-autocomplete="list"]):not([data-is-date])',
             'category': 'inputStandard'
@@ -57,17 +53,22 @@ class SimulatorObligationAlimentaire {
             'selector': selectorPrefix + ' .ds44-selectDisplay.ds44-js-select-standard',
             'category': 'selectStandard'
         });
-        MiscEvent.dispatch('tooltip:add');
+
+        const deleteElement = document.querySelector('#ds44-js-soa-delete');
+        if (deleteElement && itemNumber === 1) {
+            deleteElement.classList.remove('ds44-none');
+        }
     }
 
     delete () {
         const itemElements = this.containerElement.querySelectorAll('.ds44-js-soa-item');
-        if (itemElements.length <= 1) {
+        const itemNumber = itemElements.length;
+        if (itemNumber <= 1) {
             return;
         }
-        const lastItemElement = itemElements[itemElements.length - 1];
+        const lastItemElement = itemElements[itemNumber - 1];
 
-        const selectorPrefix = '#ds44-js-simulateur-obligation-alimentaire-container #' + lastItemElement.getAttribute('id');
+        const selectorPrefix = '#ds44-js-soa-container #' + lastItemElement.getAttribute('id');
         MiscEvent.dispatch('field:destroy', {
             'selector': selectorPrefix + ' input[type="text"]:not([aria-autocomplete="list"]):not([data-is-date])',
             'category': 'inputStandard'
@@ -78,12 +79,19 @@ class SimulatorObligationAlimentaire {
         });
 
         lastItemElement.remove();
+
+        const deleteElement = document.querySelector('#ds44-js-soa-delete');
+        if (deleteElement && itemNumber === 2) {
+            deleteElement.classList.add('ds44-none');
+        }
     }
 
-    calculate () {
+    ajaxSubmit (objectIndex, formData) {
+        const object = this.objects[objectIndex];
 
+        console.log(formData)
     }
 }
 
 // Singleton
-new SimulatorObligationAlimentaire();
+new FormLayoutObligationAlimentaire();

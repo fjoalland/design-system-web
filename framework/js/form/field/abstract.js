@@ -124,6 +124,8 @@ class FormFieldAbstract {
                     }
 
                     this.objects.splice(objectIndex, 1);
+
+                    console.log(this.objects)
                 }
             });
     }
