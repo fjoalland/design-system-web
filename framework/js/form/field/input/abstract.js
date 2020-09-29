@@ -230,11 +230,11 @@ class FormFieldInputAbstract extends FormFieldAbstract {
         }
 
         const data = this.getData(objectIndex);
-        const autocomplete = object.textElement.getAttribute('autocomplete');
-        if (!data || !autocomplete) {
+        if (!data) {
             return this.formatErrorMessage(objectIndex);
         }
 
+        const autocomplete = object.textElement.getAttribute('autocomplete');
         if (
             autocomplete === 'email' &&
             !MiscForm.isEmail(data[object.name].value)
@@ -254,6 +254,14 @@ class FormFieldInputAbstract extends FormFieldAbstract {
             return this.formatErrorMessage(objectIndex, 'FIELD_VALID_POSTCODE_MESSAGE');
         }
 
+        const inputMode = object.textElement.getAttribute('inputmode');
+        if (
+            inputMode === 'numeric' &&
+            !MiscForm.isNumber(data[object.name].value)
+        ) {
+            return this.formatErrorMessage(objectIndex, 'FIELD_VALID_NUMBER_MESSAGE');
+        }
+
         return this.formatErrorMessage(objectIndex);
     }
 
@@ -264,11 +272,11 @@ class FormFieldInputAbstract extends FormFieldAbstract {
         }
 
         const data = this.getData(objectIndex);
-        const autocomplete = object.textElement.getAttribute('autocomplete');
-        if (!data || !autocomplete) {
+        if (!data) {
             return true;
         }
 
+        const autocomplete = object.textElement.getAttribute('autocomplete');
         if (
             autocomplete === 'email' &&
             !MiscForm.isEmail(data[object.name].value)
@@ -284,6 +292,14 @@ class FormFieldInputAbstract extends FormFieldAbstract {
         if (
             autocomplete === 'postal-code' &&
             !MiscForm.isPostcode(data[object.name].value)
+        ) {
+            return false;
+        }
+
+        const inputMode = object.textElement.getAttribute('inputmode');
+        if (
+            inputMode === 'numeric' &&
+            !MiscForm.isNumber(data[object.name].value)
         ) {
             return false;
         }

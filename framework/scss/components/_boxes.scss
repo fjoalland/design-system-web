@@ -21,6 +21,11 @@
     .ds44-blocObligeAlim {
         padding-top: 1rem ;
         border-top: 1px solid $ds44-light;
+
+        #ds44-js-soa-add,
+        #ds44-js-soa-delete {
+            cursor: pointer;
+        }
     }
 }
 
