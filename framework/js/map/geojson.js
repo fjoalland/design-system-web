@@ -8,12 +8,18 @@ class MapGeojson extends MapAbstract {
 
         const objectIndex = (this.objects.length - 1);
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.geojsonHoveredId = null;
     }
 
     afterLoadGeojson (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.map.setFilter(this.geojsonLinesId, ['!has', 'name']);
         object.map.setFilter(this.geojsonFillsId, ['!has', 'name']);
@@ -40,6 +46,9 @@ class MapGeojson extends MapAbstract {
         }
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         let popupContent = `
             <section class="ds44-card ds44-js-card ds44-card--contact ds44-box ds44-bgGray">
@@ -75,6 +84,9 @@ class MapGeojson extends MapAbstract {
 
     getGeojsonIds (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return [];
+        }
 
         // Get geojson ids
         const geojsonIds = [];
@@ -100,6 +112,9 @@ class MapGeojson extends MapAbstract {
     focus (objectIndex, evt) {
         if (evt.features.length > 0) {
             const object = this.objects[objectIndex];
+            if (!object) {
+                return;
+            }
 
             object.map.getCanvas().style.cursor = 'pointer';
 
@@ -113,6 +128,9 @@ class MapGeojson extends MapAbstract {
 
     blur (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.map.getCanvas().style.cursor = '';
 

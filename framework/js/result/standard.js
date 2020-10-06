@@ -225,7 +225,7 @@ class ResultStandard {
         ) {
             legendElement = document.createElement('p');
             legendElement.className = 'ds44-textLegend mbs';
-            legendElement.innerText = MiscTranslate._('RESULTS_MAX_RESULTS', { maxNbResults: evt.detail.maxNbResults })
+            legendElement.innerText = MiscTranslate._('RESULTS_MAX_RESULTS', { maxNbResults: evt.detail.maxNbResults });
             listContainerElement.appendChild(legendElement);
         }
 

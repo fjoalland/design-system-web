@@ -26,7 +26,7 @@ class CollapserStandard {
 
     showHide (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.buttonElement) {
+        if (!object || !object.buttonElement) {
             return;
         }
 
@@ -43,7 +43,7 @@ class CollapserStandard {
 
     show (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.buttonElement) {
+        if (!object || !object.buttonElement) {
             return;
         }
 
@@ -61,7 +61,7 @@ class CollapserStandard {
 
     hide (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.buttonElement) {
+        if (!object || !object.buttonElement) {
             return;
         }
 
@@ -79,15 +79,12 @@ class CollapserStandard {
 
     escape (objectIndex) {
         const object = this.objects[objectIndex];
-
         if (
+            !object ||
             !document.activeElement ||
-            !object.containerElement.contains(document.activeElement)
+            !object.containerElement.contains(document.activeElement) ||
+            !object.buttonElement
         ) {
-            return;
-        }
-
-        if (!object.buttonElement) {
             return;
         }
 

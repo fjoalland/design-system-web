@@ -121,6 +121,9 @@ class MapAbstract {
 
     afterLoad (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         // Add geojson if included
         const geojsonUrl = object.mapElement.getAttribute('data-geojson-url');
@@ -153,7 +156,7 @@ class MapAbstract {
     loadGeojson (objectIndex, geojson) {
         if (geojson) {
             const object = this.objects[objectIndex];
-            if(object.geojson) {
+            if (!object || object.geojson) {
                 return;
             }
 
@@ -202,8 +205,7 @@ class MapAbstract {
 
     showGeojson (objectIndex) {
         const object = this.objects[objectIndex];
-
-        if (!object.isGeojsonLoaded) {
+        if (!object || !object.isGeojsonLoaded) {
             return;
         }
 
@@ -238,14 +240,14 @@ class MapAbstract {
 
             const features = object.geojson.features;
             for (let i = 0; i < features.length; i++) {
-                if(geojsonIds.includes(features[i].properties.name)) {
+                if (geojsonIds.includes(features[i].properties.name)) {
                     hasBoundingBox = true;
 
                     for (let j = 0; j < features[i].geometry.coordinates.length; j++) {
                         const subCoordinates = features[i].geometry.coordinates[j];
 
                         for (let k = 0; k < subCoordinates.length; k++) {
-                            if(!boundingBox) {
+                            if (!boundingBox) {
                                 boundingBox = new window.mapboxgl.LngLatBounds(subCoordinates[k], subCoordinates[k]);
                             } else {
                                 boundingBox = boundingBox.extend(new window.mapboxgl.LngLatBounds(subCoordinates[k], subCoordinates[k]));
@@ -270,6 +272,9 @@ class MapAbstract {
 
     translateMap (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         const mapCanvasElement = object.mapElement.querySelector('.mapboxgl-canvas');
         if (mapCanvasElement) {
@@ -375,6 +380,10 @@ class MapAbstract {
 
     search (objectIndex, evt) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         object.newResults = evt.detail.newResults;
         object.zoom = evt.detail.zoom;
         object.addUp = evt.detail.addUp;
@@ -390,6 +399,9 @@ class MapAbstract {
 
     toggleView (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         const resultsElement = object.mapElement.closest('.ds44-results')
         if (resultsElement) {
@@ -439,6 +451,9 @@ class MapAbstract {
 
     resizeMap (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         if (object.map && object.map.resize) {
             object.map.resize();
@@ -449,6 +464,10 @@ class MapAbstract {
 
     scroll (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         const scrollTop = MiscUtils.getScrollTop();
         const enableScrolling = (object.parentElement.offsetHeight > object.containerElement.offsetHeight);
 
@@ -500,6 +519,9 @@ class MapAbstract {
 
     getTop (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return 0;
+        }
 
         if (MiscUtils.getScrollTop() > this.getMaximumTop(objectIndex)) {
             return object.parentElement.offsetHeight - object.containerElement.offsetHeight;
@@ -510,6 +532,9 @@ class MapAbstract {
 
     getMaximumTop (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return 0;
+        }
 
         return object.maximumTop - MiscDom.getHeaderHeight();
     }

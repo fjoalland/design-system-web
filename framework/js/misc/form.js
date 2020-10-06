@@ -75,4 +75,8 @@ class MiscForm {
     static isPostcode (value) {
         return /^(?:(?:0[1-9]|[1-8]\d|9[0-5]|9[7-8])\d{3})$/.test(value);
     }
+
+    static isNumber (value) {
+        return /^[0-9]*$/.test(value);
+    }
 }

@@ -26,6 +26,9 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
 
         const objectIndex = (this.objects.length - 1);
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.valueElement = valueElement;
         object.metadataElement = metadataElement;
@@ -88,10 +91,11 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
         super.setData(objectIndex, data);
 
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.metadataElement) {
+        if (
+            !object ||
+            !object.textElement ||
+            !object.metadataElement
+        ) {
             return;
         }
 
@@ -122,6 +126,10 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
         }
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return null;
+        }
+
         const extendedData = {};
         extendedData[object.name] = {
             'text': object.textElement.value,
@@ -133,10 +141,11 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
 
     record (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (object.textElement !== document.activeElement) {
+        if (
+            !object ||
+            !object.textElement ||
+            object.textElement !== document.activeElement
+        ) {
             return;
         }
 
@@ -152,10 +161,11 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
         super.write(objectIndex);
 
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (object.textElement !== document.activeElement) {
+        if (
+            !object ||
+            !object.textElement ||
+            object.textElement !== document.activeElement
+        ) {
             return;
         }
 
@@ -164,17 +174,13 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
 
     autoComplete (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.valueElement) {
-            return;
-        }
-        if (!object.metadataElement) {
-            return;
-        }
-
-        if (object.currentElementValue === object.textElement.value) {
+        if (
+            !object ||
+            !object.textElement ||
+            !object.valueElement ||
+            !object.metadataElement ||
+            object.currentElementValue === object.textElement.value
+        ) {
             return;
         }
 
@@ -227,10 +233,11 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
 
     autoCompleteFill (objectIndex, results) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.autoCompleterListElement) {
+        if (
+            !object ||
+            !object.textElement ||
+            !object.autoCompleterListElement
+        ) {
             return;
         }
 
@@ -280,7 +287,7 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
 
     translate (objectIndex, results) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
+        if (!object || !object.textElement) {
             return results;
         }
 
@@ -310,28 +317,27 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
 
     focus (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.isEnabled || !object.textElement) {
-            return;
-        }
+        if (object && object.isEnabled && object.textElement) {
+            if (
+                object.currentElementValue &&
+                object.currentElementValue !== object.textElement.value
+            ) {
+                object.textElement.value = object.currentElementValue;
+            }
 
-        if (
-            object.currentElementValue &&
-            object.currentElementValue !== object.textElement.value
-        ) {
-            object.textElement.value = object.currentElementValue;
+            this.autoComplete(objectIndex);
         }
-
-        this.autoComplete(objectIndex);
 
         super.focus(objectIndex);
     }
 
     focusOut (objectIndex, evt) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.valueElement) {
+        if (
+            !object ||
+            !object.textElement ||
+            !object.valueElement
+        ) {
             return;
         }
 
@@ -354,10 +360,11 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
 
     show (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.autoCompleterElement) {
+        if (
+            !object ||
+            !object.textElement ||
+            !object.autoCompleterElement
+        ) {
             return;
         }
 
@@ -369,10 +376,11 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
 
     hide (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.autoCompleterElement) {
+        if (
+            !object ||
+            !object.textElement ||
+            !object.autoCompleterElement
+        ) {
             return;
         }
 
@@ -393,15 +401,12 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
 
     escape (objectIndex) {
         const object = this.objects[objectIndex];
-
         if (
+            !object ||
             !document.activeElement ||
-            !object.containerElement.contains(document.activeElement)
+            !object.containerElement.contains(document.activeElement) ||
+            !object.textElement
         ) {
-            return;
-        }
-
-        if (!object.textElement) {
             return;
         }
 
@@ -422,10 +427,11 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
         evt.preventDefault();
 
         const object = this.objects[objectIndex];
-        if (!object.autoCompleterListElement) {
-            return;
-        }
-        if (!object.isExpanded) {
+        if (
+            !object ||
+            !object.autoCompleterListElement ||
+            !object.isExpanded
+        ) {
             return;
         }
 
@@ -447,7 +453,7 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
         evt.preventDefault();
 
         const object = this.objects[objectIndex];
-        if (!object.isExpanded) {
+        if (!object || !object.isExpanded) {
             return;
         }
 
@@ -467,7 +473,7 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
 
     fakeSelect (objectIndex, evt) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
+        if (!object || !object.textElement) {
             return;
         }
 
@@ -482,10 +488,11 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
         }
 
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.autoCompleterElement) {
+        if (
+            !object ||
+            !object.textElement ||
+            !object.autoCompleterElement
+        ) {
             return;
         }
 
@@ -510,7 +517,7 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
 
     selectRecord (objectIndex, currentItem) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
+        if (!object || !object.textElement) {
             return;
         }
 

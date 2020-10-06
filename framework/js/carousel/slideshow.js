@@ -8,6 +8,10 @@ class CarouselSlideshow extends CarouselAbstract {
 
         const objectIndex = (this.objects.length - 1);
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         object.isPlaying = true;
 
         object.autoplayButtonElement = object.wrapElement.querySelector('button');
@@ -30,6 +34,9 @@ class CarouselSlideshow extends CarouselAbstract {
 
     startStop (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         if (object.isPlaying) {
             const objects = this.getSectionObjects(objectIndex);
@@ -53,9 +60,14 @@ class CarouselSlideshow extends CarouselAbstract {
     }
 
     getSectionObjects (objectIndex) {
+        const object = this.objects[objectIndex];
+        if (!object) {
+            return [];
+        }
+
         // Get all slideshows in the same section
         const objects = [];
-        const parentElement = (this.objects[objectIndex].wrapElement.closest('section') || this.objects[objectIndex].wrapElement.parentElement);
+        const parentElement = (object.wrapElement.closest('section') || object.wrapElement.parentElement);
         parentElement
             .querySelectorAll('.swipper-carousel-slideshow')
             .forEach((wrapElement) => {
