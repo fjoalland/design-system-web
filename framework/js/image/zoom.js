@@ -1,5 +1,9 @@
 class ImageZoom {
     constructor () {
+        this.objects = [];
+        this.zoom = 3;
+        this.borderWidth = 3;
+
         document
             .querySelectorAll('.ds44-imgLoupe')
             .forEach((magnifyContainerElement) => {
@@ -9,22 +13,74 @@ class ImageZoom {
 
     create (magnifyContainerElement) {
         const imageElement = magnifyContainerElement.querySelector('img');
-        if (!imageElement) {
+        const magnifyElement = document.createElement('div');
+        magnifyElement.classList.add('ds44-js-magnifier');
+        magnifyElement.classList.add('hidden');
+        magnifyElement.style.backgroundImage = "url('" + imageElement.src + "')";
+        magnifyElement.style.backgroundRepeat = 'no-repeat';
+        magnifyElement.style.backgroundSize = (imageElement.width * this.zoom) + 'px ' + (imageElement.height * this.zoom) + 'px';
+        imageElement.parentElement.insertBefore(magnifyElement, imageElement);
+
+        const object = {
+            'id': MiscUtils.generateId(),
+            'imageElement': imageElement,
+            'magnifyElement': magnifyElement
+        };
+
+        this.objects.push(object);
+
+        const objectIndex = (this.objects.length - 1);
+        MiscEvent.addListener('mousemove', this.move.bind(this, objectIndex), magnifyElement);
+        MiscEvent.addListener('mousemove', this.move.bind(this, objectIndex), imageElement);
+        MiscEvent.addListener('touchmove', this.move.bind(this, objectIndex), magnifyElement);
+        MiscEvent.addListener('touchmove', this.move.bind(this, objectIndex), imageElement);
+    }
+
+    move (objectIndex, evt) {
+        evt.preventDefault();
+        evt.stopPropagation();
+
+        const object = this.objects[objectIndex];
+        if (!object) {
             return;
         }
 
-        magnifyContainerElement.style.backgroundImage = `url('${imageElement.getAttribute('src')}')`;
-        MiscEvent.addListener('mousemove', this.zoom.bind(this), magnifyContainerElement);
-        MiscEvent.addListener('touchmove', this.zoom.bind(this), magnifyContainerElement);
+        const width = object.magnifyElement.offsetWidth / 2;
+        const height = object.magnifyElement.offsetHeight / 2;
+        const cursorPosition = this.getCursorPosition(objectIndex, evt);
+
+        let x = cursorPosition.x;
+        let y = cursorPosition.y;
+        if (x > object.imageElement.width) {
+            x = object.imageElement.width;
+        }
+        if (x < 0) {
+            x = 0;
+        }
+        if (y > object.imageElement.height) {
+            y = object.imageElement.height;
+        }
+        if (y < 0) {
+            y = 0;
+        }
+
+        object.magnifyElement.style.left = (x - width) + 'px';
+        object.magnifyElement.style.top = (y - height) + 'px';
+        object.magnifyElement.style.backgroundPosition = (((x * this.zoom) - width + this.borderWidth) * -1) + 'px ' + (((y * this.zoom) - height + this.borderWidth) * -1) + 'px';
+        object.magnifyElement.classList.remove('hidden');
     }
 
-    zoom (evt) {
-        const zoomer = evt.currentTarget;
-        const offsetX = (evt.offsetX ? evt.offsetX : evt.touches[0].pageX);
-        const offsetY = (evt.offsetY ? evt.offsetY : evt.touches[0].pageY);
-        const x = offsetX / zoomer.offsetWidth * 100;
-        const y = offsetY / zoomer.offsetHeight * 100;
-        zoomer.style.backgroundPosition = x + '% ' + y + '%';
+    getCursorPosition (objectIndex, evt) {
+        const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
+        const boundingClientRect = object.imageElement.getBoundingClientRect();
+        return {
+            x: (evt.pageX || evt.touches[0].pageX || 0) - boundingClientRect.left - window.pageXOffset,
+            y: (evt.pageY || evt.touches[0].pageY || 0) - boundingClientRect.top - window.pageYOffset
+        };
     }
 }
 
