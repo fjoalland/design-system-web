@@ -36,11 +36,14 @@
         transition: opacity .5s;
         display: block;
         width: 100%;
+    }
 
-        &:hover {
-            opacity: 0;
-            cursor: url('../../../assets/icons/cd44-search-big-white.svg'), zoom-in;
-        }
+    .ds44-js-magnifier {
+        position: absolute;
+        border: 3px solid #000;
+        cursor: none;
+        width: 400px;
+        height: 200px;
     }
 }
 

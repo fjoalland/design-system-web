@@ -35,7 +35,8 @@ class FormLayoutObligationAlimentaire extends FormLayoutAbstract {
 
             childElement.innerHTML = childElement.innerHTML
                 .replace(/ds44-js-soa-template-field-1/gi, 'ds44-js-soa-field-' + idNumber)
-                .replace(/ds44-js-soa-template-field-2/gi, 'ds44-js-soa-field-' + (idNumber + 1));
+                .replace(/ds44-js-soa-template-field-2/gi, 'ds44-js-soa-field-' + (idNumber + 1))
+                .replace(/n°\)/gi, 'n°' + (itemNumber + 1) + ')');
             if (childElement.classList.contains('ds44-js-soa-item')) {
                 childElement.setAttribute('id', 'ds44-js-soa-item-' + itemNumber)
             }
@@ -58,6 +59,13 @@ class FormLayoutObligationAlimentaire extends FormLayoutAbstract {
         if (deleteElement && itemNumber === 1) {
             deleteElement.classList.remove('ds44-none');
         }
+
+        window.setTimeout(
+            ((idNumber) => {
+                MiscAccessibility.setFocus(null, '#ds44-js-soa-field-' + idNumber);
+            }).bind(this, idNumber),
+            100
+        )
     }
 
     delete () {
