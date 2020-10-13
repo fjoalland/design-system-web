@@ -154,7 +154,7 @@ class OverlayAbstract {
         }
 
         if (this.visibilityCounter === 0) {
-            MiscAccessibility.hide(this.modal);
+            MiscAccessibility.hide(this.modal, true, false);
         }
         this.visibilityCounter--;
     }
@@ -166,7 +166,7 @@ class OverlayAbstract {
 
         this.visibilityCounter = Math.min(0, (this.visibilityCounter + 1));
         if (this.visibilityCounter === 0) {
-            MiscAccessibility.show(this.modal);
+            MiscAccessibility.show(this.modal, true, false);
         }
     }
 }
