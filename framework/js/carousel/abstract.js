@@ -240,21 +240,12 @@ class CarouselAbstract {
         object.swiperElement
             .querySelectorAll('.swiper-slide')
             .forEach((slideElement) => {
-                const aElement = slideElement.querySelector('a');
                 if (slideElement.classList.contains('swiper-slide-visible')) {
                     // Show slide
-                    MiscAccessibility.show(slideElement);
-
-                    if (!aElement) {
-                        slideElement.setAttribute('tabindex', '0');
-                    }
+                    this.showSlide(slideElement);
                 } else {
                     // Hide slide
-                    MiscAccessibility.hide(slideElement);
-
-                    if (!aElement) {
-                        slideElement.removeAttribute('tabindex');
-                    }
+                    this.hideSlide(slideElement);
                 }
             });
 
@@ -270,6 +261,14 @@ class CarouselAbstract {
                 MiscAccessibility.setFocus(slideElement.querySelector(this.queryTitreTuile));
             }
         }
+    }
+
+    showSlide (slideElement) {
+        MiscAccessibility.show(slideElement);
+    }
+
+    hideSlide (slideElement) {
+        MiscAccessibility.hide(slideElement);
     }
 
     slide (objectIndex, direction) {

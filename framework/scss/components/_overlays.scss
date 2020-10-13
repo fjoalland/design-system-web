@@ -20,7 +20,7 @@
 
 .ds44-overlay--navNiv1 {
     left: 0;
-    top: -2500px;
+    top: -5000px;
     visibility: hidden;
 
     * {
@@ -41,7 +41,7 @@
 .ds44-overlay--navNiv2 {
     left: auto;
     top: 0;
-    right: -2500px;
+    right: -5000px;
     z-index: 11000;
 
     &.show {
@@ -51,7 +51,7 @@
 }
 
 .ds44-overlay--navFromBottom {
-    bottom: -2500px;
+    bottom: -5000px;
     z-index: 11000;
     background-color: $ds44-light-color;
 
