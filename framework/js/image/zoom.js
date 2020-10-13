@@ -1,7 +1,7 @@
 class ImageZoom {
     constructor () {
         this.objects = [];
-        this.zoom = 3;
+        this.zoom = 2;
         this.borderWidth = 3;
 
         document
