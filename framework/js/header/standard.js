@@ -93,7 +93,7 @@ class HeaderStandard {
 
     overlayShow () {
         if (this.headerVisibilityCounter === 0) {
-            MiscAccessibility.hide(document.querySelector('header'), false);
+            MiscAccessibility.hide(document.querySelector('header'), false, false);
         }
         this.headerVisibilityCounter--;
     }
@@ -101,13 +101,13 @@ class HeaderStandard {
     overlayHide () {
         this.headerVisibilityCounter = Math.min(0, (this.headerVisibilityCounter + 1));
         if (this.headerVisibilityCounter === 0) {
-            MiscAccessibility.show(document.querySelector('header'), false);
+            MiscAccessibility.show(document.querySelector('header'), false, false);
         }
     }
 
     menuShow () {
         if (this.menuVisibilityCounter === 0) {
-            MiscAccessibility.hide(document.querySelector('header .ds44-header .ds44-container-large'));
+            MiscAccessibility.hide(document.querySelector('header .ds44-header .ds44-container-large'), true, false);
         }
         this.menuVisibilityCounter--;
     }
@@ -115,7 +115,7 @@ class HeaderStandard {
     menuHide () {
         this.menuVisibilityCounter = Math.min(0, (this.menuVisibilityCounter + 1));
         if (this.menuVisibilityCounter === 0) {
-            MiscAccessibility.show(document.querySelector('header .ds44-header .ds44-container-large'));
+            MiscAccessibility.show(document.querySelector('header .ds44-header .ds44-container-large'), true, false);
         }
     }
 }
