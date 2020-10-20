@@ -29,6 +29,12 @@ class CarouselSlideshow extends CarouselAbstract {
             'delay': 5000
         }
 
+        // Take reduced motion media query into account
+        const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+        if (!mediaQuery || mediaQuery.matches) {
+            swiperParameters.speed = 0;
+        }
+
         return swiperParameters;
     }
 
