@@ -10,9 +10,6 @@ class KeyboardStandard {
             return;
         }
 
-        MiscEvent.dispatch('keyDown:*');
-        MiscEvent.dispatch('keyDown:' + (evt.key === ' ' ? 'Spacebar' : evt.key).toLowerCase());
-
         // Make the space bar or enter act like a mouse click
         const clickableElement = this.getClickableElement(evt);
         if (clickableElement) {
@@ -24,18 +21,32 @@ class KeyboardStandard {
                 'bubbles': true,
                 'cancelable': true
             }));
-            clickableElement.click();
+            clickableElement.dispatchEvent(new MouseEvent('click', {
+                'bubbles': true,
+                'cancelable': true
+            }));
 
             evt.stopPropagation();
             evt.preventDefault();
 
             return false;
         }
+
+        MiscEvent.dispatch('keyDown:*');
+        MiscEvent.dispatch('keyDown:' + (evt.key === ' ' ? 'Spacebar' : evt.key).toLowerCase());
     }
 
     keyPress (evt) {
         if (!evt.key) {
             return;
+        }
+
+        const clickableElement = this.getClickableElement(evt);
+        if (clickableElement) {
+            evt.stopPropagation();
+            evt.preventDefault();
+
+            return false;
         }
 
         MiscEvent.dispatch('keyPress:*');
@@ -45,6 +56,14 @@ class KeyboardStandard {
     keyUp (evt) {
         if (!evt.key) {
             return;
+        }
+
+        const clickableElement = this.getClickableElement(evt);
+        if (clickableElement) {
+            evt.stopPropagation();
+            evt.preventDefault();
+
+            return false;
         }
 
         MiscEvent.dispatch('keyUp:*');
