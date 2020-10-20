@@ -152,6 +152,12 @@ class CarouselAbstract {
             }
         };
 
+        // Take reduced motion media query into account
+        const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+        if (!mediaQuery || mediaQuery.matches) {
+            swiperParameters.speed = 0;
+        }
+
         if (object.paginationElement) {
             swiperParameters.pagination = {
                 'el': object.paginationElement,
@@ -174,14 +180,23 @@ class CarouselAbstract {
         }
 
         if (object.galleryElement) {
+            const thumbsSwiperParameters = {
+                'spaceBetween': 16,
+                'slidesPerView': 'auto',
+                'freeMode': true,
+                'watchSlidesVisibility': true,
+                'watchSlidesProgress': true
+            }
+
+            if (!mediaQuery || mediaQuery.matches) {
+                thumbsSwiperParameters.speed = 0;
+            }
+
             swiperParameters.thumbs = {
-                'swiper': (new Swiper(object.galleryElement.querySelector('.swiper-container'), {
-                    'spaceBetween': 16,
-                    'slidesPerView': 'auto',
-                    'freeMode': true,
-                    'watchSlidesVisibility': true,
-                    'watchSlidesProgress': true
-                }))
+                'swiper': (new Swiper(
+                    object.galleryElement.querySelector('.swiper-container'),
+                    thumbsSwiperParameters
+                ))
             };
         }
 
