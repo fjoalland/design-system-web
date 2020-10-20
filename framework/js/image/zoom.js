@@ -34,6 +34,7 @@ class ImageZoom {
         MiscEvent.addListener('mousemove', this.move.bind(this, objectIndex), imageElement);
         MiscEvent.addListener('touchmove', this.move.bind(this, objectIndex), magnifyElement);
         MiscEvent.addListener('touchmove', this.move.bind(this, objectIndex), imageElement);
+        MiscEvent.addListener('mouseleave', this.leave.bind(this, objectIndex), magnifyElement);
     }
 
     move (objectIndex, evt) {
@@ -68,6 +69,18 @@ class ImageZoom {
         object.magnifyElement.style.top = (y - height) + 'px';
         object.magnifyElement.style.backgroundPosition = (((x * this.zoom) - width + this.borderWidth) * -1) + 'px ' + (((y * this.zoom) - height + this.borderWidth) * -1) + 'px';
         object.magnifyElement.classList.remove('hidden');
+    }
+
+    leave (objectIndex, evt) {
+        evt.preventDefault();
+        evt.stopPropagation();
+
+        const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
+        object.magnifyElement.classList.add('hidden');
     }
 
     getCursorPosition (objectIndex, evt) {
