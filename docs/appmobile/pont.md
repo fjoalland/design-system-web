@@ -21,7 +21,7 @@ variations:
 
 ## Usage
 
-Ecran prinicpal de l'application mobile "Pont de Saint Nazaire"
+Ecran principal de l'application mobile "Pont de Saint Nazaire"
 
 ## Documentation
 
