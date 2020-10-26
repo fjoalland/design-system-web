@@ -73,7 +73,7 @@
 /* Tuiles */
 
 .ds44-app-tuile {
-	
+
 	p { @include ds44-font-sizes(smallText); }
 	line-height: 1.3;
 
@@ -223,9 +223,9 @@
 }
 /* masquage par defaut */
 #map-container svg{
-	#voie1, #voie1-seule, #voie1-travaux,
-	#voie2n, #voie2n-seule, #voie2s, #voie2s-seule, #voie2-travaux,
-	#voie3, #voie3-seule, #voie3-travaux,
+	#voie1, #voie1-seule, #voie1-travaux, #voie1-particulier,
+	#voie2n, #voie2n-seule, #voie2s, #voie2s-seule, #voie2-travaux, #voie2-particulier,
+	#voie3, #voie3-seule, #voie3-travaux, #voie3-particulier,
 	#pointilles1, #pointilles2,
 	#echangeur-sud-voie1-fleche, #echangeur-sud-voie1-croix,
 	#echangeur-sud-voie2-fleche, #echangeur-sud-voie2-croix,
@@ -235,11 +235,11 @@
 	#echangeur-nord-voie3-fleche, #echangeur-nord-voie3-croix,
 	#traficolor-nord g[id*=trafic-vert], #traficolor-nord g[id*=trafic-orange], #traficolor-nord g[id*=trafic-rouge],
 	#traficolor-sud g[id*=trafic-vert], #traficolor-sud g[id*=trafic-orange], #traficolor-sud g[id*=trafic-rouge],
-	#perturbation-vent, #perturbation-nord, #perturbation-sud, #perturbation-a, #perturbation-b, #perturbation-c, #perturbation-d, #perturbation-e
+	#perturbation-vent, #perturbation-nord-ouest, #perturbation-nord-est, #perturbation-sud-ouest, #perturbation-sud-est, #perturbation-a, #perturbation-b, #perturbation-c, #perturbation-d, #perturbation-e
 	{
 	  display: none;
 	}
-	#perturbation-vent, #perturbation-nord, #perturbation-sud, #perturbation-a, #perturbation-b, #perturbation-c, #perturbation-d, #perturbation-e{
+	#perturbation-vent, #perturbation-nord-ouest, #perturbation-nord-est, #perturbation-sud-ouest, #perturbation-sud-est, #perturbation-a, #perturbation-b, #perturbation-c, #perturbation-d, #perturbation-e{
 		g[id*=panne], g[id*=accident], g[id*=deviation]{
 			display: none;
 		}
@@ -255,13 +255,28 @@ $ModesCirculation012: 'm012', 'mu012';
 $ModesCirculation102: 'm102', 'me102a', 'me102ab', 'me102b', 'me102bc', 'me102c', 'me102cd', 'me102d', 'me102de', 'me102e','mu102n','mu102s';
 $ModesCirculation112: 'm112', 'me112a', 'me112ab', 'me112b', 'me112bc', 'me112c', 'me112cd', 'me112d', 'me112de', 'me112e','mu112n','mu112s';
 $ModesCirculation120: 'm120', 'mu120';
-$ModesCirculation122: 'm122', 'me122a', 'me122ab', 'me122b', 'me122bc', 'me122c', 'me122cd', 'me122d', 'me122de', 'me122e'; 
+$ModesCirculation122: 'm122', 'me122a', 'me122ab', 'me122b', 'me122bc', 'me122c', 'me122cd', 'me122d', 'me122de', 'me122e';
+#main-container[data-mode-circulation='mode-particulier']{
+	#map-container svg{
+		#voie1-particulier, #voie2-particulier, #voie3-particulier{
+		  display:block;
+		}
+		#traficolor-nord g[id*=trafic-vert], #traficolor-nord g[id*=trafic-orange], #traficolor-nord g[id*=trafic-rouge],
+		#traficolor-sud g[id*=trafic-vert], #traficolor-sud g[id*=trafic-orange], #traficolor-sud g[id*=trafic-rouge]{
+		  display:none;
+		}
+	}
+}
 #main-container[data-mode-circulation='m000']{
 	#map-container svg{
 		#voie1-travaux, #voie2-travaux, #voie3-travaux,
 		#echangeur-nord-voie1-croix,#echangeur-nord-voie2-croix,#echangeur-nord-voie3-croix,
 		#echangeur-sud-voie1-croix,#echangeur-sud-voie2-croix,#echangeur-sud-voie3-croix{
 		  display:block;
+		}
+		#traficolor-nord g[id*=trafic-vert], #traficolor-nord g[id*=trafic-orange], #traficolor-nord g[id*=trafic-rouge],
+		#traficolor-sud g[id*=trafic-vert], #traficolor-sud g[id*=trafic-orange], #traficolor-sud g[id*=trafic-rouge]{
+		  display:none;
 		}
 	}
 }
@@ -284,7 +299,7 @@ $ModesCirculation122: 'm122', 'me122a', 'me122ab', 'me122b', 'me122bc', 'me122c'
 	  display:block;
 	}
   }
-} 
+}
 @each $i in $ModesCirculation112 {
   #main-container[data-mode-circulation=#{$i}] {
     #voie1, #voie2n, #voie3-seule,
@@ -348,7 +363,7 @@ $TraficNord: 'vert', 'orange', 'rouge';
 		display: block;
 	}
   }
-	
+
 }
 $TraficSud: 'vert', 'orange', 'rouge';
 @each $i in $TraficSud {
@@ -376,8 +391,8 @@ $TraficSud: 'vert', 'orange', 'rouge';
 				  fill:#fff;
 			  }
 		  }
-			
-	}	
+
+	}
 	#traficolor-sud g[id*=trafic-#{$i}]{
 		display: block;
 	}
@@ -399,7 +414,7 @@ $TraficSud: 'vert', 'orange', 'rouge';
 	#map-container.map-container--bacs svg {
 		width: 75%;
 	}
-  
+
 }
 
 @media (min-width: $ds44-medium - .0625) {
@@ -407,7 +422,7 @@ $TraficSud: 'vert', 'orange', 'rouge';
 	#map-container.map-container--bacs svg {
 		width: 55%;
 	}
-  
+
 }
 
 @media (min-width: $ds44-large - .0625) {
@@ -415,7 +430,7 @@ $TraficSud: 'vert', 'orange', 'rouge';
 	#map-container.map-container--bacs svg {
 		width: 40%;
 	}
-  
+
 }
 
 
