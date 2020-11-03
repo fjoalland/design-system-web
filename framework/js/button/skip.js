@@ -8,10 +8,13 @@ class ButtonSkip {
     }
 
     go (evt) {
+        const id = evt.currentTarget.getAttribute('href');
+        if (id.indexOf('#') === -1) {
+            return;
+        }
+
         evt.stopPropagation();
         evt.preventDefault();
-
-        const id = evt.currentTarget.getAttribute('href');
         const focusElement = document.querySelector(id);
         if (!focusElement) {
             return;
