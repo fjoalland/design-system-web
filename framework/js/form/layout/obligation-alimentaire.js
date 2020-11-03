@@ -110,7 +110,6 @@ class FormLayoutObligationAlimentaire extends FormLayoutAbstract {
             return;
         }
 
-        const languageIso = (MiscTranslate.getLanguage() === 'fr' ? 'fr-FR' : 'en-GB');
         const results = [];
         let totalFoodObligation = 0;
         for (let i = 0; i < Object.keys(formData).length; (i = i + 2)) {

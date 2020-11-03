@@ -39,13 +39,9 @@
                 <div class="mtm">
                     {% capture section4Id %}titre-{% increment my_counter %}{% endcapture %}
                     <h2 class="h4-like" id="{{ section4Id }}">M’abonner aux <span lang="en">flash</span> infos par mail</h2>
-                    <div class="ds44-list grid-12-small-1 mtm">
-                        <li class="ds44-select-list_elem col-12 ds44-noMrg">
-                            {% include form/layout/checkboxes.html choices="3:Actus et événements" ariaDescribedBy=section4Id %}
-                        </li>
-                        <li class="col-12">
-                            {% include form/field/input/standard.html type="email" label="Votre email" explanation="Exemple : monadresse@mail.com"  required="true" containerClass="ds44-form__container ds44-mb-std" ariaDescribedBy=section4Id %}
-                        </li>
+                    <div class="ds44-list grid-12-small-1 mtm ds44-js-linked-fields">
+                        {% include form/layout/checkboxes.html choices="3:Actus et événements" ariaDescribedBy=section4Id containerClass="ds44-form__container ds44-select-list_elem col-12 ds44-noMrg" %}
+                        {% include form/field/input/standard.html type="email" label="Votre email" explanation="Exemple : monadresse@mail.com" disabled="true" required="true" containerClass="ds44-form__container ds44-mb-std col-12" ariaDescribedBy=section4Id %}
                     </div>
                 </div>
                 <button class="ds44-btnStd ds44-btn--invert ds44-w100 ds44-bntALeft" title="Je m'abonne pour recevoir l’actualité du CD44 par email" aria-describedby="valid-form">

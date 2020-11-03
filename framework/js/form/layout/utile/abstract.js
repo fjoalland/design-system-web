@@ -54,6 +54,8 @@ class FormLayoutUtileAbstract extends FormLayoutAbstract {
             }
         }
 
+        this.clear(objectIndex);
+
         // Hide loader
         MiscEvent.dispatch('loader:requestHide');
     }

@@ -297,6 +297,19 @@ class FormLayoutAbstract {
         // Abstract method
     }
 
+    clear (objectIndex) {
+        const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
+        if (object.formElement.getAttribute('data-empty-after-submit') === 'true') {
+            MiscEvent.dispatch('form:clear', {
+                'formElement': object.formElement
+            });
+        }
+    }
+
     notification (objectIndex, messageId, messageText, messageList, notificationType = 'error') {
         const object = this.objects[objectIndex];
         if (!object) {

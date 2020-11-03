@@ -24,6 +24,7 @@ class FormFieldAbstract {
         MiscEvent.addListener('field:add', this.add.bind(this));
         MiscEvent.addListener('field:destroy', this.destroy.bind(this));
         MiscEvent.addListener('form:validate', this.validate.bind(this));
+        MiscEvent.addListener('form:clear', this.clear.bind(this));
     }
 
     create (element) {
@@ -439,6 +440,33 @@ class FormFieldAbstract {
         }
 
         object.labelElement.classList.remove(this.labelClassName);
+    }
+
+    clear (evt) {
+        if (
+            !evt ||
+            !evt.detail ||
+            !evt.detail.formElement
+        ) {
+            return;
+        }
+
+        for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
+            const object = this.objects[objectIndex];
+
+            // Is the field in the form that is being validated
+            if (!evt.detail.formElement.contains(object.containerElement)) {
+                continue;
+            }
+
+            // Don't reset a hidden field
+            if (object.containerElement.closest('.ds44-select-list_elem_child.hidden')) {
+                continue;
+            }
+
+            this.empty(objectIndex);
+            this.quit(objectIndex);
+        }
     }
 
     validate (evt) {
