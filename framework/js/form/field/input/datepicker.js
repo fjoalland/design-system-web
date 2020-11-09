@@ -19,6 +19,9 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
 
         const objectIndex = (this.objects.length - 1);
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.valueElement = valueElement;
         object.inputElements = element.querySelectorAll('input[type="text"]');
@@ -30,6 +33,10 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
 
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
+            if (object.isSubSubInitialized) {
+                continue;
+            }
+            object.isSubSubInitialized = true;
 
             object.inputElements.forEach((inputElement) => {
                 MiscEvent.addListener('focus', this.focus.bind(this, objectIndex), inputElement);
@@ -55,10 +62,11 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
 
     write (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.textElement.contains(document.activeElement)) {
+        if (
+            !object ||
+            !object.textElement ||
+            !object.textElement.contains(document.activeElement)
+        ) {
             return;
         }
 
@@ -68,10 +76,11 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
 
     reset (objectIndex) {
         const object = this.objects[objectIndex];
-
-        object.inputElements[0].value = null;
-        object.inputElements[1].value = null;
-        object.inputElements[2].value = null;
+        if (object) {
+            object.inputElements[0].value = null;
+            object.inputElements[1].value = null;
+            object.inputElements[2].value = null;
+        }
 
         super.reset(objectIndex);
     }
@@ -91,10 +100,11 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
 
     disableElements (objectIndex, evt) {
         const object = this.objects[objectIndex];
-
-        object.inputElements[0].value = null;
-        object.inputElements[1].value = null;
-        object.inputElements[2].value = null;
+        if (object) {
+            object.inputElements[0].value = null;
+            object.inputElements[1].value = null;
+            object.inputElements[2].value = null;
+        }
 
         super.disableElements(objectIndex, evt);
     }
@@ -103,13 +113,11 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
         this.lastInputValue = null;
 
         const object = this.objects[objectIndex];
-        if (!object.isEnabled || !object.textElement) {
-            return;
+        if (object && object.isEnabled && object.textElement) {
+            object.textElement.classList.add('show');
         }
 
         super.focus(objectIndex);
-
-        object.textElement.classList.add('show');
     }
 
     blur (objectIndex) {
@@ -122,7 +130,7 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
         super.quit(objectIndex);
 
         const object = this.objects[objectIndex];
-        if (object.textElement) {
+        if (object && object.textElement) {
             object.textElement.classList.remove('show');
         }
     }
@@ -137,6 +145,7 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
 
         const object = this.objects[objectIndex];
         if (
+            !object ||
             !evt ||
             object.containerElement.contains(evt.target)
         ) {
@@ -186,6 +195,10 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
 
         // If two digits, go to next field
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         if (evt.currentTarget === object.inputElements[0]) {
             MiscAccessibility.setFocus(object.inputElements[1]);
         } else {
@@ -195,6 +208,9 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
 
     getText (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return null;
+        }
 
         const dateYear = parseInt(object.inputElements[2].value, 10) || '';
         const dateMonth = parseInt(object.inputElements[1].value, 10) || '';
@@ -212,6 +228,10 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
         }
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         const dateText = this.getText(objectIndex);
         if (
             !dateText ||
@@ -279,8 +299,11 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
 
     checkChronology (objectIndex) {
         const object = this.objects[objectIndex];
-        const data = this.getData(objectIndex);
+        if (!object) {
+            return false;
+        }
 
+        const data = this.getData(objectIndex);
         if (
             !data ||
             !object.textElement.getAttribute('data-previous-date-id')
@@ -311,8 +334,11 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
 
     checkPastDates (objectIndex) {
         const object = this.objects[objectIndex];
-        const data = this.getData(objectIndex);
+        if (!object) {
+            return false;
+        }
 
+        const data = this.getData(objectIndex);
         if (
             !data ||
             object.textElement.getAttribute('data-past-dates') !== 'false'
@@ -330,8 +356,11 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
 
     checkNextYearDates (objectIndex) {
         const object = this.objects[objectIndex];
-        const data = this.getData(objectIndex);
+        if (!object) {
+            return false;
+        }
 
+        const data = this.getData(objectIndex);
         if (
             !data ||
             object.textElement.getAttribute('data-next-year-dates') !== 'false'
@@ -351,6 +380,9 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
 
     showHideCalendar (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         let showCalendar = !(this.calendar && this.calendar.id === object.id);
         if (!showCalendar) {
@@ -364,6 +396,9 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
 
     showCalendar (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         this.hideCalendar();
 
@@ -400,11 +435,19 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
         super.showNotEmpty(objectIndex);
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         object.textElement.classList.add('show');
     }
 
     setDate (objectIndex, date) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         const selectedData = new Date(date);
         object.inputElements[0].value = (selectedData.getDate() + '').padStart(2, '0');
         object.inputElements[1].value = ((selectedData.getMonth() + 1) + '').padStart(2, '0');

@@ -79,6 +79,9 @@ class FormFieldInputFile extends FormFieldInputAbstract {
 
         const objectIndex = (this.objects.length - 1);
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.textElement = MiscDom.getNextSibling(element, '.ds44-fileDisplay');
         object.labelElement = MiscDom.getPreviousSibling(element.parentNode, 'label');
@@ -91,6 +94,10 @@ class FormFieldInputFile extends FormFieldInputAbstract {
 
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
+            if (object.isSubSubInitialized) {
+                continue;
+            }
+            object.isSubSubInitialized = true;
 
             object.inputElements.forEach((inputElement) => {
                 MiscEvent.addListener('change', this.fileUploaded.bind(this, objectIndex), inputElement);
@@ -102,6 +109,9 @@ class FormFieldInputFile extends FormFieldInputAbstract {
 
     fileUploaded (objectIndex, evt) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         // Get file
         const file = evt.currentTarget.files[0];
@@ -126,9 +136,11 @@ class FormFieldInputFile extends FormFieldInputAbstract {
 
     focus (objectIndex) {
         const object = this.objects[objectIndex];
-        const shapeElement = object.textElement.closest('.ds44-file__shape');
-        if (shapeElement) {
-            shapeElement.classList.add('hover');
+        if (object && object.textElement) {
+            const shapeElement = object.textElement.closest('.ds44-file__shape');
+            if (shapeElement) {
+                shapeElement.classList.add('hover');
+            }
         }
 
         super.focus(objectIndex);
@@ -136,9 +148,11 @@ class FormFieldInputFile extends FormFieldInputAbstract {
 
     blur (objectIndex) {
         const object = this.objects[objectIndex];
-        const shapeElement = object.textElement.closest('.ds44-file__shape');
-        if (shapeElement) {
-            shapeElement.classList.remove('hover');
+        if (object && object.textElement) {
+            const shapeElement = object.textElement.closest('.ds44-file__shape');
+            if (shapeElement) {
+                shapeElement.classList.remove('hover');
+            }
         }
 
         super.blur(objectIndex);
@@ -148,6 +162,10 @@ class FormFieldInputFile extends FormFieldInputAbstract {
         super.empty(objectIndex);
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         const textElementId = object.textElement.getAttribute('id');
         const ariaDescribedBy = object.valueElement.getAttribute('aria-describedby').split(' ');
         if (ariaDescribedBy.includes(textElementId)) {
@@ -166,7 +184,7 @@ class FormFieldInputFile extends FormFieldInputAbstract {
         super.setData(objectIndex, data);
 
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
+        if (!object || !object.textElement) {
             return;
         }
 
@@ -180,6 +198,10 @@ class FormFieldInputFile extends FormFieldInputAbstract {
         }
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return null;
+        }
+
         const extendedData = {};
         extendedData[object.name] = {
             'name': object.textElement.innerText
@@ -191,6 +213,7 @@ class FormFieldInputFile extends FormFieldInputAbstract {
     getText (objectIndex) {
         const object = this.objects[objectIndex];
         if (
+            !object ||
             !object.textElement ||
             !object.textElement.innerText
         ) {
@@ -215,6 +238,10 @@ class FormFieldInputFile extends FormFieldInputAbstract {
 
     getErrorMessage (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return this.formatErrorMessage(objectIndex);
+        }
+
         const file = object.inputElements[0].files[0];
         if (!file) {
             return this.formatErrorMessage(objectIndex);
@@ -232,6 +259,9 @@ class FormFieldInputFile extends FormFieldInputAbstract {
 
     hasCorrectSize (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return false;
+        }
 
         // Get file
         const file = object.inputElements[0].files[0];
@@ -250,6 +280,10 @@ class FormFieldInputFile extends FormFieldInputAbstract {
 
     hasCorrectMime (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return false;
+        }
+
         if (!object.fileExtensions) {
             return true;
         }

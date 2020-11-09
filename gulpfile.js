@@ -105,6 +105,7 @@ gulp.task('build:glyphicons', function () {
         )
         .pipe(
             iconfont({
+                formats: ['ttf', 'eot', 'woff', 'woff2'],
                 fontName: "fonts/ds44-icons", // identique au nom de iconfontCss
             }),
         )

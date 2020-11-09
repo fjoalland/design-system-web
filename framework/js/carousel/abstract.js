@@ -78,7 +78,7 @@ class CarouselAbstract {
 
     createSwipper (objectIndex) {
         const object = this.objects[objectIndex];
-        if (object.swiper) {
+        if (!object || object.swiper) {
             return;
         }
 
@@ -115,7 +115,7 @@ class CarouselAbstract {
 
     destroySwipper (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.swiper) {
+        if (!object || !object.swiper) {
             return;
         }
 
@@ -152,6 +152,12 @@ class CarouselAbstract {
             }
         };
 
+        // Take reduced motion media query into account
+        const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+        if (!mediaQuery || mediaQuery.matches) {
+            swiperParameters.speed = 0;
+        }
+
         if (object.paginationElement) {
             swiperParameters.pagination = {
                 'el': object.paginationElement,
@@ -174,14 +180,23 @@ class CarouselAbstract {
         }
 
         if (object.galleryElement) {
+            const thumbsSwiperParameters = {
+                'spaceBetween': 16,
+                'slidesPerView': 'auto',
+                'freeMode': true,
+                'watchSlidesVisibility': true,
+                'watchSlidesProgress': true
+            }
+
+            if (!mediaQuery || mediaQuery.matches) {
+                thumbsSwiperParameters.speed = 0;
+            }
+
             swiperParameters.thumbs = {
-                'swiper': (new Swiper(object.galleryElement.querySelector('.swiper-container'), {
-                    'spaceBetween': 16,
-                    'slidesPerView': 'auto',
-                    'freeMode': true,
-                    'watchSlidesVisibility': true,
-                    'watchSlidesProgress': true
-                }))
+                'swiper': (new Swiper(
+                    object.galleryElement.querySelector('.swiper-container'),
+                    thumbsSwiperParameters
+                ))
             };
         }
 
@@ -190,7 +205,7 @@ class CarouselAbstract {
 
     updatePreviousAndNextSlideMessage (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.previousElement || !object.nextElement) {
+        if (!object || !object.previousElement || !object.nextElement) {
             return;
         }
 
@@ -233,25 +248,19 @@ class CarouselAbstract {
     // Met a jour la visibilite des tuiles en fonction du placement et du nombre de tuile visible
     updateCardAccessibility (objectIndex, direction) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.swiperElement
             .querySelectorAll('.swiper-slide')
             .forEach((slideElement) => {
-                const aElement = slideElement.querySelector('a');
                 if (slideElement.classList.contains('swiper-slide-visible')) {
                     // Show slide
-                    MiscAccessibility.show(slideElement);
-
-                    if (!aElement) {
-                        slideElement.setAttribute('tabindex', '0');
-                    }
+                    this.showSlide(slideElement);
                 } else {
                     // Hide slide
-                    MiscAccessibility.hide(slideElement);
-
-                    if (!aElement) {
-                        slideElement.removeAttribute('tabindex');
-                    }
+                    this.hideSlide(slideElement);
                 }
             });
 
@@ -269,8 +278,19 @@ class CarouselAbstract {
         }
     }
 
+    showSlide (slideElement) {
+        MiscAccessibility.show(slideElement);
+    }
+
+    hideSlide (slideElement) {
+        MiscAccessibility.hide(slideElement);
+    }
+
     slide (objectIndex, direction) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         if (object.previousElement && object.nextElement) {
             this.updatePreviousAndNextSlideMessage(objectIndex);
@@ -285,7 +305,7 @@ class CarouselAbstract {
             }
 
             const object = this.objects[objectIndex];
-            if (object.swiper && object.previousElement && object.nextElement) {
+            if (object && object.swiper && object.previousElement && object.nextElement) {
                 this.updatePreviousAndNextSlideMessage(objectIndex);
             }
         }

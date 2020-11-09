@@ -26,6 +26,7 @@ class MiscTranslate {
                 'FIELD_VALID_EMAIL_MESSAGE': 'Email invalide. Merci de respecter le format d’un email',
                 'FIELD_VALID_PHONE_MESSAGE': 'Numéro de téléphone invalide. Merci de respecter le format d’un numéro de téléphone',
                 'FIELD_VALID_POSTCODE_MESSAGE': 'Code postal invalide. Merci de respecter le format d’un code postal',
+                'FIELD_VALID_NUMBER_MESSAGE': 'Nombre invalide. Merci de respecter le format d’un nombre entier',
                 'NO_RESULTS_FOUND': 'Aucun résultat trouvé',
                 'LOADING': 'Chargement en cours',
                 'SHOW': 'Afficher',
@@ -56,7 +57,9 @@ class MiscTranslate {
                 'EMPTY_SEARCH_CRITERIA': 'aucun critère',
                 'RESULTS_MAX_RESULTS': 'Il y a un trop grand nombre de résultats correspondant à votre recherche. Vous trouverez ci-dessous les {maxNbResults} plus pertinents. N’hésitez pas à affiner vos critères de recherche.',
                 'NEW_WINDOW': 'nouvelle fenêtre',
-                'TOS_OF': 'Conditions d’utilisation de'
+                'TOS_OF': 'Conditions d’utilisation de',
+                'FOOD_OBLIGATION_PER_MONTH': '€ par mois pour votre obligé alimentaire n°',
+                'FOOD_OBLIGATION_TOTAL': 'L\'estimation de la capacité contributive mensuelle de l\'ensemble de vos obligés alimentaires s\'élève à {totalFoodObligation} €.'
             },
             'en': {
                 'AROUND_ME': 'Around me',
@@ -71,6 +74,7 @@ class MiscTranslate {
                 'FIELD_VALID_EMAIL_MESSAGE': 'Invalid email format. Please enter an email with a valid format',
                 'FIELD_VALID_PHONE_MESSAGE': 'Invalid phone number format. Please enter a phone number with a valid format',
                 'FIELD_VALID_POSTCODE_MESSAGE': 'Invalid postcode format. Please enter a postcode with a valid format',
+                'FIELD_VALID_NUMBER_MESSAGE': 'Invalid number format. Please enter a number with a valid format',
                 'NO_RESULTS_FOUND': 'No results found',
                 'LOADING': 'Loading',
                 'SHOW': 'Show',
@@ -101,7 +105,9 @@ class MiscTranslate {
                 'EMPTY_SEARCH_CRITERIA': 'no criteria',
                 'RESULTS_MAX_RESULTS': 'There are too many results matching your search. Below are the {maxNbResults} most relevant. Do not hesitate to refine your search criteria.',
                 'NEW_WINDOW': 'new window',
-                'TOS_OF': 'Terms of service of'
+                'TOS_OF': 'Terms of service of',
+                'FOOD_OBLIGATION_PER_MONTH': '€ per month for your food obligation no.',
+                'FOOD_OBLIGATION_TOTAL': 'The estimate of the monthly contributory capacity of all your food obligations is {totalFoodObligation} €.'
             }
         })[MiscTranslate.getLanguage()];
     }

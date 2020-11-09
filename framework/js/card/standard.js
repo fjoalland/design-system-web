@@ -13,7 +13,10 @@ class CardStandard {
         }
 
         const elementLinks = evt.target.closest('.ds44-js-card').getElementsByTagName('a');
-        if (elementLinks[0]) {
+        if (
+            elementLinks[0] &&
+            elementLinks[0] !== evt.target
+        ) {
             elementLinks[0].click();
         }
     }

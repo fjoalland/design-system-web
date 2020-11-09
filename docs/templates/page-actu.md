@@ -17,10 +17,10 @@ variations:
 - title: Page type "Evénement" sans photo
   pattern: page/LA__evenement-sansPhoto.html
 
-- title: Page Fiche méthode (Archives)
+- title: Page Fiche méthode - Archives
   pattern: page/AD__fiche.html
 
-- title: Page Fiche Paléo (Archives)
+- title: Page Fiche Paléo - Archives
   pattern: page/AD__fiche-paleo.html
 
 - title: Template centré

@@ -8,6 +8,9 @@ class FormLayoutSearch extends FormLayoutAbstract {
 
         const objectIndex = (this.objects.length - 1);
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.containerElement = formElement.closest('.ds44-facette');
         object.parameters = {};
@@ -19,6 +22,10 @@ class FormLayoutSearch extends FormLayoutAbstract {
         // Initialize each object
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
+            if (object.isSubInitialized) {
+                continue;
+            }
+            object.isSubInitialized = true;
 
             // Bind events
             MiscEvent.addListener('search:refresh', this.search.bind(this, objectIndex));
@@ -48,6 +55,9 @@ class FormLayoutSearch extends FormLayoutAbstract {
         }
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return false;
+        }
 
         // Reset search parameters
         object.parameters = (window.searchData.parameters || {});
@@ -64,6 +74,9 @@ class FormLayoutSearch extends FormLayoutAbstract {
 
     loadFromUrl (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return false;
+        }
 
         if (object.formElement.getAttribute('data-seo-url') !== 'true') {
             this.loadFromUrlSuccess(objectIndex, MiscUrl.getHashParameters());
@@ -115,6 +128,11 @@ class FormLayoutSearch extends FormLayoutAbstract {
     }
 
     ajaxSubmit (objectIndex, formData) {
+        const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         const evt = {
             detail: {
                 parameters: formData || {},
@@ -122,15 +140,13 @@ class FormLayoutSearch extends FormLayoutAbstract {
             }
         };
 
-        const object = this.objects[objectIndex];
         object.hasSearched = true;
         this.search(objectIndex, evt);
     }
 
     search (objectIndex, evt) {
         const object = this.objects[objectIndex];
-
-        if (!object.hasSearched) {
+        if (!object || !object.hasSearched) {
             return;
         }
 
@@ -184,6 +200,9 @@ class FormLayoutSearch extends FormLayoutAbstract {
         }
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         // Save search data
         object.searchData = this.formatSearchData(
@@ -212,6 +231,9 @@ class FormLayoutSearch extends FormLayoutAbstract {
 
     showSearchData (objectIndex, options = {}) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         MiscEvent.dispatch('search:update', Object.assign({}, object.searchData, options));
     }
@@ -252,6 +274,9 @@ class FormLayoutSearch extends FormLayoutAbstract {
 
     toggleSearchView (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         if (object.containerElement.classList.contains('ds44-facette-mobile-expanded')) {
             object.containerElement.classList.remove('ds44-facette-mobile-expanded')
@@ -262,6 +287,9 @@ class FormLayoutSearch extends FormLayoutAbstract {
 
     async setSearchHash (objectIndex, searchId) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         if (MiscUtils.isInDevMode) {
             // In dev mode, generate the search id and use the local storage to store the search data

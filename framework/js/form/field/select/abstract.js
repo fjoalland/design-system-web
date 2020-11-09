@@ -12,6 +12,10 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
         const objectIndex = (this.objects.length - 1);
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         object.textElement = element;
         object.valueElement = valueElement;
         object.shapeElement = object.containerElement.querySelector('.ds44-select__shape');
@@ -36,6 +40,10 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
+            if (object.isSubInitialized) {
+                continue;
+            }
+            object.isSubInitialized = true;
 
             MiscEvent.addListener('keyUp:escape', this.escape.bind(this, objectIndex));
             MiscEvent.addListener('keyUp:arrowup', this.previousOption.bind(this, objectIndex));
@@ -78,6 +86,10 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
         // Mark the component category as answered
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         let isFinished = true;
         object.validationCategories[evt.detail.category] = {
             'isValid': evt.detail.isValid,
@@ -133,7 +145,7 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
     focusOnButtonElement (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.buttonElement) {
+        if (!object || !object.buttonElement) {
             return;
         }
 
@@ -148,10 +160,11 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         super.enableElements(objectIndex, evt);
 
         const object = this.objects[objectIndex];
-        if (!object.shapeElement) {
-            return;
-        }
-        if (!object.buttonElement) {
+        if (
+            !object ||
+            !object.shapeElement ||
+            !object.buttonElement
+        ) {
             return;
         }
 
@@ -175,16 +188,13 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         super.disableElements(objectIndex, evt);
 
         const object = this.objects[objectIndex];
-        if (!object.labelElement) {
-            return;
-        }
-        if (!object.shapeElement) {
-            return;
-        }
-        if (!object.buttonElement) {
-            return;
-        }
-        if (!object.selectListElement) {
+        if (
+            !object ||
+            !object.labelElement ||
+            !object.shapeElement ||
+            !object.buttonElement ||
+            !object.selectListElement
+        ) {
             return;
         }
 
@@ -204,7 +214,7 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
     showHideResetButton (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.resetButtonElement) {
+        if (!object || !object.resetButtonElement) {
             return;
         }
 
@@ -219,13 +229,12 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
     setData (objectIndex, data = null) {
         const object = this.objects[objectIndex];
-        if (!object.valueElement) {
-            return;
-        }
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.buttonElement) {
+        if (
+            !object ||
+            !object.valueElement ||
+            !object.textElement ||
+            !object.buttonElement
+        ) {
             return;
         }
 
@@ -255,6 +264,10 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         }
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return null;
+        }
+
         const extendedData = {};
         extendedData[object.name] = {
             'text': object.textElement.innerText
@@ -265,6 +278,9 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
     showHide (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         if (!object.isExpanded) {
             this.show(objectIndex);
@@ -277,6 +293,9 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
     focusOut (objectIndex, evt) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         if (
             !evt ||
@@ -301,19 +320,14 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
     show (objectIndex, evt) {
         const object = this.objects[objectIndex];
-        if (!object.shapeElement) {
-            return;
-        }
-        if (!object.buttonElement) {
-            return;
-        }
-        if (!object.buttonIconElement) {
-            return;
-        }
-        if (!object.buttonTextElement) {
-            return;
-        }
-        if (!object.selectContainerElement) {
+        if (
+            !object ||
+            !object.shapeElement ||
+            !object.buttonElement ||
+            !object.buttonIconElement ||
+            !object.buttonTextElement ||
+            !object.selectContainerElement
+        ) {
             return;
         }
 
@@ -339,16 +353,13 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
     hide (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.buttonElement) {
-            return;
-        }
-        if (!object.buttonIconElement) {
-            return;
-        }
-        if (!object.buttonTextElement) {
-            return;
-        }
-        if (!object.selectContainerElement) {
+        if (
+            !object ||
+            !object.buttonElement ||
+            !object.buttonIconElement ||
+            !object.buttonTextElement ||
+            !object.selectContainerElement
+        ) {
             return;
         }
 
@@ -362,8 +373,8 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
     escape (objectIndex) {
         const object = this.objects[objectIndex];
-
         if (
+            !object ||
             !document.activeElement ||
             !object.containerElement.contains(document.activeElement)
         ) {
@@ -376,7 +387,7 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
     autoComplete (objectIndex, parameters) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
+        if (!object || !object.textElement) {
             return;
         }
 
@@ -409,15 +420,15 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
     autoCompleteFill (objectIndex, results) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
+        if (
+            !object ||
+            !object.textElement ||
+            !object.selectListElement ||
+            !object.selectContainerElement
+        ) {
             return;
         }
-        if (!object.selectListElement) {
-            return;
-        }
-        if (!object.selectContainerElement) {
-            return;
-        }
+
         const subSelectListElement = object.selectListElement.querySelector('.ds44-list');
         if (!subSelectListElement) {
             return;
@@ -471,10 +482,11 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         }
 
         const object = this.objects[objectIndex];
-        if (!object.selectListElement) {
-            return;
-        }
-        if (!object.isExpanded) {
+        if (
+            !object ||
+            !object.selectListElement ||
+            !object.isExpanded
+        ) {
             return;
         }
 
@@ -498,7 +510,7 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         }
 
         const object = this.objects[objectIndex];
-        if (!object.isExpanded) {
+        if (!object || !object.isExpanded) {
             return;
         }
 
@@ -537,7 +549,7 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         }
 
         const object = this.objects[objectIndex];
-        if (!object.selectListElement) {
+        if (!object || !object.selectListElement) {
             return;
         }
 
@@ -554,13 +566,12 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
     save (objectIndex, additionalData) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.valueElement) {
-            return;
-        }
-        if (!object.selectListElement) {
+        if (
+            !object ||
+            !object.textElement ||
+            !object.valueElement ||
+            !object.selectListElement
+        ) {
             return;
         }
 
@@ -657,6 +668,10 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
     autoSubmit (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         if (object.textElement.getAttribute('data-auto-submit')) {
             // Auto submit
             const formElement = object.textElement.closest('form');
@@ -670,6 +685,10 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         super.removeInvalid(objectIndex);
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         if (object.buttonElement) {
             object.buttonElement.removeAttribute('aria-invalid');
         }
@@ -680,13 +699,12 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
     invalid (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.buttonElement) {
-            return;
-        }
-        if (!object.shapeElement) {
+        if (
+            !object ||
+            !object.textElement ||
+            !object.buttonElement ||
+            !object.shapeElement
+        ) {
             return;
         }
 

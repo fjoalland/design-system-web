@@ -13,9 +13,7 @@ class TooltipStandard {
         this.DATA_HASH_ID = 'data-hashtooltip-id';
 
         // Create tooltips
-        document
-            .querySelectorAll('.' + this.TOOLTIP_SIMPLE)
-            .forEach(this.create.bind(this));
+        this.add();
 
         // Bind events
         ['mouseenter', 'focus', 'mouseleave', 'blur']
@@ -23,9 +21,17 @@ class TooltipStandard {
                 document.body.addEventListener(eventType, this.showHide.bind(this), true);
             });
         MiscEvent.addListener('keyDown:escape', this.hideAll.bind(this));
+        MiscEvent.addListener('tooltip:add', this.add.bind(this));
+    }
+
+    add () {
+        document
+            .querySelectorAll('button.' + this.TOOLTIP_SIMPLE + ':not([data-is-initialized="true"])')
+            .forEach(this.create.bind(this));
     }
 
     create (element) {
+        element.setAttribute('data-is-initialized', 'true');
         const hashId = Math.random().toString(32).slice(2, 12);
         const prefixClassName = MiscDom.getAttribute(element, this.TOOLTIP_DATA_PREFIX_CLASS);
         const contentId = MiscDom.getAttribute(element, this.TOOLTIP_DATA_CONTENT_ID);

@@ -5,6 +5,9 @@ class FormLayoutInline extends FormLayoutAbstract {
 
     ajaxSubmit (objectIndex, formData) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         // Show loader
         MiscEvent.dispatch('loader:requestShow');
@@ -26,6 +29,9 @@ class FormLayoutInline extends FormLayoutAbstract {
         ) {
             this.notification(objectIndex, null, response.message, response.message_list, response.status || 'information');
         }
+
+        this.clear(objectIndex);
+
         MiscEvent.dispatch('loader:requestHide');
     }
 
@@ -41,6 +47,9 @@ class FormLayoutInline extends FormLayoutAbstract {
 
     showInlineData (objectIndex, inlineData) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         const destinationElement = document.querySelector(object.formElement.getAttribute('data-result-destination'));
         if (!inlineData.content_html || !destinationElement) {

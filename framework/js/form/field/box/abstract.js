@@ -13,6 +13,9 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
 
         const objectIndex = (this.objects.length - 1);
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.inputElements = element.querySelectorAll('input[type="' + this.category + '"]');
     }
@@ -22,6 +25,10 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
 
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
+            if (object.isSubInitialized) {
+                continue;
+            }
+            object.isSubInitialized = true;
 
             object.inputElements.forEach((inputElement) => {
                 MiscEvent.addListener('click', this.toggleCheck.bind(this, objectIndex), inputElement);
@@ -33,6 +40,9 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
         super.enableElements(objectIndex, evt);
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.inputElements.forEach((inputElement) => {
             inputElement.removeAttribute('aria-disabled');
@@ -44,6 +54,9 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
         super.disableElements(objectIndex, evt);
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.inputElements.forEach((inputElement) => {
             inputElement.setAttribute('aria-disabled', 'true');
@@ -53,7 +66,7 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
 
     toggleCheck (objectIndex, evt) {
         const object = this.objects[objectIndex];
-        if (!object.isEnabled) {
+        if (!object || !object.isEnabled) {
             evt.stopPropagation();
             evt.preventDefault();
 
@@ -65,6 +78,9 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
 
     setData (objectIndex, data = null) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.inputElements.forEach((inputElement) => {
             if (
@@ -81,6 +97,9 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
 
     getData (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return null;
+        }
 
         const inputElementValues = [];
         const inputElementTexts = [];
@@ -108,6 +127,10 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
         super.removeInvalid(objectIndex);
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         object.inputElements.forEach((inputElement) => {
             const defaultAriaDescribedBy = inputElement.getAttribute('data-bkp-aria-describedby');
             if (!defaultAriaDescribedBy) {
@@ -122,6 +145,9 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
 
     invalid (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         const errorMessageElementId = MiscUtils.generateId();
         this.showErrorMessage(objectIndex, errorMessageElementId);

@@ -29,7 +29,7 @@ class PageElement {
         this.visibilityCounter = Math.min(0, (this.visibilityCounter + 1));
         if (this.visibilityCounter === 0) {
             for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
-                MiscAccessibility.show(this.objects[objectIndex].element);
+                MiscAccessibility.show(this.objects[objectIndex].element, true, false);
             }
         }
     }
@@ -37,7 +37,7 @@ class PageElement {
     hide () {
         if (this.visibilityCounter === 0) {
             for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
-                MiscAccessibility.hide(this.objects[objectIndex].element);
+                MiscAccessibility.hide(this.objects[objectIndex].element, true, false);
             }
         }
         this.visibilityCounter--;

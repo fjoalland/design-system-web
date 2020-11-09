@@ -10,9 +10,6 @@ class KeyboardStandard {
             return;
         }
 
-        MiscEvent.dispatch('keyDown:*');
-        MiscEvent.dispatch('keyDown:' + (evt.key === ' ' ? 'Spacebar' : evt.key).toLowerCase());
-
         // Make the space bar or enter act like a mouse click
         const clickableElement = this.getClickableElement(evt);
         if (clickableElement) {
@@ -24,18 +21,40 @@ class KeyboardStandard {
                 'bubbles': true,
                 'cancelable': true
             }));
-            clickableElement.click();
+            clickableElement.dispatchEvent(new MouseEvent('click', {
+                'bubbles': true,
+                'cancelable': true
+            }));
 
             evt.stopPropagation();
             evt.preventDefault();
 
             return false;
         }
+
+        // Prevent non valid characters from being entered in inputs
+        if (!this.isValid(evt)) {
+            evt.stopPropagation();
+            evt.preventDefault();
+
+            return false;
+        }
+
+        MiscEvent.dispatch('keyDown:*');
+        MiscEvent.dispatch('keyDown:' + (evt.key === ' ' ? 'Spacebar' : evt.key).toLowerCase());
     }
 
     keyPress (evt) {
         if (!evt.key) {
             return;
+        }
+
+        const clickableElement = this.getClickableElement(evt);
+        if (clickableElement) {
+            evt.stopPropagation();
+            evt.preventDefault();
+
+            return false;
         }
 
         MiscEvent.dispatch('keyPress:*');
@@ -45,6 +64,14 @@ class KeyboardStandard {
     keyUp (evt) {
         if (!evt.key) {
             return;
+        }
+
+        const clickableElement = this.getClickableElement(evt);
+        if (clickableElement) {
+            evt.stopPropagation();
+            evt.preventDefault();
+
+            return false;
         }
 
         MiscEvent.dispatch('keyUp:*');
@@ -67,6 +94,26 @@ class KeyboardStandard {
         }
 
         return null;
+    }
+
+    isValid (evt) {
+        if (!document.activeElement) {
+            return true;
+        }
+
+        const numericElement = document.activeElement.closest('[inputmode="numeric"]');
+        if (numericElement) {
+            const allowedCharacters = '0123456789';
+
+            if (
+                evt.key.length === 1 &&
+                allowedCharacters.indexOf(evt.key) === -1
+            ) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
 
