@@ -87,7 +87,7 @@ class MiscAccessibility {
         }
     }
 
-    static show (element, bubble = true, isChild = false) {
+    static show (element, bubble = true, force = true, isChild = false) {
         if (!element) {
             // No element
             return;
@@ -105,25 +105,30 @@ class MiscAccessibility {
             // Is parent element
             element.removeAttribute('aria-hidden');
         }
-        if (
-            element.closest(MiscAccessibility.getEnabledElementsSelector()) === element &&
-            element.getAttribute('tabindex') === '-1'
-        ) {
+        if (element.closest(MiscAccessibility.getEnabledElementsSelector()) === element) {
             if (element.hasAttribute('data-bkp-tabindex')) {
                 element.setAttribute('tabindex', element.getAttribute('data-bkp-tabindex'));
             } else {
+                element.removeAttribute('tabindex');
+            }
+            element.removeAttribute('data-bkp-tabindex');
+
+            if (
+                force &&
+                element.getAttribute('tabindex') === '-1'
+            ) {
                 element.removeAttribute('tabindex');
             }
         }
 
         if (bubble) {
             Array.from(element.children).map((childElement) => {
-                MiscAccessibility.show(childElement, true, true);
+                MiscAccessibility.show(childElement, bubble, force, true);
             });
         }
     }
 
-    static hide (element, bubble = true, isChild = false) {
+    static hide (element, bubble = true, force = true, isChild = false) {
         if (!element) {
             // No element
             return;
@@ -142,19 +147,22 @@ class MiscAccessibility {
             element.setAttribute('aria-hidden', true);
         }
         if (element.closest(MiscAccessibility.getEnabledElementsSelector()) === element) {
-            if (
-                element.hasAttribute('tabindex') &&
-                element.getAttribute('tabindex') !== '-1' &&
-                !element.hasAttribute('data-bkp-tabindex')
-            ) {
-                element.setAttribute('data-bkp-tabindex', element.getAttribute('tabindex'));
+            if (force) {
+                element.setAttribute('data-bkp-tabindex', '-1');
+            } else if (!element.hasAttribute('data-bkp-tabindex')) {
+                if (element.hasAttribute('tabindex')) {
+                    element.setAttribute('data-bkp-tabindex', element.getAttribute('tabindex'));
+                } else {
+                    element.setAttribute('data-bkp-tabindex', '');
+                }
             }
+
             element.setAttribute('tabindex', '-1');
         }
 
         if (bubble) {
             Array.from(element.children).map((childElement) => {
-                MiscAccessibility.hide(childElement, true, true);
+                MiscAccessibility.hide(childElement, bubble, force, true);
             });
         }
     }
@@ -358,6 +366,10 @@ class MiscForm {
     static isPostcode (value) {
         return /^(?:(?:0[1-9]|[1-8]\d|9[0-5]|9[7-8])\d{3})$/.test(value);
     }
+
+    static isNumber (value) {
+        return /^[0-9]*$/.test(value);
+    }
 }
 
 class MiscRequest {
@@ -440,6 +452,7 @@ class MiscTranslate {
                 'FIELD_VALID_EMAIL_MESSAGE': 'Email invalide. Merci de respecter le format d’un email',
                 'FIELD_VALID_PHONE_MESSAGE': 'Numéro de téléphone invalide. Merci de respecter le format d’un numéro de téléphone',
                 'FIELD_VALID_POSTCODE_MESSAGE': 'Code postal invalide. Merci de respecter le format d’un code postal',
+                'FIELD_VALID_NUMBER_MESSAGE': 'Nombre invalide. Merci de respecter le format d’un nombre entier',
                 'NO_RESULTS_FOUND': 'Aucun résultat trouvé',
                 'LOADING': 'Chargement en cours',
                 'SHOW': 'Afficher',
@@ -470,7 +483,9 @@ class MiscTranslate {
                 'EMPTY_SEARCH_CRITERIA': 'aucun critère',
                 'RESULTS_MAX_RESULTS': 'Il y a un trop grand nombre de résultats correspondant à votre recherche. Vous trouverez ci-dessous les {maxNbResults} plus pertinents. N’hésitez pas à affiner vos critères de recherche.',
                 'NEW_WINDOW': 'nouvelle fenêtre',
-                'TOS_OF': 'Conditions d’utilisation de'
+                'TOS_OF': 'Conditions d’utilisation de',
+                'FOOD_OBLIGATION_PER_MONTH': '€ par mois pour votre obligé alimentaire n°',
+                'FOOD_OBLIGATION_TOTAL': 'L\'estimation de la capacité contributive mensuelle de l\'ensemble de vos obligés alimentaires s\'élève à {totalFoodObligation} €.'
             },
             'en': {
                 'AROUND_ME': 'Around me',
@@ -485,6 +500,7 @@ class MiscTranslate {
                 'FIELD_VALID_EMAIL_MESSAGE': 'Invalid email format. Please enter an email with a valid format',
                 'FIELD_VALID_PHONE_MESSAGE': 'Invalid phone number format. Please enter a phone number with a valid format',
                 'FIELD_VALID_POSTCODE_MESSAGE': 'Invalid postcode format. Please enter a postcode with a valid format',
+                'FIELD_VALID_NUMBER_MESSAGE': 'Invalid number format. Please enter a number with a valid format',
                 'NO_RESULTS_FOUND': 'No results found',
                 'LOADING': 'Loading',
                 'SHOW': 'Show',
@@ -515,7 +531,9 @@ class MiscTranslate {
                 'EMPTY_SEARCH_CRITERIA': 'no criteria',
                 'RESULTS_MAX_RESULTS': 'There are too many results matching your search. Below are the {maxNbResults} most relevant. Do not hesitate to refine your search criteria.',
                 'NEW_WINDOW': 'new window',
-                'TOS_OF': 'Terms of service of'
+                'TOS_OF': 'Terms of service of',
+                'FOOD_OBLIGATION_PER_MONTH': '€ per month for your food obligation no.',
+                'FOOD_OBLIGATION_TOTAL': 'The estimate of the monthly contributory capacity of all your food obligations is {totalFoodObligation} €.'
             }
         })[MiscTranslate.getLanguage()];
     }
@@ -810,13 +828,22 @@ class FormFieldAbstract {
         }
         this.initialize();
         this.fill();
+
+        MiscEvent.addListener('field:add', this.add.bind(this));
+        MiscEvent.addListener('field:destroy', this.destroy.bind(this));
+        MiscEvent.addListener('form:validate', this.validate.bind(this));
+        MiscEvent.addListener('form:clear', this.clear.bind(this));
     }
 
     create (element) {
         const object = {
             'id': MiscUtils.generateId(),
-            'name': (element.getAttribute('name') || element.getAttribute('data-name')),
+            'name': this.getName(element),
             'containerElement': (element.closest('.ds44-form__container') || element),
+            'isInitialized': false,
+            'isSubInitialized': false,
+            'isSubSubInitialized': false,
+            'isFilled': false,
             'isRequired': (element.getAttribute('required') !== null || element.getAttribute('data-required') === 'true'),
             'isEnabled': !(element.getAttribute('readonly') !== null || element.getAttribute('disabled') !== null || element.getAttribute('data-disabled') === 'true')
         };
@@ -836,6 +863,10 @@ class FormFieldAbstract {
         // Initialize each object
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
+            if (object.isInitialized) {
+                continue;
+            }
+            object.isInitialized = true;
 
             this.addBackupAttributes(objectIndex);
 
@@ -859,8 +890,55 @@ class FormFieldAbstract {
             MiscEvent.addListener('field:disable', this.disable.bind(this, objectIndex), object.containerElement);
             MiscEvent.addListener('field:' + object.name + ':set', this.set.bind(this, objectIndex));
         }
+    }
 
-        MiscEvent.addListener('form:validate', this.validate.bind(this));
+    add (evt) {
+        if (
+            !evt ||
+            !evt.detail ||
+            !evt.detail.selector ||
+            !evt.detail.category ||
+            evt.detail.category !== this.category
+        ) {
+            return;
+        }
+
+        document
+            .querySelectorAll(evt.detail.selector)
+            .forEach((element) => {
+                this.create(element);
+            });
+        this.initialize();
+        this.fill();
+    }
+
+    destroy (evt) {
+        if (
+            !evt ||
+            !evt.detail ||
+            !evt.detail.selector ||
+            !evt.detail.category ||
+            evt.detail.category !== this.category
+        ) {
+            return;
+        }
+
+        document
+            .querySelectorAll(evt.detail.selector)
+            .forEach((element) => {
+                for (let objectIndex = this.objects.length - 1; objectIndex >= 0; objectIndex--) {
+                    const object = this.objects[objectIndex];
+                    if (object.name !== this.getName(element)) {
+                        continue;
+                    }
+
+                    this.objects.splice(objectIndex, 1);
+                }
+            });
+    }
+
+    getName (element) {
+        return (element.getAttribute('name') || element.getAttribute('data-name'));
     }
 
     fill () {
@@ -890,6 +968,10 @@ class FormFieldAbstract {
         // Set each object
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
+            if (object.isFilled) {
+                continue;
+            }
+            object.isFilled = true;
 
             if (externalParameters[object.name]) {
                 this.set(objectIndex, externalParameters[object.name]);
@@ -899,6 +981,9 @@ class FormFieldAbstract {
 
     addBackupAttributes (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         if (object.inputElements) {
             object.inputElements.forEach((inputElement) => {
@@ -948,7 +1033,7 @@ class FormFieldAbstract {
 
     getData (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.valueElement) {
+        if (!object || !object.valueElement) {
             return null;
         }
 
@@ -972,6 +1057,9 @@ class FormFieldAbstract {
 
     enableDisableLinkedField (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         const linkedFieldsContainerElement = object.containerElement.closest('.ds44-js-linked-fields');
         if (!linkedFieldsContainerElement) {
@@ -1039,6 +1127,9 @@ class FormFieldAbstract {
         }
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.isEnabled = true;
         object.containerElement.removeAttribute('data-field-enabled');
@@ -1062,18 +1153,26 @@ class FormFieldAbstract {
     }
 
     enableElements (objectIndex, evt) {
+        const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         if (
             evt &&
             evt.detail &&
             evt.detail.areMaskedLinkedFields
         ) {
-            const object = this.objects[objectIndex];
             object.containerElement.classList.remove('hidden');
         }
     }
 
     disable (objectIndex, evt) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         object.isEnabled = false;
         object.parentValue = null;
         object.containerElement.removeAttribute('data-field-disabled');
@@ -1084,19 +1183,23 @@ class FormFieldAbstract {
     }
 
     disableElements (objectIndex, evt) {
+        const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         if (
             evt &&
             evt.detail &&
             evt.detail.areMaskedLinkedFields
         ) {
-            const object = this.objects[objectIndex];
             object.containerElement.classList.add('hidden');
         }
     }
 
     isEnableAllowed (objectIndex, evt) {
         const object = this.objects[objectIndex];
-        if (!object.valuesAllowed) {
+        if (!object || !object.valuesAllowed) {
             return true;
         }
 
@@ -1127,11 +1230,11 @@ class FormFieldAbstract {
 
     enter (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.labelElement) {
-            return;
-        }
-
-        if (!object.isEnabled) {
+        if (
+            !object ||
+            !object.labelElement ||
+            !object.isEnabled
+        ) {
             return;
         }
 
@@ -1140,11 +1243,38 @@ class FormFieldAbstract {
 
     quit (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.labelElement) {
+        if (!object || !object.labelElement) {
             return;
         }
 
         object.labelElement.classList.remove(this.labelClassName);
+    }
+
+    clear (evt) {
+        if (
+            !evt ||
+            !evt.detail ||
+            !evt.detail.formElement
+        ) {
+            return;
+        }
+
+        for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
+            const object = this.objects[objectIndex];
+
+            // Is the field in the form that is being validated
+            if (!evt.detail.formElement.contains(object.containerElement)) {
+                continue;
+            }
+
+            // Don't reset a hidden field
+            if (object.containerElement.closest('.ds44-select-list_elem_child.hidden')) {
+                continue;
+            }
+
+            this.empty(objectIndex);
+            this.quit(objectIndex);
+        }
     }
 
     validate (evt) {
@@ -1159,13 +1289,15 @@ class FormFieldAbstract {
         let isValid = true;
         let data = {};
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
+            const object = this.objects[objectIndex];
+
             // Is the field in the form that is being validated
-            if (!evt.detail.formElement.contains(this.objects[objectIndex].containerElement)) {
+            if (!evt.detail.formElement.contains(object.containerElement)) {
                 continue;
             }
 
             // Don't validate a hidden field
-            if (this.objects[objectIndex].containerElement.closest('.ds44-select-list_elem_child.hidden')) {
+            if (object.containerElement.closest('.ds44-select-list_elem_child.hidden')) {
                 continue;
             }
 
@@ -1176,7 +1308,7 @@ class FormFieldAbstract {
                 isValid = false;
             } else if (
                 evt.detail.formElement.classList.contains('ds44-listSelect') ||
-                !this.objects[objectIndex].containerElement.closest('.ds44-select-list_elem_child')
+                !object.containerElement.closest('.ds44-select-list_elem_child')
             ) {
                 // Don't take into consideration data from sub elements
                 // The data is already injected in the parent value
@@ -1200,6 +1332,9 @@ class FormFieldAbstract {
 
     removeInvalid (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         const informationElement = object.containerElement.querySelector(':scope > .ds44-field-information');
         if (!informationElement) {
@@ -1224,6 +1359,7 @@ class FormFieldAbstract {
     isValid (objectIndex) {
         const object = this.objects[objectIndex];
         if (
+            !object ||
             (
                 object.isRequired &&
                 object.isEnabled &&
@@ -1255,6 +1391,9 @@ class FormFieldAbstract {
 
     showErrorMessage (objectIndex, errorMessageElementId = null) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         // Recreate information structure
         let informationElement = object.containerElement.querySelector(':scope > .ds44-field-information');
@@ -1307,7 +1446,7 @@ class FormFieldAbstract {
 
     formatErrorMessage (objectIndex, errorMessage = this.errorMessage, patterns) {
         const object = this.objects[objectIndex];
-        if (!object.labelElement) {
+        if (!object || !object.labelElement) {
             return MiscTranslate._(errorMessage, patterns);
         }
 
@@ -1401,7 +1540,7 @@ class CarouselAbstract {
 
     createSwipper (objectIndex) {
         const object = this.objects[objectIndex];
-        if (object.swiper) {
+        if (!object || object.swiper) {
             return;
         }
 
@@ -1438,7 +1577,7 @@ class CarouselAbstract {
 
     destroySwipper (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.swiper) {
+        if (!object || !object.swiper) {
             return;
         }
 
@@ -1475,6 +1614,12 @@ class CarouselAbstract {
             }
         };
 
+        // Take reduced motion media query into account
+        const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+        if (!mediaQuery || mediaQuery.matches) {
+            swiperParameters.speed = 0;
+        }
+
         if (object.paginationElement) {
             swiperParameters.pagination = {
                 'el': object.paginationElement,
@@ -1497,14 +1642,23 @@ class CarouselAbstract {
         }
 
         if (object.galleryElement) {
+            const thumbsSwiperParameters = {
+                'spaceBetween': 16,
+                'slidesPerView': 'auto',
+                'freeMode': true,
+                'watchSlidesVisibility': true,
+                'watchSlidesProgress': true
+            }
+
+            if (!mediaQuery || mediaQuery.matches) {
+                thumbsSwiperParameters.speed = 0;
+            }
+
             swiperParameters.thumbs = {
-                'swiper': (new Swiper(object.galleryElement.querySelector('.swiper-container'), {
-                    'spaceBetween': 16,
-                    'slidesPerView': 'auto',
-                    'freeMode': true,
-                    'watchSlidesVisibility': true,
-                    'watchSlidesProgress': true
-                }))
+                'swiper': (new Swiper(
+                    object.galleryElement.querySelector('.swiper-container'),
+                    thumbsSwiperParameters
+                ))
             };
         }
 
@@ -1513,7 +1667,7 @@ class CarouselAbstract {
 
     updatePreviousAndNextSlideMessage (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.previousElement || !object.nextElement) {
+        if (!object || !object.previousElement || !object.nextElement) {
             return;
         }
 
@@ -1556,25 +1710,19 @@ class CarouselAbstract {
     // Met a jour la visibilite des tuiles en fonction du placement et du nombre de tuile visible
     updateCardAccessibility (objectIndex, direction) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.swiperElement
             .querySelectorAll('.swiper-slide')
             .forEach((slideElement) => {
-                const aElement = slideElement.querySelector('a');
                 if (slideElement.classList.contains('swiper-slide-visible')) {
                     // Show slide
-                    MiscAccessibility.show(slideElement);
-
-                    if (!aElement) {
-                        slideElement.setAttribute('tabindex', '0');
-                    }
+                    this.showSlide(slideElement);
                 } else {
                     // Hide slide
-                    MiscAccessibility.hide(slideElement);
-
-                    if (!aElement) {
-                        slideElement.removeAttribute('tabindex');
-                    }
+                    this.hideSlide(slideElement);
                 }
             });
 
@@ -1592,8 +1740,19 @@ class CarouselAbstract {
         }
     }
 
+    showSlide (slideElement) {
+        MiscAccessibility.show(slideElement);
+    }
+
+    hideSlide (slideElement) {
+        MiscAccessibility.hide(slideElement);
+    }
+
     slide (objectIndex, direction) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         if (object.previousElement && object.nextElement) {
             this.updatePreviousAndNextSlideMessage(objectIndex);
@@ -1608,7 +1767,7 @@ class CarouselAbstract {
             }
 
             const object = this.objects[objectIndex];
-            if (object.swiper && object.previousElement && object.nextElement) {
+            if (object && object.swiper && object.previousElement && object.nextElement) {
                 this.updatePreviousAndNextSlideMessage(objectIndex);
             }
         }
@@ -1761,6 +1920,9 @@ class MapAbstract {
 
     afterLoad (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         // Add geojson if included
         const geojsonUrl = object.mapElement.getAttribute('data-geojson-url');
@@ -1793,7 +1955,7 @@ class MapAbstract {
     loadGeojson (objectIndex, geojson) {
         if (geojson) {
             const object = this.objects[objectIndex];
-            if(object.geojson) {
+            if (!object || object.geojson) {
                 return;
             }
 
@@ -1842,8 +2004,7 @@ class MapAbstract {
 
     showGeojson (objectIndex) {
         const object = this.objects[objectIndex];
-
-        if (!object.isGeojsonLoaded) {
+        if (!object || !object.isGeojsonLoaded) {
             return;
         }
 
@@ -1878,14 +2039,14 @@ class MapAbstract {
 
             const features = object.geojson.features;
             for (let i = 0; i < features.length; i++) {
-                if(geojsonIds.includes(features[i].properties.name)) {
+                if (geojsonIds.includes(features[i].properties.name)) {
                     hasBoundingBox = true;
 
                     for (let j = 0; j < features[i].geometry.coordinates.length; j++) {
                         const subCoordinates = features[i].geometry.coordinates[j];
 
                         for (let k = 0; k < subCoordinates.length; k++) {
-                            if(!boundingBox) {
+                            if (!boundingBox) {
                                 boundingBox = new window.mapboxgl.LngLatBounds(subCoordinates[k], subCoordinates[k]);
                             } else {
                                 boundingBox = boundingBox.extend(new window.mapboxgl.LngLatBounds(subCoordinates[k], subCoordinates[k]));
@@ -1910,6 +2071,9 @@ class MapAbstract {
 
     translateMap (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         const mapCanvasElement = object.mapElement.querySelector('.mapboxgl-canvas');
         if (mapCanvasElement) {
@@ -2015,6 +2179,10 @@ class MapAbstract {
 
     search (objectIndex, evt) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         object.newResults = evt.detail.newResults;
         object.zoom = evt.detail.zoom;
         object.addUp = evt.detail.addUp;
@@ -2030,6 +2198,9 @@ class MapAbstract {
 
     toggleView (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         const resultsElement = object.mapElement.closest('.ds44-results')
         if (resultsElement) {
@@ -2079,6 +2250,9 @@ class MapAbstract {
 
     resizeMap (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         if (object.map && object.map.resize) {
             object.map.resize();
@@ -2089,6 +2263,10 @@ class MapAbstract {
 
     scroll (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         const scrollTop = MiscUtils.getScrollTop();
         const enableScrolling = (object.parentElement.offsetHeight > object.containerElement.offsetHeight);
 
@@ -2140,6 +2318,9 @@ class MapAbstract {
 
     getTop (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return 0;
+        }
 
         if (MiscUtils.getScrollTop() > this.getMaximumTop(objectIndex)) {
             return object.parentElement.offsetHeight - object.containerElement.offsetHeight;
@@ -2150,6 +2331,9 @@ class MapAbstract {
 
     getMaximumTop (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return 0;
+        }
 
         return object.maximumTop - MiscDom.getHeaderHeight();
     }
@@ -2326,7 +2510,7 @@ class OverlayAbstract {
         }
 
         if (this.visibilityCounter === 0) {
-            MiscAccessibility.hide(this.modal);
+            MiscAccessibility.hide(this.modal, true, false);
         }
         this.visibilityCounter--;
     }
@@ -2338,7 +2522,7 @@ class OverlayAbstract {
 
         this.visibilityCounter = Math.min(0, (this.visibilityCounter + 1));
         if (this.visibilityCounter === 0) {
-            MiscAccessibility.show(this.modal);
+            MiscAccessibility.show(this.modal, true, false);
         }
     }
 }
@@ -2539,6 +2723,9 @@ class FormLayoutAbstract {
 
     start (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         if (object.formElement.getAttribute('data-auto-load') === 'true') {
             MiscEvent.dispatch('submit', { 'dryRun': true }, object.formElement);
@@ -2548,6 +2735,10 @@ class FormLayoutAbstract {
     validation (objectIndex, evt) {
         // This function will be fired by each component category so they can tell if they are valid or not
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         object.hasBeenChecked = true;
 
         if (
@@ -2584,6 +2775,9 @@ class FormLayoutAbstract {
 
     submit (objectIndex, evt) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return false;
+        }
 
         // Submission is in two steps :
         //  - First we ask the form components if they are valid through event dispatching
@@ -2742,6 +2936,9 @@ class FormLayoutAbstract {
                     .execute(recaptchaId, { action: 'submit' })
                     .then((function (objectIndex, token) {
                         const object = this.objects[objectIndex];
+                        if (!object) {
+                            return;
+                        }
 
                         if (object.formElement.getAttribute('data-is-ajax') === 'true') {
                             // Ajax submission
@@ -2766,6 +2963,9 @@ class FormLayoutAbstract {
 
     send (objectIndex, formData) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         if (object.formElement.getAttribute('data-is-ajax') === 'true') {
             // Ajax submission
@@ -2779,8 +2979,24 @@ class FormLayoutAbstract {
         // Abstract method
     }
 
+    clear (objectIndex) {
+        const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
+        if (object.formElement.getAttribute('data-empty-after-submit') === 'true') {
+            MiscEvent.dispatch('form:clear', {
+                'formElement': object.formElement
+            });
+        }
+    }
+
     notification (objectIndex, messageId, messageText, messageList, notificationType = 'error') {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         let containerElement = object.formElement.querySelector('.ds44-msg-container');
         if (containerElement) {
@@ -2851,6 +3067,9 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
 
         const objectIndex = (this.objects.length - 1);
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.inputElements = element.querySelectorAll('input[type="' + this.category + '"]');
     }
@@ -2860,6 +3079,10 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
 
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
+            if (object.isSubInitialized) {
+                continue;
+            }
+            object.isSubInitialized = true;
 
             object.inputElements.forEach((inputElement) => {
                 MiscEvent.addListener('click', this.toggleCheck.bind(this, objectIndex), inputElement);
@@ -2871,6 +3094,9 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
         super.enableElements(objectIndex, evt);
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.inputElements.forEach((inputElement) => {
             inputElement.removeAttribute('aria-disabled');
@@ -2882,6 +3108,9 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
         super.disableElements(objectIndex, evt);
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.inputElements.forEach((inputElement) => {
             inputElement.setAttribute('aria-disabled', 'true');
@@ -2891,7 +3120,7 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
 
     toggleCheck (objectIndex, evt) {
         const object = this.objects[objectIndex];
-        if (!object.isEnabled) {
+        if (!object || !object.isEnabled) {
             evt.stopPropagation();
             evt.preventDefault();
 
@@ -2903,6 +3132,9 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
 
     setData (objectIndex, data = null) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.inputElements.forEach((inputElement) => {
             if (
@@ -2919,6 +3151,9 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
 
     getData (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return null;
+        }
 
         const inputElementValues = [];
         const inputElementTexts = [];
@@ -2946,6 +3181,10 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
         super.removeInvalid(objectIndex);
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         object.inputElements.forEach((inputElement) => {
             const defaultAriaDescribedBy = inputElement.getAttribute('data-bkp-aria-describedby');
             if (!defaultAriaDescribedBy) {
@@ -2960,6 +3199,9 @@ class FormFieldBoxAbstract extends FormFieldAbstract {
 
     invalid (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         const errorMessageElementId = MiscUtils.generateId();
         this.showErrorMessage(objectIndex, errorMessageElementId);
@@ -2983,6 +3225,9 @@ class FormFieldInputAbstract extends FormFieldAbstract {
 
         const objectIndex = (this.objects.length - 1);
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.textElement = element;
         object.valueElement = element;
@@ -2996,6 +3241,10 @@ class FormFieldInputAbstract extends FormFieldAbstract {
 
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
+            if (object.isSubInitialized) {
+                continue;
+            }
+            object.isSubInitialized = true;
 
             MiscEvent.addListener('focus', this.focus.bind(this, objectIndex), object.textElement);
             MiscEvent.addListener('blur', this.blur.bind(this, objectIndex), object.textElement);
@@ -3013,10 +3262,11 @@ class FormFieldInputAbstract extends FormFieldAbstract {
 
     write (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (object.textElement !== document.activeElement) {
+        if (
+            !object ||
+            !object.textElement ||
+            object.textElement !== document.activeElement
+        ) {
             return;
         }
 
@@ -3039,6 +3289,9 @@ class FormFieldInputAbstract extends FormFieldAbstract {
         super.enableElements(objectIndex, evt);
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.inputElements.forEach((inputElement) => {
             inputElement.removeAttribute('readonly');
@@ -3053,6 +3306,9 @@ class FormFieldInputAbstract extends FormFieldAbstract {
         super.disableElements(objectIndex, evt);
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.inputElements.forEach((inputElement) => {
             inputElement.setAttribute('readonly', 'true');
@@ -3068,7 +3324,7 @@ class FormFieldInputAbstract extends FormFieldAbstract {
 
     showHideResetButton (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.resetButtonElement) {
+        if (!object || !object.resetButtonElement) {
             return;
         }
 
@@ -3083,7 +3339,7 @@ class FormFieldInputAbstract extends FormFieldAbstract {
 
     setData (objectIndex, data = null) {
         const object = this.objects[objectIndex];
-        if (!object.valueElement) {
+        if (!object || !object.valueElement) {
             return;
         }
 
@@ -3104,6 +3360,10 @@ class FormFieldInputAbstract extends FormFieldAbstract {
         }
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return null;
+        }
+
         const extendedData = {};
         extendedData[object.name] = {
             'text': object.valueElement.value
@@ -3115,6 +3375,7 @@ class FormFieldInputAbstract extends FormFieldAbstract {
     getText (objectIndex) {
         const object = this.objects[objectIndex];
         if (
+            !object ||
             !object.textElement ||
             !object.textElement.value
         ) {
@@ -3126,6 +3387,9 @@ class FormFieldInputAbstract extends FormFieldAbstract {
 
     isEmpty (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return true;
+        }
 
         let isEmpty = !this.getText(objectIndex);
         if (isEmpty) {
@@ -3156,14 +3420,16 @@ class FormFieldInputAbstract extends FormFieldAbstract {
 
     focusOnTextElement (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         MiscAccessibility.setFocus(object.inputElements[0]);
     }
 
     focus (objectIndex) {
         const object = this.objects[objectIndex];
-
-        if (!object.isEnabled) {
+        if (!object || !object.isEnabled) {
             return;
         }
 
@@ -3180,16 +3446,16 @@ class FormFieldInputAbstract extends FormFieldAbstract {
 
     getErrorMessage (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
+        if (!object || !object.textElement) {
             return this.formatErrorMessage(objectIndex);
         }
 
         const data = this.getData(objectIndex);
-        const autocomplete = object.textElement.getAttribute('autocomplete');
-        if (!data || !autocomplete) {
+        if (!data) {
             return this.formatErrorMessage(objectIndex);
         }
 
+        const autocomplete = object.textElement.getAttribute('autocomplete');
         if (
             autocomplete === 'email' &&
             !MiscForm.isEmail(data[object.name].value)
@@ -3209,21 +3475,29 @@ class FormFieldInputAbstract extends FormFieldAbstract {
             return this.formatErrorMessage(objectIndex, 'FIELD_VALID_POSTCODE_MESSAGE');
         }
 
+        const inputMode = object.textElement.getAttribute('inputmode');
+        if (
+            inputMode === 'numeric' &&
+            !MiscForm.isNumber(data[object.name].value)
+        ) {
+            return this.formatErrorMessage(objectIndex, 'FIELD_VALID_NUMBER_MESSAGE');
+        }
+
         return this.formatErrorMessage(objectIndex);
     }
 
     checkFormat (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
+        if (!object || !object.textElement) {
             return true;
         }
 
         const data = this.getData(objectIndex);
-        const autocomplete = object.textElement.getAttribute('autocomplete');
-        if (!data || !autocomplete) {
+        if (!data) {
             return true;
         }
 
+        const autocomplete = object.textElement.getAttribute('autocomplete');
         if (
             autocomplete === 'email' &&
             !MiscForm.isEmail(data[object.name].value)
@@ -3243,6 +3517,14 @@ class FormFieldInputAbstract extends FormFieldAbstract {
             return false;
         }
 
+        const inputMode = object.textElement.getAttribute('inputmode');
+        if (
+            inputMode === 'numeric' &&
+            !MiscForm.isNumber(data[object.name].value)
+        ) {
+            return false;
+        }
+
         return true;
     }
 
@@ -3250,6 +3532,10 @@ class FormFieldInputAbstract extends FormFieldAbstract {
         super.removeInvalid(objectIndex);
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         if (object.textElement) {
             object.textElement.classList.remove('ds44-error');
         }
@@ -3267,7 +3553,7 @@ class FormFieldInputAbstract extends FormFieldAbstract {
 
     invalid (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
+        if (!object || !object.textElement) {
             return;
         }
 
@@ -3301,6 +3587,10 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
         const objectIndex = (this.objects.length - 1);
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         object.textElement = element;
         object.valueElement = valueElement;
         object.shapeElement = object.containerElement.querySelector('.ds44-select__shape');
@@ -3325,6 +3615,10 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
+            if (object.isSubInitialized) {
+                continue;
+            }
+            object.isSubInitialized = true;
 
             MiscEvent.addListener('keyUp:escape', this.escape.bind(this, objectIndex));
             MiscEvent.addListener('keyUp:arrowup', this.previousOption.bind(this, objectIndex));
@@ -3367,6 +3661,10 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
         // Mark the component category as answered
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         let isFinished = true;
         object.validationCategories[evt.detail.category] = {
             'isValid': evt.detail.isValid,
@@ -3422,7 +3720,7 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
     focusOnButtonElement (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.buttonElement) {
+        if (!object || !object.buttonElement) {
             return;
         }
 
@@ -3437,10 +3735,11 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         super.enableElements(objectIndex, evt);
 
         const object = this.objects[objectIndex];
-        if (!object.shapeElement) {
-            return;
-        }
-        if (!object.buttonElement) {
+        if (
+            !object ||
+            !object.shapeElement ||
+            !object.buttonElement
+        ) {
             return;
         }
 
@@ -3464,16 +3763,13 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         super.disableElements(objectIndex, evt);
 
         const object = this.objects[objectIndex];
-        if (!object.labelElement) {
-            return;
-        }
-        if (!object.shapeElement) {
-            return;
-        }
-        if (!object.buttonElement) {
-            return;
-        }
-        if (!object.selectListElement) {
+        if (
+            !object ||
+            !object.labelElement ||
+            !object.shapeElement ||
+            !object.buttonElement ||
+            !object.selectListElement
+        ) {
             return;
         }
 
@@ -3493,7 +3789,7 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
     showHideResetButton (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.resetButtonElement) {
+        if (!object || !object.resetButtonElement) {
             return;
         }
 
@@ -3508,13 +3804,12 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
     setData (objectIndex, data = null) {
         const object = this.objects[objectIndex];
-        if (!object.valueElement) {
-            return;
-        }
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.buttonElement) {
+        if (
+            !object ||
+            !object.valueElement ||
+            !object.textElement ||
+            !object.buttonElement
+        ) {
             return;
         }
 
@@ -3544,6 +3839,10 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         }
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return null;
+        }
+
         const extendedData = {};
         extendedData[object.name] = {
             'text': object.textElement.innerText
@@ -3554,6 +3853,9 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
     showHide (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         if (!object.isExpanded) {
             this.show(objectIndex);
@@ -3566,6 +3868,9 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
     focusOut (objectIndex, evt) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         if (
             !evt ||
@@ -3590,19 +3895,14 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
     show (objectIndex, evt) {
         const object = this.objects[objectIndex];
-        if (!object.shapeElement) {
-            return;
-        }
-        if (!object.buttonElement) {
-            return;
-        }
-        if (!object.buttonIconElement) {
-            return;
-        }
-        if (!object.buttonTextElement) {
-            return;
-        }
-        if (!object.selectContainerElement) {
+        if (
+            !object ||
+            !object.shapeElement ||
+            !object.buttonElement ||
+            !object.buttonIconElement ||
+            !object.buttonTextElement ||
+            !object.selectContainerElement
+        ) {
             return;
         }
 
@@ -3628,16 +3928,13 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
     hide (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.buttonElement) {
-            return;
-        }
-        if (!object.buttonIconElement) {
-            return;
-        }
-        if (!object.buttonTextElement) {
-            return;
-        }
-        if (!object.selectContainerElement) {
+        if (
+            !object ||
+            !object.buttonElement ||
+            !object.buttonIconElement ||
+            !object.buttonTextElement ||
+            !object.selectContainerElement
+        ) {
             return;
         }
 
@@ -3651,8 +3948,8 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
     escape (objectIndex) {
         const object = this.objects[objectIndex];
-
         if (
+            !object ||
             !document.activeElement ||
             !object.containerElement.contains(document.activeElement)
         ) {
@@ -3665,7 +3962,7 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
     autoComplete (objectIndex, parameters) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
+        if (!object || !object.textElement) {
             return;
         }
 
@@ -3698,15 +3995,15 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
     autoCompleteFill (objectIndex, results) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
+        if (
+            !object ||
+            !object.textElement ||
+            !object.selectListElement ||
+            !object.selectContainerElement
+        ) {
             return;
         }
-        if (!object.selectListElement) {
-            return;
-        }
-        if (!object.selectContainerElement) {
-            return;
-        }
+
         const subSelectListElement = object.selectListElement.querySelector('.ds44-list');
         if (!subSelectListElement) {
             return;
@@ -3760,10 +4057,11 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         }
 
         const object = this.objects[objectIndex];
-        if (!object.selectListElement) {
-            return;
-        }
-        if (!object.isExpanded) {
+        if (
+            !object ||
+            !object.selectListElement ||
+            !object.isExpanded
+        ) {
             return;
         }
 
@@ -3787,7 +4085,7 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         }
 
         const object = this.objects[objectIndex];
-        if (!object.isExpanded) {
+        if (!object || !object.isExpanded) {
             return;
         }
 
@@ -3826,7 +4124,7 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         }
 
         const object = this.objects[objectIndex];
-        if (!object.selectListElement) {
+        if (!object || !object.selectListElement) {
             return;
         }
 
@@ -3843,13 +4141,12 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
     save (objectIndex, additionalData) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.valueElement) {
-            return;
-        }
-        if (!object.selectListElement) {
+        if (
+            !object ||
+            !object.textElement ||
+            !object.valueElement ||
+            !object.selectListElement
+        ) {
             return;
         }
 
@@ -3946,6 +4243,10 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
     autoSubmit (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         if (object.textElement.getAttribute('data-auto-submit')) {
             // Auto submit
             const formElement = object.textElement.closest('form');
@@ -3959,6 +4260,10 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
         super.removeInvalid(objectIndex);
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         if (object.buttonElement) {
             object.buttonElement.removeAttribute('aria-invalid');
         }
@@ -3969,13 +4274,12 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 
     invalid (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.buttonElement) {
-            return;
-        }
-        if (!object.shapeElement) {
+        if (
+            !object ||
+            !object.textElement ||
+            !object.buttonElement ||
+            !object.shapeElement
+        ) {
             return;
         }
 
@@ -4009,6 +4313,9 @@ class FormFieldSelectAbstract extends FormFieldAbstract {
 class FormLayoutUtileAbstract extends FormLayoutAbstract {
     ajaxSubmit (objectIndex, formData) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         // Show loader
         MiscEvent.dispatch('loader:requestShow');
@@ -4044,6 +4351,9 @@ class FormLayoutUtileAbstract extends FormLayoutAbstract {
         }
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         // Add aria described by to textarea
         const textareaElement = object.formElement.querySelector('textarea');
@@ -4055,6 +4365,8 @@ class FormLayoutUtileAbstract extends FormLayoutAbstract {
                 textareaElement.setAttribute('aria-describedby', defaultAriaDescribedBy);
             }
         }
+
+        this.clear(objectIndex);
 
         // Hide loader
         MiscEvent.dispatch('loader:requestHide');
@@ -4070,6 +4382,9 @@ class FormLayoutUtileAbstract extends FormLayoutAbstract {
         }
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         // Add aria described by to textarea
         const textareaElement = object.formElement.querySelector('textarea');
@@ -4129,6 +4444,9 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
 
         const objectIndex = (this.objects.length - 1);
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.valueElement = valueElement;
         object.metadataElement = metadataElement;
@@ -4150,6 +4468,10 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
 
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
+            if (object.isSubSubInitialized) {
+                continue;
+            }
+            object.isSubSubInitialized = true;
 
             object.textElement.setAttribute('aria-owns', 'owned_listbox_' + object.id);
             if (object.autoCompleterListElement) {
@@ -4187,10 +4509,11 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
         super.setData(objectIndex, data);
 
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.metadataElement) {
+        if (
+            !object ||
+            !object.textElement ||
+            !object.metadataElement
+        ) {
             return;
         }
 
@@ -4221,6 +4544,10 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
         }
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return null;
+        }
+
         const extendedData = {};
         extendedData[object.name] = {
             'text': object.textElement.value,
@@ -4232,10 +4559,11 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
 
     record (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (object.textElement !== document.activeElement) {
+        if (
+            !object ||
+            !object.textElement ||
+            object.textElement !== document.activeElement
+        ) {
             return;
         }
 
@@ -4251,10 +4579,11 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
         super.write(objectIndex);
 
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (object.textElement !== document.activeElement) {
+        if (
+            !object ||
+            !object.textElement ||
+            object.textElement !== document.activeElement
+        ) {
             return;
         }
 
@@ -4263,17 +4592,13 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
 
     autoComplete (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.valueElement) {
-            return;
-        }
-        if (!object.metadataElement) {
-            return;
-        }
-
-        if (object.currentElementValue === object.textElement.value) {
+        if (
+            !object ||
+            !object.textElement ||
+            !object.valueElement ||
+            !object.metadataElement ||
+            object.currentElementValue === object.textElement.value
+        ) {
             return;
         }
 
@@ -4326,10 +4651,11 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
 
     autoCompleteFill (objectIndex, results) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.autoCompleterListElement) {
+        if (
+            !object ||
+            !object.textElement ||
+            !object.autoCompleterListElement
+        ) {
             return;
         }
 
@@ -4379,7 +4705,7 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
 
     translate (objectIndex, results) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
+        if (!object || !object.textElement) {
             return results;
         }
 
@@ -4409,28 +4735,27 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
 
     focus (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.isEnabled || !object.textElement) {
-            return;
-        }
+        if (object && object.isEnabled && object.textElement) {
+            if (
+                object.currentElementValue &&
+                object.currentElementValue !== object.textElement.value
+            ) {
+                object.textElement.value = object.currentElementValue;
+            }
 
-        if (
-            object.currentElementValue &&
-            object.currentElementValue !== object.textElement.value
-        ) {
-            object.textElement.value = object.currentElementValue;
+            this.autoComplete(objectIndex);
         }
-
-        this.autoComplete(objectIndex);
 
         super.focus(objectIndex);
     }
 
     focusOut (objectIndex, evt) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.valueElement) {
+        if (
+            !object ||
+            !object.textElement ||
+            !object.valueElement
+        ) {
             return;
         }
 
@@ -4453,10 +4778,11 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
 
     show (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.autoCompleterElement) {
+        if (
+            !object ||
+            !object.textElement ||
+            !object.autoCompleterElement
+        ) {
             return;
         }
 
@@ -4468,10 +4794,11 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
 
     hide (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.autoCompleterElement) {
+        if (
+            !object ||
+            !object.textElement ||
+            !object.autoCompleterElement
+        ) {
             return;
         }
 
@@ -4492,15 +4819,12 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
 
     escape (objectIndex) {
         const object = this.objects[objectIndex];
-
         if (
+            !object ||
             !document.activeElement ||
-            !object.containerElement.contains(document.activeElement)
+            !object.containerElement.contains(document.activeElement) ||
+            !object.textElement
         ) {
-            return;
-        }
-
-        if (!object.textElement) {
             return;
         }
 
@@ -4521,10 +4845,11 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
         evt.preventDefault();
 
         const object = this.objects[objectIndex];
-        if (!object.autoCompleterListElement) {
-            return;
-        }
-        if (!object.isExpanded) {
+        if (
+            !object ||
+            !object.autoCompleterListElement ||
+            !object.isExpanded
+        ) {
             return;
         }
 
@@ -4546,7 +4871,7 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
         evt.preventDefault();
 
         const object = this.objects[objectIndex];
-        if (!object.isExpanded) {
+        if (!object || !object.isExpanded) {
             return;
         }
 
@@ -4566,7 +4891,7 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
 
     fakeSelect (objectIndex, evt) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
+        if (!object || !object.textElement) {
             return;
         }
 
@@ -4581,10 +4906,11 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
         }
 
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.autoCompleterElement) {
+        if (
+            !object ||
+            !object.textElement ||
+            !object.autoCompleterElement
+        ) {
             return;
         }
 
@@ -4609,7 +4935,7 @@ class FormFieldInputAutoComplete extends FormFieldInputAbstract {
 
     selectRecord (objectIndex, currentItem) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
+        if (!object || !object.textElement) {
             return;
         }
 
@@ -4702,6 +5028,9 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
 
         const objectIndex = (this.objects.length - 1);
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.valueElement = valueElement;
         object.inputElements = element.querySelectorAll('input[type="text"]');
@@ -4713,6 +5042,10 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
 
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
+            if (object.isSubSubInitialized) {
+                continue;
+            }
+            object.isSubSubInitialized = true;
 
             object.inputElements.forEach((inputElement) => {
                 MiscEvent.addListener('focus', this.focus.bind(this, objectIndex), inputElement);
@@ -4738,10 +5071,11 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
 
     write (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.textElement.contains(document.activeElement)) {
+        if (
+            !object ||
+            !object.textElement ||
+            !object.textElement.contains(document.activeElement)
+        ) {
             return;
         }
 
@@ -4751,10 +5085,11 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
 
     reset (objectIndex) {
         const object = this.objects[objectIndex];
-
-        object.inputElements[0].value = null;
-        object.inputElements[1].value = null;
-        object.inputElements[2].value = null;
+        if (object) {
+            object.inputElements[0].value = null;
+            object.inputElements[1].value = null;
+            object.inputElements[2].value = null;
+        }
 
         super.reset(objectIndex);
     }
@@ -4774,10 +5109,11 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
 
     disableElements (objectIndex, evt) {
         const object = this.objects[objectIndex];
-
-        object.inputElements[0].value = null;
-        object.inputElements[1].value = null;
-        object.inputElements[2].value = null;
+        if (object) {
+            object.inputElements[0].value = null;
+            object.inputElements[1].value = null;
+            object.inputElements[2].value = null;
+        }
 
         super.disableElements(objectIndex, evt);
     }
@@ -4786,13 +5122,11 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
         this.lastInputValue = null;
 
         const object = this.objects[objectIndex];
-        if (!object.isEnabled || !object.textElement) {
-            return;
+        if (object && object.isEnabled && object.textElement) {
+            object.textElement.classList.add('show');
         }
 
         super.focus(objectIndex);
-
-        object.textElement.classList.add('show');
     }
 
     blur (objectIndex) {
@@ -4805,7 +5139,7 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
         super.quit(objectIndex);
 
         const object = this.objects[objectIndex];
-        if (object.textElement) {
+        if (object && object.textElement) {
             object.textElement.classList.remove('show');
         }
     }
@@ -4820,6 +5154,7 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
 
         const object = this.objects[objectIndex];
         if (
+            !object ||
             !evt ||
             object.containerElement.contains(evt.target)
         ) {
@@ -4869,6 +5204,10 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
 
         // If two digits, go to next field
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         if (evt.currentTarget === object.inputElements[0]) {
             MiscAccessibility.setFocus(object.inputElements[1]);
         } else {
@@ -4878,6 +5217,9 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
 
     getText (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return null;
+        }
 
         const dateYear = parseInt(object.inputElements[2].value, 10) || '';
         const dateMonth = parseInt(object.inputElements[1].value, 10) || '';
@@ -4895,6 +5237,10 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
         }
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         const dateText = this.getText(objectIndex);
         if (
             !dateText ||
@@ -4962,8 +5308,11 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
 
     checkChronology (objectIndex) {
         const object = this.objects[objectIndex];
-        const data = this.getData(objectIndex);
+        if (!object) {
+            return false;
+        }
 
+        const data = this.getData(objectIndex);
         if (
             !data ||
             !object.textElement.getAttribute('data-previous-date-id')
@@ -4994,8 +5343,11 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
 
     checkPastDates (objectIndex) {
         const object = this.objects[objectIndex];
-        const data = this.getData(objectIndex);
+        if (!object) {
+            return false;
+        }
 
+        const data = this.getData(objectIndex);
         if (
             !data ||
             object.textElement.getAttribute('data-past-dates') !== 'false'
@@ -5013,8 +5365,11 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
 
     checkNextYearDates (objectIndex) {
         const object = this.objects[objectIndex];
-        const data = this.getData(objectIndex);
+        if (!object) {
+            return false;
+        }
 
+        const data = this.getData(objectIndex);
         if (
             !data ||
             object.textElement.getAttribute('data-next-year-dates') !== 'false'
@@ -5034,6 +5389,9 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
 
     showHideCalendar (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         let showCalendar = !(this.calendar && this.calendar.id === object.id);
         if (!showCalendar) {
@@ -5047,6 +5405,9 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
 
     showCalendar (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         this.hideCalendar();
 
@@ -5083,11 +5444,19 @@ class FormFieldInputDatepicker extends FormFieldInputAbstract {
         super.showNotEmpty(objectIndex);
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         object.textElement.classList.add('show');
     }
 
     setDate (objectIndex, date) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         const selectedData = new Date(date);
         object.inputElements[0].value = (selectedData.getDate() + '').padStart(2, '0');
         object.inputElements[1].value = ((selectedData.getMonth() + 1) + '').padStart(2, '0');
@@ -5208,6 +5577,9 @@ class FormFieldInputFile extends FormFieldInputAbstract {
 
         const objectIndex = (this.objects.length - 1);
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.textElement = MiscDom.getNextSibling(element, '.ds44-fileDisplay');
         object.labelElement = MiscDom.getPreviousSibling(element.parentNode, 'label');
@@ -5220,6 +5592,10 @@ class FormFieldInputFile extends FormFieldInputAbstract {
 
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
+            if (object.isSubSubInitialized) {
+                continue;
+            }
+            object.isSubSubInitialized = true;
 
             object.inputElements.forEach((inputElement) => {
                 MiscEvent.addListener('change', this.fileUploaded.bind(this, objectIndex), inputElement);
@@ -5231,6 +5607,9 @@ class FormFieldInputFile extends FormFieldInputAbstract {
 
     fileUploaded (objectIndex, evt) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         // Get file
         const file = evt.currentTarget.files[0];
@@ -5255,9 +5634,11 @@ class FormFieldInputFile extends FormFieldInputAbstract {
 
     focus (objectIndex) {
         const object = this.objects[objectIndex];
-        const shapeElement = object.textElement.closest('.ds44-file__shape');
-        if (shapeElement) {
-            shapeElement.classList.add('hover');
+        if (object && object.textElement) {
+            const shapeElement = object.textElement.closest('.ds44-file__shape');
+            if (shapeElement) {
+                shapeElement.classList.add('hover');
+            }
         }
 
         super.focus(objectIndex);
@@ -5265,9 +5646,11 @@ class FormFieldInputFile extends FormFieldInputAbstract {
 
     blur (objectIndex) {
         const object = this.objects[objectIndex];
-        const shapeElement = object.textElement.closest('.ds44-file__shape');
-        if (shapeElement) {
-            shapeElement.classList.remove('hover');
+        if (object && object.textElement) {
+            const shapeElement = object.textElement.closest('.ds44-file__shape');
+            if (shapeElement) {
+                shapeElement.classList.remove('hover');
+            }
         }
 
         super.blur(objectIndex);
@@ -5277,6 +5660,10 @@ class FormFieldInputFile extends FormFieldInputAbstract {
         super.empty(objectIndex);
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         const textElementId = object.textElement.getAttribute('id');
         const ariaDescribedBy = object.valueElement.getAttribute('aria-describedby').split(' ');
         if (ariaDescribedBy.includes(textElementId)) {
@@ -5295,7 +5682,7 @@ class FormFieldInputFile extends FormFieldInputAbstract {
         super.setData(objectIndex, data);
 
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
+        if (!object || !object.textElement) {
             return;
         }
 
@@ -5309,6 +5696,10 @@ class FormFieldInputFile extends FormFieldInputAbstract {
         }
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return null;
+        }
+
         const extendedData = {};
         extendedData[object.name] = {
             'name': object.textElement.innerText
@@ -5320,6 +5711,7 @@ class FormFieldInputFile extends FormFieldInputAbstract {
     getText (objectIndex) {
         const object = this.objects[objectIndex];
         if (
+            !object ||
             !object.textElement ||
             !object.textElement.innerText
         ) {
@@ -5344,6 +5736,10 @@ class FormFieldInputFile extends FormFieldInputAbstract {
 
     getErrorMessage (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return this.formatErrorMessage(objectIndex);
+        }
+
         const file = object.inputElements[0].files[0];
         if (!file) {
             return this.formatErrorMessage(objectIndex);
@@ -5361,6 +5757,9 @@ class FormFieldInputFile extends FormFieldInputAbstract {
 
     hasCorrectSize (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return false;
+        }
 
         // Get file
         const file = object.inputElements[0].files[0];
@@ -5379,6 +5778,10 @@ class FormFieldInputFile extends FormFieldInputAbstract {
 
     hasCorrectMime (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return false;
+        }
+
         if (!object.fileExtensions) {
             return true;
         }
@@ -5411,6 +5814,7 @@ class FormFieldInputStandard extends FormFieldInputAbstract {
         super(
             'input[type="text"]:not([aria-autocomplete="list"]):not([data-is-date]), ' +
             'input[type="email"]:not([aria-autocomplete="list"]), ' +
+            'input[type="password"]:not([aria-autocomplete="list"]), ' +
             'input[type="number"]:not([aria-autocomplete="list"])',
             'inputStandard'
         );
@@ -5451,6 +5855,10 @@ class FormFieldSelectCheckbox extends FormFieldSelectAbstract {
 
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
+            if (object.isSubSubInitialized) {
+                continue;
+            }
+            object.isSubSubInitialized = true;
 
             const flexContainerElement = object.containerElement.querySelector('.ds44-flex-container');
             const checkAllElement = flexContainerElement.querySelector('button:first-child');
@@ -5527,10 +5935,11 @@ class FormFieldSelectCheckbox extends FormFieldSelectAbstract {
         evt.preventDefault();
 
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.selectListElement) {
+        if (
+            !object ||
+            !object.textElement ||
+            !object.selectListElement
+        ) {
             return;
         }
 
@@ -5583,6 +5992,10 @@ class FormFieldSelectCheckbox extends FormFieldSelectAbstract {
         }
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         const data = this.getData(objectIndex);
         let values = [];
         if (data && data[object.name].value) {
@@ -5644,7 +6057,7 @@ class FormFieldSelectCheckbox extends FormFieldSelectAbstract {
 
     getCheckboxElements (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.selectListElement) {
+        if (!object || !object.selectListElement) {
             return null;
         }
 
@@ -5653,7 +6066,7 @@ class FormFieldSelectCheckbox extends FormFieldSelectAbstract {
 
     getValueCheckboxElements (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.selectListElement) {
+        if (!object || !object.selectListElement) {
             return null;
         }
 
@@ -5677,6 +6090,10 @@ class FormFieldSelectMultilevel extends FormFieldSelectCheckbox {
 
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
+            if (object.isSubSubSubInitialized) {
+                continue;
+            }
+            object.isSubSubSubInitialized = true;
 
             if (object.selectListElement) {
                 object.selectListElement
@@ -5762,7 +6179,7 @@ class FormFieldSelectMultilevel extends FormFieldSelectCheckbox {
 
     getCheckboxElements (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.selectListElement) {
+        if (!object || !object.selectListElement) {
             return null;
         }
 
@@ -5797,10 +6214,11 @@ class FormFieldSelectRadio extends FormFieldSelectAbstract {
         }
 
         const object = this.objects[objectIndex];
-        if (!object.selectListElement) {
-            return;
-        }
-        if (!object.isExpanded) {
+        if (
+            !object ||
+            !object.selectListElement ||
+            !object.isExpanded
+        ) {
             return;
         }
 
@@ -5818,10 +6236,11 @@ class FormFieldSelectRadio extends FormFieldSelectAbstract {
         }
 
         const object = this.objects[objectIndex];
-        if (!object.selectListElement) {
-            return;
-        }
-        if (!object.isExpanded) {
+        if (
+            !object ||
+            !object.selectListElement ||
+            !object.isExpanded
+        ) {
             return;
         }
 
@@ -5887,10 +6306,11 @@ class FormFieldSelectRadio extends FormFieldSelectAbstract {
         evt.preventDefault();
 
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.selectListElement) {
+        if (
+            !object ||
+            !object.textElement ||
+            !object.selectListElement
+        ) {
             return;
         }
 
@@ -5943,6 +6363,10 @@ class FormFieldSelectRadio extends FormFieldSelectAbstract {
         }
 
         const object = this.objects[objectIndex];
+        if(!object) {
+            return;
+        }
+
         const data = this.getData(objectIndex);
         let values = [];
         if (data && data[object.name].value) {
@@ -5980,7 +6404,7 @@ class FormFieldSelectRadio extends FormFieldSelectAbstract {
 
     getRadioElements (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.selectListElement) {
+        if (!object || !object.selectListElement) {
             return null;
         }
 
@@ -6003,6 +6427,12 @@ class FormFieldSelectStandard extends FormFieldSelectAbstract {
         super.initialize();
 
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
+            const object = this.objects[objectIndex];
+            if (object.isSubSubInitialized) {
+                continue;
+            }
+            object.isSubSubInitialized = true;
+
             MiscEvent.addListener('keyPress:spacebar', this.selectOption.bind(this, objectIndex));
             MiscEvent.addListener('keyPress:enter', this.selectOption.bind(this, objectIndex));
         }
@@ -6012,7 +6442,10 @@ class FormFieldSelectStandard extends FormFieldSelectAbstract {
         evt.preventDefault();
 
         const object = this.objects[objectIndex];
-        if (!object.selectListElement) {
+        if (
+            !object ||
+            !object.selectListElement
+        ) {
             return;
         }
 
@@ -6046,10 +6479,11 @@ class FormFieldSelectStandard extends FormFieldSelectAbstract {
         evt.preventDefault();
 
         const object = this.objects[objectIndex];
-        if (!object.textElement) {
-            return;
-        }
-        if (!object.selectListElement) {
+        if (
+            !object ||
+            !object.textElement ||
+            !object.selectListElement
+        ) {
             return;
         }
 
@@ -6073,6 +6507,10 @@ class FormFieldSelectStandard extends FormFieldSelectAbstract {
         }
 
         const object = this.objects[objectIndex];
+        if(!object) {
+            return;
+        }
+
         const data = this.getData(objectIndex);
         let values = [];
         if (data && data[object.name].value) {
@@ -6108,7 +6546,7 @@ class FormFieldSelectStandard extends FormFieldSelectAbstract {
 
     getOptionElements (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.selectListElement) {
+        if (!object || !object.selectListElement) {
             return null;
         }
 
@@ -6126,6 +6564,9 @@ class FormLayoutInline extends FormLayoutAbstract {
 
     ajaxSubmit (objectIndex, formData) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         // Show loader
         MiscEvent.dispatch('loader:requestShow');
@@ -6147,6 +6588,9 @@ class FormLayoutInline extends FormLayoutAbstract {
         ) {
             this.notification(objectIndex, null, response.message, response.message_list, response.status || 'information');
         }
+
+        this.clear(objectIndex);
+
         MiscEvent.dispatch('loader:requestHide');
     }
 
@@ -6162,6 +6606,9 @@ class FormLayoutInline extends FormLayoutAbstract {
 
     showInlineData (objectIndex, inlineData) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         const destinationElement = document.querySelector(object.formElement.getAttribute('data-result-destination'));
         if (!inlineData.content_html || !destinationElement) {
@@ -6174,6 +6621,158 @@ class FormLayoutInline extends FormLayoutAbstract {
 
 new FormLayoutInline();
 
+class FormLayoutObligationAlimentaire extends FormLayoutAbstract {
+    constructor () {
+        super('#ds44-js-soa-form');
+
+        this.templateElement = document.querySelector('#ds44-js-soa-template');
+        this.containerElement = document.querySelector('#ds44-js-soa-container');
+        if (
+            !this.templateElement ||
+            !this.containerElement
+        ) {
+            return;
+        }
+
+        this.add();
+
+        const addElement = document.querySelector('#ds44-js-soa-add');
+        if (addElement) {
+            MiscEvent.addListener('click', this.add.bind(this), addElement);
+        }
+        const deleteElement = document.querySelector('#ds44-js-soa-delete');
+        if (deleteElement) {
+            MiscEvent.addListener('click', this.delete.bind(this), deleteElement);
+        }
+    }
+
+    add () {
+        const itemNumber = this.containerElement.querySelectorAll('.ds44-js-soa-item').length;
+        const idNumber = itemNumber * 2;
+
+        const cloneElement = document.importNode(this.templateElement.content, true);
+        cloneElement.childNodes.forEach((childElement) => {
+            if (!childElement.innerHTML) {
+                return;
+            }
+
+            childElement.innerHTML = childElement.innerHTML
+                .replace(/ds44-js-soa-template-field-1/gi, 'ds44-js-soa-field-' + idNumber)
+                .replace(/ds44-js-soa-template-field-2/gi, 'ds44-js-soa-field-' + (idNumber + 1))
+                .replace(/n°\)/gi, 'n°' + (itemNumber + 1) + ')');
+            if (childElement.classList.contains('ds44-js-soa-item')) {
+                childElement.setAttribute('id', 'ds44-js-soa-item-' + itemNumber)
+            }
+        });
+        cloneElement.querySelector('.ds44-js-soa-number').innerText = itemNumber + 1;
+
+        this.containerElement.append(cloneElement);
+
+        const selectorPrefix = '#ds44-js-soa-container #ds44-js-soa-item-' + itemNumber;
+        MiscEvent.dispatch('field:add', {
+            'selector': selectorPrefix + ' input[type="text"]:not([aria-autocomplete="list"]):not([data-is-date])',
+            'category': 'inputStandard'
+        });
+        MiscEvent.dispatch('field:add', {
+            'selector': selectorPrefix + ' .ds44-selectDisplay.ds44-js-select-standard',
+            'category': 'selectStandard'
+        });
+
+        const deleteElement = document.querySelector('#ds44-js-soa-delete');
+        if (deleteElement && itemNumber === 1) {
+            deleteElement.classList.remove('ds44-none');
+        }
+
+        window.setTimeout(
+            ((idNumber) => {
+                MiscAccessibility.setFocus(null, '#ds44-js-soa-field-' + idNumber);
+            }).bind(this, idNumber),
+            100
+        )
+    }
+
+    delete () {
+        const itemElements = this.containerElement.querySelectorAll('.ds44-js-soa-item');
+        const itemNumber = itemElements.length;
+        if (itemNumber <= 1) {
+            return;
+        }
+        const lastItemElement = itemElements[itemNumber - 1];
+
+        const selectorPrefix = '#ds44-js-soa-container #' + lastItemElement.getAttribute('id');
+        MiscEvent.dispatch('field:destroy', {
+            'selector': selectorPrefix + ' input[type="text"]:not([aria-autocomplete="list"]):not([data-is-date])',
+            'category': 'inputStandard'
+        });
+        MiscEvent.dispatch('field:destroy', {
+            'selector': selectorPrefix + ' .ds44-selectDisplay.ds44-js-select-standard',
+            'category': 'selectStandard'
+        });
+
+        lastItemElement.remove();
+
+        const deleteElement = document.querySelector('#ds44-js-soa-delete');
+        if (deleteElement && itemNumber === 2) {
+            deleteElement.classList.add('ds44-none');
+
+            const addElement = document.querySelector('#ds44-js-soa-add');
+            if (addElement) {
+                MiscAccessibility.setFocus(addElement);
+            }
+        }
+    }
+
+    ajaxSubmit (objectIndex, formData) {
+        const object = this.objects[objectIndex];
+        const resultsElement = document.querySelector('#ds44-js-soa-results');
+        if (
+            !object ||
+            !window.FORM_OBLIGATION_ALIMENTAIRE ||
+            !resultsElement
+        ) {
+            return;
+        }
+
+        const results = [];
+        let totalFoodObligation = 0;
+        for (let i = 0; i < Object.keys(formData).length; (i = i + 2)) {
+            const income = formData['ds44-js-soa-field-' + i].value;
+            const nbShare = formData['ds44-js-soa-field-' + (i + 1)].value;
+
+            const result = parseFloat(
+                Math.max(
+                    0,
+                    ((income / 12) - (window.FORM_OBLIGATION_ALIMENTAIRE.threshold + ((nbShare - 1) * window.FORM_OBLIGATION_ALIMENTAIRE.delta * 2))) / 6
+                )
+                , 10
+            );
+            totalFoodObligation += Math.round(result);
+
+            results.push(
+                Math.round(result) + ' ' +
+                MiscTranslate._('FOOD_OBLIGATION_PER_MONTH') + ((i / 2) + 1)
+            );
+        }
+
+        resultsElement.innerHTML = '<section class="ds44-box ds44-theme" tabindex="0">' +
+            '<div class="ds44-innerBoxContainer">' +
+            '<p role="heading" aria-level="3" class="h5-like">' +
+            MiscTranslate._(
+                'FOOD_OBLIGATION_TOTAL',
+                { totalFoodObligation: totalFoodObligation }
+            ) +
+            '</p>' +
+            '<ul><li>' + results.join('</li><li>') + '</li></ul>' +
+            '</div>' +
+            '</section>';
+        resultsElement.classList.remove('hidden');
+        MiscAccessibility.setFocus(resultsElement.querySelector('section:first-child'));
+    }
+}
+
+// Singleton
+new FormLayoutObligationAlimentaire();
+
 class FormLayoutSearch extends FormLayoutAbstract {
     constructor () {
         super('.ds44-facette form');
@@ -6184,6 +6783,9 @@ class FormLayoutSearch extends FormLayoutAbstract {
 
         const objectIndex = (this.objects.length - 1);
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.containerElement = formElement.closest('.ds44-facette');
         object.parameters = {};
@@ -6195,6 +6797,10 @@ class FormLayoutSearch extends FormLayoutAbstract {
         // Initialize each object
         for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
             const object = this.objects[objectIndex];
+            if (object.isSubInitialized) {
+                continue;
+            }
+            object.isSubInitialized = true;
 
             // Bind events
             MiscEvent.addListener('search:refresh', this.search.bind(this, objectIndex));
@@ -6224,6 +6830,9 @@ class FormLayoutSearch extends FormLayoutAbstract {
         }
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return false;
+        }
 
         // Reset search parameters
         object.parameters = (window.searchData.parameters || {});
@@ -6240,6 +6849,9 @@ class FormLayoutSearch extends FormLayoutAbstract {
 
     loadFromUrl (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return false;
+        }
 
         if (object.formElement.getAttribute('data-seo-url') !== 'true') {
             this.loadFromUrlSuccess(objectIndex, MiscUrl.getHashParameters());
@@ -6291,6 +6903,11 @@ class FormLayoutSearch extends FormLayoutAbstract {
     }
 
     ajaxSubmit (objectIndex, formData) {
+        const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         const evt = {
             detail: {
                 parameters: formData || {},
@@ -6298,15 +6915,13 @@ class FormLayoutSearch extends FormLayoutAbstract {
             }
         };
 
-        const object = this.objects[objectIndex];
         object.hasSearched = true;
         this.search(objectIndex, evt);
     }
 
     search (objectIndex, evt) {
         const object = this.objects[objectIndex];
-
-        if (!object.hasSearched) {
+        if (!object || !object.hasSearched) {
             return;
         }
 
@@ -6360,6 +6975,9 @@ class FormLayoutSearch extends FormLayoutAbstract {
         }
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         // Save search data
         object.searchData = this.formatSearchData(
@@ -6388,6 +7006,9 @@ class FormLayoutSearch extends FormLayoutAbstract {
 
     showSearchData (objectIndex, options = {}) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         MiscEvent.dispatch('search:update', Object.assign({}, object.searchData, options));
     }
@@ -6428,6 +7049,9 @@ class FormLayoutSearch extends FormLayoutAbstract {
 
     toggleSearchView (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         if (object.containerElement.classList.contains('ds44-facette-mobile-expanded')) {
             object.containerElement.classList.remove('ds44-facette-mobile-expanded')
@@ -6438,6 +7062,9 @@ class FormLayoutSearch extends FormLayoutAbstract {
 
     async setSearchHash (objectIndex, searchId) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         if (MiscUtils.isInDevMode) {
             // In dev mode, generate the search id and use the local storage to store the search data
@@ -6860,10 +7487,13 @@ class ButtonSkip {
     }
 
     go (evt) {
+        const id = evt.currentTarget.getAttribute('href');
+        if (id.indexOf('#') === -1) {
+            return;
+        }
+
         evt.stopPropagation();
         evt.preventDefault();
-
-        const id = evt.currentTarget.getAttribute('href');
         const focusElement = document.querySelector(id);
         if (!focusElement) {
             return;
@@ -7152,7 +7782,10 @@ class CardStandard {
         }
 
         const elementLinks = evt.target.closest('.ds44-js-card').getElementsByTagName('a');
-        if (elementLinks[0]) {
+        if (
+            elementLinks[0] &&
+            elementLinks[0] !== evt.target
+        ) {
             elementLinks[0].click();
         }
     }
@@ -7171,6 +7804,10 @@ class CarouselSlideshow extends CarouselAbstract {
 
         const objectIndex = (this.objects.length - 1);
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
         object.isPlaying = true;
 
         object.autoplayButtonElement = object.wrapElement.querySelector('button');
@@ -7188,11 +7825,20 @@ class CarouselSlideshow extends CarouselAbstract {
             'delay': 5000
         }
 
+        // Take reduced motion media query into account
+        const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+        if (!mediaQuery || mediaQuery.matches) {
+            swiperParameters.speed = 0;
+        }
+
         return swiperParameters;
     }
 
     startStop (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         if (object.isPlaying) {
             const objects = this.getSectionObjects(objectIndex);
@@ -7216,9 +7862,14 @@ class CarouselSlideshow extends CarouselAbstract {
     }
 
     getSectionObjects (objectIndex) {
+        const object = this.objects[objectIndex];
+        if (!object) {
+            return [];
+        }
+
         // Get all slideshows in the same section
         const objects = [];
-        const parentElement = (this.objects[objectIndex].wrapElement.closest('section') || this.objects[objectIndex].wrapElement.parentElement);
+        const parentElement = (object.wrapElement.closest('section') || object.wrapElement.parentElement);
         parentElement
             .querySelectorAll('.swipper-carousel-slideshow')
             .forEach((wrapElement) => {
@@ -7290,6 +7941,24 @@ new CarouselSlideshow();
 class CarouselStandard extends CarouselAbstract {
     constructor () {
         super('.swipper-carousel-wrap:not(.swipper-carousel-slideshow)');
+    }
+
+    showSlide (slideElement) {
+        super.showSlide(slideElement);
+
+        const aElement = slideElement.querySelector('a');
+        if (!aElement) {
+            slideElement.setAttribute('tabindex', '0');
+        }
+    }
+
+    hideSlide (slideElement) {
+        super.hideSlide(slideElement);
+
+        const aElement = slideElement.querySelector('a');
+        if (!aElement) {
+            slideElement.removeAttribute('tabindex');
+        }
     }
 }
 
@@ -7429,7 +8098,7 @@ class CollapserStandard {
 
     showHide (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.buttonElement) {
+        if (!object || !object.buttonElement) {
             return;
         }
 
@@ -7446,7 +8115,7 @@ class CollapserStandard {
 
     show (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.buttonElement) {
+        if (!object || !object.buttonElement) {
             return;
         }
 
@@ -7464,7 +8133,7 @@ class CollapserStandard {
 
     hide (objectIndex) {
         const object = this.objects[objectIndex];
-        if (!object.buttonElement) {
+        if (!object || !object.buttonElement) {
             return;
         }
 
@@ -7482,15 +8151,12 @@ class CollapserStandard {
 
     escape (objectIndex) {
         const object = this.objects[objectIndex];
-
         if (
+            !object ||
             !document.activeElement ||
-            !object.containerElement.contains(document.activeElement)
+            !object.containerElement.contains(document.activeElement) ||
+            !object.buttonElement
         ) {
-            return;
-        }
-
-        if (!object.buttonElement) {
             return;
         }
 
@@ -7598,7 +8264,7 @@ class HeaderStandard {
 
     overlayShow () {
         if (this.headerVisibilityCounter === 0) {
-            MiscAccessibility.hide(document.querySelector('header'), false);
+            MiscAccessibility.hide(document.querySelector('header'), false, false);
         }
         this.headerVisibilityCounter--;
     }
@@ -7606,13 +8272,13 @@ class HeaderStandard {
     overlayHide () {
         this.headerVisibilityCounter = Math.min(0, (this.headerVisibilityCounter + 1));
         if (this.headerVisibilityCounter === 0) {
-            MiscAccessibility.show(document.querySelector('header'), false);
+            MiscAccessibility.show(document.querySelector('header'), false, false);
         }
     }
 
     menuShow () {
         if (this.menuVisibilityCounter === 0) {
-            MiscAccessibility.hide(document.querySelector('header .ds44-header .ds44-container-large'));
+            MiscAccessibility.hide(document.querySelector('header .ds44-header .ds44-container-large'), true, false);
         }
         this.menuVisibilityCounter--;
     }
@@ -7620,7 +8286,7 @@ class HeaderStandard {
     menuHide () {
         this.menuVisibilityCounter = Math.min(0, (this.menuVisibilityCounter + 1));
         if (this.menuVisibilityCounter === 0) {
-            MiscAccessibility.show(document.querySelector('header .ds44-header .ds44-container-large'));
+            MiscAccessibility.show(document.querySelector('header .ds44-header .ds44-container-large'), true, false);
         }
     }
 }
@@ -7630,6 +8296,10 @@ new HeaderStandard();
 
 class ImageZoom {
     constructor () {
+        this.objects = [];
+        this.zoom = 2;
+        this.borderWidth = 3;
+
         document
             .querySelectorAll('.ds44-imgLoupe')
             .forEach((magnifyContainerElement) => {
@@ -7639,22 +8309,87 @@ class ImageZoom {
 
     create (magnifyContainerElement) {
         const imageElement = magnifyContainerElement.querySelector('img');
-        if (!imageElement) {
+        const magnifyElement = document.createElement('div');
+        magnifyElement.classList.add('ds44-js-magnifier');
+        magnifyElement.classList.add('hidden');
+        magnifyElement.style.backgroundImage = "url('" + imageElement.src + "')";
+        magnifyElement.style.backgroundRepeat = 'no-repeat';
+        magnifyElement.style.backgroundSize = (imageElement.width * this.zoom) + 'px ' + (imageElement.height * this.zoom) + 'px';
+        imageElement.parentElement.insertBefore(magnifyElement, imageElement);
+
+        const object = {
+            'id': MiscUtils.generateId(),
+            'imageElement': imageElement,
+            'magnifyElement': magnifyElement
+        };
+
+        this.objects.push(object);
+
+        const objectIndex = (this.objects.length - 1);
+        MiscEvent.addListener('mousemove', this.move.bind(this, objectIndex), magnifyElement);
+        MiscEvent.addListener('mousemove', this.move.bind(this, objectIndex), imageElement);
+        MiscEvent.addListener('touchmove', this.move.bind(this, objectIndex), magnifyElement);
+        MiscEvent.addListener('touchmove', this.move.bind(this, objectIndex), imageElement);
+        MiscEvent.addListener('mouseleave', this.leave.bind(this, objectIndex), magnifyElement);
+    }
+
+    move (objectIndex, evt) {
+        evt.preventDefault();
+        evt.stopPropagation();
+
+        const object = this.objects[objectIndex];
+        if (!object) {
             return;
         }
 
-        magnifyContainerElement.style.backgroundImage = `url('${imageElement.getAttribute('src')}')`;
-        MiscEvent.addListener('mousemove', this.zoom.bind(this), magnifyContainerElement);
-        MiscEvent.addListener('touchmove', this.zoom.bind(this), magnifyContainerElement);
+        const width = object.magnifyElement.offsetWidth / 2;
+        const height = object.magnifyElement.offsetHeight / 2;
+        const cursorPosition = this.getCursorPosition(objectIndex, evt);
+
+        let x = cursorPosition.x;
+        let y = cursorPosition.y;
+        if (x > object.imageElement.width) {
+            x = object.imageElement.width;
+        }
+        if (x < 0) {
+            x = 0;
+        }
+        if (y > object.imageElement.height) {
+            y = object.imageElement.height;
+        }
+        if (y < 0) {
+            y = 0;
+        }
+
+        object.magnifyElement.style.left = (x - width) + 'px';
+        object.magnifyElement.style.top = (y - height) + 'px';
+        object.magnifyElement.style.backgroundPosition = (((x * this.zoom) - width + this.borderWidth) * -1) + 'px ' + (((y * this.zoom) - height + this.borderWidth) * -1) + 'px';
+        object.magnifyElement.classList.remove('hidden');
     }
 
-    zoom (evt) {
-        const zoomer = evt.currentTarget;
-        const offsetX = (evt.offsetX ? evt.offsetX : evt.touches[0].pageX);
-        const offsetY = (evt.offsetY ? evt.offsetY : evt.touches[0].pageY);
-        const x = offsetX / zoomer.offsetWidth * 100;
-        const y = offsetY / zoomer.offsetHeight * 100;
-        zoomer.style.backgroundPosition = x + '% ' + y + '%';
+    leave (objectIndex, evt) {
+        evt.preventDefault();
+        evt.stopPropagation();
+
+        const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
+        object.magnifyElement.classList.add('hidden');
+    }
+
+    getCursorPosition (objectIndex, evt) {
+        const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
+        const boundingClientRect = object.imageElement.getBoundingClientRect();
+        return {
+            x: (evt.pageX || evt.touches[0].pageX || 0) - boundingClientRect.left - window.pageXOffset,
+            y: (evt.pageY || evt.touches[0].pageY || 0) - boundingClientRect.top - window.pageYOffset
+        };
     }
 }
 
@@ -7673,9 +8408,6 @@ class KeyboardStandard {
             return;
         }
 
-        MiscEvent.dispatch('keyDown:*');
-        MiscEvent.dispatch('keyDown:' + (evt.key === ' ' ? 'Spacebar' : evt.key).toLowerCase());
-
         // Make the space bar or enter act like a mouse click
         const clickableElement = this.getClickableElement(evt);
         if (clickableElement) {
@@ -7687,18 +8419,40 @@ class KeyboardStandard {
                 'bubbles': true,
                 'cancelable': true
             }));
-            clickableElement.click();
+            clickableElement.dispatchEvent(new MouseEvent('click', {
+                'bubbles': true,
+                'cancelable': true
+            }));
 
             evt.stopPropagation();
             evt.preventDefault();
 
             return false;
         }
+
+        // Prevent non valid characters from being entered in inputs
+        if (!this.isValid(evt)) {
+            evt.stopPropagation();
+            evt.preventDefault();
+
+            return false;
+        }
+
+        MiscEvent.dispatch('keyDown:*');
+        MiscEvent.dispatch('keyDown:' + (evt.key === ' ' ? 'Spacebar' : evt.key).toLowerCase());
     }
 
     keyPress (evt) {
         if (!evt.key) {
             return;
+        }
+
+        const clickableElement = this.getClickableElement(evt);
+        if (clickableElement) {
+            evt.stopPropagation();
+            evt.preventDefault();
+
+            return false;
         }
 
         MiscEvent.dispatch('keyPress:*');
@@ -7708,6 +8462,14 @@ class KeyboardStandard {
     keyUp (evt) {
         if (!evt.key) {
             return;
+        }
+
+        const clickableElement = this.getClickableElement(evt);
+        if (clickableElement) {
+            evt.stopPropagation();
+            evt.preventDefault();
+
+            return false;
         }
 
         MiscEvent.dispatch('keyUp:*');
@@ -7730,6 +8492,26 @@ class KeyboardStandard {
         }
 
         return null;
+    }
+
+    isValid (evt) {
+        if (!document.activeElement) {
+            return true;
+        }
+
+        const numericElement = document.activeElement.closest('[inputmode="numeric"]');
+        if (numericElement) {
+            const allowedCharacters = '0123456789';
+
+            if (
+                evt.key.length === 1 &&
+                allowedCharacters.indexOf(evt.key) === -1
+            ) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
 
@@ -7811,12 +8593,18 @@ class MapGeojson extends MapAbstract {
 
         const objectIndex = (this.objects.length - 1);
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.geojsonHoveredId = null;
     }
 
     afterLoadGeojson (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.map.setFilter(this.geojsonLinesId, ['!has', 'name']);
         object.map.setFilter(this.geojsonFillsId, ['!has', 'name']);
@@ -7843,6 +8631,9 @@ class MapGeojson extends MapAbstract {
         }
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         let popupContent = `
             <section class="ds44-card ds44-js-card ds44-card--contact ds44-box ds44-bgGray">
@@ -7878,6 +8669,9 @@ class MapGeojson extends MapAbstract {
 
     getGeojsonIds (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return [];
+        }
 
         // Get geojson ids
         const geojsonIds = [];
@@ -7903,6 +8697,9 @@ class MapGeojson extends MapAbstract {
     focus (objectIndex, evt) {
         if (evt.features.length > 0) {
             const object = this.objects[objectIndex];
+            if (!object) {
+                return;
+            }
 
             object.map.getCanvas().style.cursor = 'pointer';
 
@@ -7916,6 +8713,9 @@ class MapGeojson extends MapAbstract {
 
     blur (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.map.getCanvas().style.cursor = '';
 
@@ -7987,6 +8787,9 @@ class MapMarker extends MapAbstract {
 
         const objectIndex = (this.objects.length - 1);
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.markers = [];
     }
@@ -7995,6 +8798,9 @@ class MapMarker extends MapAbstract {
         super.afterLoad(objectIndex);
 
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.isMapReady = true;
         object.map.on('moveend', this.move.bind(this, objectIndex));
@@ -8009,7 +8815,7 @@ class MapMarker extends MapAbstract {
         }
 
         const object = this.objects[objectIndex];
-        if (!object.isVisible) {
+        if (!object || !object.isVisible) {
             return;
         }
 
@@ -8030,6 +8836,9 @@ class MapMarker extends MapAbstract {
 
     show (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         // Remove existing markers
         if (!object.addUp) {
@@ -8147,6 +8956,9 @@ class MapMarker extends MapAbstract {
 
     afterLoadGeojson (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
 
         object.isGeojsonLoaded = true;
         if (object.mapElement.getAttribute('data-geojson-refine') === 'true') {
@@ -8156,6 +8968,9 @@ class MapMarker extends MapAbstract {
 
     getGeojsonIds (objectIndex) {
         const object = this.objects[objectIndex];
+        if (!object) {
+            return [];
+        }
 
         const geojsonIds = [];
         for (let resultIndex in object.newResults) {
@@ -8673,7 +9488,7 @@ class PageElement {
         this.visibilityCounter = Math.min(0, (this.visibilityCounter + 1));
         if (this.visibilityCounter === 0) {
             for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
-                MiscAccessibility.show(this.objects[objectIndex].element);
+                MiscAccessibility.show(this.objects[objectIndex].element, true, false);
             }
         }
     }
@@ -8681,7 +9496,7 @@ class PageElement {
     hide () {
         if (this.visibilityCounter === 0) {
             for (let objectIndex = 0; objectIndex < this.objects.length; objectIndex++) {
-                MiscAccessibility.hide(this.objects[objectIndex].element);
+                MiscAccessibility.hide(this.objects[objectIndex].element, true, false);
             }
         }
         this.visibilityCounter--;
@@ -8918,7 +9733,7 @@ class ResultStandard {
         ) {
             legendElement = document.createElement('p');
             legendElement.className = 'ds44-textLegend mbs';
-            legendElement.innerText = MiscTranslate._('RESULTS_MAX_RESULTS', { maxNbResults: evt.detail.maxNbResults })
+            legendElement.innerText = MiscTranslate._('RESULTS_MAX_RESULTS', { maxNbResults: evt.detail.maxNbResults });
             listContainerElement.appendChild(legendElement);
         }
 
@@ -9336,9 +10151,7 @@ class TooltipStandard {
         this.DATA_HASH_ID = 'data-hashtooltip-id';
 
         // Create tooltips
-        document
-            .querySelectorAll('.' + this.TOOLTIP_SIMPLE)
-            .forEach(this.create.bind(this));
+        this.add();
 
         // Bind events
         ['mouseenter', 'focus', 'mouseleave', 'blur']
@@ -9346,9 +10159,17 @@ class TooltipStandard {
                 document.body.addEventListener(eventType, this.showHide.bind(this), true);
             });
         MiscEvent.addListener('keyDown:escape', this.hideAll.bind(this));
+        MiscEvent.addListener('tooltip:add', this.add.bind(this));
+    }
+
+    add () {
+        document
+            .querySelectorAll('button.' + this.TOOLTIP_SIMPLE + ':not([data-is-initialized="true"])')
+            .forEach(this.create.bind(this));
     }
 
     create (element) {
+        element.setAttribute('data-is-initialized', 'true');
         const hashId = Math.random().toString(32).slice(2, 12);
         const prefixClassName = MiscDom.getAttribute(element, this.TOOLTIP_DATA_PREFIX_CLASS);
         const contentId = MiscDom.getAttribute(element, this.TOOLTIP_DATA_CONTENT_ID);
