@@ -17,26 +17,26 @@
   },
   "homepage": "https://github.com/departement-loire-atlantique/design-system-web#readme",
   "devDependencies": {
+    "aos": "^2.3.4",
     "autoprefixer": "^9.7.4",
     "browser-sync": "^2.26.7",
     "cssnano": "^4.1.10",
     "gulp": "^4.0.2",
+    "gulp-cli": "^2.2.0",
     "gulp-concat": "^2.6.1",
     "gulp-consolidate": "^0.1.2",
     "gulp-iconfont": "^10.0.3",
     "gulp-iconfont-css": "^3.0.0",
     "gulp-postcss": "^8.0.0",
     "gulp-rename": "^1.4.0",
-    "gulp-sass": "^4.0.2",
+    "gulp-sass": "^5.1.0",
     "gulp-util": "^3.0.8",
     "knacss": "^7.1.0",
     "postcss-flexbugs-fixes": "^4.2.0",
     "postcss-gap-properties": "^2.0.0",
     "postcss-unprefix": "^2.1.4",
-    "underscore": "^1.8.3",
-    "gulp-cli": "^2.2.0",
     "swiper": "^5.3.1",
-    "aos": "^2.3.4"
+    "underscore": "^1.8.3"
   },
   "browserslist": [
     "> 1%",
@@ -50,11 +50,13 @@
     "ios_saf >= 12",
     "Android >= 7"
   ],
-  "dependencies": {},
   "files": [
     "dist/assets/images/",
     "dist/fonts/",
     "dist/css/",
     "dist/js/"
-  ]
+  ],
+  "dependencies": {
+    "sass": "^1.69.5"
+  }
 }

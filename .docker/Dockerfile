@@ -1,6 +1,9 @@
 FROM ruby:2.6.5
 MAINTAINER Julien BAYLE <julien.bayle@loire-atlantique.fr>
 
+# Installer une version compatible de bundler
+RUN gem install bundler:2.3.26
+
 # install nodejs
 RUN \
   cd /tmp && \

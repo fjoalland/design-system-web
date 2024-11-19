@@ -1,7 +1,7 @@
 // Requires
 var gulp = require('gulp');
 var postcss = require('gulp-postcss');
-var sass = require('gulp-sass');
+var sass = require('gulp-sass')(require('sass'));
 var concat = require('gulp-concat');
 var exec = require('child_process').exec;
 var browserSync = require('browser-sync').create();
