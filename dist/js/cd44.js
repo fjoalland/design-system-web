@@ -8169,6 +8169,108 @@ class CollapserStandard {
 // Singleton
 new CollapserStandard();
 
+class ImageZoom {
+    constructor () {
+        this.objects = [];
+        this.zoom = 2;
+        this.borderWidth = 3;
+
+        document
+            .querySelectorAll('.ds44-imgLoupe')
+            .forEach((magnifyContainerElement) => {
+                this.create(magnifyContainerElement);
+            });
+    }
+
+    create (magnifyContainerElement) {
+        const imageElement = magnifyContainerElement.querySelector('img');
+        const magnifyElement = document.createElement('div');
+        magnifyElement.classList.add('ds44-js-magnifier');
+        magnifyElement.classList.add('hidden');
+        magnifyElement.style.backgroundImage = "url('" + imageElement.src + "')";
+        magnifyElement.style.backgroundRepeat = 'no-repeat';
+        magnifyElement.style.backgroundSize = (imageElement.width * this.zoom) + 'px ' + (imageElement.height * this.zoom) + 'px';
+        imageElement.parentElement.insertBefore(magnifyElement, imageElement);
+
+        const object = {
+            'id': MiscUtils.generateId(),
+            'imageElement': imageElement,
+            'magnifyElement': magnifyElement
+        };
+
+        this.objects.push(object);
+
+        const objectIndex = (this.objects.length - 1);
+        MiscEvent.addListener('mousemove', this.move.bind(this, objectIndex), magnifyElement);
+        MiscEvent.addListener('mousemove', this.move.bind(this, objectIndex), imageElement);
+        MiscEvent.addListener('touchmove', this.move.bind(this, objectIndex), magnifyElement);
+        MiscEvent.addListener('touchmove', this.move.bind(this, objectIndex), imageElement);
+        MiscEvent.addListener('mouseleave', this.leave.bind(this, objectIndex), magnifyElement);
+    }
+
+    move (objectIndex, evt) {
+        evt.preventDefault();
+        evt.stopPropagation();
+
+        const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
+        const width = object.magnifyElement.offsetWidth / 2;
+        const height = object.magnifyElement.offsetHeight / 2;
+        const cursorPosition = this.getCursorPosition(objectIndex, evt);
+
+        let x = cursorPosition.x;
+        let y = cursorPosition.y;
+        if (x > object.imageElement.width) {
+            x = object.imageElement.width;
+        }
+        if (x < 0) {
+            x = 0;
+        }
+        if (y > object.imageElement.height) {
+            y = object.imageElement.height;
+        }
+        if (y < 0) {
+            y = 0;
+        }
+
+        object.magnifyElement.style.left = (x - width) + 'px';
+        object.magnifyElement.style.top = (y - height) + 'px';
+        object.magnifyElement.style.backgroundPosition = (((x * this.zoom) - width + this.borderWidth) * -1) + 'px ' + (((y * this.zoom) - height + this.borderWidth) * -1) + 'px';
+        object.magnifyElement.classList.remove('hidden');
+    }
+
+    leave (objectIndex, evt) {
+        evt.preventDefault();
+        evt.stopPropagation();
+
+        const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
+        object.magnifyElement.classList.add('hidden');
+    }
+
+    getCursorPosition (objectIndex, evt) {
+        const object = this.objects[objectIndex];
+        if (!object) {
+            return;
+        }
+
+        const boundingClientRect = object.imageElement.getBoundingClientRect();
+        return {
+            x: (evt.pageX || evt.touches[0].pageX || 0) - boundingClientRect.left - window.pageXOffset,
+            y: (evt.pageY || evt.touches[0].pageY || 0) - boundingClientRect.top - window.pageYOffset
+        };
+    }
+}
+
+// Singleton
+new ImageZoom();
+
 class HeaderStandard {
     constructor () {
         this.lastScroll = 0;
@@ -8293,108 +8395,6 @@ class HeaderStandard {
 
 // Singleton
 new HeaderStandard();
-
-class ImageZoom {
-    constructor () {
-        this.objects = [];
-        this.zoom = 2;
-        this.borderWidth = 3;
-
-        document
-            .querySelectorAll('.ds44-imgLoupe')
-            .forEach((magnifyContainerElement) => {
-                this.create(magnifyContainerElement);
-            });
-    }
-
-    create (magnifyContainerElement) {
-        const imageElement = magnifyContainerElement.querySelector('img');
-        const magnifyElement = document.createElement('div');
-        magnifyElement.classList.add('ds44-js-magnifier');
-        magnifyElement.classList.add('hidden');
-        magnifyElement.style.backgroundImage = "url('" + imageElement.src + "')";
-        magnifyElement.style.backgroundRepeat = 'no-repeat';
-        magnifyElement.style.backgroundSize = (imageElement.width * this.zoom) + 'px ' + (imageElement.height * this.zoom) + 'px';
-        imageElement.parentElement.insertBefore(magnifyElement, imageElement);
-
-        const object = {
-            'id': MiscUtils.generateId(),
-            'imageElement': imageElement,
-            'magnifyElement': magnifyElement
-        };
-
-        this.objects.push(object);
-
-        const objectIndex = (this.objects.length - 1);
-        MiscEvent.addListener('mousemove', this.move.bind(this, objectIndex), magnifyElement);
-        MiscEvent.addListener('mousemove', this.move.bind(this, objectIndex), imageElement);
-        MiscEvent.addListener('touchmove', this.move.bind(this, objectIndex), magnifyElement);
-        MiscEvent.addListener('touchmove', this.move.bind(this, objectIndex), imageElement);
-        MiscEvent.addListener('mouseleave', this.leave.bind(this, objectIndex), magnifyElement);
-    }
-
-    move (objectIndex, evt) {
-        evt.preventDefault();
-        evt.stopPropagation();
-
-        const object = this.objects[objectIndex];
-        if (!object) {
-            return;
-        }
-
-        const width = object.magnifyElement.offsetWidth / 2;
-        const height = object.magnifyElement.offsetHeight / 2;
-        const cursorPosition = this.getCursorPosition(objectIndex, evt);
-
-        let x = cursorPosition.x;
-        let y = cursorPosition.y;
-        if (x > object.imageElement.width) {
-            x = object.imageElement.width;
-        }
-        if (x < 0) {
-            x = 0;
-        }
-        if (y > object.imageElement.height) {
-            y = object.imageElement.height;
-        }
-        if (y < 0) {
-            y = 0;
-        }
-
-        object.magnifyElement.style.left = (x - width) + 'px';
-        object.magnifyElement.style.top = (y - height) + 'px';
-        object.magnifyElement.style.backgroundPosition = (((x * this.zoom) - width + this.borderWidth) * -1) + 'px ' + (((y * this.zoom) - height + this.borderWidth) * -1) + 'px';
-        object.magnifyElement.classList.remove('hidden');
-    }
-
-    leave (objectIndex, evt) {
-        evt.preventDefault();
-        evt.stopPropagation();
-
-        const object = this.objects[objectIndex];
-        if (!object) {
-            return;
-        }
-
-        object.magnifyElement.classList.add('hidden');
-    }
-
-    getCursorPosition (objectIndex, evt) {
-        const object = this.objects[objectIndex];
-        if (!object) {
-            return;
-        }
-
-        const boundingClientRect = object.imageElement.getBoundingClientRect();
-        return {
-            x: (evt.pageX || evt.touches[0].pageX || 0) - boundingClientRect.left - window.pageXOffset,
-            y: (evt.pageY || evt.touches[0].pageY || 0) - boundingClientRect.top - window.pageYOffset
-        };
-    }
-}
-
-// Singleton
-new ImageZoom();
 
 class KeyboardStandard {
     constructor () {
@@ -8582,6 +8582,264 @@ class LoaderStandard {
 
 // Singleton
 new LoaderStandard();
+
+class MenuHeader {
+    constructor () {
+        this.triggerMenuElement = null;
+        this.triggerSubMenuElement = null;
+        this.menuSelector = null;
+        this.menu = null;
+
+        this.hideMenuListener = this.hideMenu.bind(this);
+        this.focusOutListener = this.focusOut.bind(this);
+        this.clickOutListener = this.clickOut.bind(this);
+
+        MiscEvent.addListener('keyUp:escape', this.hideMenuListener);
+
+        document
+            .querySelectorAll('header #open-menu')
+            .forEach((element) => {
+                MiscEvent.addListener('click', this.showNavigation.bind(this), element);
+            });
+        document
+            .querySelectorAll('header #open-search')
+            .forEach((element) => {
+                MiscEvent.addListener('click', this.showSearch.bind(this), element);
+            });
+        document
+            .querySelectorAll('header .ds44-btnOverlay--closeOverlay')
+            .forEach((element) => {
+                MiscEvent.addListener('click', this.hideMenuListener, element);
+            });
+        document
+            .querySelectorAll('#ds44-btn-applis, header .ds44-navList .ds44-menuBtn')
+            .forEach((element) => {
+                MiscEvent.addListener('click', this.showSubNavigationMenu.bind(this), element);
+            });
+        document
+            .querySelectorAll('header .ds44-btn-backOverlay')
+            .forEach((element) => {
+                MiscEvent.addListener('click', this.hideSubNavigationMenu.bind(this), element);
+            });
+
+        MiscAccessibility.hide(document.querySelector('header .ds44-blocMenu'));
+    }
+
+    showMenu (evt) {
+        if (evt) {
+            evt.stopPropagation();
+        }
+
+        if (this.menu) {
+            this.hideMenu();
+        }
+
+        // Get corresponding menu
+        const menu = document.querySelector('header .ds44-blocMenu');
+        if (!menu) {
+            return;
+        }
+
+        // Get menu main section
+        const mainMenu = menu.querySelector(this.menuSelector)
+        if (!mainMenu) {
+            return;
+        }
+
+        // Get corresponding close button
+        const closeButton = mainMenu.querySelector('.ds44-btnOverlay--closeOverlay');
+        if (!closeButton) {
+            return;
+        }
+
+        // Record the element that triggered the overlay
+        this.triggerMenuElement = evt.currentTarget;
+        this.menu = menu;
+
+        // Show menu
+        document.body.style.overflow = 'hidden';
+        MiscEvent.dispatch('resize', null, window);
+        mainMenu.classList.add('show');
+        MiscAccessibility.show(this.menu);
+        MiscAccessibility.show(mainMenu);
+        this.menu
+            .querySelectorAll('section.ds44-overlay')
+            .forEach((subMainMenu) => {
+                MiscAccessibility.hide(subMainMenu);
+            });
+
+        // Set focus in menu
+        window.setTimeout(MiscAccessibility.setFocus.bind(this, closeButton), 500);
+        MiscAccessibility.addFocusLoop(mainMenu);
+        MiscEvent.dispatch('menu:show', { 'element': mainMenu });
+
+        MiscEvent.addListener('click', this.hideMenuListener, closeButton);
+        MiscEvent.addListener('focusout', this.focusOutListener, this.menu);
+        MiscEvent.addListener('click', this.clickOutListener, document.body);
+    }
+
+    showNavigation (evt) {
+        this.menuSelector = '.ds44-overlay--navNiv1';
+        this.showMenu(evt);
+    }
+
+    showSearch (evt) {
+        this.menuSelector = '#menuRech .ds44-overlay';
+        this.showMenu(evt);
+    }
+
+    // Ferme tous les menus, et ajoute un focus sur le bouton qui a ouvert le dernier menu affiché
+    hideMenu (evt) {
+        if (evt) {
+            evt.stopPropagation();
+        }
+
+        // Get current menu
+        if (!this.menu) {
+            return;
+        }
+
+        // Get menu main section
+        const mainMenu = this.menu.querySelector(this.menuSelector)
+        this.menuSelector = null;
+        if (!mainMenu) {
+            return;
+        }
+
+        // Get corresponding close button
+        const closeButton = mainMenu.querySelector('.ds44-btnOverlay--closeOverlay');
+        if (!closeButton) {
+            return;
+        }
+
+        MiscEvent.removeListener('click', this.hideMenuListener, closeButton);
+        MiscEvent.removeListener('focusout', this.focusOutListener, this.menu);
+        MiscEvent.removeListener('click', this.clickOutListener, document.body);
+
+        MiscAccessibility.removeFocusLoop();
+
+        document.body.style.overflow = null;
+        MiscEvent.dispatch('resize', null, window);
+        mainMenu.classList.remove('show');
+        document
+            .querySelectorAll('header .ds44-blocMenu .ds44-overlay')
+            .forEach((subMainMenu) => {
+                subMainMenu.classList.remove('show');
+            });
+        MiscAccessibility.hide(mainMenu);
+        MiscAccessibility.hide(this.menu);
+
+        if (this.triggerMenuElement) {
+            MiscAccessibility.setFocus(this.triggerMenuElement)
+        }
+
+        this.triggerMenuElement = null;
+        this.menu = null;
+
+        MiscEvent.dispatch('menu:hide');
+    }
+
+    showSubNavigationMenu (evt) {
+        // Get current menu
+        if (!this.menu) {
+            return;
+        }
+
+        // Don't do anything if it is a link
+        if (evt.currentTarget.getAttribute('href')) {
+            return;
+        }
+
+        // Get menu navigation section
+        const navigationMenu = this.menu.querySelector('.ds44-overlay--navNiv1');
+        if (!navigationMenu) {
+            return;
+        }
+
+        let subNavigationMenu = null;
+        if (evt.currentTarget.getAttribute('data-ssmenu')) {
+            subNavigationMenu = document.querySelector('#' + evt.currentTarget.getAttribute('data-ssmenu'));
+        } else {
+            subNavigationMenu = document.querySelector('#navApplis');
+        }
+        if (!subNavigationMenu) {
+            return;
+        }
+
+        // Get corresponding close button
+        const backButton = subNavigationMenu.querySelector('.ds44-btn-backOverlay');
+        if (!backButton) {
+            return;
+        }
+
+        this.triggerSubMenuElement = evt.currentTarget;
+
+        MiscAccessibility.hide(navigationMenu);
+        MiscAccessibility.removeFocusLoop();
+
+        subNavigationMenu.classList.add('show');
+        MiscAccessibility.show(subNavigationMenu);
+        MiscAccessibility.setFocus(backButton);
+        MiscAccessibility.addFocusLoop(subNavigationMenu);
+    }
+
+    hideSubNavigationMenu () {
+        // Get current menu
+        if (!this.menu) {
+            return;
+        }
+
+        // Get menu navigation section
+        const navigationMenu = this.menu.querySelector('.ds44-overlay--navNiv1');
+        if (!navigationMenu) {
+            return;
+        }
+
+        const subNavigationMenu = this.menu.querySelector('.ds44-overlay.show:not(.ds44-overlay--navNiv1)');
+        if (!subNavigationMenu) {
+            return;
+        }
+
+        // Get corresponding close button
+        const closeButton = navigationMenu.querySelector('.ds44-btnOverlay--closeOverlay');
+        if (!closeButton) {
+            return;
+        }
+
+        subNavigationMenu.classList.remove('show');
+        MiscAccessibility.hide(subNavigationMenu);
+        MiscAccessibility.removeFocusLoop();
+
+        MiscAccessibility.show(navigationMenu);
+
+        if (this.triggerSubMenuElement) {
+            MiscAccessibility.setFocus(this.triggerSubMenuElement)
+            this.triggerSubMenuElement = null;
+        } else {
+            MiscAccessibility.setFocus(closeButton);
+        }
+        MiscAccessibility.addFocusLoop(navigationMenu);
+    }
+
+    focusOut (evt) {
+        if (evt.target && this.menu.contains(evt.target)) {
+            return;
+        }
+
+        MiscAccessibility.setFocus(this.menu);
+    }
+
+    clickOut (evt) {
+        if (evt.target && this.menu.contains(evt.target)) {
+            return;
+        }
+
+        this.hideMenu();
+    }
+}
+
+// Singleton
+new MenuHeader();
 
 class MapGeojson extends MapAbstract {
     constructor () {
@@ -9040,264 +9298,6 @@ class MapMarker extends MapAbstract {
 
 // Singleton
 new MapMarker();
-
-class MenuHeader {
-    constructor () {
-        this.triggerMenuElement = null;
-        this.triggerSubMenuElement = null;
-        this.menuSelector = null;
-        this.menu = null;
-
-        this.hideMenuListener = this.hideMenu.bind(this);
-        this.focusOutListener = this.focusOut.bind(this);
-        this.clickOutListener = this.clickOut.bind(this);
-
-        MiscEvent.addListener('keyUp:escape', this.hideMenuListener);
-
-        document
-            .querySelectorAll('header #open-menu')
-            .forEach((element) => {
-                MiscEvent.addListener('click', this.showNavigation.bind(this), element);
-            });
-        document
-            .querySelectorAll('header #open-search')
-            .forEach((element) => {
-                MiscEvent.addListener('click', this.showSearch.bind(this), element);
-            });
-        document
-            .querySelectorAll('header .ds44-btnOverlay--closeOverlay')
-            .forEach((element) => {
-                MiscEvent.addListener('click', this.hideMenuListener, element);
-            });
-        document
-            .querySelectorAll('#ds44-btn-applis, header .ds44-navList .ds44-menuBtn')
-            .forEach((element) => {
-                MiscEvent.addListener('click', this.showSubNavigationMenu.bind(this), element);
-            });
-        document
-            .querySelectorAll('header .ds44-btn-backOverlay')
-            .forEach((element) => {
-                MiscEvent.addListener('click', this.hideSubNavigationMenu.bind(this), element);
-            });
-
-        MiscAccessibility.hide(document.querySelector('header .ds44-blocMenu'));
-    }
-
-    showMenu (evt) {
-        if (evt) {
-            evt.stopPropagation();
-        }
-
-        if (this.menu) {
-            this.hideMenu();
-        }
-
-        // Get corresponding menu
-        const menu = document.querySelector('header .ds44-blocMenu');
-        if (!menu) {
-            return;
-        }
-
-        // Get menu main section
-        const mainMenu = menu.querySelector(this.menuSelector)
-        if (!mainMenu) {
-            return;
-        }
-
-        // Get corresponding close button
-        const closeButton = mainMenu.querySelector('.ds44-btnOverlay--closeOverlay');
-        if (!closeButton) {
-            return;
-        }
-
-        // Record the element that triggered the overlay
-        this.triggerMenuElement = evt.currentTarget;
-        this.menu = menu;
-
-        // Show menu
-        document.body.style.overflow = 'hidden';
-        MiscEvent.dispatch('resize', null, window);
-        mainMenu.classList.add('show');
-        MiscAccessibility.show(this.menu);
-        MiscAccessibility.show(mainMenu);
-        this.menu
-            .querySelectorAll('section.ds44-overlay')
-            .forEach((subMainMenu) => {
-                MiscAccessibility.hide(subMainMenu);
-            });
-
-        // Set focus in menu
-        window.setTimeout(MiscAccessibility.setFocus.bind(this, closeButton), 500);
-        MiscAccessibility.addFocusLoop(mainMenu);
-        MiscEvent.dispatch('menu:show', { 'element': mainMenu });
-
-        MiscEvent.addListener('click', this.hideMenuListener, closeButton);
-        MiscEvent.addListener('focusout', this.focusOutListener, this.menu);
-        MiscEvent.addListener('click', this.clickOutListener, document.body);
-    }
-
-    showNavigation (evt) {
-        this.menuSelector = '.ds44-overlay--navNiv1';
-        this.showMenu(evt);
-    }
-
-    showSearch (evt) {
-        this.menuSelector = '#menuRech .ds44-overlay';
-        this.showMenu(evt);
-    }
-
-    // Ferme tous les menus, et ajoute un focus sur le bouton qui a ouvert le dernier menu affiché
-    hideMenu (evt) {
-        if (evt) {
-            evt.stopPropagation();
-        }
-
-        // Get current menu
-        if (!this.menu) {
-            return;
-        }
-
-        // Get menu main section
-        const mainMenu = this.menu.querySelector(this.menuSelector)
-        this.menuSelector = null;
-        if (!mainMenu) {
-            return;
-        }
-
-        // Get corresponding close button
-        const closeButton = mainMenu.querySelector('.ds44-btnOverlay--closeOverlay');
-        if (!closeButton) {
-            return;
-        }
-
-        MiscEvent.removeListener('click', this.hideMenuListener, closeButton);
-        MiscEvent.removeListener('focusout', this.focusOutListener, this.menu);
-        MiscEvent.removeListener('click', this.clickOutListener, document.body);
-
-        MiscAccessibility.removeFocusLoop();
-
-        document.body.style.overflow = null;
-        MiscEvent.dispatch('resize', null, window);
-        mainMenu.classList.remove('show');
-        document
-            .querySelectorAll('header .ds44-blocMenu .ds44-overlay')
-            .forEach((subMainMenu) => {
-                subMainMenu.classList.remove('show');
-            });
-        MiscAccessibility.hide(mainMenu);
-        MiscAccessibility.hide(this.menu);
-
-        if (this.triggerMenuElement) {
-            MiscAccessibility.setFocus(this.triggerMenuElement)
-        }
-
-        this.triggerMenuElement = null;
-        this.menu = null;
-
-        MiscEvent.dispatch('menu:hide');
-    }
-
-    showSubNavigationMenu (evt) {
-        // Get current menu
-        if (!this.menu) {
-            return;
-        }
-
-        // Don't do anything if it is a link
-        if (evt.currentTarget.getAttribute('href')) {
-            return;
-        }
-
-        // Get menu navigation section
-        const navigationMenu = this.menu.querySelector('.ds44-overlay--navNiv1');
-        if (!navigationMenu) {
-            return;
-        }
-
-        let subNavigationMenu = null;
-        if (evt.currentTarget.getAttribute('data-ssmenu')) {
-            subNavigationMenu = document.querySelector('#' + evt.currentTarget.getAttribute('data-ssmenu'));
-        } else {
-            subNavigationMenu = document.querySelector('#navApplis');
-        }
-        if (!subNavigationMenu) {
-            return;
-        }
-
-        // Get corresponding close button
-        const backButton = subNavigationMenu.querySelector('.ds44-btn-backOverlay');
-        if (!backButton) {
-            return;
-        }
-
-        this.triggerSubMenuElement = evt.currentTarget;
-
-        MiscAccessibility.hide(navigationMenu);
-        MiscAccessibility.removeFocusLoop();
-
-        subNavigationMenu.classList.add('show');
-        MiscAccessibility.show(subNavigationMenu);
-        MiscAccessibility.setFocus(backButton);
-        MiscAccessibility.addFocusLoop(subNavigationMenu);
-    }
-
-    hideSubNavigationMenu () {
-        // Get current menu
-        if (!this.menu) {
-            return;
-        }
-
-        // Get menu navigation section
-        const navigationMenu = this.menu.querySelector('.ds44-overlay--navNiv1');
-        if (!navigationMenu) {
-            return;
-        }
-
-        const subNavigationMenu = this.menu.querySelector('.ds44-overlay.show:not(.ds44-overlay--navNiv1)');
-        if (!subNavigationMenu) {
-            return;
-        }
-
-        // Get corresponding close button
-        const closeButton = navigationMenu.querySelector('.ds44-btnOverlay--closeOverlay');
-        if (!closeButton) {
-            return;
-        }
-
-        subNavigationMenu.classList.remove('show');
-        MiscAccessibility.hide(subNavigationMenu);
-        MiscAccessibility.removeFocusLoop();
-
-        MiscAccessibility.show(navigationMenu);
-
-        if (this.triggerSubMenuElement) {
-            MiscAccessibility.setFocus(this.triggerSubMenuElement)
-            this.triggerSubMenuElement = null;
-        } else {
-            MiscAccessibility.setFocus(closeButton);
-        }
-        MiscAccessibility.addFocusLoop(navigationMenu);
-    }
-
-    focusOut (evt) {
-        if (evt.target && this.menu.contains(evt.target)) {
-            return;
-        }
-
-        MiscAccessibility.setFocus(this.menu);
-    }
-
-    clickOut (evt) {
-        if (evt.target && this.menu.contains(evt.target)) {
-            return;
-        }
-
-        this.hideMenu();
-    }
-}
-
-// Singleton
-new MenuHeader();
 
 class NumberDynamic {
     constructor () {
