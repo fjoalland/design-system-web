@@ -7562,6 +7562,33 @@ class ButtonSticky {
 // Singleton
 new ButtonSticky();
 
+class CardStandard {
+    constructor () {
+        document.addEventListener('click', this.open.bind(this));
+    }
+
+    open (evt) {
+        if (
+            !evt ||
+            !evt.target ||
+            !evt.target.closest('.ds44-js-card')
+        ) {
+            return;
+        }
+
+        const elementLinks = evt.target.closest('.ds44-js-card').getElementsByTagName('a');
+        if (
+            elementLinks[0] &&
+            elementLinks[0] !== evt.target
+        ) {
+            elementLinks[0].click();
+        }
+    }
+}
+
+// Singleton
+new CardStandard();
+
 class CalendarStandard {
     constructor (options) {
         this.options = {
@@ -7766,33 +7793,6 @@ class CalendarStandard {
         this.calendarElement = null;
     }
 }
-
-class CardStandard {
-    constructor () {
-        document.addEventListener('click', this.open.bind(this));
-    }
-
-    open (evt) {
-        if (
-            !evt ||
-            !evt.target ||
-            !evt.target.closest('.ds44-js-card')
-        ) {
-            return;
-        }
-
-        const elementLinks = evt.target.closest('.ds44-js-card').getElementsByTagName('a');
-        if (
-            elementLinks[0] &&
-            elementLinks[0] !== evt.target
-        ) {
-            elementLinks[0].click();
-        }
-    }
-}
-
-// Singleton
-new CardStandard();
 
 class CarouselSlideshow extends CarouselAbstract {
     constructor () {
